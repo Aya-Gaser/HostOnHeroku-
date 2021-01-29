@@ -10,7 +10,7 @@
     <!-- Favicon -->
     <link href="" rel="icon" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-  <link href="{{asset('bootstrap-datetimepicker-master/css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
+  <link href="{{asset('//bootstrap-datetimepicker-master/css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
 
 <!-- Latest compiled and minified JavaScript -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
