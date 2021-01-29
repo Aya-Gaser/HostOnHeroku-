@@ -35,7 +35,7 @@
     padding:8px;
 }
 .body{
-    background-image:url("{{//asset('img/bg4.jpg')}}");
+    background-image:url("{{asset('img/bg4.jpg')}}");
     background-size:cover;
     background-repeat:no-repeat;
     background-position: center;
