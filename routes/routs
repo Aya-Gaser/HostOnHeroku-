@@ -1,0 +1,152 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('auth.login');
+});
+Route::get('/projects', function () {
+    return view('admins.projectsAdmin');
+});
+//////////admins //////////////
+Route::get('/dashboard', 'admins\dashboardController@index')->middleware('auth')->name('dashboard');
+
+Route::get('/createWo', 'projects\createWO@getAllData')->middleware('auth');
+Route::post('/createWo', 'projects\createWO@store')->middleware('auth');
+Route::get('/allWo', 'projects\allWoController@index')->middleware('auth');
+Route::get('/viewWo/{id}', 'projects\viewWoController@index')->middleware('auth'); 
+Route::get('/recieve-wo/{wo}', 'projects\viewWoController@recieveWo')->middleware('auth')
+->where(['wo'=>'[0-9]+'])->name('recieve-wo');
+//choose single / linked
+Route::get('/createProject-select/{id}', 'projects\createProjectController@selectProject_type')->middleware('auth')
+->where(['id'=>'[0-9]+']);
+//////createProject
+Route::get('/createProject-data/{id}/{type}', 'projects\createProjectController@index')->middleware('auth')->name('create-project')
+->where(['id'=>'[0-9]+', 'type'=> '[a-z]+']);
+
+Route::get('/file-delete/{id}/{type}', 'projects\viewProjectController@deleteAttachment')->name('wo.delete-attachment')
+->where(['id'=>'[0-9]+', 'type'=>'[a-z]+']);
+//// store project
+Route::post('/createProject/{id}/{isLinked}', 'projects\createProjectController@store')->middleware('auth')
+->where(['id'=>'[0-9]+', 'isLinked'=> '[0-1]']);
+//// view project
+Route::get('/viewProject/{id}', 'projects\viewProjectController@index')->middleware('auth')
+->where(['id'=>'[0-9]+'])->name('view-project');
+///all projects
+Route::get('/view-allProjects/{status}', 'projects\allWoController@allProjects')->middleware('auth')
+->where(['status'=> '[a-z]+'])->name('view-allProjects');
+
+Route::post('/upload-editedFile/{project}/{sourceFile}', 'projects\viewProjectController@store_EditedFile')->middleware('auth')
+->where(['project'=>'[0-9]+', 'sourceFile'=>'[0-9]+'])->name('upload-editedFile');
+
+Route::get('/delete-editedFile/{editedFile}', 'projects\viewProjectController@delete_EditedFile')->middleware('auth')
+->where(['editedFile'=>'[0-9]+'])->name('delete-editedFile');
+
+Route::get('/sendTo-finalization/{sourceFile}', 'projects\viewProjectController@send_toFinalization')->middleware('auth')
+->where(['sourceFile'=>'[0-9]+']);
+
+Route::post('/upload-finalizedFile/{project}/{sourceFile}', 'projects\viewProjectController@store_finalizedFile')->middleware('auth')
+->where(['project'=>'[0-9]+', 'sourceFile'=>'[0-9]+'])->name('upload-editedFile');
+
+Route::get('/delete-finalizedFile/{finalizedFile}', 'projects\viewProjectController@delete_finalizedFile')->middleware('auth')
+->where(['editedFile'=>'[0-9]+'])->name('delete-editedFile');
+
+Route::get('/complete-sourceFile/{sourceFile}/{compelte}', 'projects\viewProjectController@complete_reOpen_sourceFile')->middleware('auth')
+->where(['sourceFile'=>'[0-9]+', 'compelte'=> '[0-1]']);
+
+Route::get('/complete-projectStage/{stage}/{compelte}', 'projects\viewProjectController@complete_reOpen_vendorStage')->middleware('auth')
+->where(['stage'=>'[0-9]+', 'compelte'=> '[0-1]']);
+
+Route::get('/send-finalizedFile-toNext-project/{finalizedFile}', 'projects\viewProjectController@sendFinalized_toNextProject')->middleware('auth')
+->where(['finalizedFile'=>'[0-9]+']);
+
+Route::get('/tracking', 'projects\trackingController@index')->middleware('auth');
+
+////// view vendors
+
+Route::get('/view-allVendors', 'projects\vendorController@allVendors')->middleware('auth');
+
+Route::get('/view-vendor/{vendor}', 'projects\vendorController@viewVendor')->middleware('auth')
+->where(['vendor'=>'[0-9]+']);
+//////// create vendor
+Route::post('/createVendor', 'projects\vendorController@createVendor')->middleware('auth');
+
+Route::post('/updateVendor-data/{vendor}', 'projects\vendorController@updateVendor')->middleware('auth')
+->where(['vendor'=>'[0-9]+']);
+
+Route::get('/delete-vendor/{vendor}', 'projects\vendorController@destroy')->middleware('auth')
+->where(['vendor'=>'[0-9]+']);
+////view clients
+Route::get('/view-allclients', 'projects\clientController@allclients')->middleware('auth');
+
+Route::get('/view-client/{client}', 'projects\clientController@viewclient')->middleware('auth')
+->where(['client'=>'[0-9]+']);
+//////// create client
+Route::post('/createclient', 'projects\clientController@createclient')->middleware('auth');
+
+Route::post('/updateclient-data/{client}', 'projects\clientController@updateclient')->middleware('auth')
+->where(['client'=>'[0-9]+']);
+
+Route::get('/delete-client/{client}', 'projects\clientController@destroy')->middleware('auth')
+->where(['client'=>'[0-9]+']);
+////////////******************* * vendor *********************/////////////////
+Route::get('/dashboardv', 'vendor\dashboardController@index')->middleware('auth')->name('dashboard');
+
+////////// offer/////////////////////
+Route::get('/project-offer/{project}/{group}/{vendor}',
+ array('as' => 'offer', 'uses' => 'vendor\viewOfferController@index'))->middleware('auth')
+ ->where(['project_id'=> '[0-9]+', 'group'=> '[0-9]+', 'vendor'=> '[0-9]+' ]);
+ 
+Route::get('/aceept-offer/{project_id}/{group}/{vendor}',
+ array('as' => 'accept-offer', 'uses' => 'vendor\viewOfferController@acceptOffer'))->middleware('auth')
+ ->where(['project_id'=> '[0-9]+', 'group'=> '[0-9]+', 'vendor'=> '[0-9]+' ]);
+
+ Route::get('/decline-offer/{project_id}/{group}/{vendor}',
+ array('as' => 'decline-offer', 'uses' => 'vendor\viewOfferController@declineOffer'))->middleware('auth')
+ ->where(['project_id'=> '[0-9]+', 'group'=> '[0-9]+', 'vendor'=> '[0-9]+' ]); 
+
+///// projects /////////////// 
+Route::get('/my-projects/{filter}', 'vendor\viewAllProjectsController@index')->middleware('auth')
+->where('filter', '[a-z]+')->name('view-myProjects'); 
+
+Route::get('/my-project/{id}', 'vendor\viewAllProjectsController@viewProject')->middleware('auth')
+->where('id', '[0-9]+')->name('view-my-project');
+
+Route::post('/send-delivery/{stage}/{sourceFile}', 'vendor\viewAllProjectsController@storeDelivery')->middleware('auth')
+->where(['stage'=> '[0-9]+', 'sourceFile'=> '[0-9]+' ])->name('send-delivery');
+
+Route::post('/REsend-delivery/{stage}/{delivery}', 'vendor\viewAllProjectsController@REsendDelivery')->middleware('auth')
+->where(['stage'=> '[0-9]+', 'delivery'=> '[0-9]+' ])->name('send-delivery');
+
+///// editor in linked project acion-on-deliveryFile
+Route::get('/action-deliveryFile/{deliveryID}/{action}', 'vendor\viewAllProjectsController@deliveryFile_action')->middleware('auth')
+->where(['deliveryID'=> '[0-9]+', 'action'=> '[a-z]+' ])->name('acion-on-deliveryFile');
+
+Auth::routes();
+
+//vendor first login
+//Route::get('/first', 'projects\makeUserController@first')->middleware('auth');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/roles', 'PermissionController@Permission');
+
+Route::group(['middleware' => 'role:ff', 'prefix' => 'mangement-panel',
+'namespace' => 'Management', 'as' => 'management.'], function() {
+
+    Route::get('/admin', function() {
+ 
+       return 'Welcome Admin';
+       
+    });
+ 
+ });

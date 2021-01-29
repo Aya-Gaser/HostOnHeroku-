@@ -1,0 +1,186 @@
+
+                             @php  @endphp
+                            @foreach($files->vendorDelivery as $delivery)
+                            @if($delivery->status != 'rejected')
+                             <div class="card">
+                                <div class="card-header">
+                                <h5> Delivery #  {{ $delivery->id}} </h5>
+                                </div>
+                                <div class="card-body">
+                                   <div class="row col-md-12">
+                                        <div class="col-md-3">
+                                        <p class="head"> Delivery date </p>
+                                        <p class="data">  {{$delivery->created_at}} </p>
+                                        </div>
+                                        <div class="col-md-3">
+                                        <p class="head"> Delivery date </p>
+                                         <p class="data">  {{$delivery->type}} </p>
+                                        </div>
+                                        <div class="col-md-3">
+                                        <p class="head"> Delivery date </p>
+                                        <p class="data">   {{$delivery->status}} </p>
+                                        </div>
+                                        <div class="col-md-3">
+                                        <p class="head"> #Delivered Files </p>
+                                        <p class="data">   {{$delivery->docs_number}} out of {{$files->required_docs}} </p>
+                                        </div>
+                                    
+                                   </div>
+                                   <br> <br>
+                                 <div class="table-responsive">
+                                 <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                       
+                                        <th width="80%">File</th>
+                                        
+                                        <th width="20%">Action/ Status by Admins</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($delivery->deliveryFiles as $file)
+                                    @if($file->status != 'rejected')                                
+                                    <tr>
+                                      <td>  <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file']}}">
+                                       {{$file->file_name}}
+                                    </a>
+                                     </td>
+                                      @if($file ->status == 'pending')
+                                    <td> <button class="btn btn-success">
+                                    <a href="{{route('acion-on-deliveryFile',
+                                    ['deliveryId'=> $delivery->id, 'fileId'=>$file->id, 'action'=>'accepted'])}}">
+                                     Accept </a>
+                                        </button> 
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
+                                       Reject
+                                        </button>   </td>
+                                       <!-- /.modal -->
+                                        <div class="modal fade in" id="modal-default" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+                                      <center>
+                                          <div class="modal-dialog center">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 class="modal-title">Rejection Notes</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                              <form action="{{route('acion-on-deliveryFile',
+                                        ['deliveryId'=> $delivery->id, 'fileId'=>$file->id, 'action'=>'rejected'])}}" method="get" enctype="multipart/form-data">
+                                                    @csrf
+                                               <input name="notes" type="text" class="form-control" required> 
+                                              
+                                              </div>
+                                              <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-success"> save
+                                                </button> 
+                                                </form>
+                                              </div>
+                                            </div>
+                                            </center>
+                                            <!-- /.modal-content -->
+                                          </div>
+                                          <!-- /.modal-dialog -->
+                                        @else
+                                        <td> {{$file->status}} </td>
+                                        
+                                        @endif
+                                        
+                                       
+                                    <tr>
+                                   
+                                    @endif
+  
+                                   @endforeach  
+                                    </tbody>
+                                    </table>
+                                 </div>
+                                </div>
+                             </div>
+                              @endif
+                            @endforeach
+                            
+                               
+                           
+                
+               
+                 
+                   <!-- *************** upload delivery ****************** -->
+                   <div class="row" style=" margin-top:60px;">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Send Delivery</h3>
+                        </div>
+                        <form action="/send-delivery/{{$stage->id}}/{{$project->id}}" method="post" enctype="multipart/form-data">
+                         @csrf
+                       <div class="card-body">
+                          <div class="row">  
+                           <div class="form-group col-md-6">
+                             <label for="exampleInputEmail1">Notes</label>
+                                <input type="text" class="form-control" name="notes" id="notes" placeholder="Enter notes">
+                            </div>
+                            <div class="form-group col-md-6">
+                             <label for="exampleInputEmail1">Delivery Type</label>
+                             <select class="form-control" name="type" id="type">
+                             <option selected >Partial</option>
+                             <option selected >Final</option>
+                             </select>
+                             </div>
+                            </div>
+                          </div>
+                          <div class="row"> 
+                          <div class="form-group col-md-12">
+                    <label class="col-md-12" for="">Delivery Files</label> <br>
+                    <div class="input-group col-md-12">
+                    <br>
+                      <div class="custom-file">
+                      <input name="delivery_files[]" id="delivery_files" class="custom-file-input" type="file" multiple>  
+                      <label class="custom-file-label" for="delivery_files">Choose file</label>
+                      </div>
+                     
+                      
+                    </div>
+                    </div>
+                   
+                   
+                    </div>
+                            <div class="card-footer" style="text-align:right; margin-top:20px;">
+                            <button type="submit" class="btn btn-success ">Send</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    </div>  
+                </div>  
+            </div>    
+
+                    
+            @endif
+            //////////////////////////////////////////////////////////////////////////////////////////
+            admin action
+            ///////////////////////////////////////////
+                     @if($delivery_file->admin_status == 'pending')
+                                        @if($delivery_file->status == 'pending')
+                                       <button class="btn btn-success">
+                                       <a href="">
+                                      Accept </a>
+                                          </button> 
+                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
+                                        Reject
+                                        </button> 
+                                        @else 
+                                          @if($delivery_file->status == 'accepted')
+                                              {{$delivery_file->status}} (editor action)
+                                          @endif
+                                        @endif
+                                      @else  
+                                      @if($delivery_file->admin_status == 'accepted')
+                                              {{$delivery_file->admin_status}} (admin action)
+                                          @endif
+                                      @endif 

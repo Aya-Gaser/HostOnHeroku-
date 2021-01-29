@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use App\User;
+class offerAction extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    protected $project_id, $action, $vendor_name, $stage_type;
+    public function __construct($project_id, $vendor_name, $action, $stage_type)
+    {
+        $this->project_id = $project_id;
+        $this->vendor_name =  $vendor_name;
+        $this->stage_type = $stage_type;
+        $this->action =  $action;
+        $this->project = projects::find($project_id); 
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->markdown('emails.offerAction.offerAction')
+        ->with(['project_id'=>$this->project_id, 'vendor_name'=>$this->vendor_name, 'action'=>$this->action,
+        'stage_type'=>$this->stage_type, 'wo_id'=>$this->project->wo_id])
+       ->from('ayagaser30@example.com')
+       ->subject('Project : '.str_pad( $this->project_id, 4, "0", STR_PAD_LEFT )
+       .' Has Been '.$this->action)->delay(15); 
+    }
+}
