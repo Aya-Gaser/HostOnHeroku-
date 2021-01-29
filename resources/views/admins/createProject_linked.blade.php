@@ -5,11 +5,11 @@
 
     @section('style')
       <!-- Bootstrap4 Duallistbox -->
-    <link rel="stylesheet" href="{{asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css')}}">
+    <link rel="stylesheet" href="{{asset('//plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css')}}">
       <!-- BS Stepper -->
-      <link rel="stylesheet" href="{{asset('plugins/bs-stepper/css/bs-stepper.min.css')}}">
+      <link rel="stylesheet" href="{{asset('//plugins/bs-stepper/css/bs-stepper.min.css')}}">
       <!-- dropzonejs -->
-      <link rel="stylesheet" href="{{asset('plugins/dropzone/min/dropzone.min.css')}}">
+      <link rel="stylesheet" href="{{asset('//plugins/dropzone/min/dropzone.min.css')}}">
       @include('layouts.partials._file_input_plugin_style')
 
     @endsection  
@@ -278,7 +278,7 @@
 @section('script')
 
 <!-- BS-Stepper -->
-<script src="{{asset('plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
+<script src="{{asset('//plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
 
 <script>
 $(function () {
