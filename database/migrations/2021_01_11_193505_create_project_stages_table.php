@@ -20,8 +20,8 @@ class CreateProjectStagesTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->boolean('lastIn_project');
             $table->string('type'); 
-            $table->timestamps('G1_acceptance_deadline');
-            $table->timestamps('G2_acceptance_deadline');
+            $table->dateTime('G1_acceptance_deadline');
+            $table->dateTime('G2_acceptance_deadline');
             $table->unsignedBigInteger('vendor_id')->nullable();
             $table->integer('required_docs');
             $table->integer('accepted_docs');
