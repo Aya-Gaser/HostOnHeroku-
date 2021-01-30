@@ -175,7 +175,7 @@
 
 @section('script')
 <!-- BS-Stepper -->
-<script src="{{asset('//plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
+<script src="{{asset('plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
 
 
 <script>
