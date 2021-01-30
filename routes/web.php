@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/','seedUser@index');
+
 
 //////////admins //////////////
 Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
