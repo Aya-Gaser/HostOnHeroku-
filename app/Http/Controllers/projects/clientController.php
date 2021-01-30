@@ -25,13 +25,13 @@ class clientController extends Controller
      }
      public function allclients(){
         $clients = client::orderBy('created_at','desc')->get();
-        return view('admins.viewAllclients')->with(['clients'=> $clients]);
+        return view('admins.view-allClients')->with(['clients'=> $clients]);
     
     }
    
     public function viewclient($client_id){
         $client = client::findOrFail($client_id);
-        return view('admins.viewclient')->with(['client'=> $client]);
+        return view('admins.view-client')->with(['client'=> $client]);
 
     }
 
