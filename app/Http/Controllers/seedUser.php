@@ -14,7 +14,7 @@ class seedUser extends Controller
          $user->account_type = 'admin';
          $user->password = bcrypt('123456789');
          $user->visible = encrypt('123456789');
-         //$user->birthdate = ('01-02-2020');
+         $user->birthdate = ('2021-01-03');
          $user->save();
          $users = User::all();
          return $users;
