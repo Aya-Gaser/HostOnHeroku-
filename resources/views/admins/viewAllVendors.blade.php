@@ -34,7 +34,7 @@
                   <h5> Add New Vendor</h5>      
               </div>
               <div class="card-body">
-              <form action="{{route('management.view-allVendors' )}}" method="post" enctype="multipart/form-data">
+              <form action="{{route('management.create-vendor' )}}" method="post" enctype="multipart/form-data">
               @csrf
      
                 

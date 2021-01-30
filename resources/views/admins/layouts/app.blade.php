@@ -159,7 +159,7 @@ tr{
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{route('management.create-wo')}}" 
-                class="nav-link {{ isActive('management.view-create-wo')}}">
+                class="nav-link {{ isActive('management.create-wo')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create WO</p>
                 </a>

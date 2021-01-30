@@ -93,7 +93,7 @@
                     <div class="form-group col-md-6" style="position:relative;top:-11px;">
                     <label for="exampleInputFile">Deadline <span class="required"> *</span> </label>
                     <div style="padding:10px;" class="input-append date form_datetime" data-date="2020-12-21T15:25:00Z">
-                      <input name="deadline" style="width:90%; height:40px; " size="16" type="text" value="" readonly>
+                      <input name="deadline" class="form-control" style="width:90%; height:40px; " size="16" type="text" value="" readonly>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>

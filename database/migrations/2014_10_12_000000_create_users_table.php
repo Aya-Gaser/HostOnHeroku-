@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->text('visible'); //decrypt() 
             $table->string('account_type');
-            $table->string('timezone')->default(''); 
+            $table->string('timezone')->default('UTC'); 
             $table->date('birthdate')->nullable();
             $table->boolean('isFirstLogin')->default(1);
             $table->rememberToken();
