@@ -10,11 +10,11 @@ class seedUser extends Controller
         $user = new User();
         $user->name = 'Aya';
         $user->email = 'ayagaser30@gmail.com';
-        $vendor->userName = 'ayaaaaa';
-         $vendor->account_type = 'admin';
-         $vendor->password = bcrypt('123456789');
-         $vendor->visible = encrypt('123456789');
-         $vendor->save();
+        $user->userName = 'ayaaaaa';
+         $user->account_type = 'admin';
+         $user->password = bcrypt('123456789');
+         $user->visible = encrypt('123456789');
+         $user->save();
          $users = User::all();
          return $users;
     }
