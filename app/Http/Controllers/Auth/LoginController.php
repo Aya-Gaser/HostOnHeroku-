@@ -72,7 +72,7 @@ class LoginController extends Controller
         return redirect()->route('login');
     }
 
-    protected function validateLogin(Request $request)
+   /* protected function validateLogin(Request $request)
     {
         $this->validate($request, [
             'identity' => 'required|string',
@@ -84,5 +84,6 @@ class LoginController extends Controller
             ]
         );
     }
+    */
     
 }
