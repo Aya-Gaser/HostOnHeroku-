@@ -40,7 +40,7 @@ class vendorController extends Controller
      public function allvendors(){
        // if( in_array($type, ['translator','editor', 'all' ], true )  ){
             $vendors = User::where('account_type', 'vendor')->orderBy('created_at','desc')->get();
-            return view('admins.view-allVendors')->with(['vendors'=> $vendors]);
+            return view('admins.viewAllVendors')->with(['vendors'=> $vendors]);
        /* }
         else 
         abort(404); */
@@ -58,7 +58,7 @@ class vendorController extends Controller
     public function viewVendor($vendor_id){
         $vendor = User::findOrFail($vendor_id);
         $vendorStages = projectStage::where('vendor_id', $vendor_id )->orderby('created_at', 'desc')->get();
-        return view('admins.view-vendor')->with(['vendor'=> $vendor, 'vendorStages'=>$vendorStages]);
+        return view('admins.viewVendor')->with(['vendor'=> $vendor, 'vendorStages'=>$vendorStages]);
 
     }
 
