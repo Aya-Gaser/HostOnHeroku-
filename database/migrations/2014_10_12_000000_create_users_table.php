@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->text('visible'); //decrypt() 
             $table->string('account_type');
             $table->string('timezone')->default(''); 
-            $table->date('birthdate');
+            $table->date('birthdate')->nullable();
             $table->boolean('isFirstLogin')->default(1);
             $table->rememberToken();
             $table->timestamps();
