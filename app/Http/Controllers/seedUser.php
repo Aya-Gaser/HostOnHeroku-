@@ -31,6 +31,6 @@ class seedUser extends Controller
          
          return $users;*/
          $roles = Role::all();
-         return $roles
+         return $roles;
     }
 }
