@@ -20,7 +20,7 @@ class seedUser extends Controller
          $user->birthdate = ('2021-01-03');
          $user->save();
          $users = User::all();
-         */
+         
         $role = new Role();
         $role->name = 'admin';
         $role->slug = 'admin';
@@ -29,7 +29,7 @@ class seedUser extends Controller
         $role->name = 'vendor';
         $role->slug = 'vendor';
         $role->save();
-
+*/
         $roleuser = new userRole();
         $roleuser->user_id= 1;
         $roleuser->role_id = 1;
