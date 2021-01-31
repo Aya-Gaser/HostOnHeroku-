@@ -92,19 +92,23 @@ class viewOfferController extends Controller
         return [$reference_file, $target_file];
         
     }
-
+    //return 'g';
     public function acceptOffer($stage_id, $group, $vendor){
         $stage = projectStage::findOrFail($stage_id);
         $project = projects::findOrFail($stage->project_id);
         //return $project->id;
+        
         $invitation = projectsInvitations::where('project_id', $project->id)
                                         ->where('vendor_id', Auth::user()->id)
                                         ->where('group', $group)
                                         ->where('vendor', $vendor)->first();
-        if(!$invitation) abort(404);                                
-        $isExpired = $this->isExpired($project, $group, $vendor);
-        $isAvailable = $this->isAvailable($project, $vendor);
-        $isDeclined = $this->isDeclined($project, $group, $vendor);
+        if(!$invitation) abort(404);  
+        //else return $invitation;
+                                   
+        $isExpired = $this->isExpired($stage, $group, $vendor);
+        $isAvailable = $this->isAvailable($stage, $vendor);
+        $isDeclined = $this->isDeclined($stage, $group, $vendor);
+       
         if($isAvailable && !$isExpired && !$isDeclined){
             if($vendor == 1){
                 $project->translator_id = Auth::user()->id;
@@ -129,6 +133,8 @@ class viewOfferController extends Controller
         } 
        $this->sendMail_toProjectCreator($project_id, 'Accepted', $stage->type );
        return redirect(route('vendor.dashboard'));
+       
+      
     }
     public function declineOffer($stage_id, $group, $vendor){
         $stage = projectStage::findOrFail($stage_id);

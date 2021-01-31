@@ -159,7 +159,7 @@ tr{
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('vendor.view-myProjects', 'completed') }}" 
+                <a href="{{route('vendor.view-myProjects', 'accepted') }}" 
                 class="nav-link {{ isActive('vendor.view-myProjects')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Completed Projects</p>

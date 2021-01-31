@@ -102,13 +102,13 @@
                 </div>
                 <div class="card-footer row" id="submit_div" style="text-align:right;">
                     <div class=" col-md-2" id="submit_div" >
-                    <a href="{{ route('vendor.accept-offer',['stage_id'=> $stage->id,
+                    <a href="{{route('vendor.accept-offer',['stage_id'=> $stage->id,
                     'group'=> $group,'vendor'=> $vendor] )}}">
                       <button type="ok" class="btn btn-success ">ACCEPT</button>
                       </a>
                     </div> 
                     <div class="col-md-3" id="" > 
-                    <a href="{{ route('vendor.decline-offer',['stage_id'=> $stage->id,
+                    <a href="{{route('vendor.decline-offer',['stage_id'=> $stage->id,
                     'group'=> $group,'vendor'=> $vendor] )}}">
                       <button type="ok" class="btn btn-danger ">DECLINE</button>
                       </a>
