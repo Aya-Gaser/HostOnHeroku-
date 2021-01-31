@@ -94,7 +94,7 @@ class createWO extends Controller
       
         //alert()->success('Project Created Successfully !')->autoclose(false);
         //return response()->json(['success'=>'File Uploaded Successfully']);      
-      return redirect("route(management.view-allWo')");
+      return redirect(route('management.view-allWo'));
     }
     
    
