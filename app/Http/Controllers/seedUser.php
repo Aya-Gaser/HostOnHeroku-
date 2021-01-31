@@ -10,7 +10,7 @@ class seedUser extends Controller
 {
     public function index(){
        
-        $user = new User();
+        /*$user = new User();
         $user->name = 'Aya';
         $user->email = 'ayagaser30@gmail.com';
         $user->userName = 'ayaaaaa';
@@ -20,7 +20,7 @@ class seedUser extends Controller
          $user->birthdate = ('2021-01-03');
          $user->save();
          $users = User::all();
-         
+         */
         $role = new Role();
         $role->name = 'admin';
         $role->slug = 'admin';
