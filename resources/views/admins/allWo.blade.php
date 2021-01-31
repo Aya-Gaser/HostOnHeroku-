@@ -114,13 +114,7 @@
                         
                          
                           @if (Auth::user()->id == $Pending_wo['created_by_id'])
-                         
-                         
-                          <a class="btn btn-info btn-sm" href="#">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Edit
-                          </a>
+                        
                           <a class="btn btn-danger btn-sm" href="#">
                               <i class="fas fa-trash">
                               </i>
