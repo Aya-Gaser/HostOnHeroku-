@@ -65,7 +65,7 @@ td{
                </p>
               <p class="data"> <Span class="head" style=""> Client Number : </Span> {{App\client::find($wo->client_id)->code}} </p>
               <p class="data"> <Span class="head">  Rate  : 
-              </Span>{{ $project->vendor_rate}} </p>
+              </Span>{{ $stage->vendor_rate}} </p>
               <p class="data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
 
                <p class="data"> <Span class="head"> Words Count : </Span> {{$wo->words_count}} </p>
