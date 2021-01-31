@@ -11,6 +11,7 @@ use App\User;
 use App\projects;
 use App\projectStage;
 use App\userRole;
+use App\Role;
 class vendorController extends Controller
 {
     public function __construct()
