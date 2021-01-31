@@ -23,6 +23,7 @@ class CreateProjectStagesTable extends Migration
             $table->dateTime('G1_acceptance_deadline');
             $table->dateTime('G2_acceptance_deadline');
             $table->unsignedBigInteger('vendor_id')->nullable();
+            $table->float('vendor_rate');
             $table->integer('required_docs');
             $table->integer('accepted_docs');
             $table->dateTime('deadline');

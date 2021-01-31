@@ -10,7 +10,7 @@ class seedUser extends Controller
 {
     public function index(){
        
-        /*$user = new User();
+        $user = new User();
         $user->name = 'Aya';
         $user->email = 'ayagaser30@gmail.com';
         $user->userName = 'ayaaaaa';
@@ -29,7 +29,7 @@ class seedUser extends Controller
         $role->name = 'vendor';
         $role->slug = 'vendor';
         $role->save();
-*/
+
         $roleuser = new userRole();
         $roleuser->user_id= 1;
         $roleuser->role_id = 1;
