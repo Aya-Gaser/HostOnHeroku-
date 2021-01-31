@@ -20,7 +20,7 @@ class seedUser extends Controller
          $user->save();
          $users = User::all();
          */
-        $role = new Role();
+        /*$role = new Role();
         $role->name = 'vendor';
         $role->slug = 'vendor';
         $role->save();
@@ -28,7 +28,9 @@ class seedUser extends Controller
         $roleuser->user_id= ;
         $roleuser->role_id = 1;
         $roleuser->save();
-        
+         
          return $users;*/
+         $roles = Role::all();
+         return $roles
     }
 }
