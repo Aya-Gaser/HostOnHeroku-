@@ -102,8 +102,8 @@ td{
                             <br>
                             @forelse($target_files as $file)                               
                                 <li class="text-primary">
-                                    <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
+                                <a href="{{Storage::url($file['file'])}}"
+                                       download="{{$file['file']}}">
                                         {{str_limit($file['file_name'],50)}}
                                     </a>
                                    
@@ -152,7 +152,7 @@ td{
                                               
                                               @if(isset( $deliver_withFiles->thisVendor_delivery[$source_file->id]))
                                               <td> 
-                                              <p>
+                                              <p> Storage::download('file.jpg');
                                               <a href="{{asset('storage/'.$deliver_withFiles->thisVendor_delivery[$source_file->id][0]->file)}}"
                                        download="{{$deliver_withFiles->thisVendor_delivery[$source_file->id][0]->file_name}}">
                                         {{str_limit($deliver_withFiles->thisVendor_delivery[$source_file->id][0]->file_name,50)}}

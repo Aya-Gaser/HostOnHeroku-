@@ -16,6 +16,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+
+
 //////////admins //////////////
 Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
  'as' => 'management.'], function() {
