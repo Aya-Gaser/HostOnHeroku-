@@ -14,6 +14,7 @@ class CreateWoTable extends Migration
     
     public function up()
     {
+        Schema::dropIfExists('wo');
         Schema::create('wo', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('client_id');

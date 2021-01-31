@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-/// php artisan migrate --path=/database/migrations/2020_04_01_064006_create_posts_table.php
+/// php artisan migrate --path=/database/migrations/2021_01_11_170714_create_wo_table.php
+//C:\Users\Aya\tarjamat2\database\migrations\2021_01_11_170714_create_wo_table.php
 class CreateRolesPermissionsTable extends Migration
 {
     /**
