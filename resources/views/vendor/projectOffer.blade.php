@@ -35,15 +35,15 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <p> <Span class="data"> Project Type : </Span> {{$stage->type}} </p>
-              <p> <Span class="data">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
-              <p> <Span class="data">  Word Count  : </Span>{{$wo->words_count}} </p>
-              <p> <Span class="data">  Rate  : </Span>{{$stage->vendor_rate}} </p>
-              <p> <Span class="data"> Final Delivery Deadline  : </Span>
+              <p class="data"> <Span class="head"> Project Type : </Span> {{$stage->type}} </p>
+              <p class="data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
+              <p class="data"> <Span class="head">  Word Count  : </Span>{{$wo->words_count}} </p>
+              <p class="data"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
+              <p class="data"> <Span class="head"> Final Delivery Deadline  : </Span>
               {{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
-              <p> <Span class="data"> Offer Expires Date :  </Span>
+              <p class="data"> <Span class="head"> Offer Expires Date :  </Span>
               @php $date = ($group == 1)? 'G1_acceptance_deadline' : "G2_acceptance_deadline"; @endphp
               {{UTC_To_LocalTime($stage->$date,
                                         Auth::user()->timezone) }}

@@ -25,7 +25,7 @@ class CreateDeliveryFilesTable extends Migration
             $table->longText('file');
             $table->string('extension');
             $table->string('notes')->default("");
-            $table->dateTime('deadline_difference');
+            $table->string('deadline_difference');
             $table->boolean('isReceived')->default(false);
             $table->string('status');
             $table->timestamps();
