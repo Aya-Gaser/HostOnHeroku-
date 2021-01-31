@@ -25,7 +25,8 @@ class CreateWoTable extends Migration
             $table->string('to_language');
             $table->string('client_instructions')->nullable();
             $table->longText('general_instructions')->nullable();
-            $table->boolean('isHandeled');
+            $table->boolean('isHandeled'); 
+            $table->boolean('isReceived')->default(0);
             $table->unsignedBigInteger('created_by_id');
             $table->string('status');
 
