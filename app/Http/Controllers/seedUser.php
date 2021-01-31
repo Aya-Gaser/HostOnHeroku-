@@ -7,7 +7,8 @@ use App\User;
 class seedUser extends Controller
 {
     public function index(){
-        $user = new User();
+       
+       /* $user = new User();
         $user->name = 'Aya';
         $user->email = 'ayagaser30@gmail.com';
         $user->userName = 'ayaaaaa';
@@ -17,16 +18,16 @@ class seedUser extends Controller
          $user->birthdate = ('2021-01-03');
          $user->save();
          $users = User::all();
-         /*
-         $role = new Role();
-        $role->name = 'admin';
-        $role->slug = 'admin';
+         */
+        $role = new Role();
+        $role->name = 'vendor';
+        $role->slug = 'vendor';
         $role->save();
-        $roleuser = new userRole();
-        $roleuser->user_id= 1;
+        /*$roleuser = new userRole();
+        $roleuser->user_id= ;
         $roleuser->role_id = 1;
         $roleuser->save();
-        */
-         return $users;
+        
+         return $users;*/
     }
 }

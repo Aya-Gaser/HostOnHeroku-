@@ -10,7 +10,7 @@ use Auth;
 use App\User;
 use App\projects;
 use App\projectStage;
-
+use App\userRole;
 class vendorController extends Controller
 {
     public function __construct()
@@ -29,7 +29,11 @@ class vendorController extends Controller
          if(request()['created_at'])
            $vendor->created_at = request()['created_at'];
          
-           $vendor->save();
+        $vendor->save();
+        $roleuser = new userRole();
+        $roleuser->user_id= $vendor->id;
+        $roleuser->role_id = 2;
+        $roleuser->save();
 
          //send mail to vendor
          Mail::to($vendor->email)->send(new createVendor());

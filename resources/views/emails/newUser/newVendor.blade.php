@@ -4,7 +4,7 @@
 Please login to complete registration proccess.<br>
 Use this temporary password : tarjamatNewMember@1234
 
-@component('mail::button', ['url' => '/login'])
+@component('mail::button', ['url' => '{{route('login')}}'])
 Login
 @endcomponent
 
