@@ -73,6 +73,9 @@
                         {{$language['name']}}
                     </option>
                      @endforeach
+                     <option value="arabic" > arabic</option>
+                     <option value="english" > english</option>
+                     <option value="farsi" > farsi</option>
                     </select>
                   </div>
                   <div class="form-group col-sm-6">
@@ -86,6 +89,9 @@
                         {{$language['name']}}
                     </option>
                      @endforeach
+                     <option value="arabic" > arabic</option>
+                     <option value="english" > english</option>
+                     <option value="farsi" > farsi</option>
                     </select>
                   </div>
             </div>
