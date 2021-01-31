@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
+use App\projects; 
 class offerAction extends Mailable
 {
     use Queueable, SerializesModels;
@@ -16,7 +17,7 @@ class offerAction extends Mailable
      *
      * @return void
      */
-    protected $project_id, $action, $vendor_name, $stage_type;
+    protected $project_id, $project, $action, $vendor_name, $stage_type;
     public function __construct($project_id, $vendor_name, $action, $stage_type)
     {
         $this->project_id = $project_id;
@@ -34,10 +35,10 @@ class offerAction extends Mailable
     public function build()
     {
         return $this->markdown('emails.offerAction.offerAction')
-        ->with(['project_id'=>$this->project_id, 'vendor_name'=>$this->vendor_name, 'action'=>$this->action,
+        ->with(['project_id'=>$this->project->wo_id, 'vendor_name'=>$this->vendor_name, 'action'=>$this->action,
         'stage_type'=>$this->stage_type, 'wo_id'=>$this->project->wo_id])
        ->from('ayagaser30@example.com')
-       ->subject('Project : '.str_pad( $this->project_id, 4, "0", STR_PAD_LEFT )
+       ->subject('Project : '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
        .' Has Been '.$this->action)->delay(15); 
     }
 }

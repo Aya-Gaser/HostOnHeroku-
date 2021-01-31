@@ -131,7 +131,7 @@ class viewOfferController extends Controller
             $invitation->save();
                          
         } 
-       $this->sendMail_toProjectCreator($project_id, 'Accepted', $stage->type );
+       $this->sendMail_toProjectCreator($project->id, 'Accepted', $stage->type );
        return redirect(route('vendor.dashboard'));
        
       
