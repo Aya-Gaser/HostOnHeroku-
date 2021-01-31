@@ -32,7 +32,7 @@ class vendorController extends Controller
         $vendor->save();
         $roleuser = new userRole();
         $roleuser->user_id= $vendor->id;
-        $roleuser->role_id = 2;
+        $roleuser->role_id = Role::where('name', 'vendor')->first()->id;
         $roleuser->save();
 
          //send mail to vendor
