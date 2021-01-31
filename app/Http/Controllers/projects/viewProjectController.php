@@ -31,7 +31,7 @@ class viewProjectController extends Controller
     public function index($id){
         $project = projects::findOrFail($id);
         [$delivery_files,$deliveryHistory_files] =  $this->getProject_Deliveriesfiles($project);    
-        ($project->type == 'linked')? $view = 'admins.viewProject_linked': $view = 'admins.viewProject';
+        ($project->type == 'linked')? $view = 'admins.viewProject_linked': $view = 'admins.viewproject';
         $deliveries_edited = $this->getSource_acceptedDelivery_edit($project);
         $ifNextProject = $this->ifHas_nextProject($project);
         [$reference_files, $target_files] = $this->getprojectsFiles($project);
