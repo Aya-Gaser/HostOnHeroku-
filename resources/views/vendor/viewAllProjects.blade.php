@@ -75,10 +75,7 @@
                                         Auth::user()->timezone) }}
                     </td>
                     <td> 
-                     @php $rate = (App\projects::find($stage['project_id'])->type == 'linked') ?
-                     App\editingDetails::where('project_id',$stage['project_id'])->first()->vendor_rate : 
-                     App\projects::find($stage['project_id'])->vendor_rate; @endphp
-                     {{$rate}} </td>
+                    {{$stage->vendor_rate}} </td>
                     <td> {{ $stage['status']}} </td>
                     <td> <button class="btn btn-success">
                      <a href="{{route('vendor.view-project', $stage['id'])}}" style="color:white;"> view </a>

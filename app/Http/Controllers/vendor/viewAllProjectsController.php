@@ -37,6 +37,7 @@ class viewAllProjectsController extends Controller
         return view('vendor.viewAllProjects')->with(['stages'=>$stages, 'filter'=>$filter]);
     }
     public function filterProjects($filter){
+       // if($filter == '')
         $stages = projectStage::where('vendor_id', Auth::user()->id)
                                   ->where('status', $filter)->get();
         return $stages;

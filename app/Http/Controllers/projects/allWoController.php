@@ -41,7 +41,7 @@ class allWoController extends Controller
     }
 
     public function getprojects_filtered($status){
-        if($status=='pending' || $status=='completed')
+        if($status=='pending' || $status=='completed' || $status=='on progress')
             $projects = projects::where('status', $status)->orderBy('created_at','desc')->get();
         else
             $projects = projects::orderBy('created_at','desc')->get();

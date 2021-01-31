@@ -150,12 +150,19 @@ tr{
               </p>
             </a>
             <ul class="nav nav-treeview">
-             
+
+            <li class="nav-item">
+                <a href="{{route('vendor.view-myProjects', 'undelivered') }}" 
+                class="nav-link {{ isActive('vendor.view-myProjects')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Undelivered Projects</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="{{route('vendor.view-myProjects', 'pending') }}" 
                 class="nav-link {{ isActive('vendor.view-myProjects')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>On Progress Projects</p>
+                  <p>Pending Projects</p>
                 </a>
               </li>
               <li class="nav-item">
