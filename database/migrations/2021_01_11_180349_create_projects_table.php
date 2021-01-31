@@ -21,7 +21,7 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->dateTime('delivery_deadline');
-            $table->float('vendor_rate');
+            //$table->float('vendor_rate');
            // $table->longText('instructions')->nullable(); instructions_editing
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('translator_id')->nullable();
