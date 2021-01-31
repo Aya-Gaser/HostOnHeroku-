@@ -105,7 +105,7 @@ class createProjectController extends Controller
     $UTCDeadline = LocalTime_To_UTC($request->input('delivery_deadline'), Auth::user()->timezone);
     $project->delivery_deadline = $UTCDeadline;
     
-    $project->vendor_rate = $request->input('vendor_rate'); 	
+    //$project->vendor_rate = $request->input('vendor_rate'); 	
     //$project->words_count = $request->input('words_count');
    // $project->instructions = $request->input('instructions');
     $project->created_by = Auth::user()->id;
