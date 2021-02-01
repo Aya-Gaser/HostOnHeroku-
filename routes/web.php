@@ -10,17 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/','seedUser@index');
+//Route::get('/','seedUser@index');
 /*
 Route::get('/linkstorage', function () {
    Artisan::call('storage:link');
 });
-
+*/
 Route::get('/', function () {
     return view('auth.login');
 });
 
-*/
+
 
 //////////admins //////////////
 Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
