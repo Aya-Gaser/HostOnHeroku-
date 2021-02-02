@@ -460,8 +460,6 @@ $('#deleteWo').click(function(){
               icon: "success",
             }); */
             window.location.href = '{{route('management.view-allWo')}}';
-           
-        
         }
       })           
           } else {

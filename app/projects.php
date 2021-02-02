@@ -30,5 +30,20 @@ class projects extends Model
   public function projectFile(){
    return $this->hasMany('App\projectFile','project_id');
 }
+public  static function boot() {
+   parent::boot();
+
+   static::deleting(function($project) {
+       //remove related rows region and city
+       $project->project_sourceFile->each(function($sourceFile) {
+           $sourceFile->vendorDelivery()->delete();
+       });
+       $project->project_sourceFile()->delete();//
+       $project->finalizedFile()->delete();//
+       $project->projectFile()->delete();// 
+       $project->projectStage()->delete();//
+       return true;
+   });
+}
      
 }

@@ -392,6 +392,13 @@ class viewProjectController extends Controller
         }
    
            
-     
+        public function destroy($projectId){
+            $project = projects::findOrFail($projectId);
+            $project->delete();
+            alert()->success('Wo Deleted Successfully !')->autoclose(15);
+              //return response()->json(['success'=>'File Uploaded Successfully']);      
+           // return redirect(route('management.view-allWo'));
+         }
+      
 
 }

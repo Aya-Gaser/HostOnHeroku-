@@ -66,6 +66,8 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     //// view project
     Route::get('/viewProject/{id}', 'projects\viewProjectController@index')->middleware('auth')
     ->where(['id'=>'[0-9]+'])->name('view-project');
+    Route::get('/delete-project/{projectId}', 'projects\viewProjectController@destroy')->middleware('auth')
+    ->where(['projectId'=>'[0-9]+'])->name('delete-project');
     Route::post('/updateProject/{id}', 'projects\viewProjectController@updateProject')->middleware('auth')
     ->where(['id'=>'[0-9]+'])->name('update-project');
 

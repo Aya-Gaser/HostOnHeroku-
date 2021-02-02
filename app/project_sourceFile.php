@@ -25,4 +25,18 @@ class project_sourceFile extends Model
     public function finalizedFile(){
         return $this->hasOne('App\finalizedFile','sourceFile_id');
     } 
+    public  static function boot() {
+        parent::boot();
+     
+        static::deleting(function($sourceFile) {
+            //remove related rows region and city
+           /* $project->project_sourceFile->each(function($sourceFile) {
+                $sourceFile->vendorDelivery()->delete();
+            }); */
+            $sourceFile->vendorDelivery()->delete();//
+            $sourceFile->finalizedFile()->delete();//
+            $sourceFile->editedFile()->delete();// 
+            return true;
+        });
+     }
 }

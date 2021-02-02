@@ -28,6 +28,19 @@ class WO extends Model
     public function woFiles(){
         return $this->hasMany('App\woFiles','wo_id');
     }
+    public  static function boot() {
+        parent::boot();
+
+        static::deleting(function($wo) {
+            //remove related rows region and city
+            $wo->projects->each(function($project) {
+                $project->projectStage()->delete();
+            });
+            $wo->projects()->delete();//
+            $wo->woFiles()->delete();//woFiles
+            return true;
+        });
+    }
     
     
 }

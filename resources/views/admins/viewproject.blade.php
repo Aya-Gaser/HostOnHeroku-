@@ -61,9 +61,7 @@ td{
               <p class="data"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
 
                <p class="data"> <Span class="head"> Deadline Time Left : </Span> {!! $deadline_difference !!}</p>
-               <p> 
-                 <button type="update" id="update" class="btn btn-primary">Update Project</button>
-               </p> 
+              
               <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                     <br>
@@ -133,7 +131,10 @@ td{
                         </ul>
                     </div>
                 </div>
-            
+                <p> 
+                <button type="button" id="deleteProject" class="btn btn-danger">Delete Wo</button>
+                 <button type="update" id="update" class="btn btn-primary">Update Project</button>
+               </p> 
               </div>
               </div>
               </div>
@@ -734,6 +735,37 @@ $('#update').click(function(){
 $('#updateStage').click(function(){
   $('#update_div_stage').fadeIn();
   document.getElementById('update_div_stage').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+});
+$('#deleteProject').click(function(){
+  swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+        type: "warning",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+        url:" {{route('management.delete-project', $project->id) }}",
+        method:"get",
+        data: {
+          woId: {{$wo->id}}
+        //  category_id: category_id,
+        },
+        success:function(response) {
+           // tasks on reponse
+          /* swal("Done! Your data has been deleted", {
+              icon: "success",
+            }); */
+            window.location.href = '{{route('management.view-allProjects', 'all' )}}';
+        }
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
 }); 
 })
 

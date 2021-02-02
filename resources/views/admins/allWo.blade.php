@@ -111,16 +111,7 @@
                          </i>
                        View
                      </a>
-                        
-                         
-                          @if (Auth::user()->id == $Pending_wo['created_by_id'])
-                        
-                          <a class="btn btn-danger btn-sm" href="#">
-                              <i class="fas fa-trash">
-                              </i>
-                              Delete
-                          </a>
-                          @endif
+                                                
                       </td>
                       @endforeach
                   </tr>
