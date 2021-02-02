@@ -436,36 +436,39 @@ $('#update').click(function(){
   document.getElementById('update_div').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 //window.scrollBy(0, 200); 
 })
-//$('#deleteWo')
-swal({
+$('#deleteWo').click(function(){
+  swal({
         title: "Are you sure?",
         text: "You will not be able to recover this data!",
         type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel plx!",
-        closeOnConfirm: false,
-        closeOnCancel: false 
-    },
-    function(isConfirm) {
-        if (isConfirm) {
-          $.ajax({
-        url:"/path",
-        method:"GET",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+        url:" {{route('management.delete-wo', $wo->id) }}",
+        method:"get",
         data: {
-          category_id: category_id,
+          woId: {{$wo->id}}
+        //  category_id: category_id,
         },
         success:function(response) {
-          swal("Deleted!", "Data has been deleted.", "success");
+           // tasks on reponse
+          /* swal("Done! Your data has been deleted", {
+              icon: "success",
+            }); */
+            window.location.href = '{{route('management.view-allWo')}}';
+           
+        
         }
-      })
-            
-        } else {
-            swal("Cancelled", "Your Data is safe ", "error");
-        }
-    }
-);
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
+});
 })
 
 </script>

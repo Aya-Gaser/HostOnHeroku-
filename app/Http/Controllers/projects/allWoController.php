@@ -32,7 +32,8 @@ class allWoController extends Controller
 
     }
     public function allProjects($status){
-        if( in_array($status, ['pending','completed', 'all' ], true )  ){
+        if($status == 'progress') $status = 'on progress';
+        if( in_array($status, ['pending','completed', 'all', 'on progress' ], true )  ){
             $projects = $this->getprojects_filtered($status);
             return view('admins.allProjects')->with(['projects'=> $projects]);
         }
