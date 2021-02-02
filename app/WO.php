@@ -24,6 +24,10 @@ class WO extends Model
     public function woProjectsNeeded(){
         return $this->hasMany('App\woProjectsNeeded','wo_id');
     }
+
+    public function woFiles(){
+        return $this->hasMany('App\woFiles','wo_id');
+    }
     
     
 }

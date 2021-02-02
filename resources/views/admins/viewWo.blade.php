@@ -85,10 +85,80 @@ td{
                  @endif </Span>
               
                </p>
-               <p> 
-                 <button type="update" id="update" class="btn btn-primary">Update Wo</button>
-               </p>              
+                          
          
+               <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                    <br>
+                        <h4> Source Document </h4>
+                        <br>
+                        
+                            @forelse($source_files as $file)                                
+                                <li class="text-primary">
+                                <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file']}}">
+                                        {{$file['file_name']}}
+                                    </a>
+                                    <a href="{{route('management.delete-woFile', $file['id'] ) }}"
+                                       class="btn btn-danger btn-sm ml-2">
+                                            <span class="btn-inner--icon"><i
+                                                    class="far fa-trash-alt"></i></span>
+                                    </a>   
+                                   
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">No documents found</li>
+                            @endforelse
+                            <br>
+                            <h4> Reference files </h4>
+                           <br>
+                            @forelse($reference_file as $file)                               
+                                <li class="text-primary">
+                                    <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['name']}}">
+                                        {{str_limit($file['file_name'],50)}}
+                                    </a>
+                                    <a href="{{route('management.delete-woFile', $file['id'] ) }}"
+                                       class="btn btn-danger btn-sm ml-2">
+                                            <span class="btn-inner--icon"><i
+                                                    class="far fa-trash-alt"></i></span>
+                                    </a> 
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">No documents found</li>
+                            @endforelse
+                            <br>
+                            <h4> Target files </h4>
+                            <br>
+                            @forelse($target_files as $file)                               
+                                <li class="text-primary">
+                                    <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['name']}}">
+                                        {{str_limit($file['file_name'],50)}}
+                                    </a>
+                                    <a href="{{route('management.delete-woFile', $file['id'] ) }}"
+                                       class="btn btn-danger btn-sm ml-2">
+                                            <span class="btn-inner--icon"><i
+                                                    class="far fa-trash-alt"></i></span>
+                                    </a> 
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">No documents found</li>
+                            @endforelse
+                        </ul>
+                    </div>
+                </div>
+            
+              <p> 
+                
+                 <button type="button" id="deleteWo" class="btn btn-danger">Delete Wo</button>
+                 <button type="update" id="update" class="btn btn-primary">Update Wo</button>
+               </p>   
+               
+          </div>
           </div>
           </div>
           <!--*************** edit *************************** -->
@@ -211,7 +281,46 @@ td{
                     </div>
                    </div>
                  
-            
+                   <div class="row">
+                   
+                   <div class="col-md-4">
+                     <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Working Files <span class="required">*</span></label>
+                    
+                        <div class="file-loading col-md-2">  
+                         <input id="source_files" name="source_files[]"
+                          class="kv-explorer" type="file" multiple>  
+                          </div>
+                     </div>
+                   </div> 
+                      
+                   
+                   <div class="col-md-4">
+                     <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Refrence Files <span class="required"></span></label>
+                    
+                        <div class="file-loading">  
+                         <input id="reference_files" name="reference_files[]"
+                          class="kv-explorer " type="file" multiple>  
+                        
+                          </div>
+                     </div>
+                   </div>   
+                     <div class="col-md-4">
+                       <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Target Files <span class="required"></span></label>
+                    
+                        <div class="file-loading">  
+                         <input id="target_files" name="target_files[]"
+                          class="kv-explorer custom-file-input" type="file" multiple>  
+                        
+                          </div>
+                       </div>
+                   </div>
+                </div>   
                 
                 
                 </div>
@@ -327,7 +436,38 @@ $('#update').click(function(){
   document.getElementById('update_div').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 //window.scrollBy(0, 200); 
 })
-})    
+//$('#deleteWo')
+swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel plx!",
+        closeOnConfirm: false,
+        closeOnCancel: false 
+    },
+    function(isConfirm) {
+        if (isConfirm) {
+          $.ajax({
+        url:"/path",
+        method:"GET",
+        data: {
+          category_id: category_id,
+        },
+        success:function(response) {
+          swal("Deleted!", "Data has been deleted.", "success");
+        }
+      })
+            
+        } else {
+            swal("Cancelled", "Your Data is safe ", "error");
+        }
+    }
+);
+})
+
 </script>
      
 @endsection

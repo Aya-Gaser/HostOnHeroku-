@@ -13,6 +13,7 @@ use App\User;
 use App\WO;
 use Auth;
 use App\woProjectsNeeded;
+use App\woFiles;
 class createWO extends Controller
 {
 
@@ -79,8 +80,19 @@ class createWO extends Controller
        $WO->general_instructions = $request->input('general_instructions');
        $WO->isHandeled = false;
        $WO->created_by_id = Auth::user()->id;
-       $WO->status = 'open';
+       $WO->status = 'pending';
        $WO->save();
+
+         // UPLOAD FILES
+        if ($request->hasFile('source_files')) {
+            $this->uploadWoAttachments($WO, 'source_files','source_file');
+        }
+        if ($request->hasFile('reference_files')) {
+            $this->uploadWoAttachments($WO, 'reference_files','reference_file');
+        }
+        if ($request->hasFile('target_files')) {
+            $this->uploadWoAttachments($WO, 'target_files','target_file');
+        }
 
        if($request->input('projects_needed')){
          foreach($request->input('projects_needed') as $projectType){
@@ -92,10 +104,32 @@ class createWO extends Controller
        }
        
       
-        //alert()->success('Project Created Successfully !')->autoclose(false);
+        alert()->success('Wo Created Successfully !')->autoclose(15);
         //return response()->json(['success'=>'File Uploaded Successfully']);      
       return redirect(route('management.view-allWo'));
     }
+
+    private function uploadWoAttachments( $WO, $attachmentInputName, $inputType)
+    { 
+        foreach (request()->file($attachmentInputName) as $attachment) {
+            $extension = $attachment->extension();
+            $fileName = $WO->id . '_' . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
+            $filePath = '/wo_files/' . $WO->id. '/' . $WO->client_id . '/';
+            Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
+
+                //save each file 
+                $woFiles =new woFiles();
+                $woFiles->wo_id =$WO->id;
+                $woFiles->file_name = $attachment->getClientOriginalName();
+                $woFiles->type = $inputType;
+                $woFiles->file = $filePath . $fileName;
+                $woFiles->extension = $extension;
+                $woFiles->save();
+               
+         }
+    }
+
+
     
    
 

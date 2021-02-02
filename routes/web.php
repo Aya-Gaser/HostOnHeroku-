@@ -44,6 +44,11 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     
     Route::get('allWo', 'projects\allWoController@index')->middleware('auth')->name('view-allWo');
     Route::get('/viewWo/{id}', 'projects\viewWoController@index')->middleware('auth')->name('view-wo');
+   
+    Route::get('/delete-woFile/{fileId}', 'projects\viewWoController@destroyWoFile')->middleware('auth')
+    ->where(['fileId'=>'[0-9]+'])->name('delete-woFile');
+    Route::get('/delete-wo/{woId}', 'projects\viewWoController@destroy')->middleware('auth')
+    ->where(['woId'=>'[0-9]+'])->name('delete-wo');
     Route::get('/recieve-wo/{wo}', 'projects\viewWoController@recieveWo')->middleware('auth')
     ->where(['wo'=>'[0-9]+'])->name('recieve-wo');
     //choose single / linked

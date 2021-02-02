@@ -1,10 +1,14 @@
 
-
-
-
 @extends('admins.layouts.app')
 
 @section('content')
+
+@section('style')
+@include('layouts.partials._file_input_plugin_style')
+@endsection
+
+{{--    @include('layouts.partials.default_laravel_validation')--}}
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -151,7 +155,46 @@
                    </div>
                  
             
-                
+                   <div class="row">
+                   
+                   <div class="col-md-4">
+                     <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Working Files <span class="required">*</span></label>
+                    
+                        <div class="file-loading col-md-2">  
+                         <input id="source_files" name="source_files[]"
+                          class="kv-explorer" type="file" multiple>  
+                          </div>
+                     </div>
+                   </div> 
+                      
+                   
+                   <div class="col-md-4">
+                     <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Refrence Files <span class="required"></span></label>
+                    
+                        <div class="file-loading">  
+                         <input id="reference_files" name="reference_files[]"
+                          class="kv-explorer " type="file" multiple>  
+                        
+                          </div>
+                     </div>
+                   </div>   
+                     <div class="col-md-4">
+                       <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Target Files <span class="required"></span></label>
+                    
+                        <div class="file-loading">  
+                         <input id="target_files" name="target_files[]"
+                          class="kv-explorer custom-file-input" type="file" multiple>  
+                        
+                          </div>
+                       </div>
+                   </div>
+                </div>   
                 
                 </div>
                 <!-- /.card-body -->
@@ -215,7 +258,7 @@ $(".form_datetime").datetimepicker({
             });
           });
 </script>
-
+@include('layouts.partials._file_input_plugin_script')
 @endsection
 
 @endsection

@@ -17,6 +17,7 @@ use App\client;
 use App\languages;
 use Illuminate\Http\RedirectResponse;
 use Auth;
+use App\woFiles;
 
 class viewWoController extends Controller
 {
@@ -41,11 +42,19 @@ class viewWoController extends Controller
         $clients = $this->getClients();
         $languages = $this->getLanguages();
       //  date_default_timezone_set("America/Guayaquil");
-        
+      [$source_files, $reference_files, $target_files] = $this->getWoFiles($wo);
         return view('admins.viewWo')->with(['wo'=>$wo, 'projects'=>$projects, 'clients'=>$clients,
-        'languages'=>$languages]);
+        'languages'=>$languages, 'source_files'=>$source_files,'reference_file'=>$reference_files,
+        'target_files'=>$target_files]);
     }
-    
+
+    public function getWoFiles($wo){
+      $source_files = $wo->woFiles->where('type','source_file');
+      $reference_file =$wo->woFiles->where('type','reference_file');
+      $target_file =$wo->woFiles->where('type','target_file');
+      return [$source_files,$reference_file, $target_file];
+
+  }
     public function getClients(){
    
         $clients = client::all();
@@ -97,12 +106,59 @@ class viewWoController extends Controller
            $wo->client_instructions = request()['client_instructions'];
         if(request()['general_instructions'])
            $wo->general_instructions = request()['general_instructions'];   
-        
 
-       $wo->save(); 
+        $wo->save(); 
+
+        // UPLOAD FILES
+        if ($request->hasFile('source_files')) {
+         $this->uploadWoAttachments($wo, 'source_files','source_file');
+         }
+        if ($request->hasFile('reference_files')) {
+               $this->uploadWoAttachments($wo, 'reference_files','reference_file');
+         }
+        if ($request->hasFile('target_files')) {
+               $this->uploadWoAttachments($wo, 'target_files','target_file');
+         }
+
+       alert()->success('Wo Updated Successfully !')->autoclose(15);
        return back();   
     }
-    
+
+    private function uploadWoAttachments( $WO, $attachmentInputName, $inputType)
+    { 
+        foreach (request()->file($attachmentInputName) as $attachment) {
+            $extension = $attachment->extension();
+            $fileName = $WO->id . '_' . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
+            $filePath = '/wo_files/' . $WO->id. '/' . $WO->client_id . '/';
+            Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
+
+                //save each file 
+                $woFiles =new woFiles();
+                $woFiles->wo_id =$WO->id;
+                $woFiles->file_name = $attachment->getClientOriginalName();
+                $woFiles->type = $inputType;
+                $woFiles->file = $filePath . $fileName;
+                $woFiles->extension = $extension;
+                $woFiles->save();
+               
+         }
+    }
+
+    public function destroyWoFile($fileId){
+       $file = woFiles::findOrFail($fileId);
+       $file->delete();
+       alert()->success('File Deleted Successfully !')->autoclose(15);
+       return back();
+    }
+
+    public function destroy($woId){
+      $wo = WO::findOrFail($woId);
+      $wo->delete();
+      alert()->success('Wo Deleted Successfully !')->autoclose(15);
+        //return response()->json(['success'=>'File Uploaded Successfully']);      
+      return redirect(route('management.view-allWo'));
+   }
+
  
     
 }
