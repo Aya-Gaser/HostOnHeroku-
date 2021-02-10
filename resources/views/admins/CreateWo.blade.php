@@ -80,6 +80,15 @@
                         {{$language['name']}}
                     </option>
                      @endforeach
+                     <option value="Arabic" >
+                     Arabic
+                    </option>
+                    <option value="English" >
+                     English
+                    </option>
+                    <option value="Farsi" >
+                     Farsi
+                    </option>
                     
                     </select>
                   </div>
@@ -94,6 +103,15 @@
                         {{$language['name']}}
                     </option>
                      @endforeach
+                     <option value="Arabic" >
+                     Arabic
+                    </option>
+                    <option value="English" >
+                     English
+                    </option>
+                    <option value="Farsi" >
+                     Farsi
+                    </option>
                     
                     </select>
                   </div>
