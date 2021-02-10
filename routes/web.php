@@ -42,12 +42,17 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::post('/updateWo/{woId}', 'projects\viewWoController@updateWo')->middleware('auth')
     ->where(['woId'=>'[0-9]+'])->name('update-wo');
     
+    Route::post('/addTask/{woId}', 'projects\viewWoController@addTask')->middleware('auth')
+    ->where(['woId'=>'[0-9]+'])->name('add-task');
+    Route::post('/DeleteTask/{taskId}', 'projects\viewWoController@destroyTask')->middleware('auth')
+    ->where(['taskId'=>'[0-9]+'])->name('delete-task');
+    
     Route::get('allWo', 'projects\allWoController@index')->middleware('auth')->name('view-allWo');
     Route::get('/viewWo/{id}', 'projects\viewWoController@index')->middleware('auth')->name('view-wo');
    
     Route::get('/delete-woFile/{fileId}', 'projects\viewWoController@destroyWoFile')->middleware('auth')
     ->where(['fileId'=>'[0-9]+'])->name('delete-woFile');
-    Route::get('/delete-wo/{woId}', 'projects\viewWoController@destroy')->middleware('auth')
+    Route::post('/delete-wo/{woId}', 'projects\viewWoController@destroy')->middleware('auth')
     ->where(['woId'=>'[0-9]+'])->name('delete-wo');
     Route::get('/recieve-wo/{wo}', 'projects\viewWoController@recieveWo')->middleware('auth')
     ->where(['wo'=>'[0-9]+'])->name('recieve-wo');

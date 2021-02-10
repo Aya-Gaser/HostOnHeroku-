@@ -108,26 +108,8 @@ td{
                                 <li class="text-danger">No documents found</li>
                             @endforelse
                             <br>
-                            <h4> Target files </h4>
-                            <br>
-                            @forelse($target_files as $file)                               
-                                <li class="text-primary">
-                                    <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
-                                        {{str_limit($file['file_name'],50)}}
-                                    </a>
-                                    <a href="{{route('management.delete-file',['id'=>$file['id'],
-                                    'type'=>'target']) }}"
-                                       class="btn btn-danger btn-sm ml-2">
-                                            <span class="btn-inner--icon"><i
-                                                    class="far fa-trash-alt"></i></span>
-                                    </a>
-                                   
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
+                            
+                           
                         </ul>
                     </div>
                 </div>
@@ -202,18 +184,7 @@ td{
                           </div>
                      </div>
                    </div>   
-                     <div class="col-md-4">
-                       <div class="form-group">
-                       <label class="form-control-label"
-                        for="source_document">Target Files <span class="required"></span></label>
                     
-                        <div class="file-loading">  
-                         <input id="target_files" name="target_files[]"
-                          class="kv-explorer custom-file-input" type="file" multiple>  
-                        
-                          </div>
-                       </div>
-                   </div>
                 </div>
                 
             <!-- /.card -->
@@ -521,10 +492,13 @@ td{
                 <p class="data col-md-4"> <Span class="head"> Deadline  : </Span>
                
                 {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
+                <p class="data col-md-4"> <Span class="head">  words Count  : </Span>{{$stage->vendor_wordsCount}} </p>
+                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>{{$stage->vendor_qualityPoints}} </p>
+                <p class="data col-md-4"> <Span class="head">  Rate unit : </Span>{{$stage->vendor_rateUnit}} </p>
                 <p class="data col-md-4"> <Span class="head"> Translator Rate  : </Span>{{$stage->vendor_rate}} </p>
+
                 <p class="data col-md-4"> <Span class="head">Translator : </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
                 @else <span class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
-                <p class="data col-md-6"> <Span class="head"> Instructions  : </Span>{{$stage->instructions}} </p>
                 <p class="data col-md-4"> <Span class="head"> Status  : </Span>
                
                   {{$stage->status}} </p>
@@ -540,7 +514,9 @@ td{
                         RE-OPEN </button>
                     </a>
                  @endif       
-                    </p> 
+                    </p>
+              <p class="data col-md-12"> <Span class="head"> Instructions  : </Span>{{$stage->instructions}} </p>
+     
                    
               </div>
                <!-- ****************update stage**************************************** -->
@@ -741,7 +717,7 @@ $('#deleteProject').click(function(){
         title: "Are you sure?",
         text: "You will not be able to recover this data!",
         type: "warning",
-        icon: "warning",
+        
         buttons: true,
         dangerMode: true,
     })
@@ -749,9 +725,10 @@ $('#deleteProject').click(function(){
           if (willDelete) {
             $.ajax({
         url:" {{route('management.delete-project', $project->id) }}",
-        method:"get",
+        type: 'POST',
+        dataType: 'text',
         data: {
-          woId: {{$wo->id}}
+          woId: {{ $project->id}}
         //  category_id: category_id,
         },
         success:function(response) {

@@ -17,7 +17,7 @@ if (!function_exists('UTC_To_LocalTime')) {
         // change the timezone of the object without changing it's time
         $dt->setTimezone(new DateTimeZone($userTimezone));
         // format the datetime
-       return $dt->format('Y-m-d H:i T');
+       return $dt->format('d-M-y H:i T');
     }
 }    
 if (!function_exists('LocalTime_To_UTC')) {
@@ -28,7 +28,7 @@ if (!function_exists('LocalTime_To_UTC')) {
         // change the timezone of the object without changing it's time
         $dt->setTimezone(new DateTimeZone('UTC')); 
         // format the datetime
-       return $dt->format('Y-m-d H:i:s ');
+       return $dt->format('Y-m-d H:i:s');
     }
 }    
 

@@ -71,44 +71,44 @@ class createWO extends Controller
        $WO->client_id = $client_id;
        $UTCDeadline = LocalTime_To_UTC($request->input('deadline'), Auth::user()->timezone);
        $WO->deadline = $UTCDeadline;
-       $WO->client_rate = $request->input('client_rate');
        $WO->from_language = $request->input('from_language');
        $WO->to_language = $request->input('to_language'); 
-       $WO->words_count = $request->input('words_count');
-       $WO->quality_points = $request->input('quality_points');
        $WO->client_instructions = $request->input('client_instructions');
        $WO->general_instructions = $request->input('general_instructions');
        $WO->isHandeled = false;
-       $WO->created_by_id = Auth::user()->id;
+       $WO->created_by = Auth::user()->id;
        $WO->status = 'pending';
+       $WO->sent_docs = $request->input('sent_docs'); 
        $WO->save();
-
+       $this->storeWo_Tasks($WO->id);
          // UPLOAD FILES
         if ($request->hasFile('source_files')) {
             $this->uploadWoAttachments($WO, 'source_files','source_file');
         }
         if ($request->hasFile('reference_files')) {
             $this->uploadWoAttachments($WO, 'reference_files','reference_file');
-        }
-        if ($request->hasFile('target_files')) {
-            $this->uploadWoAttachments($WO, 'target_files','target_file');
-        }
-
-       if($request->input('projects_needed')){
-         foreach($request->input('projects_needed') as $projectType){
-               $projectNeeded = new woProjectsNeeded();
-               $projectNeeded->wo_id = $WO->id;
-               $projectNeeded->type = $projectType;
-               $projectNeeded->save();
-         }
-       }
-       
+        } 
       
-        alert()->success('Wo Created Successfully !')->autoclose(15);
+        alert()->success('Wo Created Successfully !')->autoclose(false);
         //return response()->json(['success'=>'File Uploaded Successfully']);      
       return redirect(route('management.view-allWo'));
     }
-
+    
+    public function storeWo_Tasks($wo_id){
+      $taskNum = request()['tasksNum'];
+      for($i=1; $i<=$taskNum; $i++){
+         $task = new woProjectsNeeded();
+         $task->wo_id = $wo_id;
+         $task->type = request()['task_type'.$i]; 
+         $task->client_wordsCount = request()['client_wordsCount'.$i];
+         $task->client_rateUnit = request()['client_rateUnit'.$i];
+         $task->client_rateValue = request()['client_rateValue'.$i];
+         $task->vendor_suggest_rateUnit = request()['vendor_rateUnit'.$i];
+         $task->vendor_suggest_rateValue = request()['vendor_rateValue'.$i];
+         $task->save();
+      }
+      
+    }
     private function uploadWoAttachments( $WO, $attachmentInputName, $inputType)
     { 
         foreach (request()->file($attachmentInputName) as $attachment) {

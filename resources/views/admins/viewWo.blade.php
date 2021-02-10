@@ -2,7 +2,11 @@
 
 @section('content') 
 
+
+{{--    @include('layouts.partials.default_laravel_validation')--}}
 @section('style')
+@include('layouts.partials._file_input_plugin_style')
+
 <style>
 td{
   white-space: normal;
@@ -53,25 +57,105 @@ td{
               </div> 
               <!-- /.card-header -->
               <div class="card-body">
-              <p class="data" > <Span class="head"> Deadline  : </Span>
-              {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
-              </p>
-              <p class="data"> <Span class="head"> Client Number : </Span> {{App\client::find($wo->client_id)->first()->code}} </p>
-              <p class="data"> <Span class="head"> Client Rate  : </Span>{{$wo->client_rate}} </p>
-              <p class="data"> <Span class="head"> words Count  : </Span>{{$wo->words_count}} </p>
-              <p class="data"> <Span class="head"> Quality Points  : </Span>{{$wo->quality_points}} </p>
-
-              <p class="data"> <Span class="head"> Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
-              <p class="data"> <Span class="head"> Created At : </Span>
-              {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
-               </p>
-               <p class="data"> <Span class="head"> Projects Needed  :
-               <ul>
-               @foreach($wo->woProjectsNeeded as $projectNeeded)
-                  <li class="data"> {{$projectNeeded->type}} </li>
-               @endforeach
-               </ul>
-               </Span> </p>
+              <div class="row">
+                <p class="data col-md-6"> <Span class="head"> Client : </Span> {{App\client::find($wo->client_id)->first()->code}} - {{App\client::find($wo->client_id)->first()->name}}  </p>
+                <p class="data col-md-6" > <Span class="head"> Deadline  : </Span>
+                {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
+                </p>
+              </div>
+              <div class="row">
+                <p class="data col-md-6"> <Span class="head"> Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
+                <p class="data col-md-6"> <Span class="head"> Created At : </Span>
+                {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
+                </p>
+                <p class="data col-md-6"> <Span class="head">Sent Files Number </Span>
+                {{$wo->sent_docs}}
+                </p>
+                
+              </div>  
+               <div class="card card-dark">
+               <div class="card-header">
+                 <h3 class="card-title"> Tasks Needed </h3>
+                 <div class="card-tools">
+                 <button type="button" id="addTask" data-toggle="modal" data-target="#modal-default" class="" 
+                   style="outline:none; border:none; background:transparent; color:#0dbd35; font-weight:bold;">
+                   <i class="fas fa-plus"></i> add more task </button>
+                 </div>
+               </div>  
+               <div class="card-body p-0 table-responsive">
+                <table class="table table-striped table-sm table-bodered" id="pending">
+                 <thead>
+                  <tr>
+                     
+                     
+                      <th style="width: " >
+                         Type 
+                      </th>
+                      <th style="width: ">
+                      Client Words Count
+                      </th>
+                      <th style="width: ">
+                      Client Unit
+                      </th>
+                      <th style="width:  " >
+                      Client Rate
+                      </th>
+                      <th style="width:">
+                      Vendor Unit
+                      </th>
+                      <th style="width:">
+                      Vendor Rate
+                      </th>
+                      <th style="width:">
+                     
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+             @foreach ($wo->woProjectsNeeded as $task)
+              <tr>
+                      <td>
+                     {{$task['type']}}
+                      </td>
+                      <td>
+                    
+                      {{$task['client_wordsCount']}}
+                      
+                      </td>
+                      <td>
+                      {{$task['client_rateUnit']}}
+                    
+                      </td>
+                      <td>
+                         
+                      {{$task['client_rateValue']}}
+                      </td>
+                      <td>
+                      {{$task['vendor_suggest_rateUnit']}}
+                   
+                         </td>
+                         <td>
+                      {{$task['vendor_suggest_rateValue']}}
+                   
+                         </td>
+                   
+                      <td class="project-actions text-right">
+                      
+                   
+                     <a class="btn btn-danger btn-sm deleteTask" id="{{$task->id}}">
+                         <i class="fas fa-trash">
+                         </i>
+                       Delete
+                     </a>
+                                                
+                      </td>
+                      @endforeach
+                  </tr>
+        
+              </tbody>
+          </table>
+        </div>
+        </div> <br>
                <p class="data"> <Span class="head"> Client Instructions : </Span>
                  {{ $wo->client_instructions}}
                </p>
@@ -130,24 +214,7 @@ td{
                                 <li class="text-danger">No documents found</li>
                             @endforelse
                             <br>
-                            <h4> Target files </h4>
-                            <br>
-                            @forelse($target_files as $file)                               
-                                <li class="text-primary">
-                                    <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
-                                        {{str_limit($file['file_name'],50)}}
-                                    </a>
-                                    <a href="{{route('management.delete-woFile', $file['id'] ) }}"
-                                       class="btn btn-danger btn-sm ml-2">
-                                            <span class="btn-inner--icon"><i
-                                                    class="far fa-trash-alt"></i></span>
-                                    </a> 
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
+                           
                         </ul>
                     </div>
                 </div>
@@ -164,6 +231,12 @@ td{
           <!--*************** edit *************************** -->
           <div class="card card-primary col-md-12" id="update_div">
               <div class="card-header">
+              <div class="card-tools">
+                  
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
                 <h3 class="card-title">Update WO  </h3>
               </div>
               <!-- /.card-header -->
@@ -171,160 +244,115 @@ td{
               <form action="{{route('management.update-wo',$wo->id)}}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="card-body">
-                  <div class="row">  
+              <div class="row">  
                 
-                  <div class="form-group col-md-6">
-                    <label class="form-control-label" for="client_number">Client Number <span
-                    class="required">*</span></label>
-                    <select class=" form-control" data-live-search="true" name="client_number" id="client_number">
-                   <option disabled>Select / Insert Client</option>
-                   @foreach($clients as $client)
-                    <option
-                        value="{{$client['id']}}" >
-                        {{$client['code']}} - {{$client['name']}}
-                    </option>
-                     @endforeach
-                    </select>
+                <div class="form-group col-md-6">
+                  <label class="form-control-label" for="client_number">Client Number <span
+                  class="required">*</span></label>
+                  <select class=" form-control" data-live-search="true" name="client_number" id="client_number">
+                 <option disabled selected >Select / Insert Client</option>
+                 @foreach($clients as $client)
+                  <option
+                      value="{{$client['id']}}" >
+                      {{$client['code']}} - {{$client['name']}}
+                  </option>
+                   @endforeach
+                  </select>
+                </div>
+                <div class="form-group col-md-6" style="position:relative;top:-2px;">
+                  <label for="exampleInputFile">Client Deadline <span class="required"> *</span> </label>
+                  <div style="" class="input-append date form_datetime" data-date="2020-12-21T15:25:00Z">
+                    <input name="deadline" class="form-control" value="{{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}"
+                     style="width:90%; height:40px; " size="16" type="text" value="" readonly>
+                    <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
+                    <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
+                </div>
+               </div> 
+             </div>  
+        
+        <div class="row">
+        <div class="form-group col-sm-6">
+                  <label class="form-control-label" for="from_language">Source Language <span
+                  class="required">*</span></label>
+                  <select class=" form-control" data-live-search="true" name="from_language" id="from_language">
+                 <option disabled selected value="hhhhhhhh" >Select / Insert Language</option>
+                 @foreach($languages as $language)
+                  <option class="language" value="{{$language['name']}}" >
+                      {{$language['name']}}
+                  </option>
+                   @endforeach
+                  
+                  </select>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label class="form-control-label" for="to_language">Target Language <span
+                  class="required">*</span></label>
+                  <select class=" form-control" data-live-search="true" name="to_language" id="to_language">
+                 <option disabled selected >Select / Insert Language</option>
+                 @foreach($languages as $language)
+                  <option class="language"
+                      value="{{$language['name']}}" >
+                      {{$language['name']}}
+                  </option>
+                   @endforeach
+                  
+                  </select>
+                </div>
+          </div>
+    
+              <div class="row">  
+               <div class="col-sm-6">
+                    <!-- textarea -->
+                    <div class="form-group">
+                      <label>Client Instructions</label>
+                      <textarea class="form-control" name="client_instructions" value="{{$wo->client_instructions}}"
+                      rows="3" placeholder="Enter ..."></textarea>
+                    </div>
                   </div>
-                  <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Client Rate</label>
-                    <input type="number" step="0.01" min="0" class="form-control"
-                    value="{{$wo->client_rate}}" name="client_rate" id="client_rate" placeholder="Enter Rate">
+                  <div class="col-sm-6">
+                    <!-- textarea -->
+                    <div class="form-group">
+                      <label>General Instructions</label>
+                      <textarea class="form-control" name="general_instructions" value="{{$wo->general_instructions}}"
+                       rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+                  </div>
                  </div>
-                </div>  
+               
           
-          <div class="row col-sm-12">
-          <div class="form-group col-sm-6">
-                    <label class="form-control-label" for="from_language">From Language <span
-                    class="required">*</span></label>
-                    <select class=" form-control" data-live-search="true" name="from_language" id="from_language">
-                   <option disabled >Select / Insert Language</option>
-                   @foreach($languages as $language)
-                    <option
-                        value="{{$language['name']}}" >
-                        {{$language['name']}}
-                    </option>
-                     @endforeach
-                    </select>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <label class="form-control-label" for="to_language">To Language <span
-                    class="required">*</span></label>
-                    <select class=" form-control" data-live-search="true" name="to_language" id="to_language">
-                   <option disabled >Select / Insert Language</option>
-                   @foreach($languages as $language)
-                    <option
-                        value="{{$language['name']}}" >
-                        {{$language['name']}}
-                    </option>
-                     @endforeach
-                    </select>
-                  </div>
-            </div>
-            <div class="row">  
-                    <div class="form-group col-md-6" style="position:relative;top:-11px;">
-                    <label for="exampleInputFile">Deadline <span class="required"> *</span> </label>
-                    <div style="padding:10px;" class="input-append date form_datetime" data-date="2020-12-21T15:25:00Z">
-                      <input name="deadline" style="width:90%; height:40px; " size="16"
-                      value="{{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}" type="text" value="" readonly>
-                      <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
-                      <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
-                  </div>
-                 </div> 
-                  <div class="form-group col-md-6">
-                    <label class="form-control-label" for="project_type">Projects Needed 
-                    <span class="required">*</span>
-                    </label>
-                    <select class="select2 form-control" name="projects_needed[]" id="project_type"
-                     multiple="multiple" multiple data-placeholder="select projects needed">
-                   <option disabled >Select</option>
-                    <option value="translation" >Translation  </option>
-                    <option value="editing" >Editing  </option>
-                    <option value="dtp" >DTP  </option>
-                    <option value="linked" >Linked  </option>
-                    </select>
-                  </div>
-                </div>
-          <div class="row">     
-            <div class="form-group col-md-6">
-              <label class="form-control-label" for="words_count">Words Count <span
-              class="required">*</span></label>
-              <input type="number" min="1" class="form-control" name="words_count"
-              value="{{$wo->words_count}}" id="words_count" placeholder="Enter ..">
-
-            </div> 
-            <div class="form-group col-md-6">
-                <label class="form-control-label" for="quality_points">Quality Points<span
-                    class="required">*</span></label>
-                <input type="number" min="1" class="form-control" name="quality_points"
-                value="{{$wo->quality_points}}" id="quality_points" placeholder="Enter ..">
-
-                  </div>
-            
-                </div>  
-                <div class="row">  
-                 <div class="col-sm-6">
-                      <!-- textarea -->
-                      <div class="form-group">
-                        <label>Client Instructions</label>
-                        <textarea class="form-control" name="client_instructions"
-                        value="{{$wo->client_instructions}}" rows="3" placeholder="Enter ..."></textarea>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <!-- textarea -->
-                      <div class="form-group">
-                        <label>General Instructions</label>
-                        <textarea class="form-control" name="general_instructions" 
-                        value="{{$wo->general_instructions}}" rows="3" placeholder="Enter ..."></textarea>
-                      </div>
-                    </div>
-                   </div>
+                 <div class="row">
                  
-                   <div class="row">
-                   
-                   <div class="col-md-4">
-                     <div class="form-group">
-                       <label class="form-control-label"
-                        for="source_document">Working Files <span class="required">*</span></label>
-                    
-                        <div class="file-loading col-md-2">  
-                         <input id="source_files" name="source_files[]"
-                          class="kv-explorer" type="file" multiple>  
-                          </div>
-                     </div>
-                   </div> 
-                      
-                   
-                   <div class="col-md-4">
-                     <div class="form-group">
-                       <label class="form-control-label"
-                        for="source_document">Refrence Files <span class="required"></span></label>
-                    
-                        <div class="file-loading">  
-                         <input id="reference_files" name="reference_files[]"
-                          class="kv-explorer " type="file" multiple>  
-                        
-                          </div>
-                     </div>
-                   </div>   
-                     <div class="col-md-4">
-                       <div class="form-group">
-                       <label class="form-control-label"
-                        for="source_document">Target Files <span class="required"></span></label>
-                    
-                        <div class="file-loading">  
-                         <input id="target_files" name="target_files[]"
-                          class="kv-explorer custom-file-input" type="file" multiple>  
-                        
-                          </div>
-                       </div>
+                 <div class="col-md-6">
+                   <div class="form-group">
+                     <label class="form-control-label"
+                      for="source_document">Source Files <span class="required">*</span></label>
+                  
+                      <div class="file-loading col-md-2">  
+                       <input id="source_files" name="source_files[]"
+                        class="kv-explorer" type="file" multiple>  
+                        </div>
                    </div>
-                </div>   
-                
-                
-                </div>
-                <!-- /.card-body -->
+                 </div> 
+                    
+                 
+                 <div class="col-md-6">
+                   <div class="form-group">
+                     <label class="form-control-label"
+                      for="source_document">Refrence Files <span class="required"></span></label>
+                  
+                      <div class="file-loading">  
+                       <input id="reference_files" name="reference_files[]"
+                        class="kv-explorer " type="file" multiple>  
+                      
+                        </div>
+                   </div>
+                 </div>   
+                   
+              </div>   
+              
+              </div>
+              <!-- /.card-body -->
+              <input type="hidden" id="tasksNum" name="tasksNum">
 
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Update</button>
@@ -388,7 +416,102 @@ td{
             </div>
             <!-- /.card -->
         
+<!-- /.modal -->
+<div class="modal fade in" id="modal-default" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+      <center>
+          <div class="modal-dialog center">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Add New Task</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              <form action="{{route('management.add-task',$wo->id)}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div id="task">  
+                 <div class="row">
+            
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label" for="task_type">Task Type
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="task_type" id="task_type"
+                        data-placeholder="select Task Type">
+                        <option disabled >Select</option>
+                        <option value="translation" >Translation  </option>
+                        <option value="editing" >Editing  </option>
+                        <option value="dtp" >DTP  </option>
+                        <option value="linked" >Linked  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="client_wordsCount">Client Words Count<span
+                    class="required">*</span></label>
+                    <input type="number" min="0" class="form-control" name="client_wordsCount"
+                     id="client_wordsCount" placeholder="Enter 0 if Target">
+                  </div>
+                </div>  
+                <div class="row">  
+                  
 
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label" for="client_rateUnit">Client Unit
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="client_rateUnit" id="client_rateUnit"
+                        data-placeholder="select Client Rate Unit">
+                        <option disabled >Select</option>
+                        <option value="words_count" >Words Count  </option>
+                        <option value="hour" >Hour  </option>
+                        <option value="flat" >Flat  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="client_rateValue">Client Rate<span
+                    class="required">*</span></label>
+                    <input type="number" min="0.01" step="0.01" class="form-control" name="client_rateValue"
+                     value="0.15" id="client_rateValue" placeholder="">
+                  </div>
+                 </div>
+                 <div class="row">  
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label" for="vendor_rateUnit">Vendor Unit
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="vendor_rateUnit" id="vendor_rateUnit"
+                        data-placeholder="select vendor Rate Unit">
+                        <option disabled >Select</option>
+                        <option value="words_count" >Words Count  </option>
+                        <option value="hour" >Hour  </option>
+                        <option value="flat" >Flat  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="vendor_rateValue">Vendor Rate<span
+                    class="required">*</span></label>
+                    <input type="number" min="0.01" step="0.01" class="form-control" name="vendor_rateValue"
+                    value="0.03" id="vendor_rateValue" placeholder="Enter .. ">
+                  </div>
+
+              
+               
+                </div> 
+               </div>  
+              
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success"> save
+                </button> 
+                </form>
+              </div>
+            </div>
+            </center>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
           </div>
           <!--/.col (left) -->
           <!-- right column -->
@@ -449,7 +572,8 @@ $('#deleteWo').click(function(){
           if (willDelete) {
             $.ajax({
         url:" {{route('management.delete-wo', $wo->id) }}",
-        method:"get",
+        type: 'POST',
+        dataType: 'text',
         data: {
           woId: {{$wo->id}}
         //  category_id: category_id,
@@ -467,9 +591,45 @@ $('#deleteWo').click(function(){
           }
         });
 });
-})
 
+$('.deleteTask').click(function(){
+ $taskd = $(this).attr('id');
+ var url = "{{ route('management.delete-task', 'id') }}";
+url = url.replace('id', $taskd);
+ 
+$('#'+$taskd).click(function(){
+  swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+       // type: "warning",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+        url:url,
+        type: 'POST',
+        dataType: 'text',
+        data: { taskId: $taskd},
+       
+        success:function(response) {
+           // tasks on reponse
+          /* swal("Done! Your data has been deleted", {
+              icon: "success",
+            }); */
+            location.reload();
+        }
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
+});
+})
+})
 </script>
-     
+@include('layouts.partials._file_input_plugin_script')     
 @endsection
 @endsection

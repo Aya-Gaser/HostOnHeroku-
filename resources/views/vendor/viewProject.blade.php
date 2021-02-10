@@ -55,29 +55,33 @@ td{
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <p class="data"> <Span class="head"> ID  : </Span>{{$project->id}} </p>
+              <div class="row">
+              <p class="col-md-6 data"> <Span class="head"> ID  : </Span>{{$project->Wo->id}} </p>
               <p class="data" class="data col-md-4"> <Span class="head"> Status  : </Span>
                   {{$stage->status}} </p>
-              <p class="data"> <Span class="head"> name : </Span>{{$project->name}} </p>
-              <p class="data"> <Span class="head"> Deadline  : 
+    
+              <p class="col-md-6 data"> <Span class="head"> Deadline  : 
               </Span>{{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
-              <p class="data"> <Span class="head" style=""> Client Number : </Span> {{App\client::find($wo->client_id)->code}} </p>
-              <p class="data"> <Span class="head">  Rate  : 
-              </Span>{{ $stage->vendor_rate}} </p>
-              <p class="data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
+              <p class="col-md-6 data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
+              <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
+              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else Target @endif</p>
+              <p class="data col-md-6"> <Span class="head">  Quality Points  : </Span>
+              @if($stage->vendor_qualityPoints) {{$stage->vendor_qualityPoints}} @else Target @endif</p>
+              <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
+              <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
 
-               <p class="data"> <Span class="head"> Words Count : </Span> {{$wo->words_count}} </p>
-
-              <p class="data"> <Span class="head"> Created At : </Span>
+              <p class="col-md-6 data"> <Span class="head"> Started At : </Span>
               {{UTC_To_LocalTime($project->created_at,
                                         Auth::user()->timezone) }}  </p>
-              <p class="data"> <Span class="head"> Instruction : 
+              <p class="col-md-6 data"> <Span class="head"> Instruction : 
               </Span> {{  $stage->instructions }} </p>
-              <p class="data"> <Span class="head"> Deadline Time Left : 
+              <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
+              </Span> {{  $stage->required_docs }} </p>
+              <p class="col-md-6 data"> <Span class="head"> Deadline Time Left : 
               </Span>  {!! $deadline_difference !!} </p>
-              
+              </div>
               <div class="col-sm-12 col-md-12">
                     <div class="form-group">
                     <br>
@@ -98,20 +102,7 @@ td{
                                 <li class="text-danger">No documents found</li>
                             @endforelse
                             <br>
-                            <h4> Target files </h4>
-                            <br>
-                            @forelse($target_files as $file)                               
-                                <li class="text-primary">
-                                <a href="{{Storage::url($file['file'])}}"
-                                       download="{{$file['file']}}">
-                                        {{str_limit($file['file_name'],50)}}
-                                    </a>
-                                   
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
+                           
              
                             </ul>
                     </div>
@@ -152,7 +143,7 @@ td{
                                               
                                               @if(isset( $deliver_withFiles->thisVendor_delivery[$source_file->id]))
                                               <td> 
-                                              <p> Storage::download('file.jpg');
+                                              <p> 
                                               <a href="{{asset('storage/'.$deliver_withFiles->thisVendor_delivery[$source_file->id][0]->file)}}"
                                        download="{{$deliver_withFiles->thisVendor_delivery[$source_file->id][0]->file_name}}">
                                         {{str_limit($deliver_withFiles->thisVendor_delivery[$source_file->id][0]->file_name,50)}}

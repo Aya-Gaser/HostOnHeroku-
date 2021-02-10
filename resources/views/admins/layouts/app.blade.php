@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
     <meta name="author" content="">
@@ -62,7 +63,12 @@ tr{
     background-color: #007bff;
     color: #fff;
 }
-
+.language{
+  text-transform: capitalize;
+}
+.required{
+  color:red;
+}
 </style>
     @yield('style')
     
@@ -347,6 +353,11 @@ $(function () {
 
   $("a.activeNav").parents('ul.nav').siblings('a.nav-link').css({"background-color":"#007bff", 'color':"#fff"});
 
+});
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
 });
 </script>
 @yield('script')

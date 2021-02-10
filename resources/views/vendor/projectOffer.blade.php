@@ -24,7 +24,7 @@
     <section class="content">
       <div class="container-fluid">
       <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-11">
             <div class="card card-success shadow-sm">
               <div class="card-header">
                 <h2 class="card-title"> Project {{$wo->id}} </h2>
@@ -34,21 +34,30 @@
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
-              <p class="data"> <Span class="head"> Project Type : </Span> {{$stage->type}} </p>
-              <p class="data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
-              <p class="data"> <Span class="head">  Word Count  : </Span>{{$wo->words_count}} </p>
-              <p class="data"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
-              <p class="data"> <Span class="head"> Final Delivery Deadline  : </Span>
+              <div class="card-body ">
+              <div class="row">
+              <p class="data col-md-6"> <Span class="head"> Project Type : </Span> {{$stage->type}} </p>
+              <p class="data col-md-6"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
+              <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
+              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else Target @endif</p>
+              <p class="data col-md-6"> <Span class="head">  Quality Points  : </Span>
+              @if($stage->vendor_qualityPoints) {{$stage->vendor_qualityPoints}} @else Target @endif</p>
+              <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
+              <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
+              <p class="col-md-6 data"> <Span class="head"> Instruction : 
+              </Span> {{  $stage->instructions }} </p>
+              <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
+              </Span> {{  $stage->required_docs }} </p>
+              <p class="data col-md-6"> <Span class="head"> Final Delivery Deadline  : </Span>
               {{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
-              <p class="data"> <Span class="head"> Offer Expires Date :  </Span>
+              <p class="data col-md-6"> <Span class="head"> Offer Expires Date :  </Span>
               @php $date = ($group == 1)? 'G1_acceptance_deadline' : "G2_acceptance_deadline"; @endphp
               {{UTC_To_LocalTime($stage->$date,
                                         Auth::user()->timezone) }}
                  </p>
-              
+            </div>  
               <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                     <br>
@@ -83,20 +92,7 @@
                                 <li class="text-danger">No documents found</li>
                             @endforelse
                             <br>
-                            <h4> Target files </h4>
-                            <br>
-                            @forelse($target_files as $file)                               
-                                <li class="text-primary">
-                                    <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
-                                        {{str_limit($file['file_name'],50)}}
-                                    </a>
-                                   
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
+                           
                         </ul>
                     </div>
                 </div>

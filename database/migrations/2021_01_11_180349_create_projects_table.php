@@ -14,7 +14,7 @@ class CreateProjectsTable extends Migration
    
     public function up()
     {
-        
+        Schema::dropIfExists('projects');
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wo_id');

@@ -59,84 +59,120 @@
                      @endforeach
                     </select>
                   </div>
-                  <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Client Rate</label>
-                    <input type="number" step="0.01" min="0" class="form-control" name="client_rate" id="client_rate" placeholder="Enter Rate">
-                 </div>
-                </div>  
-          
-          <div class="row col-sm-12">
-          <div class="form-group col-sm-6">
-                    <label class="form-control-label" for="from_language">From Language <span
-                    class="required">*</span></label>
-                    <select class=" form-control" data-live-search="true" name="from_language" id="from_language">
-                   <option disabled selected value="hhhhhhhh" >Select / Insert Language</option>
-                   @foreach($languages as $language)
-                    <option
-                        value="{{$language['name']}}" >
-                        {{$language['name']}}
-                    </option>
-                     @endforeach
-                     <option value="arabic" > arabic</option>
-                     <option value="english" > english</option>
-                     <option value="farsi" > farsi</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <label class="form-control-label" for="to_language">To Language <span
-                    class="required">*</span></label>
-                    <select class=" form-control" data-live-search="true" name="to_language" id="to_language">
-                   <option disabled selected >Select / Insert Language</option>
-                   @foreach($languages as $language)
-                    <option
-                        value="{{$language['name']}}" >
-                        {{$language['name']}}
-                    </option>
-                     @endforeach
-                     <option value="arabic" > arabic</option>
-                     <option value="english" > english</option>
-                     <option value="farsi" > farsi</option>
-                    </select>
-                  </div>
-            </div>
-            <div class="row">  
-                    <div class="form-group col-md-6" style="position:relative;top:-11px;">
-                    <label for="exampleInputFile">Deadline <span class="required"> *</span> </label>
-                    <div style="padding:10px;" class="input-append date form_datetime" data-date="2020-12-21T15:25:00Z">
+                  <div class="form-group col-md-6" style="position:relative;top:-2px;">
+                    <label for="exampleInputFile">Client Deadline <span class="required"> *</span> </label>
+                    <div style="" class="input-append date form_datetime" data-date="2020-12-21T15:25:00Z">
                       <input name="deadline" class="form-control" style="width:90%; height:40px; " size="16" type="text" value="" readonly>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>
                  </div> 
-                  <div class="form-group col-md-6">
-                    <label class="form-control-label" for="project_type">Projects Needed 
-                    <span class="required">*</span>
-                    </label>
-                    <select class="select2 form-control" name="projects_needed[]" id="project_type"
-                     multiple="multiple" multiple data-placeholder="select projects needed">
-                   <option disabled >Select</option>
-                    <option value="translation" >Translation  </option>
-                    <option value="editing" >Editing  </option>
-                    <option value="dtp" >DTP  </option>
-                    <option value="linked" >Linked  </option>
+               </div>  
+          
+          <div class="row">
+          <div class="form-group col-sm-6">
+                    <label class="form-control-label" for="from_language">Source Language <span
+                    class="required">*</span></label>
+                    <select class=" form-control" data-live-search="true" name="from_language" id="from_language">
+                   <option disabled selected value="hhhhhhhh" >Select / Insert Language</option>
+                   @foreach($languages as $language)
+                    <option class="language" value="{{$language['name']}}" >
+                        {{$language['name']}}
+                    </option>
+                     @endforeach
+                    
                     </select>
                   </div>
-                </div>
-          <div class="row">     
-            <div class="form-group col-md-6">
-              <label class="form-control-label" for="words_count">Words Count <span
-              class="required">*</span></label>
-              <input type="number" min="1" class="form-control" name="words_count" id="words_count" placeholder="Enter ..">
-
-            </div> 
-            <div class="form-group col-md-6">
-                <label class="form-control-label" for="quality_points">Quality Points<span
+                  <div class="form-group col-sm-6">
+                    <label class="form-control-label" for="to_language">Target Language <span
                     class="required">*</span></label>
-                <input type="number" min="1" class="form-control" name="quality_points" id="quality_points" placeholder="Enter ..">
-
+                    <select class=" form-control" data-live-search="true" name="to_language" id="to_language">
+                   <option disabled selected >Select / Insert Language</option>
+                   @foreach($languages as $language)
+                    <option class="language"
+                        value="{{$language['name']}}" >
+                        {{$language['name']}}
+                    </option>
+                     @endforeach
+                    
+                    </select>
                   </div>
+            </div>
+           <div id="tasksNeeded"> 
+             <p class="form-control-label" >Tasks Needed </p>
+                <div id="task1">  
+                 <div class="row">
             
+                  <div class="form-group col-md-4">
+                      <label class="form-control-label" for="task_type1">Task #1 Type
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="task_type1" id="task_type1"
+                        data-placeholder="select Task Type">
+                        <option disabled >Select</option>
+                        <option value="translation" >Translation  </option>
+                        <option value="editing" >Editing  </option>
+                        <option value="dtp" >DTP  </option>
+                        <option value="linked" >Linked  </option>
+                      </select>
+                  </div>
                 </div>  
+                <div class="row">  
+                  <div class="form-group col-md-3">
+                    <label class="form-control-label" for="client_wordsCount1">Client Words Count<span
+                    class="required">*</span></label>
+                    <input type="number" min="0" class="form-control" name="client_wordsCount1"
+                     id="client_wordsCount1" placeholder="Enter 0 if Target">
+                  </div>
+
+                  <div class="form-group col-md-2">
+                      <label class="form-control-label" for="client_rateUnit1">Client Unit
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="client_rateUnit1" id="client_rateUnit1"
+                        data-placeholder="select Client Rate Unit">
+                        <option disabled >Select</option>
+                        <option value="words_count" >Words Count  </option>
+                        <option value="hour" >Hour  </option>
+                        <option value="flat" >Flat  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="form-control-label" for="client_rateValue1">Client Rate<span
+                    class="required">*</span></label>
+                    <input type="number" min="0.01" step="0.01" class="form-control" name="client_rateValue1"
+                     value="0.15" id="client_rateValue1" placeholder="">
+                  </div>
+
+                  <div class="form-group col-md-2">
+                      <label class="form-control-label" for="vendor_rateUnit1">Vendor Unit
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="vendor_rateUnit1" id="vendor_rateUnit1"
+                        data-placeholder="select vendor Rate Unit">
+                        <option disabled >Select</option>
+                        <option value="words_count" >Words Count  </option>
+                        <option value="hour" >Hour  </option>
+                        <option value="flat" >Flat  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="form-control-label" for="vendor_rateValue1">Vendor Rate<span
+                    class="required">*</span></label>
+                    <input type="number" min="0.01" step="0.01" class="form-control" name="vendor_rateValue1"
+                    value="0.03" id="vendor_rateValue1" placeholder="Enter .. ">
+                  </div>
+
+              
+                </div> 
+               </div>  
+              </div>
+                
+                <div class="form-group col-md-2">
+                   <button type="button" id="addTask" class="" 
+                   style="border:none; background:transparent; color:green; font-weight:bold;">
+                   <i class="fas fa-plus"></i> add more task </button>
+                </div> 
                 <div class="row">  
                  <div class="col-sm-6">
                       <!-- textarea -->
@@ -153,14 +189,18 @@
                       </div>
                     </div>
                    </div>
-                 
+                   <div class="form-group col-md-6">
+                <label for="exampleInputEmail1"> Sent Files <span class="required">*</span></label>
+                <input type="number" step="1" min="1" class="form-control" name="sent_docs" id="" placeholder="Enter sent files number" required>
+              </div>
+           </div> 
             
                    <div class="row">
                    
-                   <div class="col-md-4">
+                   <div class="col-md-6">
                      <div class="form-group">
                        <label class="form-control-label"
-                        for="source_document">Working Files <span class="required">*</span></label>
+                        for="source_document">Source Files <span class="required">*</span></label>
                     
                         <div class="file-loading col-md-2">  
                          <input id="source_files" name="source_files[]"
@@ -170,7 +210,7 @@
                    </div> 
                       
                    
-                   <div class="col-md-4">
+                   <div class="col-md-6">
                      <div class="form-group">
                        <label class="form-control-label"
                         for="source_document">Refrence Files <span class="required"></span></label>
@@ -182,23 +222,12 @@
                           </div>
                      </div>
                    </div>   
-                     <div class="col-md-4">
-                       <div class="form-group">
-                       <label class="form-control-label"
-                        for="source_document">Target Files <span class="required"></span></label>
-                    
-                        <div class="file-loading">  
-                         <input id="target_files" name="target_files[]"
-                          class="kv-explorer custom-file-input" type="file" multiple>  
-                        
-                          </div>
-                       </div>
-                   </div>
+                     
                 </div>   
                 
                 </div>
                 <!-- /.card-body -->
-
+                <input type="hidden" id="tasksNum" name="tasksNum">
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
@@ -239,11 +268,11 @@ $('.select2bs4').select2({
 })
 });
 $(".form_datetime").datetimepicker({
-        format: "yy-mm-dd H:i:s",
+        format: "dd-M-yy H:i:s",
         autoclose: true,
         todayBtn: true,
         startDate: new Date(),
-        minuteStep: 10
+        minuteStep: 15
     });
     $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
     $(document).on('change','#from_language',function(){
@@ -257,6 +286,98 @@ $(".form_datetime").datetimepicker({
                 }
             });
           });
+ $task = 1;
+ $('#tasksNum').val($task);
+$('#addTask').click(function(){
+  $task++;
+  $('#tasksNeeded').append(`
+  <div id="task`+$task+`" class="">  
+          <div class="row">
+            <div class="form-group col-md-4 col-sm-10">
+                <label class="form-control-label" for="task_type`+$task+`">Task #`+$task+` Type 
+                <span class="required">*</span>
+                </label>
+                <select class="form-control" name="task_type`+$task+`" id="task_type`+$task+`"
+                  data-placeholder="select Task Type" required>
+                  <option disabled >Select</option>
+                  <option value="translation" >Translation  </option>
+                  <option value="editing" >Editing  </option>
+                  <option value="dtp" >DTP  </option>
+                  <option value="linked" >Linked  </option>
+                </select>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 justify-content-center align-self-center"
+               style="padding-top:28px;">
+               <button type="button" id="`+$task+`" class="removeTask btn btn-danger btn-sm ml-2">
+                Remove <span class="btn-inner--icon"><i class="far fa-trash-alt"></i></span>
+                 </button>
+              
+            </div>
+          </div>  
+          <div class="row">
+            <div class="form-group col-md-3 col-sm-10">
+              <label class="form-control-label" for="client_wordsCount`+$task+`">Client Words Count<span
+              class="required">*</span></label>
+              <input type="number" min="0" class="form-control" name="client_wordsCount`+$task+`"
+               id="client_wordsCount`+$task+`" placeholder="Enter 0 if Target" required>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-10">
+                <label class="form-control-label" for="client_rateUnit`+$task+`">Client Unit
+                <span class="required">*</span>
+                </label>
+                <select class="form-control" name="client_rateUnit`+$task+`" id="client_rateUnit`+$task+`"
+                  data-placeholder="select Client Rate Unit" required>
+                  <option disabled >Select</option>
+                  <option value="words_count" >Words Count  </option>
+                  <option value="hour" >Hour  </option>
+                  <option value="flat" >Flat  </option>
+                </select>
+            </div>
+            <div class="form-group col-md-2 col-sm-10">
+              <label class="form-control-label" for="client_rateValue`+$task+`">Client Rate<span
+              class="required">*</span></label>
+              <input type="number" min="0.01" step="0.01" class="form-control" name="client_rateValue`+$task+`"
+               value="0.15" id="client_rateValue`+$task+`" placeholder="" required>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-10">
+                <label class="form-control-label" for="vendor_rateUnit`+$task+`">Vendor Unit
+                <span class="required">*</span>
+                </label>
+                <select class="form-control" name="vendor_rateUnit`+$task+`" id="vendor_rateUnit`+$task+`"
+                  data-placeholder="select vendor Rate Unit" required>
+                  <option disabled >Select</option>
+                  <option value="words_count" >Words Count  </option>
+                  <option value="hour" >Hour  </option>
+                  <option value="flat" >Flat  </option>
+                </select>
+            </div>
+            <div class="form-group col-md-2 col-sm-10">
+              <label class="form-control-label" for="vendor_rateValue`+$task+`">Vendor Rate<span
+              class="required">*</span></label>
+              <input type="number" min="0.01" step="0.01" class="form-control" name="vendor_rateValue`+$task+`"
+              value="0.03" id="vendor_rateValue`+$task+`" placeholder="Enter .. " required>
+            </div>
+
+          </div> 
+      </div>   
+  `);
+ 
+  $('#tasksNum').val($task);
+}); 
+
+$('body').on('click', '.removeTask', function(){ //injected html elements, events must rebind again 
+//$('#m').on('click',function(){  >>>>>>> not working in injected elements
+  $deleteTask = 'task'+$(this).attr("id");
+  //alert($deleteTask);
+
+  $('#'+$deleteTask).remove();
+  $task--;
+  $('#tasksNum').val($task);
+});
+
+
 </script>
 @include('layouts.partials._file_input_plugin_script')
 @endsection

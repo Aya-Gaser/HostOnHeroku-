@@ -25,9 +25,13 @@ class CreateProjectStagesTable extends Migration
             $table->dateTime('G1_acceptance_deadline'); 
             $table->dateTime('G2_acceptance_deadline');
             $table->unsignedBigInteger('vendor_id')->nullable();
+           // $table->float('vendor_rate');
+            $table->string('vendor_rateUnit');
             $table->float('vendor_rate');
+            $table->integer('vendor_wordsCount')->default(0);
+            $table->integer('vendor_qualityPoints')->default(0);
             $table->integer('required_docs');
-            $table->integer('accepted_docs');
+            $table->integer('accepted_docs')->default(0);
             $table->dateTime('deadline');
             $table->longText('instructions')->nullable(); 
             $table->string('status');

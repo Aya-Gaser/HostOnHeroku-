@@ -2,8 +2,8 @@
 @php
 
 $acceptanceDeadline = ($group == 'GROUP_1') ?  $stage->G1_acceptance_deadline:  $stage->G2_acceptance_deadline;
-  
-
+$words_count =  ($stage->vendor_wordsCount)?  $stage->vendor_wordsCount : "Target";
+$quality_points =  ($stage->vendor_qualityPoints)?  $stage->vendor_qualityPoints : "Target";
 
 @endphp
 @component('mail::message')
@@ -15,7 +15,9 @@ This is a message from Tarjamat alerting you of a new project offer available th
 | ------------------------- | ---------------------------------------------------------------------------:|
 | Assignment Type           | {{$stage->type}}                                                      |
 | Language                  | {{$stage->project->WO->from_language .'▸'.$stage->project->WO->to_language}}                          |
-| Word Count                | {{$stage->project->WO->words_count}}                                                  |
+| Word Count                | {{$words_count}}                                                  |
+| Quality Points            | {{$quality_points}}                                                   |
+| Rate Unit                 | {{$stage['vendor_rateUnit']}}                                                          |
 | Rate                      | {{$stage['vendor_rate']}}                                                          |
 | Offer Expires at          | {{UTC_To_LocalTime($acceptanceDeadline,$vendor->timezone)}} |
 | Final Delivery Deadline   | {{UTC_To_LocalTime($stage->deadline,$vendor->timezone)}}   |

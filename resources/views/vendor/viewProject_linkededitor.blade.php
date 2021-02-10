@@ -75,8 +75,10 @@ td{
               <p class="data"> <Span class="head"> Created At : </Span> 
               {{UTC_To_LocalTime($project->created_at,
                                         Auth::user()->timezone) }}</p>
-              <p class="data"> <Span class="head"> Instruction : 
+                                        <p class="col-md-6 data"> <Span class="head"> Instruction : 
               </Span> {{  $stage->instructions }} </p>
+              <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
+              </Span> {{  $stage->required_docs }} </p>
               <p class="data"> <Span class="head">  Deadline Time Left : 
               </Span>  {!! $deadline_difference !!} </p>
               <div class="col-sm-12 col-md-12">
@@ -99,20 +101,7 @@ td{
                                 <li class="text-danger">No documents found</li>
                             @endforelse
                             <br>
-                            <h4> Target files </h4>
-                            <br>
-                            @forelse($target_files as $file)                               
-                                <li class="text-primary">
-                                    <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
-                                        {{str_limit($file['file_name'],50)}}
-                                    </a>
-                                   
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
+                           
              
                             </ul>
                     </div>

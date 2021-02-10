@@ -99,7 +99,7 @@ class createProjectController extends Controller
     $project = new projects(); 
     $project->wo_id = $wo_id;
     //$wo = WO::find($wo_id);
-    $project->numInWo = 0;
+    $project->numInWo = 0; ///////////////////////???????
     $project->type = ($isLinked)? 'linked' : $request->input('project_type');
     $project->name = $request->input('project_name');
     $UTCDeadline = LocalTime_To_UTC($request->input('delivery_deadline'), Auth::user()->timezone);
@@ -113,18 +113,17 @@ class createProjectController extends Controller
     $project->save();
     $transStage =null;
     $editStage =null; 
-    $sourceFiles_count = count(request()['source_files']);
 
     $wo->isHandeled = true;
     $wo->isReceived = true;
     $wo->save();
     ///// CREATE PROJECT STAGES//////// instructions_editing
     if($isLinked){
-        $transStage = $this->createStage($wo_id,$project->id, 'translation', false, false , $sourceFiles_count );
-        $editStage = $this->createStage($wo_id,$project->id, 'editing', true, true , $sourceFiles_count);
+        $transStage = $this->createStage($wo_id,$project->id, 'translation', false, false );
+        $editStage = $this->createStage($wo_id,$project->id, 'editing', true, true );
     }
     else{
-       $transStage =  $this->createStage($wo_id, $project->id, $project->type, true, false , $sourceFiles_count);
+       $transStage =  $this->createStage($wo_id, $project->id, $project->type, true, false);
     }
     if(request()['vendor1_translators_group1'])
        $this->inviteGroup1($transStage,request()['vendor1_translators_group1']);
@@ -149,13 +148,13 @@ class createProjectController extends Controller
           $this->uploadWoAttachments($project->id, 'target_files','target_file');
       }
       
-      alert()->message('Project Created Successfully !')->autoclose(15);
-      return back();
-      //return response()->json(['success'=>'File Uploaded Successfully']);     
-   // return $wo; 
+     
+      alert()->success('Project Created Successfully !')->autoclose(false);
+        //return response()->json(['success'=>'File Uploaded Successfully']);      
+      return redirect(route('management.view-allProjects', 'all'));
   }
   
-  public function createStage($wo_id,$project_id, $project_type, $IsLast, $isLinkedEditing, $required_docs){
+  public function createStage($wo_id,$project_id, $project_type, $IsLast, $isLinkedEditing){
         $wo = WO::find($wo_id);
         $stage = new projectStage();
         $stage->wo_id = $wo_id;
@@ -164,16 +163,22 @@ class createProjectController extends Controller
         //instructions_editing
         $stage->lastIn_project = $IsLast;
         $stage->status = 'Undelivered'; 
-        $stage->required_docs = $required_docs;
-        $stage->accepted_docs = 0;
-        $deadline_inputName = ($isLinkedEditing)? 'delivery_deadline_editing' : 'delivery_deadline';
-        $instruction_inputName = ($isLinkedEditing)? 'instructions_editing' : 'instructions';
-        $vendorRate_inputName = ($isLinkedEditing)? 'vendor_rate_editing' : 'vendor_rate';
+        $required_docs_inputName = ($isLinkedEditing)? 'required_docs_edit' : 'required_docs';
+        $deadline_inputName = ($isLinkedEditing)? 'delivery_deadline_edit' : 'delivery_deadline';
+        $instruction_inputName = ($isLinkedEditing)? 'instructions_edit' : 'instructions';
+        $vendorRate_inputName = ($isLinkedEditing)? 'vendor_rate_edit' : 'vendor_rate';
         $acceptance_deadline = ($isLinkedEditing)? 'acceptance_deadline_edit' : 'acceptance_deadline';
+        $words_count_inputName = ($isLinkedEditing)? 'words_count_edit' : 'words_count';
+        $quality_points_inputName = ($isLinkedEditing)? 'quality_points_edit' : 'quality_points';
+        $vendorRate_unit_inputName = ($isLinkedEditing)? 'rate_unit_edit' : 'rate_unit';
 
         $UTCDeadline = LocalTime_To_UTC(request()[$deadline_inputName], Auth::user()->timezone);
         $stage->deadline = $UTCDeadline;
+        $stage->required_docs = request()[$required_docs_inputName];
         $stage->instructions = request()[$instruction_inputName];
+        $stage->vendor_wordsCount = request()[$words_count_inputName];
+        $stage->vendor_qualityPoints = request()[$quality_points_inputName];
+        $stage->vendor_rateUnit = request()[$vendorRate_unit_inputName];
         $stage->vendor_rate = request()[$vendorRate_inputName];
         $stage->G1_acceptance_hours = request()[$acceptance_deadline];
         $stage->G2_acceptance_hours = request()[$acceptance_deadline];

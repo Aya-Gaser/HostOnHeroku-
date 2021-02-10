@@ -1,297 +1,148 @@
-  <div class="row">
-          <!-- left column -->
-          <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Quick Example </h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form action="/createProject" method="post" class="dropzone">
-              @csrf
-                <div class="card-body">
-                <div class="row">
-                <div class="form-group col-md-12">
-                  <label for="exampleInputEmail1">Name</label>
-                   <input type="text" class="form-control" name="name" id="name" placeholder="">
+      <div class="row">  
+                
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="client_number">Client Number <span
+                    class="required">*</span></label>
+                    <select class=" form-control" data-live-search="true" name="client_number" id="client_number">
+                   <option disabled>Select / Insert Client</option>
+                   @foreach($clients as $client)
+                    <option
+                        value="{{$client['id']}}" >
+                        {{$client['code']}} - {{$client['name']}}
+                    </option>
+                     @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                   <label for="exampleInputEmail1">Client Rate</label>
+                    <input type="number" step="0.01" min="0" class="form-control"
+                    value="{{$wo->client_rate}}" name="client_rate" id="client_rate" placeholder="Enter Rate">
                  </div>
-                </div>
-            <div class="row">
-                      <div class="form-group-lg col-md-6">
-                    <label for="exampleInputFile">Delivery Deadline</label>
-                    <div style="padding:10px;" class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
-                      <input style="width:90%; height:40px;" size="16" type="text" value="" readonly>
+                </div>  
+          
+          <div class="row col-sm-12">
+          <div class="form-group col-sm-6">
+                    <label class="form-control-label" for="from_language">From Language <span
+                    class="required">*</span></label>
+                    <select class=" form-control" data-live-search="true" name="from_language" id="from_language">
+                   <option disabled >Select / Insert Language</option>
+                   @foreach($languages as $language)
+                    <option
+                        value="{{$language['name']}}" >
+                        {{$language['name']}}
+                    </option>
+                     @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label class="form-control-label" for="to_language">To Language <span
+                    class="required">*</span></label>
+                    <select class=" form-control" data-live-search="true" name="to_language" id="to_language">
+                   <option disabled >Select / Insert Language</option>
+                   @foreach($languages as $language)
+                    <option
+                        value="{{$language['name']}}" >
+                        {{$language['name']}}
+                    </option>
+                     @endforeach
+                    </select>
+                  </div>
+            </div>
+            <div class="row">  
+                    <div class="form-group col-md-6" style="position:relative;top:-11px;">
+                    <label for="exampleInputFile">Deadline <span class="required"> *</span> </label>
+                    <div style="padding:10px;" class="input-append date form_datetime" data-date="2020-12-21T15:25:00Z">
+                      <input name="deadline" style="width:90%; height:40px; " size="16"
+                      value="{{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}" type="text" value="" readonly>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>
+                 </div> 
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="project_type">Tasks Needed 
+                    <span class="required">*</span>
+                    </label>
+                    <select class="select2 form-control" name="projects_needed[]" id="project_type"
+                     multiple="multiple" multiple data-placeholder="select projects needed">
+                   <option disabled >Select</option>
+                    <option value="translation" >Translation  </option>
+                    <option value="editing" >Editing  </option>
+                    <option value="dtp" >DTP  </option>
+                    <option value="linked" >Linked  </option>
+                    </select>
+                  </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="exampleInputEmail1">Acceptance Deadline</label>
-                   <input type="number" step="1" min="0" class="form-control" name="acceptance_deadline" id="acceptance_deadline" placeholder="">
-                 </div>
-            </div>
-          <div class="row">          
+          <div class="row">     
             <div class="form-group col-md-6">
-              <label for="exampleInputEmail1"> Rate</label>
-              <input type="number" step="0.01" min="0" class="form-control" name="vendor_rate" id="vendor_rate" placeholder="Enter Rate">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="exampleInputEmail1">Words Count</label>
-              <input type="number" step="1" min="0" class="form-control" name="words_count" id="words_count" placeholder="Enter words count">
-            </div>
-          </div> 
-          <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                  <label>Group 1 Members </label>
-                  <select class="select2" multiple="multiple" data-placeholder="Select translators" style="width: 100%;">
-                   @foreach($translators as $translator)
-                   <option value= "{{$translator['name']}}" >{{$translator['name']}} </option>
-                   @endforeach
-                  </select>
-                </div>
-                </div>
-                <div class="col-md-6">
-                <div class="form-group">
-                  <label>Group 2 Members</label>
-                  <select class="select2" multiple="multiple" data-placeholder="Select translators" style="width: 100%;">
-                   @foreach($translators as $translator)
-                   <option value= "{{$translator['name']}}" >{{$translator['name']}} </option>
-                   @endforeach
-                  </select>
-                </div>
-                </div>
-            </div>  
-            <div class="form-group">
-                <label> Instructions</label>
-                <textarea class="form-control" name="instructions" rows="3" placeholder="Enter ..."></textarea>
-            </div>
-            <div class="row">
-          <div class="col-md-12">
-            <div class="card card-default">
-              <div class="card-header">
-                <h3 class="card-title">Dropzone.js <small><em>jQuery File Upload</em> like look</small></h3>
-              </div>
-              <div class="card-body">
-                <div id="actions" class="row">
-                  <div class="col-lg-6">
-                    <div class="btn-group w-100">
-                      <span class="btn btn-success col fileinput-button">
-                        <i class="fas fa-plus"></i>
-                        <span>Add files</span>
-                      </span>
-                      <button type="submit" class="btn btn-primary col start">
-                        <i class="fas fa-upload"></i>
-                        <span>Start upload</span>
-                      </button>
-                      <button type="reset" class="btn btn-warning col cancel">
-                        <i class="fas fa-times-circle"></i>
-                        <span>Cancel upload</span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 d-flex align-items-center">
-                    <div class="fileupload-process w-100">
-                      <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+              <label class="form-control-label" for="words_count">Words Count <span
+              class="required">*</span></label>
+              <input type="number" min="1" class="form-control" name="words_count"
+              value="{{$wo->words_count}}" id="words_count" placeholder="Enter ..">
+
+            </div> 
+            
+            
+                </div>  
+                <div class="row">  
+                 <div class="col-sm-6">
+                      <!-- textarea -->
+                      <div class="form-group">
+                        <label>Client Instructions</label>
+                        <textarea class="form-control" name="client_instructions"
+                        value="{{$wo->client_instructions}}" rows="3" placeholder="Enter ..."></textarea>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div class="table table-striped files" id="previews">
-                  <div id="template" class="row mt-2">
-                    <div class="col-auto">
-                        <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
-                    </div>
-                    <div class="col d-flex align-items-center">
-                       
-                        <strong class="error text-danger" data-dz-errormessage></strong>
-                    </div>
-                    <div class="col-4 d-flex align-items-center">
-                        <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                          <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                        </div>
-                    </div>
-                    <div class="col-auto d-flex align-items-center">
-                      <div class="btn-group">
-                        <button class="btn btn-primary start">
-                          <i class="fas fa-upload"></i>
-                          <span>Start</span>
-                        </button>
-                        <button data-dz-remove class="btn btn-warning cancel">
-                          <i class="fas fa-times-circle"></i>
-                          <span>Cancel</span>
-                        </button>
-                        <button data-dz-remove class="btn btn-danger delete">
-                          <i class="fas fa-trash"></i>
-                          <span>Delete</span>
-                        </button>
+                    <div class="col-sm-6">
+                      <!-- textarea -->
+                      <div class="form-group">
+                        <label>General Instructions</label>
+                        <textarea class="form-control" name="general_instructions" 
+                        value="{{$wo->general_instructions}}" rows="3" placeholder="Enter ..."></textarea>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                Visit <a href="https://www.dropzonejs.com">dropzone.js documentation</a> for more examples and information about the plugin.
-              </div>
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-
-        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-         <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                    <br>
-                        <h4> Source Document </h4>
-                        <br>
+                   </div>
+                 
+                   <div class="row">
+                   
+                   <div class="col-md-4">
+                     <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Source Files <span class="required">*</span></label>
+                    
+                        <div class="file-loading col-md-2">  
+                         <input id="source_files" name="source_files[]"
+                          class="kv-explorer" type="file" multiple>  
+                          </div>
+                     </div>
+                   </div> 
+                      
+                   
+                   <div class="col-md-4">
+                     <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Refrence Files <span class="required"></span></label>
+                    
+                        <div class="file-loading">  
+                         <input id="reference_files" name="reference_files[]"
+                          class="kv-explorer " type="file" multiple>  
                         
-                            @forelse($source_files as $file)                                
-                                <li class="text-primary">
-                                <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['file']}}">
-                                        {{$file['file_name']}}
-                                    </a>
-                                   
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
-                            <br>
-                            <h4> Reference files </h4>
-                           <br>
-                            @forelse($reference_file as $file)                               
-                                <li class="text-primary">
-                                    <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
-                                        {{str_limit($file['file_name'],50)}}
-                                    </a>
-                                    
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
-                            <br>
-                            <h4> Target files </h4>
-                            <br>
-                            @forelse($target_files as $file)                               
-                                <li class="text-primary">
-                                    <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
-                                        {{str_limit($file['file_name'],50)}}
-                                    </a>
-                                   
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
-                        </ul>
-                    </div>
-                </div>
-                </div>
-                </div>
-                <br>
-                      <div class="card col-md-12">
-                  <div class="card-header">
-                  <h4 style="position:relative; top:10px;"> WO Projects </h4>
-                  <button type="ok" class="btn btn-success" style=" float: right; margin-right:10px;"> 
-                          <a href="/createProject-select/{{$wo->id}}">
-                         + ADD PROJECT </a>
-                          </button>
-                  </div>
-                  <div class="card-body">
-                  @php $i=0; @endphp
-                  @foreach($projects as $project)
-                  @php $i++; @endphp
-                      <div class="card" style="margin-bottom:15px;">
-                        <div class="card-header">
-                        <h5> Project #  {{$i}}  </h5>
-                        </div>
-                        <div class="card-body">
-                          <div class="row col-md-12">
-                            <div class="col-md-3">
-                            <p class="head">  ID </p>
-                            <p class="data">  {{$project->id}} </p>
-                            </div>
-                            <div class="col-md-3">
-                            <p class="head"> Creation Date </p>
-                              <p class="data"> 
-                              {{$project->created_at}}
-                              </p>
-                            </div>
-                            
-                            <div class="col-md-3">
-                            <p class="head">  Type </p>
-                            <p class="data">  
-                            {{$project->type}}
-                            </p>
-                            </div>
-                            <div class="col-md-3">
-                            <p class="head">  Status </p>
-                            <p class="data">   {{$project->status}} </p>
-                            </div>
+                          </div>
+                     </div>
+                   </div>   
+                     <div class="col-md-4">
+                       <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Target Files <span class="required"></span></label>
+                    
+                        <div class="file-loading">  
+                         <input id="target_files" name="target_files[]"
+                          class="kv-explorer custom-file-input" type="file" multiple>  
                         
-                        </div>
-                        <button type="ok" class="btn btn-primary" style=" float: right; margin-right:10px;"> 
-                          <a href="{{route('view-project',$project->id)}}">
-                          See Full Project </a>
-                          </button>
-                        </div>
-                      </div>
-                      @endforeach
-                    </div>
-                    </div>                  
-              </div>
-              ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-               <a href="{{route('wo.delete-attachment',$file['file'])}}"
-                                       class="btn btn-danger btn-sm ml-2">
-                                            <span class="btn-inner--icon"><i
-                                                    class="far fa-trash-alt"></i></span>
-                                    </a>
-              ---------------------------------------------------------------------------------------------------
-                @foreach($deliveryHistory_files['translator_delivery'] as $delivery)
-             @php $i++; @endphp
-                             <div class="card" style="margin-bottom:15px;">
-                                <div class="card-header">
-                                <h5> Delivery #  {{$i}}  </h5>
-                                </div>
-                                <div class="card-body">
-                                   <div class="row col-md-12">
-                                        <div class="col-md-3">
-                                        <p class="head"> Delivery date </p>
-                                        <p class="data">  {{$delivery->created_at}} </p>
-                                        </div>
-                                        <div class="col-md-3">
-                                        <p class="head"> Source File </p>
-                                         <p class="data"> 
-                                         <a href="{{asset('storage/'.App\project_sourceFile::find($delivery->sourceFile_id)->file)}}"
-                                       download="{{App\project_sourceFile::find($delivery->sourceFile_id)->file_name}}">
-                                        {{str_limit(App\project_sourceFile::find($delivery->sourceFile_id)->file_name,50)}}
-                                    </a>
-                                         </p>
-                                        </div>
-                                       
-                                        <div class="col-md-3">
-                                        <p class="head"> #Delivered File </p>
-                                        <p class="data">  
-                                        <a href="{{asset('storage/'.$delivery->file)}}"
-                                       download="{{$delivery->file_name}}">
-                                        {{str_limit($delivery->file_name,50)}}
-                                    </a>
-                                        </p>
-                                        </div>
-                                        <div class="col-md-3">
-                                        <p class="head"> Delivery Status </p>
-                                        <p class="data">   {{$delivery->status}} </p>
-                                        </div>
-                                   </div>
-                                 </div> 
-                                 </div> 
-
-                               @endforeach                       
+                          </div>
+                       </div>
+                   </div>
+                </div>   
+                
+                
+                </div>
+                <!-- /.card-body -->

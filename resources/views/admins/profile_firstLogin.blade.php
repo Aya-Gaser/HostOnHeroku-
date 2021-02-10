@@ -40,23 +40,23 @@
                 <div class="row">  
                    
                 <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" name="name" value="{{$vendor->name}}">
+                   <label for="exampleInputEmail1">Name<<span class="required">*</span>/label>
+                    <input type="text" class="form-control" name="name" value="{{$vendor->name}}" required>
                  </div>
                  <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">User Name</label>
+                   <label for="exampleInputEmail1">User Name<span class="required">*</span></label>
                     <input type="text" class="form-control" name="userName" value="{{$vendor->userName}}" readonly>
                  </div>
               </div>
 
               <div class="row">  
                 <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Email</label>
-                    <input type="email" class="form-control" name="email"  value="{{$vendor->email}}">
+                   <label for="exampleInputEmail1">Email<span class="required">*</span></label>
+                    <input type="email" class="form-control" name="email"  value="{{$vendor->email}}" required>
                  </div>
                  <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Birthdate</label>
-                    <input type="date" class="form-control" name="birthdate">
+                   <label for="exampleInputEmail1">Birthdate<span class="required">*</span></label>
+                    <input type="date" class="form-control" name="birthdate" required>
                  </div>
               </div>
 

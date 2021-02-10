@@ -13,10 +13,15 @@ class CreateWoProjectsNeededTable extends Migration
      */
     public function up()
     {
-        Schema::create('wo_projects_needed', function (Blueprint $table) {
+        Schema::create('wo_tasks_needed', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wo_id');
             $table->string('type');
+            $table->integer('client_wordsCount')->default(0);
+            $table->string('client_rateUnit');
+            $table->float('client_rateValue');
+            $table->string('vendor_suggest_rateUnit')->nullable();
+            $table->float('vendor_suggest_rateValue')->default(0);
             $table->timestamps();
         });
     }

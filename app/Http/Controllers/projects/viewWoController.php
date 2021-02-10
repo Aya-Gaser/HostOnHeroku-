@@ -18,7 +18,7 @@ use App\languages;
 use Illuminate\Http\RedirectResponse;
 use Auth;
 use App\woFiles;
-
+use App\woProjectsNeeded;
 class viewWoController extends Controller
 {
     public function __construct()
@@ -42,17 +42,16 @@ class viewWoController extends Controller
         $clients = $this->getClients();
         $languages = $this->getLanguages();
       //  date_default_timezone_set("America/Guayaquil");
-      [$source_files, $reference_files, $target_files] = $this->getWoFiles($wo);
+      [$source_files, $reference_files] = $this->getWoFiles($wo);
         return view('admins.viewWo')->with(['wo'=>$wo, 'projects'=>$projects, 'clients'=>$clients,
-        'languages'=>$languages, 'source_files'=>$source_files,'reference_file'=>$reference_files,
-        'target_files'=>$target_files]);
+        'languages'=>$languages, 'source_files'=>$source_files,'reference_file'=>$reference_files]);
     }
 
     public function getWoFiles($wo){
       $source_files = $wo->woFiles->where('type','source_file');
       $reference_file =$wo->woFiles->where('type','reference_file');
-      $target_file =$wo->woFiles->where('type','target_file');
-      return [$source_files,$reference_file, $target_file];
+      
+      return [$source_files,$reference_file];
 
   }
     public function getClients(){
@@ -90,18 +89,12 @@ class viewWoController extends Controller
         $request = new Request();
         if(request()['client_number'])
            $wo->client_id = request()['client_number'];
-        if(request()['client_rate'])
-           $wo->client_rate = request()['client_rate'];
         if(request()['from_language'])
            $wo->from_language = request()['from_language'];
         if(request()['to_language'])
            $wo->to_language = request()['to_language'];
         if(request()['deadline'])
            $wo->deadline = LocalTime_To_UTC(request()['deadline'], Auth::user()->timezone); 
-        if(request()['words_count'])
-           $wo->words_count = request()['words_count'];
-        if(request()['quality_points'])
-           $wo->quality_points = request()['quality_points'];
         if(request()['client_instructions'])
            $wo->client_instructions = request()['client_instructions'];
         if(request()['general_instructions'])
@@ -116,11 +109,8 @@ class viewWoController extends Controller
         if ($request->hasFile('reference_files')) {
                $this->uploadWoAttachments($wo, 'reference_files','reference_file');
          }
-        if ($request->hasFile('target_files')) {
-               $this->uploadWoAttachments($wo, 'target_files','target_file');
-         }
-
-       alert()->success('Wo Updated Successfully !')->autoclose(15);
+        
+       alert()->success('Wo Updated Successfully !')->autoclose(false);
        return back();   
     }
 
@@ -144,6 +134,27 @@ class viewWoController extends Controller
          }
     }
 
+    public function addTask($woId){
+      $task = new woProjectsNeeded();
+      $task->wo_id = $woId;
+      $task->type = request()['task_type']; 
+      $task->client_wordsCount = request()['client_wordsCount'];
+      $task->client_rateUnit = request()['client_rateUnit'];
+      $task->client_rateValue = request()['client_rateValue'];
+      $task->vendor_suggest_rateUnit = request()['vendor_rateUnit'];
+      $task->vendor_suggest_rateValue = request()['vendor_rateValue'];
+      $task->save();
+
+      alert()->success('Task Added Successfully !')->autoclose(false);
+      return back();
+    }
+    public function destroyTask($taskId){
+       $task = woProjectsNeeded::findOrFail($taskId);
+       $task->delete();
+
+       alert()->success('Task Deleted Successfully !')->autoclose(false);
+      return back();
+    }
     public function destroyWoFile($fileId){
        $file = woFiles::findOrFail($fileId);
        $file->delete();

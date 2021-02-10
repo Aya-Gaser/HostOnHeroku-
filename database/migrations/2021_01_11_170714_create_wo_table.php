@@ -19,16 +19,17 @@ class CreateWoTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('client_id');
             $table->timestamp('deadline');
-            $table->float('client_rate'); 
-            $table->bigInteger('words_count');            
-            $table->integer('quality_points');
+            //$table->float('client_rate'); 
+            //$table->bigInteger('words_count');            
+            //$table->integer('quality_points');
             $table->string('from_language');
             $table->string('to_language');
             $table->string('client_instructions')->nullable();
             $table->longText('general_instructions')->nullable();
-            $table->boolean('isHandeled'); 
+            $table->boolean('isHandeled')->default(0); 
             $table->boolean('isReceived')->default(0);
-            $table->unsignedBigInteger('created_by_id');
+            $table->integer('sent_docs');
+            $table->unsignedBigInteger('created_by');
             $table->string('status');
 
             $table->timestamps();

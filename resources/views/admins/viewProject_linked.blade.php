@@ -64,9 +64,7 @@ td{
                <p class="data"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
 
                <p class="data"> <Span class="head"> Deadline Time Left : </Span>  {!! $deadline_difference !!}</p>
-               <p> 
-                 <button type="update" id="update" class="btn btn-primary">Update Project</button>
-               </p> 
+               
               <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                     <br>
@@ -113,29 +111,15 @@ td{
                                 <li class="text-danger">No documents found</li>
                             @endforelse
                             <br>
-                            <h4> Target files </h4>
-                            <br>
-                            @forelse($target_files as $file)                               
-                                <li class="text-primary">
-                                    <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
-                                        {{str_limit($file['file_name'],50)}}
-                                    </a>
-                                    <a href="{{route('management.delete-file',['id'=>$file['id'],
-                                    'type'=>'source']) }}"
-                                       class="btn btn-danger btn-sm ml-2">
-                                            <span class="btn-inner--icon"><i
-                                                    class="far fa-trash-alt"></i></span>
-                                    </a>
-                                </li>
-                                <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">No documents found</li>
-                            @endforelse
+                           
+                            
                         </ul>
                     </div>
                 </div>
-            
+                <p> 
+                <button type="button" id="deleteProject" class="btn btn-danger">Delete Wo</button>
+                 <button type="update" id="update" class="btn btn-primary">Update Project</button>
+               </p> 
               </div>
               </div>
               </div>
@@ -202,18 +186,7 @@ td{
                           </div>
                      </div>
                    </div>   
-                     <div class="col-md-4">
-                       <div class="form-group">
-                       <label class="form-control-label"
-                        for="source_document">Target Files <span class="required"></span></label>
-                    
-                        <div class="file-loading">  
-                         <input id="target_files" name="target_files[]"
-                          class="kv-explorer custom-file-input" type="file" multiple>  
-                        
-                          </div>
-                       </div>
-                   </div>
+                     
                 </div>
             <!-- /.card -->
 
@@ -557,10 +530,13 @@ td{
                                   ->where('type','translation')->first(); @endphp
                 <p class="data col-md-5"> <Span class="head"> Deadline  : </Span>
                 {{ UTC_To_LocalTime($transStage->deadline, Auth::user()->timezone) }}</p>
+                <p class="data col-md-4"> <Span class="head">  words Count  : </Span>{{$transStage->vendor_wordsCount}} </p>
+                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>{{$transStage->vendor_qualityPoints}} </p>
+                <p class="data col-md-4"> <Span class="head">  Rate unit : </Span>{{$transStage->vendor_rateUnit}} </p>
+               
                 <p class="data col-md-3"> <Span class="head"> Translator Rate  : </Span>{{$transStage->vendor_rate}} </p>
                 <p class="data col-md-4"> <Span class="head">Translator : </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
                 @else <span  class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
-                <p class="data col-md-6"> <Span class="head"> Instructions  : </Span>{{$transStage->instructions}} </p>
 
                 <p class="data col-md-4"> <Span class="head"> Status  : </Span>
                
@@ -578,7 +554,8 @@ td{
                     </a>
                  @endif       
                     </p>
-               
+                <p class="data col-md-12"> <Span class="head"> Instructions  : </Span>{{$transStage->instructions}} </p>
+
               </div>
                 <!-- ****************update stage**************************************** -->
            <div class="card card-primary" id="update_div_translation">
@@ -708,10 +685,13 @@ td{
                 <p class="data col-md-5"> <Span class="head"> Deadline  : </Span>
                 {{ UTC_To_LocalTime($editStage->deadline, Auth::user()->timezone) }}
                 </p>
+                <p class="data col-md-4"> <Span class="head">  words Count  : </Span>{{$editStage->vendor_wordsCount}} </p>
+                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>{{$editStage->vendor_qualityPoints}} </p>
+                <p class="data col-md-4"> <Span class="head">  Rate unit : </Span>{{$editStage->vendor_rateUnit}} </p>
+             
                 <p class="data col-md-3"> <Span class="head"> Editor Rate  : </Span>{{$editStage->vendor_rate}} </p>
                 <p class="data col-md-4"> <Span class="head">Editor : </Span>  @if($project->editor_id) {{App\User::find($project->editor_id)->name}} 
                 @else <span style="color:red;"> NOT ACCEPTED YET  @endif </span> </p>
-                <p class="data col-md-6"> <Span class="head"> Instructions  : </Span>{{$editStage->instructions}} </p>
                 <p class="data col-md-4"> <Span class="head"> Status  : </Span>
                 
                   {{$editStage->status}} </p>
@@ -728,7 +708,8 @@ td{
                     </a>
                  @endif       
                     </p> 
-             
+              <p class="data col-md-12"> <Span class="head"> Instructions  : </Span>{{$editStage->instructions}} </p>
+
               </div>
                      <!-- ****************update stage**************************************** -->
                      <div class="card card-primary" id="update_div_editing">
@@ -927,6 +908,38 @@ $('#updateEditing').click(function(){
   $('#update_div_editing').fadeIn();
   document.getElementById('update_div_editing').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 });
+$('#deleteProject').click(function(){
+  swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+        type: "warning",
+        
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+        url:" {{route('management.delete-project', $project->id) }}",
+        type: 'POST',
+        dataType: 'text',
+        data: {
+          woId: {{ $project->id}}
+        //  category_id: category_id,
+        },
+        success:function(response) {
+           // tasks on reponse
+          /* swal("Done! Your data has been deleted", {
+              icon: "success",
+            }); */
+            window.location.href = '{{route('management.view-allProjects', 'all' )}}';
+        }
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
+}); 
 }) 
 </script>
 @include('layouts.partials._file_input_plugin_script')
