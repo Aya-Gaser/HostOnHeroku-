@@ -137,7 +137,7 @@
                 </div>  
                 <div class="row">  
                   <div class="form-group col-md-3">
-                    <label class="form-control-label" for="client_wordsCount1">Client Words Count<span
+                    <label class="form-control-label" for="client_wordsCount1">Client Word Count<span
                     class="required">*</span></label>
                     <input type="number" min="0" class="form-control" name="client_wordsCount1"
                      id="client_wordsCount1" placeholder="Enter 0 if Target">
@@ -189,7 +189,7 @@
                 <div class="form-group col-md-2">
                    <button type="button" id="addTask" class="" 
                    style="border:none; background:transparent; color:green; font-weight:bold;">
-                   <i class="fas fa-plus"></i> add more task </button>
+                   <i class="fas fa-plus"></i> Add more task </button>
                 </div> 
                 <div class="row">  
                  <div class="col-sm-6">
@@ -208,10 +208,10 @@
                     </div>
                    </div>
                    <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Sent Files <span class="required">*</span></label>
+                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
                 <input type="number" step="1" min="1" class="form-control" name="sent_docs" id="" placeholder="Enter sent files number" required>
               </div>
-           </div> 
+         
             
                    <div class="row">
                    
@@ -241,7 +241,7 @@
                      </div>
                    </div>   
                      
-                </div>   
+              
                 
                 </div>
                 <!-- /.card-body -->

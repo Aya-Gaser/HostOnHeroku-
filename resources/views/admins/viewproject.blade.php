@@ -492,13 +492,24 @@ td{
                 <p class="data col-md-4"> <Span class="head"> Deadline  : </Span>
                
                 {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
-                <p class="data col-md-4"> <Span class="head">  words Count  : </Span>{{$stage->vendor_wordsCount}} </p>
-                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>{{$stage->vendor_qualityPoints}} </p>
-                <p class="data col-md-4"> <Span class="head">  Rate unit : </Span>{{$stage->vendor_rateUnit}} </p>
+                <p class="data col-md-4"> <Span class="head">  Word Count  : </Span>
+                  @if($stage->vendor_wordsCount)  {{$stage->vendor_wordsCount}}
+                  @else   <span class="text-danger"> Target </span> 
+                  @endif    
+                </p>
+                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>
+                  @if($stage->vendor_qualityPoints)  {{$stage->vendor_qualityPoints}}
+                  @else   <span class="text-danger"> Target </span> 
+                  @endif
+                 </p>
+                <p class="data col-md-4"> <Span class="head"> Unit : </Span>{{$stage->vendor_rateUnit}} </p>
                 <p class="data col-md-4"> <Span class="head"> Translator Rate  : </Span>{{$stage->vendor_rate}} </p>
 
                 <p class="data col-md-4"> <Span class="head">Translator : </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
                 @else <span class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
+                <p class="data col-md-4"> <Span class="head"> Number Of Files  : </Span>
+               
+               {{$stage->required_docs}} </p>
                 <p class="data col-md-4"> <Span class="head"> Status  : </Span>
                
                   {{$stage->status}} </p>
@@ -537,30 +548,61 @@ td{
                 <div class="card-body">
                
                 <div class="row">
-               
-                <div class="form-group col-md-6">
-                  <label for="exampleInputEmail1">Rate</label>
-                   <input type="number" min="0.1" step="0.1" class="form-control"
-                    name="vendor_rate_edit_{{$stage->id}}" id="vendor_rate" 
-                   value="{{$stage->vendor_rate}}" placeholder="">
-                 </div>
-             
-          
-          <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="words_count">Word Count<span
+                        class="required">*</span></label>
+                    <input type="number" min="0" step="1" class="form-control" name="words_count_{{$stage->id}}"
+                     value="{{$stage->vendor_wordsCount}}" id="words_count" placeholder="Enter 0 if Target " required>
+
+                  </div>
+                  <div class="form-group col-md-6">
+                        <label class="form-control-label" for="quality_points">Quality Points<span
+                            class="required">*</span></label>
+                        <input type="number" min="0" class="form-control" name="quality_points_{{$stage->id}}"
+                        value="{{$stage->vendor_qualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
+
+                  </div>
+                </div>   
+                <div class="row">          
+  
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label" for="vendor_rateUnit"> Unit
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="rate_unit_{{$stage->id}}" id="rate_unit"
+                        data-placeholder="select vendor Rate Unit" required>
+                        <option disabled >Select</option>
+                        <option value="Word Count" >Word Count  </option>
+                        <option value="Hour" >Hour  </option>
+                        <option value="Flat" >Flat  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1"> Rate <span class="required">*</span></label>
+                    <input type="number" step="0.01" min="0.01" class="form-control" 
+                    name="vendor_rate_{{$stage->id}}" id="vendor_rate" value="{{$stage->vendor_rate}}" required>
+                  </div>
+                </div>
+                <div class="row">
+               <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
                     <label for="exampleInputFile">Delivery Deadline <span class="required"> *</span> </label>
                     <div style="padding:10px;" class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
                       <input name="vendor_deadline_{{$stage->id}}" style="width:90%; height:40px;" size="16"
-                      value="{{UTC_To_LocalTime($stage->deadline, Auth::user()->timezone)}}" type="text" value="">
+                      class="form-control" value="{{UTC_To_LocalTime($stage->deadline, Auth::user()->timezone)}}" type="text" value="">
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>
                 </div>
+                <div class="form-group col-md-6">
+                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <input type="number" step="1" min="1" class="form-control" name="required_docs_{{$stage->id}}" value="{{$stage->required_docs}}" required>
+              </div>
                 </div>
           
           <div class="row">        
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
               <label> Instructions</label>
-              <textarea class="form-control" name="instructions_edit_{{$stage->id}}" rows="3" 
+              <textarea class="form-control" name="instructions_{{$stage->id}}" rows="3" 
               value="">{{$stage->instructions}}</textarea>
             </div>
           </div> 
@@ -692,15 +734,16 @@ $('.select2bs4').select2({
 })
 
 $(".form_datetime").datetimepicker({
-        format: "yy-mm-dd H:i:s",
+        format: "dd-M-yy H:i:s",
         autoclose: true,
         todayBtn: true,
        // startDate: 
-        minuteStep: 10
+        minuteStep: 15
     });
   var type = "{{$project->type}}"
   $("#project_type option[value="+type+"]").attr("selected", "selected");
-
+  var unit = "{{$stage->vendor_rateUnit}}"
+  $("#rate_unit option[value="+unit+"]").attr("selected", "selected");
  /// update project 
 $('#update').click(function(){
   $('#update_div').fadeIn();

@@ -11,11 +11,11 @@
 |
 */
 //Route::get('/','seedUser@index');
-/*
+
 Route::get('/linkstorage', function () {
    Artisan::call('storage:link');
 });
-*/
+
 Route::get('/', function () {
     return view('auth.login');
 });

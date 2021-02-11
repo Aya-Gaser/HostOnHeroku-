@@ -69,6 +69,9 @@ tr{
 .required{
   color:red;
 }
+.pending{
+  color:#eb6434;
+}
 </style>
     @yield('style')
     

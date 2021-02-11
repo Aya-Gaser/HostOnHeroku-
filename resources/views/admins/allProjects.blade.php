@@ -70,7 +70,7 @@
                      <td> {{$project['name']}} </td>
                     
                      <td> 
-                      {{ $project['created_at']}}
+                      {{ UTC_To_LocalTime($project['created_at'], Auth::user()->timezone) }}
                     </td>
                     <td> 
                       {{$project['type'] }}

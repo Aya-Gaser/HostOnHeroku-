@@ -274,7 +274,7 @@ class viewProjectController extends Controller
                $stages = $project->projectStage;
                foreach($stages as $stage){
                    $vendor_id = $stage->vendor_id;
-                   if($vendor_id){
+                   if($vendor_id && $stage->status != 'completed'){
                       $vendor = User::find($vendor);
                       Mail::to($vendor->email)->send(new projectUpdate($project->wo_id,$files, null));
                     }   
@@ -291,22 +291,53 @@ class viewProjectController extends Controller
                 $isUser = true;
             }   
             $updates = [];
-            if(request()['vendor_rate_edit_'.$stage->id]){ 
-                $updates['rate'] = [$stage->vendor_rate, request()['vendor_rate_edit_'.$stage->id]];
-                $stage->vendor_rate = request()['vendor_rate_edit_'.$stage->id];
+            if(request()['words_count_'.$stage->id] ){ 
+                if($stage->vendor_wordsCount != request()['words_count_'.$stage->id]){
+                    $old_wordCount = ($stage->vendor_wordsCount)? $stage->vendor_wordsCount : 'Target';
+                    $updates['Word Count'] = [$old_wordCount, request()['words_count_'.$stage->id]];
+                    $stage->vendor_wordsCount = request()['words_count_'.$stage->id];
+                }
+            }  
+            if(request()['quality_points_'.$stage->id]){ 
+                if($stage->vendor_qualityPoints != request()['quality_points_'.$stage->id]){
+                    $old_qualityPoints = ($stage->vendor_qualityPoints)? $stage->vendor_qualityPoints : 'Target';
+                    $updates['Quality points'] = [$old_qualityPoints, request()['quality_points_'.$stage->id]];
+                    $stage->vendor_qualityPoints = request()['quality_points_'.$stage->id];
+                }
+            }    
+            if(request()['rate_unit_'.$stage->id]){ 
+                if($stage->vendor_rateUnit != request()['rate_unit_'.$stage->id]){
+                    $updates['Unit'] = [$stage->vendor_rateUnit, request()['rate_unit_'.$stage->id]];
+                    $stage->vendor_rateUnit = request()['rate_unit_'.$stage->id];
+                }
+            } 
+            if(request()['vendor_rate_'.$stage->id]){ 
+                if($stage->vendor_rate != request()['vendor_rate_'.$stage->id]){
+                    $updates['Rate'] = [$stage->vendor_rate, request()['vendor_rate_'.$stage->id]];
+                    $stage->vendor_rate = request()['vendor_rate_'.$stage->id];
+                }
+            } 
+            if(request()['required_docs_'.$stage->id]){ 
+                if($stage->required_docs != request()['required_docs_'.$stage->id]){
+                    $updates['Sent Files'] = [$stage->required_docs, request()['required_docs_'.$stage->id]];
+                    $stage->required_docs = request()['required_docs_'.$stage->id];
+                }
             } 
             if(request()['vendor_deadline_'.$stage->id]) {
                 
                 $deadline = LocalTime_To_UTC(request()['vendor_deadline_'.$stage->id], Auth::user()->timezone);
-
-                if($isUser){
-                    $updates['deadline'] = [ UTC_To_LocalTime($stage->deadline,$vendor->timezone), UTC_To_LocalTime($deadline,$vendor->timezone)];
-                    $stage->deadline = $deadline;
+                if($stage->deadline != $deadline){
+                    if($isUser){
+                        $updates['Delivery Deadline'] = [ UTC_To_LocalTime($stage->deadline,$vendor->timezone), UTC_To_LocalTime($deadline,$vendor->timezone)];
+                        $stage->deadline = $deadline;
+                    }
                 }
             }
-            if(request()['instructions_edit_'.$stage->id]){
-                $updates['instructions'] = [$stage->instructions, request()['instructions_edit_'.$stage->id]];   
-                $stage->instructions = request()['instructions_edit_'.$stage->id];
+            if(request()['instructions_'.$stage->id]){
+                if($stage->instructions != request()['instructions_'.$stage->id]){
+                    $updates['Instructions'] = [$stage->instructions, request()['instructions_'.$stage->id]];   
+                    $stage->instructions = request()['instructions_'.$stage->id];
+                }
             }
             $stage->save();
             if($isUser){

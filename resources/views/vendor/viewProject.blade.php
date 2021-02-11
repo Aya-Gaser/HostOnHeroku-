@@ -56,31 +56,37 @@ td{
               <!-- /.card-header -->
               <div class="card-body">
               <div class="row">
-              <p class="col-md-6 data"> <Span class="head"> ID  : </Span>{{$project->Wo->id}} </p>
-              <p class="data" class="data col-md-4"> <Span class="head"> Status  : </Span>
-                  {{$stage->status}} </p>
-    
-              <p class="col-md-6 data"> <Span class="head"> Deadline  : 
-              </Span>{{UTC_To_LocalTime($stage->deadline,
-                                        Auth::user()->timezone) }}
-               </p>
-              <p class="col-md-6 data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
-              <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
-              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else Target @endif</p>
-              <p class="data col-md-6"> <Span class="head">  Quality Points  : </Span>
-              @if($stage->vendor_qualityPoints) {{$stage->vendor_qualityPoints}} @else Target @endif</p>
-              <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
-              <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
-
+              <p class="col-md-6 data"> <Span class="head"> ID  : </Span>{{$project->wo_id}} </p>
               <p class="col-md-6 data"> <Span class="head"> Started At : </Span>
               {{UTC_To_LocalTime($project->created_at,
                                         Auth::user()->timezone) }}  </p>
+              <p class="col-md-6 data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
+              <p class="col-md-6 data text-danger"> <Span class="head"> Deadline  : 
+              </Span>{{UTC_To_LocalTime($stage->deadline,
+                                        Auth::user()->timezone) }}
+               </p>
+              
+    
+              
+              <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
+              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else 
+              <span class="pending">  Target </span> @endif</p>
+              <p class="data col-md-6"> <Span class="head">  Quality Points  : </Span>
+              @if($stage->vendor_qualityPoints) {{$stage->vendor_qualityPoints}} 
+              @else <span class="pending">  Target </span> @endif</p>
+              <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
+              <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
+
+              
               <p class="col-md-6 data"> <Span class="head"> Instruction : 
               </Span> {{  $stage->instructions }} </p>
               <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
               </Span> {{  $stage->required_docs }} </p>
+              
               <p class="col-md-6 data"> <Span class="head"> Deadline Time Left : 
               </Span>  {!! $deadline_difference !!} </p>
+              <p class="data col-md-6"> <Span class="head"> Status  : </Span>
+                  {{$stage->status}} </p>
               </div>
               <div class="col-sm-12 col-md-12">
                     <div class="form-group">

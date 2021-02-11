@@ -530,14 +530,24 @@ td{
                                   ->where('type','translation')->first(); @endphp
                 <p class="data col-md-5"> <Span class="head"> Deadline  : </Span>
                 {{ UTC_To_LocalTime($transStage->deadline, Auth::user()->timezone) }}</p>
-                <p class="data col-md-4"> <Span class="head">  words Count  : </Span>{{$transStage->vendor_wordsCount}} </p>
-                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>{{$transStage->vendor_qualityPoints}} </p>
-                <p class="data col-md-4"> <Span class="head">  Rate unit : </Span>{{$transStage->vendor_rateUnit}} </p>
+                <p class="data col-md-4"> <Span class="head">  Word Count  : </Span>
+                 @if($transStage->vendor_wordsCount)  {{$transStage->vendor_wordsCount}}
+                  @else   <span class="text-danger"> Target </span> 
+                  @endif 
+                  </p>
+                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>
+                  @if($transStage->vendor_qualityPoints)  {{$transStage->vendor_qualityPoints}}
+                  @else   <span class="text-danger"> Target </span> 
+                  @endif
+                 </p>
+                <p class="data col-md-4"> <Span class="head"> Unit : </Span>{{$transStage->vendor_rateUnit}} </p>
                
                 <p class="data col-md-3"> <Span class="head"> Translator Rate  : </Span>{{$transStage->vendor_rate}} </p>
                 <p class="data col-md-4"> <Span class="head">Translator : </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
                 @else <span  class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
-
+                <p class="data col-md-4"> <Span class="head"> Number Of Files  : </Span>
+               
+               {{$transStage->required_docs}} </p>
                 <p class="data col-md-4"> <Span class="head"> Status  : </Span>
                
                   {{$transStage->status}} </p>
@@ -575,30 +585,61 @@ td{
                 <div class="card-body">
                
                 <div class="row">
-               
-                <div class="form-group col-md-6">
-                  <label for="exampleInputEmail1">Rate</label>
-                   <input type="number" min="0.1" step="0.1" class="form-control" 
-                   name="vendor_rate_edit_{{$transStage->id}}" id="vendor_rate" 
-                   value="{{$transStage->vendor_rate}}" placeholder="">
-                 </div>
-                  
-          
-          <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="words_count">Word Count<span
+                        class="required">*</span></label>
+                    <input type="number" min="0" step="1" class="form-control" name="words_count_{{$transStage->id}}"
+                     value="{{$transStage->vendor_wordsCount}}" id="words_count" placeholder="Enter 0 if Target " required>
+
+                  </div>
+                  <div class="form-group col-md-6">
+                        <label class="form-control-label" for="quality_points">Quality Points<span
+                            class="required">*</span></label>
+                        <input type="number" min="0" class="form-control" name="quality_points_{{$transStage->id}}"
+                        value="{{$transStage->vendor_qualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
+
+                  </div>
+                </div>   
+                <div class="row">          
+  
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label" for="vendor_rateUnit"> Unit
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="rate_unit_{{$transStage->id}}" id="rate_unit_translation"
+                        data-placeholder="select vendor Rate Unit" required>
+                        <option disabled >Select</option>
+                        <option value="Word Count" >Word Count  </option>
+                        <option value="Hour" >Hour  </option>
+                        <option value="Flat" >Flat  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1"> Rate <span class="required">*</span></label>
+                    <input type="number" step="0.01" min="0.01" class="form-control" 
+                    name="vendor_rate_{{$transStage->id}}" id="vendor_rate" value="{{$transStage->vendor_rate}}" required>
+                  </div>
+                </div>
+                <div class="row">
+               <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
                     <label for="exampleInputFile">Delivery Deadline <span class="required"> *</span> </label>
                     <div style="padding:10px;" class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
                       <input name="vendor_deadline_{{$transStage->id}}" style="width:90%; height:40px;" size="16"
-                      value="{{UTC_To_LocalTime($transStage->deadline, Auth::user()->timezone)}}" type="text" value="" readonly>
+                      class="form-control" value="{{UTC_To_LocalTime($transStage->deadline, Auth::user()->timezone)}}" type="text" value="">
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>
                 </div>
+                <div class="form-group col-md-6">
+                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <input type="number" step="1" min="1" class="form-control" name="required_docs_{{$transStage->id}}" value="{{$transStage->required_docs}}" required>
+              </div>
                 </div>
           
           <div class="row">       
                 <div class="form-group col-md-6">
               <label> Instructions</label>
-              <textarea class="form-control" name="instructions_edit_{{$transStage->id}}" rows="3" 
+              <textarea class="form-control" name="instructions_{{$transStage->id}}" rows="3" 
               value="" >{{$transStage->instructions}}</textarea>
             </div> 
           </div> 
@@ -685,13 +726,24 @@ td{
                 <p class="data col-md-5"> <Span class="head"> Deadline  : </Span>
                 {{ UTC_To_LocalTime($editStage->deadline, Auth::user()->timezone) }}
                 </p>
-                <p class="data col-md-4"> <Span class="head">  words Count  : </Span>{{$editStage->vendor_wordsCount}} </p>
-                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>{{$editStage->vendor_qualityPoints}} </p>
-                <p class="data col-md-4"> <Span class="head">  Rate unit : </Span>{{$editStage->vendor_rateUnit}} </p>
+                <p class="data col-md-4"> <Span class="head">  Word Count  : </Span>
+                 @if($editStage->vendor_wordsCount)  {{$editStage->vendor_wordsCount}}
+                  @else   <span class="text-danger"> Target </span> 
+                  @endif 
+                </p>
+                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>
+                 @if($editStage->vendor_qualityPoints)  {{$editStage->vendor_qualityPoints}}
+                  @else   <span class="text-danger"> Target </span> 
+                  @endif
+                  </p>
+                <p class="data col-md-4"> <Span class="head"> Unit : </Span>{{$editStage->vendor_rateUnit}} </p>
              
                 <p class="data col-md-3"> <Span class="head"> Editor Rate  : </Span>{{$editStage->vendor_rate}} </p>
                 <p class="data col-md-4"> <Span class="head">Editor : </Span>  @if($project->editor_id) {{App\User::find($project->editor_id)->name}} 
                 @else <span style="color:red;"> NOT ACCEPTED YET  @endif </span> </p>
+                <p class="data col-md-4"> <Span class="head"> Number Of Files  : </Span>
+               
+               {{$editStage->required_docs}} </p>
                 <p class="data col-md-4"> <Span class="head"> Status  : </Span>
                 
                   {{$editStage->status}} </p>
@@ -729,30 +781,61 @@ td{
                 <div class="card-body">
                
                 <div class="row">
-               
-                <div class="form-group col-md-6">
-                  <label for="exampleInputEmail1">Rate</label>
-                   <input type="number" min="0.1" step="0.1" class="form-control" 
-                   name="vendor_rate_edit_{{$editStage->id}}" id="vendor_rate" 
-                   value="{{$editStage->vendor_rate}}" placeholder="">
-                 </div>
-                     
-          
-          <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="words_count">Word Count<span
+                        class="required">*</span></label>
+                    <input type="number" min="0" step="1" class="form-control" name="words_count_{{$editStage->id}}"
+                     value="{{$editStage->vendor_wordsCount}}" id="words_count" placeholder="Enter 0 if Target " required>
+
+                  </div>
+                  <div class="form-group col-md-6">
+                        <label class="form-control-label" for="quality_points">Quality Points<span
+                            class="required">*</span></label>
+                        <input type="number" min="0" class="form-control" name="quality_points_{{$editStage->id}}"
+                        value="{{$editStage->vendor_qualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
+
+                  </div>
+                </div>   
+                <div class="row">          
+  
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label" for="vendor_rateUnit"> Unit
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="rate_unit_{{$editStage->id}}" id="rate_unit_editing"
+                        data-placeholder="select vendor Rate Unit" required>
+                        <option disabled >Select</option>
+                        <option value="Word Count" >Word Count  </option>
+                        <option value="Hour" >Hour  </option>
+                        <option value="Flat" >Flat  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1"> Rate <span class="required">*</span></label>
+                    <input type="number" step="0.01" min="0.01" class="form-control" 
+                    name="vendor_rate_{{$editStage->id}}" id="vendor_rate" value="{{$editStage->vendor_rate}}" required>
+                  </div>
+                </div>
+                <div class="row">
+               <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
                     <label for="exampleInputFile">Delivery Deadline <span class="required"> *</span> </label>
                     <div style="padding:10px;" class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
                       <input name="vendor_deadline_{{$editStage->id}}" style="width:90%; height:40px;" size="16"
-                      value="{{UTC_To_LocalTime($editStage->deadline, Auth::user()->timezone)}}" type="text" value="" readonly>
+                      class="form-control" value="{{UTC_To_LocalTime($editStage->deadline, Auth::user()->timezone)}}" type="text" value="">
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>
                 </div>
+                <div class="form-group col-md-6">
+                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <input type="number" step="1" min="1" class="form-control" name="required_docs_{{$editStage->id}}" value="{{$editStage->required_docs}}" required>
+              </div>
                 </div>
           
             <div class="row">   
                 <div class="form-group col-md-6">
               <label> Instructions</label>
-              <textarea class="form-control" name="instructions_edit_{{$editStage->id}}" rows="3" 
+              <textarea class="form-control" name="instructions_{{$editStage->id}}" rows="3" 
               value="" >{{$editStage->instructions}}</textarea>
             </div>     
           </div>             
@@ -890,6 +973,12 @@ $(".form_datetime").datetimepicker({
     });
   var type = "{{$project->type}}"
   $("#project_type option[value="+type+"]").attr("selected", "selected");
+
+  var unitTranslation = "{{$transStage->vendor_rateUnit}}"
+  $("#rate_unit_translation option[value="+unitTranslation+"]").attr("selected", "selected");
+
+  var unitEditing = "{{$editStage->vendor_rateUnit}}"
+  $("#rate_unit_editing option[value="+unitEditing+"]").attr("selected", "selected");
 
 //update project  
 $('#update').click(function(){

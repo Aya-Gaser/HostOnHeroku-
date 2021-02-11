@@ -60,7 +60,6 @@
               {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
                </p>
               <p class="data"> <Span class="head"> Client Number : </Span> {{App\client::find($wo->client_id)->code}} </p>
-              <p class="data"> <Span class="head"> Client Rate  : </Span>{{$wo->client_rate}} </p>
               <p class="data" > <Span class="head"> Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
 
               <p class="data"> <Span class="head"> Created At : </Span> 
@@ -121,22 +120,22 @@
                   <label class="form-control-label" for="quality_points">Quality Points<span
                       class="required">*</span></label>
                   <input type="number" min="0" class="form-control" name="quality_points"
-                  value="{{$wo->quality_points}}" id="quality_points" placeholder="Enter 0 if Target " required>
+                    id="quality_points" placeholder="Enter 0 if Target " required>
 
                     </div>
            </div>   
            <div class="row">          
   
               <div class="form-group col-md-6">
-                        <label class="form-control-label" for="vendor_rateUnit">Rate Unit
+                        <label class="form-control-label" for="vendor_rateUnit"> Unit
                         <span class="required">*</span>
                         </label>
                         <select class="form-control" name="rate_unit" id="rate_unit"
                           data-placeholder="select vendor Rate Unit" required>
                           <option disabled >Select</option>
-                          <option value="words_count" >Words Count  </option>
-                          <option value="hour" >Hour  </option>
-                          <option value="flat" >Flat  </option>
+                          <option value="Words Count" >Word Count  </option>
+                          <option value="Hour" >Hour  </option>
+                          <option value="Flat" >Flat  </option>
                         </select>
                     </div>
               <div class="form-group col-md-6">
@@ -150,7 +149,7 @@
                 <textarea class="form-control" name="instructions" rows="3" placeholder="Enter ..."></textarea>
             </div>
             <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Sent Files <span class="required">*</span></label>
+                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
                 <input type="number" step="1" min="1" class="form-control" name="required_docs" id="" placeholder="Enter sent files number" required>
               </div>
            
@@ -233,7 +232,7 @@
                 </div>
                 <div class="row">
             <div class="form-group col-md-6">
-                  <label class="form-control-label" for="words_count">Words Count<span
+                  <label class="form-control-label" for="words_count">Word Count<span
                       class="required">*</span></label>
                   <input type="number" min="0" step="1" class="form-control" name="words_count_edit"
                   id="words_count" placeholder="Enter 0 if Target " required>
@@ -243,22 +242,22 @@
                   <label class="form-control-label" for="quality_points">Quality Points<span
                       class="required">*</span></label>
                   <input type="number" min="0" class="form-control" name="quality_points_edit"
-                  value="{{$wo->quality_points}}" id="quality_points" placeholder="Enter 0 if Target " required>
+                    id="quality_points" placeholder="Enter 0 if Target " required>
 
                     </div>
            </div>   
            <div class="row">          
   
               <div class="form-group col-md-6">
-                        <label class="form-control-label" for="vendor_rateUnit">Rate Unit
+                        <label class="form-control-label" for="vendor_rateUnit"> Unit
                         <span class="required">*</span>
                         </label>
                         <select class="form-control" name="rate_unit_edit" id="rate_unit"
                           data-placeholder="select vendor Rate Unit" required>
                           <option disabled >Select</option>
-                          <option value="words_count" >Words Count  </option>
-                          <option value="hour" >Hour  </option>
-                          <option value="flat" >Flat  </option>
+                          <option value="Words Count" >Word Count  </option>
+                          <option value="Hour" >Hour  </option>
+                          <option value="Flat" >Flat  </option>
                         </select>
                     </div>
               <div class="form-group col-md-6">
@@ -272,7 +271,7 @@
                         <textarea class="form-control" name="instructions_edit" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                     <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Sent Files <span class="required">*</span></label>
+                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
                 <input type="number" step="1" min="1" class="form-control" name="required_docs_edit" id="" placeholder="Enter sent files number" required>
               </div>
                    

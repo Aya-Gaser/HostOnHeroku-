@@ -39,20 +39,22 @@
               <p class="data col-md-6"> <Span class="head"> Project Type : </Span> {{$stage->type}} </p>
               <p class="data col-md-6"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
               <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
-              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else Target @endif</p>
+              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}}
+               @else <span class="pending">  Target </span> @endif</p>
               <p class="data col-md-6"> <Span class="head">  Quality Points  : </Span>
-              @if($stage->vendor_qualityPoints) {{$stage->vendor_qualityPoints}} @else Target @endif</p>
+              @if($stage->vendor_qualityPoints) {{$stage->vendor_qualityPoints}}
+               @else <span class="pending">  Target </span> @endif</p>
               <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
               <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
               <p class="col-md-6 data"> <Span class="head"> Instruction : 
               </Span> {{  $stage->instructions }} </p>
               <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
               </Span> {{  $stage->required_docs }} </p>
-              <p class="data col-md-6"> <Span class="head"> Final Delivery Deadline  : </Span>
+              <p class="danger col-md-6"> <Span class="head"> Final Delivery Deadline  : </Span>
               {{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
-              <p class="data col-md-6"> <Span class="head"> Offer Expires Date :  </Span>
+              <p class="danger col-md-6"> <Span class="head"> Offer Expires Date :  </Span>
               @php $date = ($group == 1)? 'G1_acceptance_deadline' : "G2_acceptance_deadline"; @endphp
               {{UTC_To_LocalTime($stage->$date,
                                         Auth::user()->timezone) }}

@@ -35,7 +35,7 @@
               <div class="card-body">
               <p class="data"> <Span class="head"> ID : </Span>{{$user->id}} </p>
               <p class="data"> <Span class="head">Name : </Span>{{$user->name}} </p>
-              <p class="data"> <Span class="head"> User Name  : </Span>{{$user->Name}} </p>
+              <p class="data"> <Span class="head"> User Name  : </Span>{{$user->userName}} </p>
               <p class="data"> <Span class="head"> Email	  : </Span>{{$user->email}} </p>
               <p class="data"> <Span class="head"> Native Language  : </Span>{{$user->native_language}} </p>
               <p class="data"> <Span class="head"> Timezone	  : </Span>{{$user->timezone}} </p>
@@ -52,7 +52,7 @@
         </div>  
       <!-- Default box -->
      
-        <div class="card col-md-10">
+        <div class="card card-primary col-md-10">
               <div class="card-header">
                   <h5> Update Information</h5>      
               </div>

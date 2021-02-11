@@ -62,6 +62,12 @@ tr{
     background-color: #007bff;
     color: #fff;
 }
+.required{
+  color:red;
+}
+.pending{
+  color:#eb6434;
+}
 </style>
     @yield('style')
     

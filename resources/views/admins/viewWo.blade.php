@@ -58,18 +58,25 @@ td{
               <!-- /.card-header -->
               <div class="card-body">
               <div class="row">
+              <p class="data col-md-6"> <Span class="head"> ID :  </Span>
+                {{$wo->id}}
+                </p>
+                <p class="data col-md-6"> <Span class="head"> Created At : </Span>
+                {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
+                </p>
                 <p class="data col-md-6"> <Span class="head"> Client : </Span> {{App\client::find($wo->client_id)->first()->code}} - {{App\client::find($wo->client_id)->first()->name}}  </p>
-                <p class="data col-md-6" > <Span class="head"> Deadline  : </Span>
+                <p class="data text-danger col-md-6" > <Span class="head"> Deadline  : </Span>
                 {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
                 </p>
               </div>
               <div class="row">
                 <p class="data col-md-6"> <Span class="head"> Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
-                <p class="data col-md-6"> <Span class="head"> Created At : </Span>
-                {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
-                </p>
-                <p class="data col-md-6"> <Span class="head">Sent Files Number </Span>
+               
+                <p class="data col-md-6"> <Span class="head"> Number Of Files :  </Span>
                 {{$wo->sent_docs}}
+                </p>
+                <p class="data col-md-6"> <Span class="head">Created By :  </Span>
+                {{App\User::find($wo->created_by)->name}}
                 </p>
                 
               </div>  
@@ -119,7 +126,11 @@ td{
                       </td>
                       <td>
                     
-                      {{$task['client_wordsCount']}}
+                      @if($task['client_wordsCount']) 
+                         {{$task['client_wordsCount']}}
+                      @else 
+                        <span class="text-danger"> Target </span>
+                      @endif     
                       
                       </td>
                       <td>
@@ -319,7 +330,10 @@ td{
                   </div>
                  </div>
                
-          
+                 <div class="form-group col-md-6">
+                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <input type="number" step="1" min="1" class="form-control" name="sent_docs" id="" value="{{$wo->sent_docs}}" required>
+              </div>
                  <div class="row">
                  
                  <div class="col-md-6">
@@ -363,10 +377,16 @@ td{
                       <div class="card col-md-12">
                   <div class="card-header">
                   <h4 style="position:relative; top:10px;"> WO Projects </h4>
-                  <button type="button" class="btn btn-success" style=" float: right; margin-right:10px;"> 
-                          <a href="{{route('management.select-projectType', $wo->id )}}">
-                         + ADD PROJECT </a>
-                          </button>
+                  <div class="card-tools">
+                      <a href="{{ route('management.create-project',['id'=> $wo->id,
+                      'type'=> 'single'] )}}">
+                    <button type="ok" class="btn btn-primary ">Add Single Project</button>
+                            </a>
+                    <a href="{{ route('management.create-project',['id'=> $wo->id,
+                        'type'=> 'linked' ] )}}">
+                    <button type="ok" class="btn btn-success ">Add Linked Project</button>
+                    </a>
+                  </div>  
                   </div>
                   <div class="card-body">
                   @php $i=0; @endphp
@@ -440,14 +460,14 @@ td{
                       <select class="form-control" name="task_type" id="task_type"
                         data-placeholder="select Task Type">
                         <option disabled >Select</option>
-                        <option value="translation" >Translation  </option>
-                        <option value="editing" >Editing  </option>
-                        <option value="dtp" >DTP  </option>
-                        <option value="linked" >Linked  </option>
+                        <option value="Translation" >Translation  </option>
+                        <option value="Editing" >Editing  </option>
+                        <option value="Dtp" >DTP  </option>
+                        <option value="Linked" >Linked  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-6">
-                    <label class="form-control-label" for="client_wordsCount">Client Words Count<span
+                    <label class="form-control-label" for="client_wordsCount">Client Word Count<span
                     class="required">*</span></label>
                     <input type="number" min="0" class="form-control" name="client_wordsCount"
                      id="client_wordsCount" placeholder="Enter 0 if Target">
@@ -463,9 +483,9 @@ td{
                       <select class="form-control" name="client_rateUnit" id="client_rateUnit"
                         data-placeholder="select Client Rate Unit">
                         <option disabled >Select</option>
-                        <option value="words_count" >Words Count  </option>
-                        <option value="hour" >Hour  </option>
-                        <option value="flat" >Flat  </option>
+                        <option value="Words Count" >Word Count  </option>
+                        <option value="Hour" >Hour  </option>
+                        <option value="Flat" >Flat  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-6">
@@ -483,9 +503,9 @@ td{
                       <select class="form-control" name="vendor_rateUnit" id="vendor_rateUnit"
                         data-placeholder="select vendor Rate Unit">
                         <option disabled >Select</option>
-                        <option value="words_count" >Words Count  </option>
-                        <option value="hour" >Hour  </option>
-                        <option value="flat" >Flat  </option>
+                        <option value="Words Count" >Words Count  </option>
+                        <option value="Hour" >Hour  </option>
+                        <option value="Flat" >Flat  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-6">

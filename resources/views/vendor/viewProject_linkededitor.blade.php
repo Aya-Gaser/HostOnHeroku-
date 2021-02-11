@@ -56,31 +56,36 @@ td{
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <p class="data" class="data col-md-4"> <Span class="head"> Status  : </Span>
-                  {{$stage->status}} </p>
-
-              <p class="data"> <Span > ID  : </Span>{{$project->id}} </p>
-
-              <p class="data"> <Span class="head"> name : </Span>{{$project->name}} </p>
-              <p class="data"> <Span class="head"> Deadline  : 
+              <p class="col-md-6 data"> <Span class="head"> ID  : </Span>{{$project->wo_id}} </p>
+              <p class="col-md-6 data"> <Span class="head"> Started At : </Span>
+              {{UTC_To_LocalTime($project->created_at,
+                                        Auth::user()->timezone) }}  </p>
+              <p class="col-md-6 data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
+              <p class="col-md-6 data text-danger"> <Span class="head"> Deadline  : 
               </Span>{{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
-              <p class="data"> <Span class="head" style=""> Client Number : </Span> {{App\client::find($wo->client_id)->code}} </p>
-              <p class="data"> <Span class="head">  Rate  : 
-              </Span>{{ $stage->vendor_rate}} </p>
-              <p class="data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
-               <p class="data"> <Span class="head"> Words Count : </Span> {{$wo->words_count}} </p>
-
-              <p class="data"> <Span class="head"> Created At : </Span> 
-              {{UTC_To_LocalTime($project->created_at,
-                                        Auth::user()->timezone) }}</p>
-                                        <p class="col-md-6 data"> <Span class="head"> Instruction : 
+              
+    
+              
+              <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
+              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else 
+              <span class="pending">  Target </span> @endif</p>
+              <p class="data col-md-6"> <Span class="head">  Quality Points  : </Span>
+              @if($stage->vendor_qualityPoints) {{$stage->vendor_qualityPoints}} 
+              @else <span class="pending">  Target </span> @endif</p>
+              <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
+              <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
+              
+              <p class="col-md-6 data"> <Span class="head"> Instruction : 
               </Span> {{  $stage->instructions }} </p>
               <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
               </Span> {{  $stage->required_docs }} </p>
-              <p class="data"> <Span class="head">  Deadline Time Left : 
+              
+              <p class="col-md-6 data"> <Span class="head"> Deadline Time Left : 
               </Span>  {!! $deadline_difference !!} </p>
+              <p class="data col-md-6"> <Span class="head"> Status  : </Span>
+                  {{$stage->status}} </p>
               <div class="col-sm-12 col-md-12">
                     <div class="form-group">
                     <br>

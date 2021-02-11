@@ -78,7 +78,7 @@ class viewWoController extends Controller
         $wo = WO::find($wo_id);
         $wo->isReceived = true;
         $wo->save();
-        $woCreator = User::find($wo->created_by_id);
+        $woCreator = User::find($wo->created_by);
         Mail::to($woCreator->email)->send(new WoRecieved($wo->id));
         return back();
     }
@@ -87,19 +87,24 @@ class viewWoController extends Controller
 
         $wo = WO::findOrFail($woId);
         $request = new Request();
-        if(request()['client_number'])
+        if(request()['client_number'] && $wo->client_id != request()['client_number'] )
            $wo->client_id = request()['client_number'];
-        if(request()['from_language'])
+        if(request()['from_language'] && $wo->from_language != request()['from_language'])
            $wo->from_language = request()['from_language'];
-        if(request()['to_language'])
-           $wo->to_language = request()['to_language'];
-        if(request()['deadline'])
-           $wo->deadline = LocalTime_To_UTC(request()['deadline'], Auth::user()->timezone); 
-        if(request()['client_instructions'])
-           $wo->client_instructions = request()['client_instructions'];
-        if(request()['general_instructions'])
-           $wo->general_instructions = request()['general_instructions'];   
 
+        if(request()['to_language'] && $wo->to_language != request()['to_language'])
+           $wo->to_language = request()['to_language'];
+        if(request()['deadline']){
+            $deadline = LocalTime_To_UTC(request()['deadline'], Auth::user()->timezone);
+           if($wo->deadline != $deadline)
+               $wo->deadline = $deadline; 
+        }
+        if(request()['client_instructions'] && $wo->client_instructions != request()['client_instructions'])
+           $wo->client_instructions = request()['client_instructions'];
+        if(request()['general_instructions'] && $wo->general_instructions = request()['general_instructions'])
+           $wo->general_instructions = request()['general_instructions'];   
+        if(request()['sent_docs'] && $wo->sent_docs != request()['sent_docs'])
+           $wo->sent_docs = request()['sent_docs'];     
         $wo->save(); 
 
         // UPLOAD FILES

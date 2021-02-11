@@ -68,7 +68,7 @@
                   <tbody>
                   @foreach($stages as $stage)
                    <tr>
-                    <td> {{$stage->project_id}} </td>
+                    <td> {{$stage->wo_id}} </td>
                     <td> {{App\projects::find($stage['project_id'])->name }} </td>
                     <td> {{$stage['type']}} </td>
                     <td> {{UTC_To_LocalTime(App\projects::where('id', $stage['project_id'])->first()->delivery_deadline,
@@ -77,7 +77,7 @@
                     <td> 
                     {{$stage->vendor_rate}} </td>
                     <td> {{ $stage['status']}} </td>
-                    <td> <button class="btn btn-success">
+                    <td> <button type="button" class="btn btn-success">
                      <a href="{{route('vendor.view-project', $stage['id'])}}" style="color:white;"> view </a>
                      </button> </td>
                    </tr>
