@@ -150,9 +150,9 @@
                       <select class="form-control" name="client_rateUnit1" id="client_rateUnit1"
                         data-placeholder="select Client Rate Unit">
                         <option disabled >Select</option>
-                        <option value="words_count" >Words Count  </option>
-                        <option value="hour" >Hour  </option>
-                        <option value="flat" >Flat  </option>
+                        <option value="Word Count" >Word Count  </option>
+                        <option value="Hour" >Hour  </option>
+                        <option value="Flat" >Flat  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-2">
@@ -231,7 +231,7 @@
                    <div class="col-md-6">
                      <div class="form-group">
                        <label class="form-control-label"
-                        for="source_document">Refrence Files <span class="required"></span></label>
+                        for="source_document">Reference Files <span class="required"></span></label>
                     
                         <div class="file-loading">  
                          <input id="reference_files" name="reference_files[]"

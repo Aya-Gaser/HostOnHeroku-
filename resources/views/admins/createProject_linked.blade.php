@@ -196,7 +196,7 @@
                    <div class="col-md-6">
                      <div class="form-group">
                        <label class="form-control-label"
-                        for="source_document">Refrence Files </label>
+                        for="source_document">Reference Files </label>
                     
                         <div class="file-loading">  
                          <input id="reference_files" name="reference_files[]"

@@ -175,7 +175,7 @@ td{
                    <div class="col-md-4">
                      <div class="form-group">
                        <label class="form-control-label"
-                        for="source_document">Refrence Files <span class="required"></span></label>
+                        for="source_document">Reference Files <span class="required"></span></label>
                     
                         <div class="file-loading">  
                          <input id="reference_files" name="reference_files[]"
