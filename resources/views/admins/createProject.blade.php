@@ -137,7 +137,7 @@
                         <select class="form-control" name="rate_unit" id="rate_unit"
                           data-placeholder="select vendor Rate Unit" required>
                           <option disabled >Select</option>
-                          <option value="Words Count" >Word Count  </option>
+                          <option value="Word Count" >Word Count  </option>
                           <option value="Hour" >Hour  </option>
                           <option value="Flat" >Flat  </option>
                         </select>
