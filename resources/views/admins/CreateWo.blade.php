@@ -169,9 +169,9 @@
                       <select class="form-control" name="vendor_rateUnit1" id="vendor_rateUnit1"
                         data-placeholder="select vendor Rate Unit">
                         <option disabled >Select</option>
-                        <option value="words_count" >Words Count  </option>
-                        <option value="hour" >Hour  </option>
-                        <option value="flat" >Flat  </option>
+                        <option value="Word Count" >Word Count  </option>
+                        <option value="Hour" >Hour  </option>
+                        <option value="Flat" >Flat  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-2">

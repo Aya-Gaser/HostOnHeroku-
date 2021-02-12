@@ -114,7 +114,7 @@ td{
                     </div>
                 </div>
                 <p> 
-                <button type="button" id="deleteProject" class="btn btn-danger">Delete Wo</button>
+                <button type="button" id="deleteProject" class="btn btn-danger">Delete Project</button>
                  <button type="update" id="update" class="btn btn-primary">Update Project</button>
                </p> 
               </div>

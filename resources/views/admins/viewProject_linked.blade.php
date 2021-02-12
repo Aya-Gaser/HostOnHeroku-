@@ -117,7 +117,7 @@ td{
                     </div>
                 </div>
                 <p> 
-                <button type="button" id="deleteProject" class="btn btn-danger">Delete Wo</button>
+                <button type="button" id="deleteProject" class="btn btn-danger">Delete Project</button>
                  <button type="update" id="update" class="btn btn-primary">Update Project</button>
                </p> 
               </div>
@@ -965,11 +965,11 @@ $('.select2bs4').select2({
 })
 
 $(".form_datetime").datetimepicker({
-        format: "yy-mm-dd H:i:s",
+        format: "dd-M-yy H:i:s",
         autoclose: true,
         todayBtn: true,
        // startDate: 
-        minuteStep: 10
+        minuteStep: 15
     });
   var type = "{{$project->type}}"
   $("#project_type option[value="+type+"]").attr("selected", "selected");

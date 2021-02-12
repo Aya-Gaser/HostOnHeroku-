@@ -69,7 +69,7 @@
                       Deadline
                       </th>
                       <th style="width: ">
-                      Client Rate
+                      Language
                       </th>
                       <th style="width:  " >
                         Created At
@@ -97,7 +97,7 @@
                       </td>
                       <td>
                          
-                      {{$Pending_wo['client_rate']}}
+                      {{$Pending_wo['from_language']}} ▸ {{$Pending_wo['to_language']}}
                       </td>
                       <td>
                       {{ UTC_To_LocalTime($Pending_wo['created_at'], Auth::user()->timezone)}}
@@ -150,7 +150,7 @@
                       Deadline
                       </th>
                       <th style="width: ">
-                      Client Rate	
+                      Language
                       </th>
                       <th style="width: " >
                         Created At
@@ -179,7 +179,7 @@
                       </td>
                       <td style="text-align:center;">
                          
-                      {{$completed_wo['client_rate']}}
+                      {{$completed_wo['from_language']}} ▸ {{$completed_wo['to_language']}}
                       </td>
                       <td>
                       {{ UTC_To_LocalTime($completed_wo['created_at'], Auth::user()->timezone)}}   
