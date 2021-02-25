@@ -15,7 +15,7 @@ class project_sourceFile extends Model
         return $this->belongsTo('App\WO'); 
      }
 
-     public function projects(){
+     public function project(){
         return $this->belongsTo('App\projects'); 
      } 
 
@@ -24,7 +24,23 @@ class project_sourceFile extends Model
     }
     public function finalizedFile(){
         return $this->hasOne('App\finalizedFile','sourceFile_id');
+    }
+    public function proofedFile(){
+        return $this->hasMany('App\proofedFile','sourceFile_id');
+     } 
+    
+    public function proofed_vendorFile(){
+        return $this->proofedFile()->where('type','vendor_file');
+    }
+    public function proofed_clientFile(){
+        return $this->proofedFile()->where('type','client_file');
+    }
+    public function proofed_projectsManagerFile(){
+        return $this->proofedFile()->where('type','projectsManager_file');
     } 
+    
+
+    
     public  static function boot() {
         parent::boot();
      
@@ -36,6 +52,7 @@ class project_sourceFile extends Model
             $sourceFile->vendorDelivery()->delete();//
             $sourceFile->finalizedFile()->delete();//
             $sourceFile->editedFile()->delete();// 
+            $sourceFile->proofedFile()->delete();// 
             return true;
         });
      }

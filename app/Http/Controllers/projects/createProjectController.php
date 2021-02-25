@@ -28,6 +28,7 @@ use App\editingDetails;
 use App\projectStage;
 use App\project_sourceFile;
 use App\projectFile;
+use App\woTasksNeeded;
 
 class createProjectController extends Controller
 {
@@ -99,8 +100,9 @@ class createProjectController extends Controller
     $project = new projects(); 
     $project->wo_id = $wo_id;
     //$wo = WO::find($wo_id);
-    $project->numInWo = 0; ///////////////////////???????
-    $project->type = ($isLinked)? 'linked' : $request->input('project_type');
+    $project->woTask_id = $request->input('woTask_id');; ///////////////////////???????
+    $project->type = woTasksNeeded::find($project->woTask_id)->first()->type;
+    //($isLinked)? 'linked' : $request->input('project_type');
     $project->name = $request->input('project_name');
     $UTCDeadline = LocalTime_To_UTC($request->input('delivery_deadline'), Auth::user()->timezone);
     $project->delivery_deadline = $UTCDeadline;
@@ -119,8 +121,8 @@ class createProjectController extends Controller
     $wo->save();
     ///// CREATE PROJECT STAGES//////// instructions_editing
     if($isLinked){
-        $transStage = $this->createStage($wo_id,$project->id, 'translation', false, false );
-        $editStage = $this->createStage($wo_id,$project->id, 'editing', true, true );
+        $transStage = $this->createStage($wo_id,$project->id, 'Translation', false, false );
+        $editStage = $this->createStage($wo_id,$project->id, 'Editing', true, true );
     }
     else{
        $transStage =  $this->createStage($wo_id, $project->id, $project->type, true, false);
@@ -218,7 +220,6 @@ class createProjectController extends Controller
                 $project_sourceFile->file_name = $attachment->getClientOriginalName();
                 $project_sourceFile->file = $filePath . $fileName;
                 $project_sourceFile->extension = $extension;
-                $project_sourceFile->readyTo_finalize = false;
                 $project_sourceFile->save();
             
 

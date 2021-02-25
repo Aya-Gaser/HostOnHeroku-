@@ -21,8 +21,8 @@ class WO extends Model
         return $this->hasMany('App\projectStage','wo_id');
     } 
 
-    public function woProjectsNeeded(){
-        return $this->hasMany('App\woProjectsNeeded','wo_id');
+    public function woTasksNeeded(){
+        return $this->hasMany('App\woTasksNeeded','wo_id');
     }
 
     public function woFiles(){
@@ -38,6 +38,7 @@ class WO extends Model
             });
             $wo->projects()->delete();//
             $wo->woFiles()->delete();//woFiles
+            $wo->woTasksNeeded()->delete();//woFiles
             return true;
         });
     }

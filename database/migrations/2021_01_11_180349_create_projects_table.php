@@ -18,11 +18,13 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wo_id');
-            $table->integer('numInWo');
+            $table->unsignedBigInteger('woTask_id');
+            //$table->integer('numInWo');
             $table->string('name');
             $table->string('type');
             $table->dateTime('delivery_deadline');
-            //$table->float('vendor_rate');
+            $table->boolean('isReadyToProof')->default(false);
+            $table->boolean('isReadyToFinalize')->default(false);
            // $table->longText('instructions')->nullable(); instructions_editing
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('translator_id')->nullable();

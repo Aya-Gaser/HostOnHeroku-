@@ -12,7 +12,7 @@ use App\languages;
 use App\User;
 use App\WO;
 use Auth;
-use App\woProjectsNeeded;
+use App\woTasksNeeded;
 use App\woFiles;
 class createWO extends Controller
 {
@@ -97,7 +97,7 @@ class createWO extends Controller
     public function storeWo_Tasks($wo_id){
       $taskNum = request()['tasksNum'];
       for($i=1; $i<=$taskNum; $i++){
-         $task = new woProjectsNeeded();
+         $task = new woTasksNeeded();
          $task->wo_id = $wo_id;
          $task->type = request()['task_type'.$i]; 
          $task->client_wordsCount = request()['client_wordsCount'.$i];

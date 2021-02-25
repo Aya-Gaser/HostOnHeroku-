@@ -50,11 +50,11 @@
               </Span> {{  $stage->instructions }} </p>
               <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
               </Span> {{  $stage->required_docs }} </p>
-              <p class="danger col-md-6"> <Span class="head"> Final Delivery Deadline  : </Span>
+              <p class="data text-danger col-md-6"> <Span class="head"> Final Delivery Deadline  : </Span>
               {{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
-              <p class="danger col-md-6"> <Span class="head"> Offer Expires Date :  </Span>
+              <p class="data text-danger col-md-6"> <Span class="head"> Offer Expires Date :  </Span>
               @php $date = ($group == 1)? 'G1_acceptance_deadline' : "G2_acceptance_deadline"; @endphp
               {{UTC_To_LocalTime($stage->$date,
                                         Auth::user()->timezone) }}

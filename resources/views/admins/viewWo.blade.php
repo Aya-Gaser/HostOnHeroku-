@@ -119,7 +119,7 @@ td{
                   </tr>
               </thead>
               <tbody>
-             @foreach ($wo->woProjectsNeeded as $task)
+             @foreach ($wo->woTasksNeeded as $task)
               <tr>
                       <td>
                      {{$task['type']}}

@@ -32,15 +32,15 @@ class viewProjectController extends Controller
         $project = projects::findOrFail($id);
         [$delivery_files,$deliveryHistory_files] =  $this->getProject_Deliveriesfiles($project);    
         ($project->type == 'linked')? $view = 'admins.viewProject_linked': $view = 'admins.viewproject';
-        $deliveries_edited = $this->getSource_acceptedDelivery_edit($project);
-        $ifNextProject = $this->ifHas_nextProject($project);
-        [$reference_files, $target_files] = $this->getprojectsFiles($project);
+        $deliveries_edited = $this->getSource_acceptedDelivery_edited($project);
+        //$ifNextProject = $this->ifHas_nextProject($project);
+        $reference_files = $this->getprojectsFiles($project);
         $source_files = $project->project_sourceFile;
         $deadline_difference = $this->deadline_difference($project);
         return view($view)->with(['project'=>$project,'source_files'=>$source_files, 'reference_files'=> $reference_files,
-         'target_files'=> $target_files, 'delivery_files'=>$delivery_files,
+          'delivery_files'=>$delivery_files,
          'deliveryHistory_files'=>$deliveryHistory_files, 'deliveries_edited'=>$deliveries_edited,
-         'ifNextProject'=> $ifNextProject, 'deadline_difference'=>$deadline_difference]);
+          'deadline_difference'=>$deadline_difference]);
         
     }
     public function deadline_difference($project){
@@ -56,8 +56,7 @@ class viewProjectController extends Controller
     }
     public function getprojectsFiles($project){
         $reference_file =$project->projectFile->where('type','reference_file');
-        $target_file =$project->projectFile->where('type','target_file');
-        return [$reference_file, $target_file];
+        return $reference_file;
         
     }
     public function getProject_Deliveriesfiles($project){
@@ -93,11 +92,11 @@ class viewProjectController extends Controller
           return [$delivery_files,$deliveryHistory_files];
      }
 
-     public function getSource_acceptedDelivery_edit($project){
+     public function getSource_acceptedDelivery_edited($project){
         $lastStage_id = projectStage::where('project_id',$project->id)
                                     ->where('lastIn_project',1)->first()->id;
         
-        $delivery_files = projects::with('project_sourceFile', 'project_sourceFile.editedFile', 'project_sourceFile.finalizedFile')->findOrFail($project->id); 
+        $delivery_files = projects::with('project_sourceFile', 'project_sourceFile.editedFile')->findOrFail($project->id); 
        
         $lastAccepted_delivery = vendorDelivery::where('stage_id',$lastStage_id)
                                                  ->where('status','accepted')->orderBy('created_at','desc')->get();
@@ -119,6 +118,8 @@ class viewProjectController extends Controller
 
      public function store_EditedFile($project, $sourceFile){
        $project = projects::find($project);
+       $project->isReadyToProof = true;
+       $project->save();
        $editedFile = new editedFile();
         $editedFile->project_id = $project->id;
         $editedFile->sourceFile_id = $sourceFile;
@@ -154,7 +155,7 @@ class viewProjectController extends Controller
      public function send_toFinalization($sourceFile){
        
         $sourceFile = project_sourceFile::find($sourceFile);  
-        $sourceFile->readyTo_finalize = true; 
+        $sourceFile->isReadyToProof = true; 
         $sourceFile->save();
        // alert()->success('Project Created Successfully !')->autoclose(false);    
         return back();

@@ -95,21 +95,33 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::get('/sendTo-finalization/{sourceFile}', 'projects\viewProjectController@send_toFinalization')->middleware('auth')
     ->where(['sourceFile'=>'[0-9]+'])->name('send-toFinalization');
 
-    Route::post('/upload-finalizedFile/{project}/{sourceFile}', 'projects\viewProjectController@store_finalizedFile')->middleware('auth')
-    ->where(['project'=>'[0-9]+', 'sourceFile'=>'[0-9]+'])->name('upload-finalizedFile');
-
-    Route::get('/delete-finalizedFile/{finalizedFile}', 'projects\viewProjectController@delete_finalizedFile')->middleware('auth')
-    ->where(['editedFile'=>'[0-9]+'])->name('delete-finalizedFile');
-
-    Route::get('/complete-sourceFile/{sourceFile}/{compelte}', 'projects\viewProjectController@complete_reOpen_sourceFile')->middleware('auth')
-    ->where(['sourceFile'=>'[0-9]+', 'compelte'=> '[0-1]'])->name('complete-sourceFile');
-
     Route::get('/complete-projectStage/{stage}/{compelte}', 'projects\viewProjectController@complete_reOpen_vendorStage')->middleware('auth')
     ->where(['stage'=>'[0-9]+', 'compelte'=> '[0-1]'])->name('complete-stage');
+    /* PROOFING */
+    Route::get('/all-tasks-proofing', 'projects\proofingController@index')->middleware('auth')
+    ->name('allTasks-proofing');
+    Route::get('/task-proofing/{taskId}', 'projects\proofingController@taskProofing')->middleware('auth')
+    ->where(['taskId'=>'[0-9]+'])->name('task-proofing');
+    Route::post('/proof-workingFile', 'projects\proofingController@store_proofingFiles')->middleware('auth')
+    ->name('store-proofingFiles'); 
+    Route::post('/send-reviewToVendor', 'projects\proofingController@send_reviewToVendor')->middleware('auth')
+    ->name('send-reviewToVendor');
+    
+    /* FINALIZATION */ 
+    Route::get('/all-tasks-finalization', 'projects\finalizationController@index')->middleware('auth')
+    ->name('allTasks-finalization');
+    Route::get('/task-finalization/{taskId}', 'projects\finalizationController@taskFinalization')->middleware('auth')
+    ->where(['taskId'=>'[0-9]+'])->name('task-finalization');
+    Route::post('/upload-finalizedFile/{taskId}/{type}', 'projects\finalizationController@store_finalizedFile')->middleware('auth')
+    ->where(['taskId'=>'[0-9]+', 'type'=>'[aA-zZ]+'])->name('upload-finalizedFile');
 
-    Route::get('/send-finalizedFile-toNext-project/{finalizedFile}', 'projects\viewProjectController@sendFinalized_toNextProject')->middleware('auth')
-    ->where(['finalizedFile'=>'[0-9]+'])->name('send-toNextStage');
+    Route::get('/delete-finalizedFile/{finalizedFile}', 'projects\finalizationController@delete_finalizedFile')->middleware('auth')
+    ->where(['editedFile'=>'[0-9]+'])->name('delete-finalizedFile');
 
+    Route::get('/complete-sourceFile/{sourceFile}/{compelte}', 'projects\finalizationController@complete_reOpen_sourceFile')->middleware('auth')
+    ->where(['sourceFile'=>'[0-9]+', 'compelte'=> '[0-1]'])->name('complete-sourceFile');
+
+    
     Route::get('/tracking', 'projects\trackingController@index')->middleware('auth')
     ->name('projects-tracking');
 

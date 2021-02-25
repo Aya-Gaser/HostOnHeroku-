@@ -18,7 +18,7 @@ use App\languages;
 use Illuminate\Http\RedirectResponse;
 use Auth;
 use App\woFiles;
-use App\woProjectsNeeded;
+use App\woTasksNeeded;
 class viewWoController extends Controller
 {
     public function __construct()
@@ -140,7 +140,7 @@ class viewWoController extends Controller
     }
 
     public function addTask($woId){
-      $task = new woProjectsNeeded();
+      $task = new woTasksNeeded();
       $task->wo_id = $woId;
       $task->type = request()['task_type']; 
       $task->client_wordsCount = request()['client_wordsCount'];
@@ -154,7 +154,7 @@ class viewWoController extends Controller
       return back();
     }
     public function destroyTask($taskId){
-       $task = woProjectsNeeded::findOrFail($taskId);
+       $task = woTasksNeeded::findOrFail($taskId);
        $task->delete();
 
        alert()->success('Task Deleted Successfully !')->autoclose(false);

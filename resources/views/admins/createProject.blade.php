@@ -77,21 +77,22 @@
               <!-- /.card-header -->
               <!-- form start -->
               <form id="createProject" action="{{route('management.store-project',['wo'=>$wo->id, 'isLinked'=>0]  )}}" method="post" enctype="multipart/form-data">
-              @csrf
+              @csrf  
                 <div class="card-body">
                
                 <div class="row">
                 <div class="form-group col-md-6">
-                    <label class="form-control-label" for="project_type">Project Type 
+                    <label class="form-control-label" for="project_type">WO Task 
                     <span class="required">*</span>
                     </label>
-                    <select class="form-control" data-live-search="true" name="project_type" id="project_type" required>
+                    <select class="form-control" data-live-search="true" name="woTask_id" id="project_type" required>
                    <option disabled >Select</option>
-                    <option value="Translation" >Translation  </option>
-                    <option value="Editing" >Editing  </option>
-                    <option value="Dtp" >DTP  </option>
+                    @foreach($wo->woTasksNeeded as $task)
+                    <option value="{{$task->id}}" >{{$task->type}}</option>
+                    @endforeach
                     </select>
                   </div>
+                
                 <div class="form-group col-md-6">
                   <label for="exampleInputEmail1">Name  <span class="required">*</span></label>
                    <input type="text" class="form-control" name="project_name" id="name" placeholder="" required>

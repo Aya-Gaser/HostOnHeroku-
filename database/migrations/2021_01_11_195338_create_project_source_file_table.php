@@ -20,7 +20,8 @@ class CreateProjectSourceFileTable extends Migration
             $table->string('file_name');
             $table->longText('file');
             $table->string('extension');
-            $table->boolean('readyTo_finalize'); 
+            $table->boolean('isReadyToProof')->default(false);
+            $table->boolean('isReadyToFinalize')->default(false); 
             $table->boolean('isCompleted')->default(false);
             $table->timestamps();
         });

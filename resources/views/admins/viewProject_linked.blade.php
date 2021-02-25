@@ -118,7 +118,7 @@ td{
                 </div>
                 <p> 
                 <button type="button" id="deleteProject" class="btn btn-danger">Delete Project</button>
-                 <button type="update" id="update" class="btn btn-primary">Update Project</button>
+                 <button id="update" class="btn btn-primary">Update Project</button>
                </p> 
               </div>
               </div>
@@ -352,10 +352,10 @@ td{
                                     <thead>
                                         <tr>
                                         
-                                        <th width="30%">Source File</th>
-                                        <th width="30%">Final Accepted Delivery</th>
-                                        <th width="20%">Editing </th>
-                                        <th width="20%">Finalization </th>
+                                        <th width="33%">Source File</th>
+                                        <th width="33%">Final Accepted Delivery</th>
+                                        <th width="33%">Editing </th>
+                                      
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -427,74 +427,6 @@ td{
                                       @endif
                                       
                                       
-
-                                       
-                                       @if($source_file->finalizedFile)
-                                       <td>
-                                       <p>
-                                       <a href="{{asset('storage/'.$source_file->finalizedFile->file)}}"
-                                       download="{{$source_file->finalizedFile->file_name}}">
-                                        {{str_limit($source_file->finalizedFile->file_name,50)}}
-                                    </a>
-                                    </p> 
-                                    @if(!$source_file->isCompleted)
-                                    <p> 
-                                     <a method="post" href="{{route('management.delete-finalizedFile',$source_file->finalizedFile->id)}}">
-                                          <button type="button" class="btn btn-danger" > 
-                                          Delete File </button>
-                                      </a>    
-                                          
-                                     </p>
-                                     <p>
-                                     <a method="post" href="{{route('management.complete-sourceFile',['sourceFile'=>$source_file->id,'compelte'=>1] )}}">
-                                          <button type="button" class="btn btn-success" > 
-                                          Completed &check;&check; </button>
-                                      </a>    
-                                          
-                                     </p>
-                                     @else
-
-                                      @if($ifNextProject && !$source_file->finalizedFile->isSentToNext)
-                                        <p>
-                                        <a method="post" href="{{route('management.send-toNextStage', $source_file->finalizedFile->id )}}">
-                                              <button type="button" class="btn btn-success" > 
-                                              Send To Next Stage</button>
-                                          </a>    
-                                            
-                                      </p>
-                                      @elseif($ifNextProject)
-                                      <p> Sent To Next Stage &check;&check; </p>
-                                      @endif
-
-                                     <p class="success"> completed &check;&check;</p>
-                                     <p>
-                                     <a method="post" href="{{route('management.complete-sourceFile',['sourceFile'=>$source_file->id,'compelte'=>0] )}}">
-                                          <button type="button" class="btn btn-success" > 
-                                          RE-OPEN </button>
-                                      </a>    
-                                          
-                                     </p>
-                                     @endif
-                                    </td>
-
-                                      @elseif($source_file->editedFile || $source_file->readyTo_finalize)
-                                      <td>
-                                      <p> 
-                                      <form action="{{route('management.upload-finalizedFile',['project'=>$project->id, 'sourceFile'=>$source_file->id])}}" method="post" enctype="multipart/form-data">
-                                                @csrf
-                                              <div class="custom-file"  style="margin-bottom:10px;">
-                                            <input type="file" class="custom-file-input" name="finalized_file" required>
-                                            <label class="custom-file-label" for="exampleInputFile" style="width:170;">Choose file</label>
-                                          </div>
-                                          <button type="submit" class="btn btn-primary" > 
-                                          upload final </button>
-                                          </form>  
-                                     </p> </td>
-                                      @else
-                                      <td></td>
-                                      @endif
-                                     
-                                             
                                               
                                          @else 
                                          <td  style="color:red; font-size:21px;"> NOT READY YET </td> <td> </td> <td></td>   
@@ -521,7 +453,7 @@ td{
             <div class="card col-md-10">
              <div class="card-header">
              <h4> Translation Stage </h4>
-             <button type="update" style="float:right;" id="updateTranslation" class="btn btn-primary">Update Details</button>
+             <button style="float:right;" id="updateTranslation" class="btn btn-primary">Update Details</button>
                
              </div>
              <div class="card-body">
@@ -716,7 +648,7 @@ td{
              <div class="card col-md-10">
              <div class="card-header">
              <h4> Editing Stage </h4>
-             <button type="update" style="float:right;" id="updateEditing" class="btn btn-primary">Update Details</button>
+             <button style="float:right;" id="updateEditing" class="btn btn-primary">Update Details</button>
 
              </div>
              <div class="card-body">
@@ -972,13 +904,13 @@ $(".form_datetime").datetimepicker({
         minuteStep: 15
     });
   var type = "{{$project->type}}"
-  $("#project_type option[value="+type+"]").attr("selected", "selected");
+  $("#project_type option[value='"+type+"']").attr("selected", "selected");
 
   var unitTranslation = "{{$transStage->vendor_rateUnit}}"
-  $("#rate_unit_translation option[value="+unitTranslation+"]").attr("selected", "selected");
+  $("#rate_unit_translation option[value='"+unitTranslation+"']").attr("selected", "selected");
 
   var unitEditing = "{{$editStage->vendor_rateUnit}}"
-  $("#rate_unit_editing option[value="+unitEditing+"]").attr("selected", "selected");
+  $("#rate_unit_editing option[value='"+unitEditing+"']").attr("selected", "selected");
 
 //update project  
 $('#update').click(function(){

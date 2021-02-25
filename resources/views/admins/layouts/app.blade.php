@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
@@ -213,6 +214,34 @@ tr{
                 class="nav-link {{ isActive('management.view-allProjects')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Projects</p>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                 Proofing & Finalization
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+             
+              <li class="nav-item"> 
+                <a href="{{route('management.allTasks-proofing') }}" 
+                class="nav-link {{ isActive('management.allTasks-proofing')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tasks Proofing</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('management.allTasks-finalization') }}" 
+                class="nav-link {{ isActive('management.allTasks-finalization')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tasks Finalization</p>
                 </a>
               </li>
               
