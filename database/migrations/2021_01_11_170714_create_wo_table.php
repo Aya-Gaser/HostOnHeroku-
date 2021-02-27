@@ -20,7 +20,7 @@ class CreateWoTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->timestamp('deadline');
             //$table->float('client_rate'); 
-            //$table->bigInteger('words_count');            
+            $table->string('po_number');            
             //$table->integer('quality_points');
             $table->string('from_language');
             $table->string('to_language');

@@ -4,6 +4,7 @@
 @section('content')
 
 @section('style')
+<link href="{{asset('bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" media="screen">
 @include('layouts.partials._file_input_plugin_style')
 @endsection
 
@@ -49,7 +50,7 @@
                   <div class="form-group col-md-6">
                     <label class="form-control-label" for="client_number">Client Number <span
                     class="required">*</span></label>
-                    <select class=" form-control" data-live-search="true" name="client_number" id="client_number">
+                    <select class="select2 form-control" data-live-search="true" name="client_number" id="client_number">
                    <option disabled selected >Select / Insert Client</option>
                    @foreach($clients as $client)
                     <option
@@ -59,6 +60,13 @@
                      @endforeach
                     </select>
                   </div>
+                    <div class="form-group col-md-6">
+                      <label for="exampleInputEmail1">Client PO Number <span class="required">*</span></label>
+                      <input type="text"  class="form-control" name="po_number" id="" placeholder="Enter PO number" required>
+                    </div>
+                 </div>
+
+                 <div class="row"> 
                   <div class="form-group col-md-6" style="position:relative;top:-2px;">
                     <label for="exampleInputFile">Client Deadline <span class="required"> *</span> </label>
                     <div style="" class="input-append date form_datetime" data-date="2020-12-21T15:25:00Z">
@@ -66,14 +74,18 @@
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>
-                 </div> 
+                 </div>
+                 <div class="form-group col-md-6">
+                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <input type="number" step="1" min="1" class="form-control" name="sent_docs" id="" placeholder="Enter sent files number" required>
+              </div> 
                </div>  
           
           <div class="row">
           <div class="form-group col-sm-6">
                     <label class="form-control-label" for="from_language">Source Language <span
                     class="required">*</span></label>
-                    <select class=" form-control" data-live-search="true" name="from_language" id="from_language">
+                    <select class="select2 form-control" data-live-search="true" name="from_language" id="from_language">
                    <option disabled selected value="hhhhhhhh" >Select / Insert Language</option>
                    @foreach($languages as $language)
                     <option class="language" value="{{$language['name']}}" >
@@ -95,7 +107,7 @@
                   <div class="form-group col-sm-6">
                     <label class="form-control-label" for="to_language">Target Language <span
                     class="required">*</span></label>
-                    <select class=" form-control" data-live-search="true" name="to_language" id="to_language">
+                    <select class="select2 form-control" data-live-search="true" name="to_language" id="to_language">
                    <option disabled selected >Select / Insert Language</option>
                    @foreach($languages as $language)
                     <option class="language"
@@ -117,7 +129,7 @@
                   </div>
             </div>
            <div id="tasksNeeded"> 
-             <p class="form-control-label" >Tasks Needed </p>
+             <p class="form-control-label text-primary" style="font-size:24px;" >Tasks Needed </p>
                 <div id="task1">  
                  <div class="row">
             
@@ -125,7 +137,7 @@
                       <label class="form-control-label" for="task_type1">Task #1 Type
                       <span class="required">*</span>
                       </label>
-                      <select class="form-control" name="task_type1" id="task_type1"
+                      <select class="select2 form-control" name="task_type1" id="task_type1"
                         data-placeholder="select Task Type">
                         <option disabled >Select</option>
                         <option value="translation" >Translation  </option>
@@ -207,11 +219,7 @@
                       </div>
                     </div>
                    </div>
-                   <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
-                <input type="number" step="1" min="1" class="form-control" name="sent_docs" id="" placeholder="Enter sent files number" required>
-              </div>
-         
+               
             
                    <div class="row">
                    
@@ -272,7 +280,10 @@
 @section('script')
 <!-- BS-Stepper -->
 <script src="{{asset('plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
-
+<script type="text/javascript" src="{{asset('bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js')}}" charset="UTF-8"></script>
+<script type="text/javascript" src="{{asset('bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.fr.js')}}" charset="UTF-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data-2012-2022.min.js"></script>
 
 <script>
 $(function () {
@@ -288,9 +299,11 @@ $('.select2bs4').select2({
 $(".form_datetime").datetimepicker({
         format: "dd-M-yy H:i:s",
         autoclose: true,
-        todayBtn: true,
-        startDate: new Date(),
-        minuteStep: 15
+        todayBtn: false,
+        startDate: new Date() ,
+        minuteStep: 15,
+        minDate: new Date(),
+        maxDate: new Date(new Date().getTime()+(5*24*60*60*1000))
     });
     $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
     $(document).on('change','#from_language',function(){

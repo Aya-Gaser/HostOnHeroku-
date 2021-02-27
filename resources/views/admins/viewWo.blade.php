@@ -68,9 +68,11 @@ td{
                 <p class="data text-danger col-md-6" > <Span class="head"> Deadline  : </Span>
                 {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
                 </p>
+                <p class="data col-md-6"> <Span class="head"> Clint PO Number  : </Span>{{$wo->po_number}}</p>
+                <p class="data col-md-6"> <Span class="head"> Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
               </div>
               <div class="row">
-                <p class="data col-md-6"> <Span class="head"> Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
+                
                
                 <p class="data col-md-6"> <Span class="head"> Number Of Files :  </Span>
                 {{$wo->sent_docs}}

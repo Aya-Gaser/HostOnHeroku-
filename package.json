@@ -29,6 +29,7 @@
     "dependencies": {
         "bootstrap-fileinput": "^5.1.4",
         "bootstrap-select": "^1.13.18",
+        "moment": "^2.29.1",
         "peer": "^0.6.1",
         "sweetalert": "^2.1.2"
     }

@@ -85,7 +85,7 @@
                     <label class="form-control-label" for="project_type">WO Task 
                     <span class="required">*</span>
                     </label>
-                    <select class="form-control" data-live-search="true" name="woTask_id" id="project_type" required>
+                    <select class="select2 form-control" data-live-search="true" name="woTask_id" id="project_type" required>
                    <option disabled >Select</option>
                     @foreach($wo->woTasksNeeded as $task)
                     <option value="{{$task->id}}" >{{$task->type}}</option>
@@ -135,7 +135,7 @@
                         <label class="form-control-label" for="vendor_rateUnit"> Unit
                         <span class="required">*</span>
                         </label>
-                        <select class="form-control" name="rate_unit" id="rate_unit"
+                        <select class="select2 form-control" name="rate_unit" id="rate_unit"
                           data-placeholder="select vendor Rate Unit" required>
                           <option disabled >Select</option>
                           <option value="Word Count" >Word Count  </option>
@@ -145,7 +145,7 @@
                     </div>
               <div class="form-group col-md-6">
                 <label for="exampleInputEmail1"> Rate <span class="required">*</span></label>
-                <input type="number" step="0.01" min="0.01" class="form-control" name="vendor_rate" id="vendor_rate" placeholder="Enter Rate" required>
+                <input type="number" step="0.01" min="0.01" value="0.03" class="form-control" name="vendor_rate" id="vendor_rate" placeholder="Enter Rate" required>
               </div>
             </div>
           <div class="row">
@@ -153,7 +153,7 @@
                 <div class="form-group">
                   <label>Group 1 Members <span class="required">*</span> </label>
                   <select class="select2" name='vendor1_translators_group1[]' id='translators_group1[]'
-                   multiple="multiple" multiple data-placeholder="Select translators" style="width: 100%;" required>
+                   multiple="multiple" multiple data-placeholder="Select / Insert Translators" style="width: 100%;" required>
                    @foreach($vendors as $vendor)
                    <option value= "{{$vendor['id']}}" >{{$vendor['name']}} </option>
                    @endforeach
@@ -164,7 +164,7 @@
                 <div class="form-group">
                   <label>Group 2 Members</label>
                   <select class="select2"  name='vendor1_translators_group2[]' multiple
-                   multiple="multiple" data-placeholder="Select translators" style="width: 100%;">
+                   multiple="multiple" data-placeholder="Select / Insert Translators" style="width: 100%;">
                    @foreach($vendors as $vendor)
                    <option value= "{{$vendor['id']}}" >{{$vendor['name']}} </option>
                    @endforeach
