@@ -102,7 +102,7 @@ td{
                                        <td> 
                                        {{ UTC_To_LocalTime($stage->created_at, Auth::user()->timezone) }} 
                                        </td>
-                                       <td> {{App\projects::find($stage->project_id)->type}} </td>
+                                       <td>  </td>
                                        <td> {{$stage->type}} </td>
                                        <td> {{$stage->status}} </td>
                                        <td> 
