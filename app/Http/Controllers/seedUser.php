@@ -10,7 +10,7 @@ class seedUser extends Controller
 {
     public function index(){
        
-        $user = new User();
+       /* $user = new User();
         $user->name = 'hoda';
         $user->email = 'hoda.tarjamat@gmail.com ';
         $user->userName = 'Rabea';
