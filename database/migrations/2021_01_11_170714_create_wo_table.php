@@ -25,7 +25,7 @@ class CreateWoTable extends Migration
             $table->string('from_language');
             $table->string('to_language');
             $table->string('client_instructions')->default('None');
-            $table->longText('general_instructions')->default('None');
+            $table->string('general_instructions')->default('None');
             $table->boolean('isHandeled')->default(0); 
             $table->boolean('isReceived')->default(0);
             $table->integer('sent_docs');
