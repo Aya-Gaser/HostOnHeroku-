@@ -196,7 +196,7 @@ tr{
             <ul class="nav nav-treeview">
              
               <li class="nav-item">
-                <a href="{{route('management.view-allProjects', 'pending') }}" 
+                <a href="{{route('management.view-allProjects', 'progress') }}" 
                 class="nav-link {{ isActive('management.view-allProjects')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>On Progress Projects</p>
@@ -231,14 +231,14 @@ tr{
             <ul class="nav nav-treeview">
              
               <li class="nav-item"> 
-                <a href="{{route('management.allTasks-proofing') }}" 
+                <a href="{{route('management.allTasks-proofing', 'pending') }}" 
                 class="nav-link {{ isActive('management.allTasks-proofing')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tasks Proofing</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('management.allTasks-finalization') }}" 
+                <a href="{{route('management.allTasks-finalization', 'proofed') }}" 
                 class="nav-link {{ isActive('management.allTasks-finalization')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tasks Finalization</p>

@@ -300,7 +300,7 @@ class viewProjectController extends Controller
                 }
             }  
             if(request()['quality_points_'.$stage->id]){ 
-                if($stage->vendor_qualityPoints != request()['quality_points_'.$stage->id]){
+                if($stage->vendor_maxQualityPoints != request()['quality_points_'.$stage->id]){
                     $old_qualityPoints = ($stage->vendor_qualityPoints)? $stage->vendor_qualityPoints : 'Target';
                     $updates['Quality points'] = [$old_qualityPoints, request()['quality_points_'.$stage->id]];
                     $stage->vendor_qualityPoints = request()['quality_points_'.$stage->id];

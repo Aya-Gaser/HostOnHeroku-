@@ -10,7 +10,11 @@ use App\User;
 use Auth;
 class dashboardController extends Controller
 {
-    public function index(){
+  public function __construct()
+     {
+         $this->middleware('auth');
+     }   
+  public function index(){
         
        $VendorProjects_all = count(projectStage::where('vendor_id', Auth::user()->id)->get());
        $VendorProjects_pending = count(projectStage::where('vendor_id', Auth::user()->id)

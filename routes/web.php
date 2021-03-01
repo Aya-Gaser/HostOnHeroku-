@@ -25,7 +25,9 @@ Route::get('/2', function () {
 //////////admins //////////////
 Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
  'as' => 'management.'], function() {
-    
+    /* HELPERS */ 
+    Route::post('/helper_getStageQP', 'admins\helperController@getStage_qualityPoints')->middleware('auth')
+    ->name('helper_getStageQP');
     Route::get('/first-login', 'admins\dashboardController@first')->middleware('auth')
     ->name('first-login');
     Route::post('/first-login', 'admins\dashboardController@completeData')->middleware('auth')
@@ -98,8 +100,8 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::get('/complete-projectStage/{stage}/{compelte}', 'projects\viewProjectController@complete_reOpen_vendorStage')->middleware('auth')
     ->where(['stage'=>'[0-9]+', 'compelte'=> '[0-1]'])->name('complete-stage');
     /* PROOFING */
-    Route::get('/all-tasks-proofing', 'projects\proofingController@index')->middleware('auth')
-    ->name('allTasks-proofing');
+    Route::get('/all-tasks-proofing/{filter}', 'projects\proofingController@index')->middleware('auth')
+    ->where(['filter'=>'[a-z]+'])->name('allTasks-proofing');
     Route::get('/task-proofing/{taskId}', 'projects\proofingController@taskProofing')->middleware('auth')
     ->where(['taskId'=>'[0-9]+'])->name('task-proofing');
     Route::post('/proof-workingFile', 'projects\proofingController@store_proofingFiles')->middleware('auth')
@@ -108,8 +110,8 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     ->name('send-reviewToVendor');
     
     /* FINALIZATION */ 
-    Route::get('/all-tasks-finalization', 'projects\finalizationController@index')->middleware('auth')
-    ->name('allTasks-finalization');
+    Route::get('/all-tasks-finalization/{filter}', 'projects\finalizationController@index')->middleware('auth')
+    ->where(['filter'=>'[a-z]+'])->name('allTasks-finalization');
     Route::get('/task-finalization/{taskId}', 'projects\finalizationController@taskFinalization')->middleware('auth')
     ->where(['taskId'=>'[0-9]+'])->name('task-finalization');
     Route::post('/upload-finalizedFile/{taskId}/{type}', 'projects\finalizationController@store_finalizedFile')->middleware('auth')

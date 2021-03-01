@@ -467,8 +467,8 @@ td{
                   @else   <span class="text-danger"> Target </span> 
                   @endif 
                   </p>
-                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>
-                  @if($transStage->vendor_qualityPoints)  {{$transStage->vendor_qualityPoints}}
+                <p class="data col-md-4"> <Span class="head"> MAX Quality Points  : </Span>
+                  @if($transStage->vendor_maxQualityPoints)  {{$transStage->vendor_maxQualityPoints}}
                   @else   <span class="text-danger"> Target </span> 
                   @endif
                  </p>
@@ -525,10 +525,10 @@ td{
 
                   </div>
                   <div class="form-group col-md-6">
-                        <label class="form-control-label" for="quality_points">Quality Points<span
+                        <label class="form-control-label" for="quality_points">MAX Quality Points<span
                             class="required">*</span></label>
                         <input type="number" min="0" class="form-control" name="quality_points_{{$transStage->id}}"
-                        value="{{$transStage->vendor_qualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
+                        value="{{$transStage->vendor_maxQualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
 
                   </div>
                 </div>   
@@ -663,8 +663,8 @@ td{
                   @else   <span class="text-danger"> Target </span> 
                   @endif 
                 </p>
-                <p class="data col-md-4"> <Span class="head">  Quality Points  : </Span>
-                 @if($editStage->vendor_qualityPoints)  {{$editStage->vendor_qualityPoints}}
+                <p class="data col-md-4"> <Span class="head">MAX Quality Points  : </Span>
+                 @if($editStage->vendor_maxQualityPoints)  {{$editStage->vendor_maxQualityPoints}}
                   @else   <span class="text-danger"> Target </span> 
                   @endif
                   </p>
@@ -721,10 +721,10 @@ td{
 
                   </div>
                   <div class="form-group col-md-6">
-                        <label class="form-control-label" for="quality_points">Quality Points<span
+                        <label class="form-control-label" for="quality_points">MAX Quality Points<span
                             class="required">*</span></label>
                         <input type="number" min="0" class="form-control" name="quality_points_{{$editStage->id}}"
-                        value="{{$editStage->vendor_qualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
+                        value="{{$editStage->vendor_maxQualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
 
                   </div>
                 </div>   

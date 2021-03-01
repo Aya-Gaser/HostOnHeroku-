@@ -179,7 +179,7 @@ class createProjectController extends Controller
         $stage->required_docs = request()[$required_docs_inputName];
         $stage->instructions = request()[$instruction_inputName];
         $stage->vendor_wordsCount = request()[$words_count_inputName];
-        $stage->vendor_qualityPoints = request()[$quality_points_inputName];
+        $stage->vendor_maxQualityPoints = request()[$quality_points_inputName];
         $stage->vendor_rateUnit = request()[$vendorRate_unit_inputName];
         $stage->vendor_rate = request()[$vendorRate_inputName];
         $stage->G1_acceptance_hours = request()[$acceptance_deadline];

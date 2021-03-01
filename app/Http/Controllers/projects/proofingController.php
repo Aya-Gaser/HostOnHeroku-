@@ -26,11 +26,16 @@ class proofingController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    }
+    } 
 
-    public function index(){
-        $tasks = woTasksNeeded::with('readyToProof_projects')->get();
-        $readyToProof_tasks = [];
+    public function index($filter){
+        if(!$this->validateFilter($filter)) abort(404);
+        if($filter == 'all')
+            $tasks = woTasksNeeded::with('readyToProof_projects')->get();
+        else 
+            $tasks = woTasksNeeded::where('status', $filter)
+                     ->with('readyToProof_projects')->get();
+            $readyToProof_tasks = [];
         foreach($tasks as $task){
            if(count($task->readyToProof_projects))
                array_push($readyToProof_tasks, $task);
@@ -38,7 +43,10 @@ class proofingController extends Controller
         //return  $readyToProof_tasks;
         return view('admins.allTasks_proofing')->with(['tasks'=>$readyToProof_tasks]);
     }
-
+    public function validateFilter($filter){
+       $filters = ['pending', 'proofed', 'all'];
+       return in_array($filter, $filters);
+    }
     public function taskProofing($taskId){
         $task = woTasksNeeded::findOrFail($taskId);
         $wo = WO::find($task->wo_id);
@@ -78,9 +86,9 @@ class proofingController extends Controller
      }
     public function store_proofingFiles(/*$sourceFileId */Request $request){
         $request->validate([
-            'vendor_file' => 'required|file',
+            //'vendor_file' => 'required|',
            
-            'client_file' => 'file',
+            //'client_file' => 'file',
             'sourceFileId' => 'required',
           ]);
         
@@ -102,6 +110,9 @@ class proofingController extends Controller
         }
         $sourceFile->isReadyToFinalize = true;
         $sourceFile->save();
+        $task = woTasksNeeded::find($project->woTask_id);
+        $task->status = 'proofed';
+        $task->save();
        // return back();
        return response()->json([ 'success'=> 'Form is successfully submitted!']);
         //return $sourceFileId;
@@ -110,8 +121,8 @@ class proofingController extends Controller
     
     public function send_reviewToVendor(Request $request){
         $request->validate([
-            'words_count' => 'required',
             'quality_points' => 'required',
+            'maxQuality_points' => 'required',
             'jobId' => 'required',
           ]);
           $projectId = $request->input('jobId');
@@ -123,7 +134,7 @@ class proofingController extends Controller
           $stage = projectStage::where('project_id', $project->id)
                                ->where('vendor_id', $project->translator_id )
                                ->where('type', 'translation')->first();  
-          $stage->vendor_wordsCount =  $request->input('words_count');  
+          $stage->vendor_maxQualityPoints =  $request->input('maxQuality_points');  
           $stage->vendor_qualityPoints =  $request->input('quality_points'); 
           $stage->status = 'reviewed';
           $stage->save();                  
@@ -135,26 +146,29 @@ class proofingController extends Controller
 
     private function upload_proofedAttachments($sourceFileId, $project_id, $taskId, $inputType)
      { 
-        $attachment =  request()->file($inputType);
-        $extension = $attachment->extension();
-        $fileName = $project_id . '_' . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
-        $filePath = '/projects_proofedFiles/' . $project_id . '/';
-        Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
-   
-        //save each file 
-        $proofedFile =new proofedFile();
-        $proofedFile->woTask_id =$taskId;
-        $proofedFile->project_id =$project_id;
-        $proofedFile->sourceFile_id = $sourceFileId;
-        $proofedFile->created_by = Auth::user()->id;
-        $proofedFile->file_name = $attachment->getClientOriginalName();
-        $proofedFile->type = $inputType;
-        $proofedFile->file = $filePath . $fileName;
-        $proofedFile->extension = $extension;
-        if(request()[$inputType.'_note']){
-            $proofedFile->note = request()[$inputType.'_note'];
-        }
-        $proofedFile->save();               
+        foreach(request()->file($inputType) as $attachment){
+        //$attachment =  request()->file($inputType);
+            $extension = $attachment->extension();
+            $fileName = $project_id . '_' . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
+            $filePath = '/projects_proofedFiles/' . $project_id . '/';
+            Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
+    
+            //save each file 
+            $proofedFile =new proofedFile();
+            $proofedFile->woTask_id =$taskId;
+            $proofedFile->project_id =$project_id;
+            $proofedFile->sourceFile_id = $sourceFileId;
+            $proofedFile->created_by = Auth::user()->id;
+            $proofedFile->file_name = $attachment->getClientOriginalName();
+            $proofedFile->type = $inputType;
+            $proofedFile->file = $filePath . $fileName;
+            $proofedFile->extension = $extension;
+            
+            if(request()[$inputType.'_note']){
+                $proofedFile->note = request()[$inputType.'_note'];
+            }
+            $proofedFile->save();  
+        }             
         
     }
 }

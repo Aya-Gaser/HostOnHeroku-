@@ -38,14 +38,12 @@
                
 
                   <select onchange="window.location.href=this.value;" class="browser-default custom-select" id="project_status" style="width:150px;">
-                   <option id="pending" value="{{ route('management.view-allProjects', 'pending') }}">  Pending </option> 
-                   <option id="progress" value="{{ route('management.view-allProjects', 'progress') }} "> on progress </option>
-
-                   <option id="completed" value="{{ route('management.view-allProjects', 'completed') }} "> Completed </option>
-                   <option id="all" value="{{ route('management.view-allProjects', 'all') }}"> ALL </option>
+                   <option id="pending" value="{{ route('management.allTasks-proofing', 'pending') }}">  Pending </option> 
+                   <option id="progress" value="{{ route('management.allTasks-proofing', 'proofed') }} "> Proofed </option>
+                   <option id="all" value="{{ route('management.allTasks-proofing', 'all') }}"> ALL </option>
                   </select>
                  </div> 
-      <h5> All Projects </h5>            
+      <h5> All Tasks </h5>            
                  </div>  
          <br>
               <!-- /.card-header -->
@@ -60,10 +58,10 @@
                       <th>Type</th>
                       <th>Total Proofed Files</th>
                       <th> Created At</th>
-                     
+                     <th> </th>
                     </tr>
                   </thead>
-                  <tbody id="tasks">
+                  <tbody>
                    @foreach($tasks as $task)
                      <tr>
                      <td> {{$task['id']}} </td>
@@ -104,7 +102,6 @@
 
 
 @section('script')
-
 <!-- DataTables  & Plugins -->
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
@@ -126,14 +123,14 @@
       "ordering": false,"info": true,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#myTable_wrapper .col-md-6:eq(0)');
-  
+/*  
    // filter status  
  url = window.location.href;
  splitURL = url.split('/');
  status = splitURL[splitURL.length - 1];
  
  $("#project_status option[id="+status+"]").attr("selected", "selected");
-
+*/
 </script>
 @endsection     
 </body>

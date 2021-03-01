@@ -38,11 +38,9 @@
                
 
                   <select onchange="window.location.href=this.value;" class="browser-default custom-select" id="project_status" style="width:150px;">
-                   <option id="pending" value="{{ route('management.view-allProjects', 'pending') }}">  Pending </option> 
-                   <option id="progress" value="{{ route('management.view-allProjects', 'progress') }} "> on progress </option>
-
-                   <option id="completed" value="{{ route('management.view-allProjects', 'completed') }} "> Completed </option>
-                   <option id="all" value="{{ route('management.view-allProjects', 'all') }}"> ALL </option>
+                  <option id="pending" value="{{ route('management.allTasks-finalization', 'proofed') }}">  Pending </option> 
+                   <option id="progress" value="{{ route('management.allTasks-finalization', 'finalized') }} "> Finalized </option>
+                   <option id="all" value="{{ route('management.allTasks-finalization', 'all') }}"> ALL </option>
                   </select>
                  </div> 
       <h5> All Projects </h5>            
@@ -60,7 +58,7 @@
                       <th>Type</th>
                       <th>Total Proofed Files</th>
                       <th> Created At</th>
-                     
+                      <th> </th>
                     </tr>
                   </thead>
                   <tbody id="tasks">

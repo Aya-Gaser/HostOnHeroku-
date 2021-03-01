@@ -25,8 +25,13 @@ class finalizationController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(){
-        $tasks = woTasksNeeded::with('readyToFinalize_projects')->get();
+    public function index($filter){
+        if(!$this->validateFilter($filter)) abort(404);
+        if($filter == 'all')
+            $tasks = woTasksNeeded::with('readyToFinalize_projects')->get();
+        else
+            $tasks = woTasksNeeded::where('status', $filter)
+            ->with('readyToFinalize_projects')->get();
         $readyToFinalize_tasks = [];
         foreach($tasks as $task){
            if(count($task->readyToFinalize_projects))
@@ -36,6 +41,11 @@ class finalizationController extends Controller
     
         return view('admins.allTasks_finalization')->with(['tasks'=>$readyToFinalize_tasks]);
     }
+
+    public function validateFilter($filter){
+        $filters = ['proofed', 'finalized', 'all'];
+        return in_array($filter, $filters);
+     }
     
     public function taskFinalization($taskId){
         $task = woTasksNeeded::findOrFail($taskId);
@@ -71,6 +81,8 @@ class finalizationController extends Controller
                 $finalizedFile->save();
                 //return  'kkkkkkkk';
             }
+            $task->status = 'finalized';
+            $task->save();
         }
         alert()->success('Uploaded Successfully !')->autoclose(false);
         return back();

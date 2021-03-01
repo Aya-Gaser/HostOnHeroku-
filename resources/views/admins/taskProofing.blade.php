@@ -267,24 +267,27 @@ td{
                                         
                                         @else 
                                     <td>
-                                      
+                                     @foreach($source_file->proofed_vendorFile as $vendorFile)
                                       <p>
-                                        <a href="{{asset('storage/'.$source_file->proofed_vendorFile->first()->file)}}"
-                                        download="{{$source_file->proofed_vendorFile->first()->file_name}}">
-                                          {{str_limit($source_file->proofed_vendorFile->first()->file_name,50)}}
+                                        <a href="{{asset('storage/'.$vendorFile->file)}}"
+                                        download="{{$vendorFile->file_name}}">
+                                          {{str_limit($vendorFile->file_name,50)}}
                                       </a>
                                       </p> 
-                                     <p> <span class="text-success">Notes : </span>  {{$source_file->proofed_vendorFile->first()->note}} </p>
+                                      <p> <span class="text-success">Notes : </span>  {{$vendorFile->note}} </p>
+                                     @endforeach
                                     </td>
                                     <td>
-                                    @if($source_file->proofed_clientFile->first())
-                                      <p>
-                                        <a href="{{asset('storage/'.$source_file->proofed_clientFile->first()->file)}}"
-                                        download="{{$source_file->proofed_clientFile->first()->file_name}}">
-                                          {{str_limit($source_file->proofed_clientFile->first()->file_name,50)}}
+                                    @if($source_file->proofed_clientFile)
+                                      @foreach($source_file->proofed_clientFile as $clientFile)
+                                      <li>
+                                        <a href="{{asset('storage/'.$clientFile->file)}}"
+                                        download="{{$clientFile->file_name}}">
+                                          {{str_limit($clientFile->file_name,50)}}
                                       </a>
-                                      </p> 
-                                     <p> <span class="text-success">Notes : </span>  {{$source_file->proofed_clientFile->first()->note}} </p>
+                                      </li> 
+                                      <p> <span class="text-success">Notes : </span>  {{$clientFile->note}} </p>
+                                     @endforeach 
                                     @else 
                                     <p class="text-danger"> NONE </p>
                                     @endif
@@ -342,11 +345,11 @@ td{
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="form-control-label"
-                      for="source_document">Vendor File <span class="required">*</span></label>
+                      for="source_document">Vendor File </label>
                   
                       <div class="file-loading col-md-2">  
-                        <input id="vendor_file" name="vendor_file"
-                        class="kv-explorer" type="file" required>  
+                        <input id="vendor_file" name="vendor_file[]"
+                        class="kv-explorer" type="file" multiple>  
                         </div>
                     </div>
                   </div> 
@@ -363,8 +366,8 @@ td{
                       for="source_document">Client File </label>
                   
                       <div class="file-loading col-md-2">  
-                        <input id="client_file" name="client_file"
-                        class="kv-explorer" type="file" >  
+                        <input id="client_file" name="client_file[]"
+                        class="kv-explorer" type="file" multiple >  
                         </div>
                     </div>
                   </div> 
@@ -404,17 +407,17 @@ td{
            <input type="hidden" value="" name="jobId" id="jobId">
            <div class="row">
              <div class="form-group col-md-6">
-               <label class="form-control-label" for="words_count">Word Count<span
+               <label class="form-control-label" for="words_count">Quality Points<span
                    class="required">*</span></label>
-               <input type="number" min="0" step="1" class="form-control" name="words_count"
-                value="" id="words_count" required>
+               <input type="number" min="0" step="1" class="form-control" name="quality_points"
+                value="" id="quality_points" required>
 
              </div>
              <div class="form-group col-md-6">
-                   <label class="form-control-label" for="quality_points">Quality Points<span
+                   <label class="form-control-label" for="quality_points">MAX Quality Points<span
                        class="required">*</span></label>
-                   <input type="number" min="0" class="form-control" name="quality_points"
-                   value="" id="quality_points" required>
+                   <input type="number" min="0" class="form-control" name="maxQuality_points"
+                   value="" id="maxQuality_points" required>
 
              </div>
            </div>   
@@ -458,7 +461,7 @@ $('.proof').click(function(){
 $('#uploadProof-form').submit(function(e) {
        e.preventDefault();
        let formData = new FormData(this);
- 
+       this.reset();
         $.ajax({
         data: formData,
         url: "{{ route('management.store-proofingFiles') }}",
@@ -468,7 +471,7 @@ $('#uploadProof-form').submit(function(e) {
            success: (response) => {
              if (response) {
                this.reset();
-               console.log(response) 
+               //console.log(response) 
               swal("Done! Uploaded Successfuly", {
               icon: "success"
             }).then((ok) =>{
@@ -477,16 +480,36 @@ $('#uploadProof-form').submit(function(e) {
            }
            },
            error: function(response){
-              console.log(response);
+              //console.log(response);
               //  $('#image-input-error').text(response.responseJSON.errors.file);
            }
       
       })           
           
 }); 
+
 $('.sendToVendor').click(function(){
   $jobId = $(this).attr('id');
   $('#jobId').val($jobId);
+  $.ajax({
+        data: { projectId : $jobId},
+        url: "{{ route('management.helper_getStageQP') }}",
+        type: 'POST',
+        dataType: 'json',
+          // processData: false,
+           success: (response) => {
+             if(response){
+              response = JSON.parse(response.success);
+              $('#maxQuality_points').val(response['qp']);
+              $('#quality_points').val(response['maxQp']);
+            //console.log(response);
+             }
+             
+            },
+            error: function(data) { 
+            //console.log(data);
+           }
+  });
 });
 $('#completeReview-form').submit(function(e) {
        e.preventDefault();
@@ -501,7 +524,7 @@ $('#completeReview-form').submit(function(e) {
            success: (response) => {
              if (response) {
                this.reset();
-               console.log(response) 
+               //console.log(response) 
               swal("Done! Sent Successfuly", {
               icon: "success"
             }).then((ok) =>{
@@ -510,7 +533,7 @@ $('#completeReview-form').submit(function(e) {
            }
            },
            error: function(response){
-              console.log(response);
+             // console.log(response);
               //  $('#image-input-error').text(response.responseJSON.errors.file);
            }
       

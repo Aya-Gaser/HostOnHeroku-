@@ -72,7 +72,7 @@ td{
               @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else 
               <span class="pending">  Target </span> @endif</p>
               <p class="data col-md-6"> <Span class="head">  Quality Points  : </Span>
-              @if($stage->vendor_qualityPoints) {{$stage->vendor_qualityPoints}} 
+              @if($stage->vendor_maxQualityPoints) {{$stage->vendor_maxQualityPoints}} 
               @else <span class="pending">  Target </span> @endif</p>
               <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
               <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>

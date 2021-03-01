@@ -10,6 +10,10 @@ use Auth;
 use App\User;
 class dashboardController extends Controller
 {
+  public function __construct()
+     {
+         $this->middleware('auth');
+     } 
     public function index(){
         
         $notRecievedWo = count(WO::where('isReceived', false)->get());

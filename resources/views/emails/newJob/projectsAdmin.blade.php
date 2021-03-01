@@ -3,7 +3,7 @@
 
 $acceptanceDeadline = ($group == 'GROUP_1') ?  $stage->G1_acceptance_deadline:  $stage->G2_acceptance_deadline;
 $words_count =  ($stage->vendor_wordsCount)?  $stage->vendor_wordsCount : "Target";
-$quality_points =  ($stage->vendor_qualityPoints)?  $stage->vendor_qualityPoints : "Target";
+$quality_points =  ($stage->vendor_maxQualityPoints)?  $stage->vendor_maxQualityPoints : "Target";
 
 @endphp
 @component('mail::message')

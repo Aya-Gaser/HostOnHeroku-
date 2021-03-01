@@ -30,6 +30,7 @@ class CreateProjectStagesTable extends Migration
             $table->float('vendor_rate');
             $table->integer('vendor_wordsCount')->default(0);
             $table->integer('vendor_qualityPoints')->default(0);
+            $table->integer('vendor_maxQualityPoints')->default(0);
             $table->integer('required_docs');
             $table->integer('accepted_docs')->default(0);
             $table->dateTime('deadline');

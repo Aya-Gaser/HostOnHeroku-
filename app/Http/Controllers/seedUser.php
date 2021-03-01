@@ -12,7 +12,7 @@ class seedUser extends Controller
        
        /* $user = new User();
         $user->name = 'hoda';
-        $user->email = 'hoda.tarjamat@gmail.com ';
+        $user->email = 'hoda.tarjamat@gmail.com';
         $user->userName = 'Rabea';
          $user->account_type = 'admin';
          $user->password = bcrypt('123456789');

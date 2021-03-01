@@ -98,11 +98,11 @@ td{
                                     @foreach($vendorStages as $stage)
                                      <tr>
                                        <td> {{$stage->project_id}} </td>
-                                       <td> {{$stage->project_id}} </td>
+                                       <td> {{App\projects::find($stage->project_id)->name}} </td>
                                        <td> 
                                        {{ UTC_To_LocalTime($stage->created_at, Auth::user()->timezone) }} 
                                        </td>
-                                       <td>  </td>
+                                       <td> {{App\projects::find($stage->project_id)->type}} </td>
                                        <td> {{$stage->type}} </td>
                                        <td> {{$stage->status}} </td>
                                        <td> 

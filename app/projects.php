@@ -27,6 +27,9 @@ class projects extends Model
      public function projectStage(){
       return $this->hasMany('App\projectStage','project_id');
    }
+   public function translationStage(){
+      return $this->projectStage()->where('type', 'translation');
+   }
    public function project_sourceFile(){
       return $this->hasMany('App\project_sourceFile','project_id');
   }
