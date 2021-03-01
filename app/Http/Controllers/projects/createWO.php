@@ -72,10 +72,10 @@ class createWO extends Controller
        $WO->po_number = $request->input('po_number');
        $UTCDeadline = LocalTime_To_UTC($request->input('deadline'), Auth::user()->timezone);
        $WO->deadline = $UTCDeadline;
-       $WO->from_language = $request->input('from_language');
+       $WO->from_language = $request->input('from_language'); 
        $WO->to_language = $request->input('to_language'); 
-       $WO->client_instructions = $request->input('client_instructions');
-       $WO->general_instructions = $request->input('general_instructions');
+       $WO->client_instructions = ($request->input('client_instructions'))? $request->input('client_instructions') : 'none';
+       $WO->general_instructions = ($request->input('general_instructions'))? $request->input('general_instructions') : 'none';
        $WO->isHandeled = false;
        $WO->created_by = Auth::user()->id;
        $WO->status = 'pending';
