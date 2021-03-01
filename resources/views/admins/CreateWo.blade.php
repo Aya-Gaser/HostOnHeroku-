@@ -50,7 +50,7 @@
                   <div class="form-group col-md-6">
                     <label class="form-control-label" for="client_number">Client Number <span
                     class="required">*</span></label>
-                    <select class="select2 form-control" data-live-search="true" name="client_number" id="client_number">
+                    <select class="select2 form-control" data-live-search="true" name="client_number" id="client_number" required>
                    <option disabled selected >Select / Insert Client</option>
                    @foreach($clients as $client)
                     <option
@@ -70,7 +70,7 @@
                   <div class="form-group col-md-6" style="position:relative;top:-2px;">
                     <label for="exampleInputFile">Client Deadline <span class="required"> *</span> </label>
                     <div style="" class="input-append date form_datetime" data-date="2020-12-21T15:25:00Z">
-                      <input name="deadline" class="form-control" style="width:90%; height:40px; " size="16" type="text" value="" readonly>
+                      <input name="deadline" class="form-control" style="width:90%; height:40px; " size="16" type="text" value="" readonly required>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>
@@ -85,8 +85,8 @@
           <div class="form-group col-sm-6">
                     <label class="form-control-label" for="from_language">Source Language <span
                     class="required">*</span></label>
-                    <select class="select2 form-control" data-live-search="true" name="from_language" id="from_language">
-                   <option disabled selected value="hhhhhhhh" >Select / Insert Language</option>
+                    <select class="select2 form-control" data-live-search="true" name="from_language" id="from_language" required>
+                   <option disabled selected value="" >Select / Insert Language</option>
                    @foreach($languages as $language)
                     <option class="language" value="{{$language['name']}}" >
                         {{$language['name']}}
@@ -107,7 +107,7 @@
                   <div class="form-group col-sm-6">
                     <label class="form-control-label" for="to_language">Target Language <span
                     class="required">*</span></label>
-                    <select class="select2 form-control" data-live-search="true" name="to_language" id="to_language">
+                    <select class="select2 form-control" data-live-search="true" name="to_language" id="to_language" required>
                    <option disabled selected >Select / Insert Language</option>
                    @foreach($languages as $language)
                     <option class="language"
@@ -138,7 +138,7 @@
                       <span class="required">*</span>
                       </label>
                       <select class="select2 form-control" name="task_type1" id="task_type1"
-                        data-placeholder="select Task Type">
+                        data-placeholder="select Task Type" required>
                         <option disabled >Select</option>
                         <option value="translation" >Translation  </option>
                         <option value="editing" >Editing  </option>
@@ -152,7 +152,7 @@
                     <label class="form-control-label" for="client_wordsCount1">Client Word Count<span
                     class="required">*</span></label>
                     <input type="number" min="0" class="form-control" name="client_wordsCount1"
-                     id="client_wordsCount1" placeholder="Enter 0 if Target">
+                     id="client_wordsCount1" placeholder="Enter 0 if Target" required>
                   </div>
 
                   <div class="form-group col-md-2">
@@ -160,7 +160,7 @@
                       <span class="required">*</span>
                       </label>
                       <select class="form-control" name="client_rateUnit1" id="client_rateUnit1"
-                        data-placeholder="select Client Rate Unit">
+                        data-placeholder="select Client Rate Unit" required>
                         <option disabled >Select</option>
                         <option value="Word Count" >Word Count  </option>
                         <option value="Hour" >Hour  </option>
@@ -171,7 +171,7 @@
                     <label class="form-control-label" for="client_rateValue1">Client Rate<span
                     class="required">*</span></label>
                     <input type="number" min="0.01" step="0.01" class="form-control" name="client_rateValue1"
-                     value="0.15" id="client_rateValue1" placeholder="">
+                     value="0.15" id="client_rateValue1" placeholder="" required>
                   </div>
 
                   <div class="form-group col-md-2">
@@ -179,7 +179,7 @@
                       <span class="required">*</span>
                       </label>
                       <select class="form-control" name="vendor_rateUnit1" id="vendor_rateUnit1"
-                        data-placeholder="select vendor Rate Unit">
+                        data-placeholder="select vendor Rate Unit" required>
                         <option disabled >Select</option>
                         <option value="Word Count" >Word Count  </option>
                         <option value="Hour" >Hour  </option>
@@ -190,7 +190,7 @@
                     <label class="form-control-label" for="vendor_rateValue1">Vendor Rate<span
                     class="required">*</span></label>
                     <input type="number" min="0.01" step="0.01" class="form-control" name="vendor_rateValue1"
-                    value="0.03" id="vendor_rateValue1" placeholder="Enter .. ">
+                    value="0.03" id="vendor_rateValue1" placeholder="Enter .. " required>
                   </div>
 
               
@@ -208,14 +208,14 @@
                       <!-- textarea -->
                       <div class="form-group">
                         <label>Client Instructions</label>
-                        <textarea class="form-control" name="client_instructions" rows="3" placeholder="Enter ..."></textarea>
+                        <textarea class="form-control" name="client_instructions" rows="3" placeholder="None ..."></textarea>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <!-- textarea -->
                       <div class="form-group">
                         <label>General Instructions</label>
-                        <textarea class="form-control" name="general_instructions" rows="3" placeholder="Enter ..."></textarea>
+                        <textarea class="form-control" name="general_instructions" rows="3" placeholder="None ..."></textarea>
                       </div>
                     </div>
                    </div>
@@ -230,7 +230,7 @@
                     
                         <div class="file-loading col-md-2">  
                          <input id="source_files" name="source_files[]"
-                          class="kv-explorer" type="file" multiple>  
+                          class="kv-explorer" type="file" multiple required>  
                           </div>
                      </div>
                    </div> 
@@ -239,7 +239,7 @@
                    <div class="col-md-6">
                      <div class="form-group">
                        <label class="form-control-label"
-                        for="source_document">Reference Files <span class="required"></span></label>
+                        for="source_document">Reference Files</label>
                     
                         <div class="file-loading">  
                          <input id="reference_files" name="reference_files[]"

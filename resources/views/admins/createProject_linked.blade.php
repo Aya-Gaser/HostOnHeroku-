@@ -157,7 +157,7 @@
           <div class="row">          
             <div class="form-group col-md-6">
                 <label> Instructions</label>
-                <textarea class="form-control" name="instructions" rows="3" placeholder="Enter ..."></textarea>
+                <textarea class="form-control" name="instructions" rows="3" placeholder="None ..."></textarea>
             </div>
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
