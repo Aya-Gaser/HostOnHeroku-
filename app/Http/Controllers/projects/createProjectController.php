@@ -167,17 +167,18 @@ class createProjectController extends Controller
         $stage->status = 'Undelivered'; 
         $required_docs_inputName = ($isLinkedEditing)? 'required_docs_edit' : 'required_docs';
         $deadline_inputName = ($isLinkedEditing)? 'delivery_deadline_edit' : 'delivery_deadline';
-        $instruction_inputName = ($isLinkedEditing)? 'instructions_edit' : 'instructions';
         $vendorRate_inputName = ($isLinkedEditing)? 'vendor_rate_edit' : 'vendor_rate';
         $acceptance_deadline = ($isLinkedEditing)? 'acceptance_deadline_edit' : 'acceptance_deadline';
         $words_count_inputName = ($isLinkedEditing)? 'words_count_edit' : 'words_count';
         $maxQuality_points_inputName = ($isLinkedEditing)? 'maxQuality_points_edit' : 'maxQuality_points';
         $vendorRate_unit_inputName = ($isLinkedEditing)? 'rate_unit_edit' : 'rate_unit';
+        $instruction_inputName = ($isLinkedEditing)? 'instructions_edit' : 'instructions';
 
         $UTCDeadline = LocalTime_To_UTC(request()[$deadline_inputName], Auth::user()->timezone);
         $stage->deadline = $UTCDeadline;
         $stage->required_docs = request()[$required_docs_inputName];
-        $stage->instructions = request()[$instruction_inputName];
+        if(request()[$instruction_inputName])
+          $stage->instructions = request()[$instruction_inputName];
         $stage->vendor_wordsCount = request()[$words_count_inputName];
         $stage->vendor_maxQualityPoints = request()[$maxQuality_points_inputName];
         $stage->vendor_rateUnit = request()[$vendorRate_unit_inputName];
