@@ -376,7 +376,6 @@ $(".form_datetime").datetimepicker({
         endDate: new Date(new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)}}").getTime() - 1*24*60*60*1000),
        });
     
-    $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
     $(document).on('change','#from_language',function(){
       $.ajax({
                 url: '/create',
