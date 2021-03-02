@@ -13,6 +13,7 @@ class CreateWoFilesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('wo_files');
         Schema::create('wo_files', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wo_id');

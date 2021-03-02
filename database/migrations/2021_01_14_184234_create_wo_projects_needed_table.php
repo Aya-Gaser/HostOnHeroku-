@@ -13,6 +13,7 @@ class CreateWoProjectsNeededTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('wo_tasks_needed');
         Schema::create('wo_tasks_needed', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wo_id');

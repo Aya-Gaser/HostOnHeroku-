@@ -13,6 +13,7 @@ class CreateProofedFileTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('proofed_file');
         Schema::create('proofed_file', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('woTask_id');
