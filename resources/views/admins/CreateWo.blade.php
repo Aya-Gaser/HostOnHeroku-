@@ -299,11 +299,12 @@ $('.select2bs4').select2({
 $(".form_datetime").datetimepicker({
         format: "dd-M-yy H:i:s",
         autoclose: true,
-        todayBtn: false,
-        startDate: new Date() ,
+        todayBtn: true,
+        todayHighlight:true,
+        startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
+        initialDate: new Date(new Date().getTime() + 1*24*60*60*1000),
         minuteStep: 15,
-        minDate: new Date(),
-        maxDate: new Date(new Date().getTime()+(5*24*60*60*1000))
+        endDate: new Date(new Date().getTime()+100*24*60*60*1000)
     });
     $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
     $(document).on('change','#from_language',function(){

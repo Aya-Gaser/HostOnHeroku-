@@ -10,14 +10,17 @@ if (!function_exists('isActive')) {
 }
 
 if (!function_exists('UTC_To_LocalTime')) {
-    function UTC_To_LocalTime($date, $userTimezone ){
+    function UTC_To_LocalTime($date, $userTimezone, $withTime=false ){
             
         // create a $dt object with the America/Denver timezone
         $dt = new DateTime($date, new DateTimeZone('UTC'));
         // change the timezone of the object without changing it's time
         $dt->setTimezone(new DateTimeZone($userTimezone));
         // format the datetime
-       return $dt->format('d-M-y H:i T');
+       if(!$withTime) 
+            return $dt->format('d-M-y H:i T');
+        else   
+            return $dt->format('Y-m-d');  
     }
 }    
 if (!function_exists('LocalTime_To_UTC')) {
@@ -31,6 +34,14 @@ if (!function_exists('LocalTime_To_UTC')) {
        return $dt->format('Y-m-d H:i:s');
     }
 }    
+if (!function_exists('format_date')) {
+    function format_date($date)
+    {
+        $dt = new DateTime($date);
+        return $dt->format('Y-m-d');
+    }
+}
+
 
 if (!function_exists('customize_date_format')) {
     function customize_date_format($originalDate, $format = 'full')

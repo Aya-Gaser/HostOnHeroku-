@@ -124,7 +124,7 @@
             <div class="form-group col-md-6">
                   <label class="form-control-label" for="quality_points">Quality Points<span
                       class="required">*</span></label>
-                  <input type="number" min="0" class="form-control" name="quality_points"
+                  <input type="number" min="0" class="form-control" name="maxQuality_points"
                     id="quality_points" placeholder="Enter 0 if Target " required>
 
                     </div>
@@ -273,8 +273,25 @@ $(".form_datetime").datetimepicker({
         format: "dd-M-yy H:i:s",
         autoclose: true,
         todayBtn: true,
-        startDate: new Date(),
-        minuteStep: 10
+        todayHighlight:true,
+        startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
+        minuteStep: 15,
+        highlightedDates:[new Date('2021-03-05')],
+        endDate: new Date(new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)}}").getTime() - 1*24*60*60*1000),
+        
+      /*  beforeShowDay: function(date) {
+          calender_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+('0'+date.getDate()).slice(-2);
+
+                var search_index = $.inArray(calender_date, user_busy_days);
+
+                if (search_index > -1) {
+                    return {classes: 'non-highlighted-cal-dates', tooltip: 'User available on this day.'};
+                }else{
+                    return {classes: 'highlighted-cal-dates', tooltip: 'User not available on this day.'};
+                }
+
+            
+        } */
     });
     $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
     $(document).on('change','#from_language',function(){

@@ -16,7 +16,7 @@ This is a message from Tarjamat alerting you of a new project offer available th
 | Assignment Type           | {{$stage->type}}                                                      |
 | Language                  | {{$stage->project->WO->from_language .'▸'.$stage->project->WO->to_language}}                          |
 | Word Count                | {{$words_count}}                                                  |
-| Quality Points            | {{$quality_points}}                                                   |
+| MAX Quality Points            | {{$quality_points}}                                                   |
 | Rate Unit                 | {{$stage['vendor_rateUnit']}}                                                          |
 | Rate                      | {{$stage['vendor_rate']}}                                                          |
 | Offer Expires at          | {{UTC_To_LocalTime($acceptanceDeadline,$vendor->timezone)}} |

@@ -491,7 +491,7 @@ td{
                   <div class="form-group col-md-6">
                         <label class="form-control-label" for="quality_points">MAX Quality Points<span
                             class="required">*</span></label>
-                        <input type="number" min="0" class="form-control" name="quality_points_{{$stage->id}}"
+                        <input type="number" min="0" class="form-control" name="maxQuality_points_{{$stage->id}}"
                         value="{{$stage->vendor_maxQualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
 
                   </div>

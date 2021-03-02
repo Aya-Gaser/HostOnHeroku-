@@ -299,11 +299,11 @@ class viewProjectController extends Controller
                     $stage->vendor_wordsCount = request()['words_count_'.$stage->id];
                 }
             }  
-            if(request()['quality_points_'.$stage->id]){ 
-                if($stage->vendor_maxQualityPoints != request()['quality_points_'.$stage->id]){
-                    $old_qualityPoints = ($stage->vendor_qualityPoints)? $stage->vendor_qualityPoints : 'Target';
-                    $updates['Quality points'] = [$old_qualityPoints, request()['quality_points_'.$stage->id]];
-                    $stage->vendor_qualityPoints = request()['quality_points_'.$stage->id];
+            if(request()['maxQuality_points_'.$stage->id]){ 
+                if($stage->vendor_maxQualityPoints != request()['maxQuality_points_'.$stage->id]){
+                    $old_qualityPoints = ($stage->vendor_maxQualityPoints)? $stage->vendor_maxQualityPoints : 'Target';
+                    $updates['MAX Quality points'] = [$old_qualityPoints, request()['maxQuality_points_'.$stage->id]];
+                    $stage->vendor_maxQualityPoints = request()['maxQuality_points_'.$stage->id];
                 }
             }    
             if(request()['rate_unit_'.$stage->id]){ 

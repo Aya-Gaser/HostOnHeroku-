@@ -527,7 +527,7 @@ td{
                   <div class="form-group col-md-6">
                         <label class="form-control-label" for="quality_points">MAX Quality Points<span
                             class="required">*</span></label>
-                        <input type="number" min="0" class="form-control" name="quality_points_{{$transStage->id}}"
+                        <input type="number" min="0" class="form-control" name="maxQuality_points_{{$transStage->id}}"
                         value="{{$transStage->vendor_maxQualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
 
                   </div>
@@ -723,7 +723,7 @@ td{
                   <div class="form-group col-md-6">
                         <label class="form-control-label" for="quality_points">MAX Quality Points<span
                             class="required">*</span></label>
-                        <input type="number" min="0" class="form-control" name="quality_points_{{$editStage->id}}"
+                        <input type="number" min="0" class="form-control" name="maxQuality_points_{{$editStage->id}}"
                         value="{{$editStage->vendor_maxQualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
 
                   </div>
