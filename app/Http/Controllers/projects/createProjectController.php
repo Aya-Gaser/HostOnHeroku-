@@ -99,7 +99,6 @@ class createProjectController extends Controller
     $wo = WO::findOrFail($wo_id);
     $project = new projects(); 
     $project->wo_id = $wo_id;
-    //$wo = WO::find($wo_id);
     $project->woTask_id = $request->input('woTask_id');; ///////////////////////???????
     $project->type = woTasksNeeded::find($project->woTask_id)->type;
     //($isLinked)? 'linked' : $request->input('project_type');
@@ -157,7 +156,7 @@ class createProjectController extends Controller
   }
   
   public function createStage($wo_id,$project_id, $project_type, $IsLast, $isLinkedEditing){
-        $wo = WO::find($wo_id);
+       
         $stage = new projectStage();
         $stage->wo_id = $wo_id;
         $stage->project_id = $project_id;

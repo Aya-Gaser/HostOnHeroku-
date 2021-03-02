@@ -18,7 +18,7 @@ class CreateWoTable extends Migration
         Schema::create('wo', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('client_id');
-            $table->timestamp('deadline');
+            $table->dateTime('deadline');
             //$table->float('client_rate'); 
             $table->string('po_number');            
             //$table->integer('quality_points');

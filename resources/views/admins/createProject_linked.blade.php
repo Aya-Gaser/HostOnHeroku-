@@ -364,17 +364,21 @@ $('.select2bs4').select2({
 
   bsCustomFileInput.init();
   $('select').selectpicker();
-});
+
+$woD = new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)}}");
+diff = 23 - $woD.getHours();
+
 $(".form_datetime").datetimepicker({
-       format: "dd-M-yy H:i:s",
+        format: "dd-M-yy H:i:s",
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,
         startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
         minuteStep: 15,
         highlightedDates:[new Date('2021-03-05')],
-        endDate: new Date(new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)}}").getTime() - 1*24*60*60*1000),
-       });
+        endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
+
+      });
     
     $(document).on('change','#from_language',function(){
       $.ajax({
@@ -389,6 +393,7 @@ $(".form_datetime").datetimepicker({
 
       
           });
+});         
 </script>
 @include('layouts.partials._file_input_plugin_script')
 @endsection

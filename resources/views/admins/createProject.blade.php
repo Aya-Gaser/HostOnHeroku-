@@ -268,7 +268,10 @@ $('.select2bs4').select2({
 
   bsCustomFileInput.init();
   $('select').selectpicker();
-});
+
+$woD = new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)}}");
+diff = 23 - $woD.getHours();
+
 $(".form_datetime").datetimepicker({
         format: "dd-M-yy H:i:s",
         autoclose: true,
@@ -277,8 +280,7 @@ $(".form_datetime").datetimepicker({
         startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
         minuteStep: 15,
         highlightedDates:[new Date('2021-03-05')],
-        endDate: new Date(new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)}}").getTime() - 1*24*60*60*1000),
-        endTime:5,
+        endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
       /*  beforeShowDay: function(date) {
           calender_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+('0'+date.getDate()).slice(-2);
 
@@ -306,6 +308,7 @@ $(".form_datetime").datetimepicker({
 
       
           });
+});          
 </script>
 @include('layouts.partials._file_input_plugin_script')
 @endsection

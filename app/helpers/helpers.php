@@ -20,7 +20,7 @@ if (!function_exists('UTC_To_LocalTime')) {
        if(!$withTime) 
             return $dt->format('d-M-y H:i T');
         else   
-            return $dt->format('Y-m-d');  
+            return $dt->format('Y-m-d H:i');  
     }
 }    
 if (!function_exists('LocalTime_To_UTC')) {
