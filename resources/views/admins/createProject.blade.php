@@ -266,7 +266,7 @@ $('.select2bs4').select2({
   theme: 'bootstrap4'
 })
 
-4  bsCustomFileInput.init();
+  bsCustomFileInput.init();
   $('select').selectpicker();
 });
 $(".form_datetime").datetimepicker({
@@ -278,7 +278,7 @@ $(".form_datetime").datetimepicker({
         minuteStep: 15,
         highlightedDates:[new Date('2021-03-05')],
         endDate: new Date(new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)}}").getTime() - 1*24*60*60*1000),
-        
+        endTime:5,
       /*  beforeShowDay: function(date) {
           calender_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+('0'+date.getDate()).slice(-2);
 
