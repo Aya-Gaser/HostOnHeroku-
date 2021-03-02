@@ -101,7 +101,7 @@ class createProjectController extends Controller
     $project->wo_id = $wo_id;
     //$wo = WO::find($wo_id);
     $project->woTask_id = $request->input('woTask_id');; ///////////////////////???????
-    $project->type = woTasksNeeded::find($project->woTask_id)->first()->type;
+    $project->type = woTasksNeeded::find($project->woTask_id)->type;
     //($isLinked)? 'linked' : $request->input('project_type');
     $project->name = $request->input('project_name');
     $UTCDeadline = LocalTime_To_UTC($request->input('delivery_deadline'), Auth::user()->timezone);
