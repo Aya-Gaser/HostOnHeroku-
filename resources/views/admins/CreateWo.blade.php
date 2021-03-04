@@ -5,6 +5,12 @@
 
 @section('style')
 <link href="{{asset('bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" media="screen">
+<style>
+.form-check{
+   padding-top:40px;
+   padding-left:60px;
+}
+</style>
 @include('layouts.partials._file_input_plugin_style')
 @endsection
 
@@ -146,6 +152,7 @@
                         <option value="linked" >Linked  </option>
                       </select>
                   </div>
+                 
                 </div>  
                 <div class="row">  
                   <div class="form-group col-md-3">

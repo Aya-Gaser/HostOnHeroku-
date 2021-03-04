@@ -81,112 +81,24 @@ td{
                 {{App\User::find($wo->created_by)->name}}
                 </p>
                 
-              </div>  
-               <div class="card card-dark">
-               <div class="card-header">
-                 <h3 class="card-title"> Tasks Needed </h3>
-                 <div class="card-tools">
-                 <button type="button" id="addTask" data-toggle="modal" data-target="#modal-default" class="" 
-                   style="outline:none; border:none; background:transparent; color:#0dbd35; font-weight:bold;">
-                   <i class="fas fa-plus"></i> add more task </button>
-                 </div>
-               </div>  
-               <div class="card-body p-0 table-responsive">
-                <table class="table table-striped table-sm table-bodered" id="pending">
-                 <thead>
-                  <tr>
-                     
-                     
-                      <th style="width: " >
-                         Type 
-                      </th>
-                      <th style="width: ">
-                      Client Words Count
-                      </th>
-                      <th style="width: ">
-                      Client Unit
-                      </th>
-                      <th style="width:  " >
-                      Client Rate
-                      </th>
-                      <th style="width:">
-                      Vendor Unit
-                      </th>
-                      <th style="width:">
-                      Vendor Rate
-                      </th>
-                      <th style="width:">
-                     
-                      </th>
-                  </tr>
-              </thead>
-              <tbody>
-             @foreach ($wo->woTasksNeeded as $task)
-              <tr>
-                      <td>
-                     {{$task['type']}}
-                      </td>
-                      <td>
-                    
-                      @if($task['client_wordsCount']) 
-                         {{$task['client_wordsCount']}}
-                      @else 
-                        <span class="text-danger"> Target </span>
-                      @endif     
-                      
-                      </td>
-                      <td>
-                      {{$task['client_rateUnit']}}
-                    
-                      </td>
-                      <td>
-                         
-                      {{$task['client_rateValue']}}
-                      </td>
-                      <td>
-                      {{$task['vendor_suggest_rateUnit']}}
-                   
-                         </td>
-                         <td>
-                      {{$task['vendor_suggest_rateValue']}}
-                   
-                         </td>
-                   
-                      <td class="project-actions text-right">
-                      
-                   
-                     <a class="btn btn-danger btn-sm deleteTask" id="{{$task->id}}">
-                         <i class="fas fa-trash">
-                         </i>
-                       Delete
-                     </a>
-                                                
-                      </td>
-                      @endforeach
-                  </tr>
-        
-              </tbody>
-          </table>
-        </div>
-        </div> <br>
-               <p class="data"> <Span class="head"> Client Instructions : </Span>
+             
+              
+               <p class="data col-md-6"> <Span class="head"> Client Instructions : </Span>
                  {{ $wo->client_instructions}}
                </p>
-               <p class="data"> <Span class="head"> General Instructions : </Span>
+               <p class="data col-md-6"> <Span class="head"> General Instructions : </Span>
                  {{ $wo->general_instructions}}
                </p>
-               <p class="data"> <Span class="head"> Recieve : 
+               <p class="data col-md-12"> <Span class="head"> Recieve : 
                @if($wo->isReceived) <Span class="data"> Recieved &check;&check; </span>
                @else
                <a href="{{route('management.recieve-wo',$wo->id)}}"> <button class="btn btn-success"> Recieve </button> </a>
                  @endif </Span>
               
                </p>
-                          
-         
-               <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                    <br>
+              </div>               
+             <div class="row">
+               <div class="col-sm-6 col-md-6 form-group">
                         <h4> Source Document </h4>
                         <br>
                         
@@ -208,6 +120,9 @@ td{
                                 <li class="text-danger">No documents found</li>
                             @endforelse
                             <br>
+                        
+                        </div> 
+                          <div class="col-sm-6 col-md-6 form-group">
                             <h4> Reference files </h4>
                            <br>
                             @forelse($reference_file as $file)                               
@@ -231,7 +146,7 @@ td{
                         </ul>
                     </div>
                 </div>
-            
+               
               <p> 
                 
                  <button type="button" id="deleteWo" class="btn btn-danger">Delete Wo</button>

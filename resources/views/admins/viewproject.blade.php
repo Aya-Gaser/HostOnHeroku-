@@ -53,18 +53,22 @@ td{
                 </div>
                 </div>
              
-                <div class="card-body">
-             <p class="data"> <Span class="head"> ID : </Span>{{$project->id}} </p>
-             <p class="data"> <Span class="head"> Name : </Span>{{$project->name}} </p>
-             <p class="data" > <Span class="head"> Language  : </Span>{{$project->WO->from_language}} ▸ {{$project->WO->to_language}}</p>
-              <p class="data"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone) }} </p>
-              <p class="data"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
+            <div class="card-body">
+             <div class="row">
+             <p class="data col-md-6"> <Span class="head"> ID : </Span>{{$project->id}} </p>
+             <p class="data col-md-6"> <Span class="head"> Name : </Span>{{$project->name}} </p>
+             <p class="data col-md-6" > <Span class="head"> Language  : </Span>{{$project->WO->from_language}} ▸ {{$project->WO->to_language}}</p>
+              <p class="data col-md-6"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone) }} </p>
+              <p class="data col-md-6"> <Span class="head"> Deadline Time Left : </Span> {!! $deadline_difference !!}</p>
 
-               <p class="data"> <Span class="head"> Deadline Time Left : </Span> {!! $deadline_difference !!}</p>
+              <p class="data col-md-6 text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
+
+             </div> 
+             <br>
+             <div class="row">
+              <div class="col-sm-6 col-md-6">
+                   
               
-              <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                    <br>
                         <h4> Working Documents </h4>
                         <br>
                         
@@ -87,6 +91,8 @@ td{
                                 <li class="text-danger">No documents found</li>
                             @endforelse
                             <br>
+                           </div> 
+                           <div class="col-sm-6 col-md-6">
                             <h4> Reference files </h4>
                            <br>
                             @forelse($reference_files as $file)                               
@@ -113,6 +119,7 @@ td{
                         </ul>
                     </div>
                 </div>
+                <br>
                 <p> 
                 <button type="button" id="deleteProject" class="btn btn-danger">Delete Project</button>
                  <button  id="update" class="btn btn-primary">Update Project</button>
@@ -243,25 +250,42 @@ td{
                                      
                                         @if($delivery_files->translator_delivery[$source_file->id][0]->status == 'pending')
                                         <td>
-                                       <button class="btn btn-success" style="margin-bottom:10px;">
-                                       <a href="{{route('management.acion-on-deliveryFile',
-                                    ['deliveryId'=> $delivery_files->translator_delivery[$source_file->id][0]->id,
-                                     'fileId'=>$source_file->id, 'action'=>'accepted'])}}">
-                                     Accept </a>
-                                          </button> 
-                                          <br>
-                                          <button onClick=" @php $deliveryId =$delivery_files->translator_delivery[$source_file->id][0]->id;
-                                          @endphp "
-                                           type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
-                                       Reject
-                                        </button>
+                                        <button type="button" class="btn btn-success action accept" id="{{$delivery_files->translator_delivery[$source_file->id][0]->id}}"
+                                        data-toggle="modal" data-target="#modal-actionNote">
+                                           Accept
+                                          </button>
+                                          <br><br>
+                                        @if($has_proofAndFinalize)
+                                        <button type="button" class="btn btn-danger action reject" id="{{$delivery_files->translator_delivery[$source_file->id][0]->id}}"
+                                        data-toggle="modal" data-target="#modal-actionNote">
+                                           Reject
+                                          </button>
+                                        @else
+                                        <button type="button" class="btn btn-danger improve" id="{{$delivery_files->translator_delivery[$source_file->id][0]->id}}"
+                                         data-toggle="modal" data-target="#modal-improvedFile">
+                                           Ask Improvements
+                                          </button>
+                                         @endif 
                                          </td> 
                                         
                                         @else 
                                         <td>
+                                       
                                               <p>{{$delivery_files->translator_delivery[$source_file->id][0]->status}}</p>
                                               <p><b>Notes</b> :{{$delivery_files->translator_delivery[$source_file->id][0]->notes}}</p>  <br> 
-                                              </td>
+                                              @if($delivery_files->translator_delivery[$source_file->id][0]->improvedFiles)
+                                                <ul>
+                                                @foreach($delivery_files->translator_delivery[$source_file->id][0]->improvedFiles as $improvedFile)   
+                                                <li class="text-primary">
+                                                  <a href="{{asset('storage/'.$improvedFile['file'])}}"
+                                                    download="{{$improvedFile['name']}}">
+                                                      {{str_limit($improvedFile['file_name'],40)}}
+                                                  </a>
+                                                </li>
+                                                @endforeach
+                                                </ul>
+                                              @endif
+                                        </td>
                                      @endif  
                                              
                                               
@@ -297,7 +321,7 @@ td{
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-           
+        @if($has_proofAndFinalize)   
             <div class="card col-md-12">
               <div class="card-body">
             
@@ -402,7 +426,7 @@ td{
                           </div>        
                                     
                           </div></div>
-                      
+              @endif        
             
               <!-- /.card-body -->
           
@@ -448,15 +472,15 @@ td{
                   {{$stage->status}} </p>
                 <p>
                 @if($stage->status != 'completed')
-                    <a method="post" href="{{route('management.complete-stage',['stage'=>$stage->id,'compelte'=>1] )}}">
-                        <button type="button" class="btn btn-success" > 
-                        Completed &check;&check; </button>
+                   
+                <button type="button" id="{{$stage->id}}" data-toggle="modal" data-target="#modal-completeStage"
+                class="btn btn-success completeStage complete" > 
+                        Completed Job &check;&check; </button>
                     </a> 
                 @else        
-                <a method="post" href="{{route('management.complete-stage',['stage'=>$stage->id,'compelte'=>0] )}}">
-                        <button type="button" class="btn btn-success" > 
+                    <button type="button" id="{{$stage->id}}" class="btn btn-success completeStage reopen" > 
                         RE-OPEN </button>
-                    </a>
+                  
                  @endif       
                     </p>
               <p class="data col-md-12"> <Span class="head"> Instructions  : </Span>{{$stage->instructions}} </p>
@@ -616,22 +640,98 @@ td{
         
           <!--/.col (right) -->
         </div>
+ <!-- /.modal -->
+<div class="modal fade in" id="modal-completeStage" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+     
+     <div class="modal-dialog center">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h4 class="modal-title">Set Final Data</h4>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+         <form id="completeStage-form" enctype="multipart/form-data">
+               @csrf
+           <input id="wordsCount" name="wordsCount" type="number" class="form-control"> 
+        
+          <input type="hidden" value="" name="stageId" id="stageId">
+          <input type="hidden" id="complete" name="complete">
+
+         </div>
+         <div class="modal-footer justify-content-between">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-success"> save
+           </button> 
+           </form>
+         </div>
+       </div>
+       
+       <!-- /.modal-content -->
+     </div>
+     <!-- /.modal-dialog -->
+   </div>        
+ <!-- ************************************************************************* -->       
 <!-- /.modal -->
-<div class="modal fade in" id="modal-default" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
-      <center>
+<div class="modal fade in" id="modal-actionNote" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+     
           <div class="modal-dialog center">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Rejection Notes</h4>
+                <h4 class="modal-title">Add Notes</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-              <form action="{{route('management.acion-on-deliveryFile',
-               ['deliveryId'=> $deliveryId,'action'=>'rejected'])}}" method="get" enctype="multipart/form-data">
+              <form id="reject-form" enctype="multipart/form-data">
                     @csrf
-                <input name="notes" type="text" class="form-control" required> 
+                <input name="notes" type="text" class="form-control" placeholder="None .."> 
+               <input type="hidden" id="deliveryId" name="deliveryId">
+               <input type="hidden" id="action" name="action">
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success"> save
+                </button> 
+                </form>
+              </div>
+            </div>
+            
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>  
+<!-- ************************************************************ -->
+<!-- /.modal -->
+<div class="modal fade in" id="modal-improvedFile" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+     
+          <div class="modal-dialog center">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Improved File</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              <form id="improve-form" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Improved Files <span class="required">*</span></label>
+                    
+                        <div class="file-loading col-md-2">  
+                         <input id="improved_files" name="improved_files[]"
+                          class="kv-explorer" type="file" multiple>  
+                          </div>
+                     </div>
+                     <label class="form-control-label"
+                        for="source_document">Notes </label>
+                    
+                     <input name="notes_improve" type="text" class="form-control" placeholder="None .."> 
+                     <input type="hidden" id="deliveryId_improve" name="deliveryId_improve">
               
               </div>
               <div class="modal-footer justify-content-between">
@@ -641,10 +741,10 @@ td{
                 </form>
               </div>
             </div>
-            </center>
+         
             <!-- /.modal-content -->
           </div>
-          <!-- /.modal-dialog -->
+          <!-- /.modal-dialog -->          
 
         <!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -722,6 +822,156 @@ $('#deleteProject').click(function(){
 }); 
 })
 
+
+$('.action').click(function(){
+  $deliveryId = $(this).attr('id');
+  $('#deliveryId').val($deliveryId);  
+ 
+});  
+$('.reject').click(function(){
+   $('#action').val('rejected');
+});  
+$('.accept').click(function(){
+   $('#action').val('accepted');
+});   
+$('#reject-form').submit(function(e) {
+       e.preventDefault();
+       let formData = new FormData(this);
+  $.ajax({
+        data: formData,
+        url: "{{route('management.acion-on-deliveryFile') }}",
+        type: 'POST',
+        contentType: false,
+           processData: false,
+           success: (response) => {
+             if(response){
+              this.reset();
+               //console.log(response) 
+              swal("Done! Sent Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            //console.log(data);
+           }
+  });
+
+});
+
+$('.improve').click(function(){
+  $deliveryId = $(this).attr('id');
+  $('#deliveryId_improve').val($deliveryId);
+});
+$('#improve-form').submit(function(e) {
+       e.preventDefault();
+       let formData = new FormData(this);
+  $.ajax({
+        data: formData,
+        url: "{{route('management.store-improvedFile') }}",
+        type: 'POST',
+        contentType: false,
+           processData: false,
+           success: (response) => {
+             if(response){
+              this.reset();
+               //console.log(response) 
+              swal("Done! Sent Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            console.log(data);
+           }
+  });
+});
+$('.completeStage').click(function(){
+  $stageId = $(this).attr('id');
+  $('#stageId').val($stageId);
+  //console.log($stageId);
+  $.ajax({
+        data: { stageId : $stageId},
+        url: "{{ route('management.helper_getStage_WordCount') }}",
+        type: 'POST',
+        dataType: 'json',
+        //contentType: false,
+          // processData: false,
+           success: (response) => {
+             if(response){
+              response = JSON.parse(response.success);
+              $('#wordsCount').val(response['wordsCount']);
+              //console.log(response['wordsCount']);
+             }
+             
+            },
+            error: function(data) { 
+            //console.log(data);
+           }
+  });
+  
+});
+$('.complete').click(function(){
+  $('#complete').val(1);
+});  
+$('.reopen').click(function(){
+  $.ajax({
+        data: {stageId : $stageId,
+              complete : 0 },
+        url: "{{route('management.complete-stage') }}",
+        type: 'POST',
+        //contentType: false,
+          // processData: false,
+           success: (response) => {
+             if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done! Sent Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            console.log(data);
+           }
+  });
+}); 
+//route('management.complete-stage',['stage'=>$stage->id,'compelte'=>1] )
+$('#completeStage-form').submit(function(e) {
+       e.preventDefault();
+       let formData = new FormData(this);
+  $.ajax({
+        data: formData,
+        url: "{{route('management.complete-stage') }}",
+        type: 'POST',
+        contentType: false,
+         processData: false,
+           success: (response) => {
+             if(response){
+              this.reset();
+               //console.log(response) 
+              swal("Done! Sent Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            console.log(data);
+           }
+  });
+}); 
 </script>
 @include('layouts.partials._file_input_plugin_script')
 @endsection

@@ -27,7 +27,9 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
  'as' => 'management.'], function() {
     /* HELPERS */ 
     Route::post('/helper_getStageQP', 'admins\helperController@getStage_qualityPoints')->middleware('auth')
-    ->name('helper_getStageQP');
+    ->name('helper_getStageQP'); 
+    Route::post('/helper_getStageWC', 'admins\helperController@getStage_wordsCount')->middleware('auth')
+    ->name('helper_getStage_WordCount');
     Route::get('/first-login', 'admins\dashboardController@first')->middleware('auth')
     ->name('first-login');
     Route::post('/first-login', 'admins\dashboardController@completeData')->middleware('auth')
@@ -84,8 +86,10 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     ->where(['status'=> '[a-z]+'])->name('view-allProjects');
     /// delivery action 
 
-    Route::get('/action-deliveryFile/{deliveryID}/{action}', 'projects\viewProjectController@deliveryFile_action')->middleware('auth')
-    ->where(['deliveryID'=> '[0-9]+', 'action'=> '[a-z]+' ])->name('acion-on-deliveryFile');
+    Route::post('/action-deliveryFile', 'projects\viewProjectController@deliveryFile_action')->middleware('auth')
+    ->where([])->name('acion-on-deliveryFile');
+    Route::post('/store-improvedFile', 'projects\viewProjectController@deliveryFile_improve')->middleware('auth')
+    ->where([])->name('store-improvedFile');
 
 
     Route::post('/upload-editedFile/{project}/{sourceFile}', 'projects\viewProjectController@store_EditedFile')->middleware('auth')
@@ -97,8 +101,8 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::get('/sendTo-finalization/{sourceFile}', 'projects\viewProjectController@send_toFinalization')->middleware('auth')
     ->where(['sourceFile'=>'[0-9]+'])->name('send-toFinalization');
 
-    Route::get('/complete-projectStage/{stage}/{compelte}', 'projects\viewProjectController@complete_reOpen_vendorStage')->middleware('auth')
-    ->where(['stage'=>'[0-9]+', 'compelte'=> '[0-1]'])->name('complete-stage');
+    Route::post('/complete-projectStage', 'projects\viewProjectController@complete_reOpen_vendorStage')->middleware('auth')
+    ->where([])->name('complete-stage');
     /* PROOFING */
     Route::get('/all-tasks-proofing/{filter}', 'projects\proofingController@index')->middleware('auth')
     ->where(['filter'=>'[a-z]+'])->name('allTasks-proofing');
@@ -207,8 +211,8 @@ Route::group(['middleware' => 'role:vendor', 'prefix' => 'vendor-panel',
     ->where(['stage'=> '[0-9]+', 'delivery'=> '[0-9]+' ])->name('resend-delivery');
 
     ///// editor in linked project acion-on-deliveryFile
-    Route::get('/action-deliveryFile/{deliveryID}/{action}', 'vendor\viewAllProjectsController@deliveryFile_action')->middleware('auth')
-    ->where(['deliveryID'=> '[0-9]+', 'action'=> '[a-z]+' ])->name('acion-on-deliveryFile');
+    Route::post('/action-deliveryFile', 'vendor\viewAllProjectsController@deliveryFile_action')->middleware('auth')
+    ->where([])->name('acion-on-deliveryFile');
 
  });
 

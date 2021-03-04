@@ -8,8 +8,8 @@ class vendorDelivery extends Model
 {
     protected $table = 'delivery_files';
 
-    public function deliveryFiles(){
-        return $this->hasMany('App\deliveryFiles','delivery_id');
+    public function improvedFiles(){
+        return $this->hasMany('App\improvedFiles','deliveryFile_id');
     }
     public function projectStage(){
         return $this->belongsTo('App\projectStage'); 

@@ -71,7 +71,7 @@ td{
               <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
               @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else 
               <span class="pending">  Target </span> @endif</p>
-              <p class="data col-md-6"> <Span class="head"> MMAX Quality Points  : </Span>
+              <p class="data col-md-6"> <Span class="head"> MAX Quality Points  : </Span>
               @if($stage->vendor_maxQualityPoints) {{$stage->vendor_maxQualityPoints}} 
               @else <span class="pending">  Target </span> @endif</p>
               <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
@@ -181,6 +181,18 @@ td{
                                               <td>
                                               {{ $deliver_withFiles->thisVendor_delivery[$source_file->id][0]->status }}
                                               <p><b>Notes</b> :  {{$deliver_withFiles->thisVendor_delivery[$source_file->id][0]->notes}} </p>
+                                              @if($deliver_withFiles->thisVendor_delivery[$source_file->id][0]->improvedFiles)
+                                                <ul>
+                                                @foreach($deliver_withFiles->thisVendor_delivery[$source_file->id][0]->improvedFiles as $improvedFile)   
+                                                <li class="text-primary">
+                                                  <a href="{{asset('storage/'.$improvedFile['file'])}}"
+                                                    download="{{$improvedFile['name']}}">
+                                                      {{str_limit($improvedFile['file_name'],40)}}
+                                                  </a>
+                                                </li>
+                                                @endforeach
+                                                </ul>
+                                              @endif
                                               </td>
                                               @else
                                              

@@ -56,6 +56,7 @@ td{
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+              <div class="row">
               <p class="col-md-6 data"> <Span class="head"> ID  : </Span>{{$project->wo_id}} </p>
               <p class="col-md-6 data"> <Span class="head"> Started At : </Span>
               {{UTC_To_LocalTime($project->created_at,
@@ -86,6 +87,7 @@ td{
               </Span>  {!! $deadline_difference !!} </p>
               <p class="data col-md-6"> <Span class="head"> Status  : </Span>
                   {{$stage->status}} </p>
+              </div>    
               <div class="col-sm-12 col-md-12">
                     <div class="form-group">
                     <br>
@@ -156,24 +158,35 @@ td{
                                      
                                         @if($deliver_withFiles->translator_delivery[$source_file->id][0]->status == 'pending')
                                         <td>
-                                       <button class="btn btn-success" style="margin-bottom:10px;">
-                                       <a href="{{route('vendor.acion-on-deliveryFile',
-                                    ['deliveryId'=> $deliver_withFiles->translator_delivery[$source_file->id][0]->id,
-                                     'fileId'=>$source_file->id, 'action'=>'accepted'])}}">
-                                     Accept </a>
-                                          </button> 
-                                          <br>
-                                          <button onClick=" @php $deliveryId =$deliver_withFiles->translator_delivery[$source_file->id][0]->id;
-                                          @endphp "
-                                           type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
-                                       Reject
-                                        </button>
+                                        <button type="button" class="btn btn-success action accept" id="{{$deliver_withFiles->translator_delivery[$source_file->id][0]->id}}"
+                                        data-toggle="modal" data-target="#modal-actionNote">
+                                           Accept
+                                          </button>
+                                          <br><br>
+                                       
+                                        <button type="button" class="btn btn-danger action reject" id="{{$deliver_withFiles->translator_delivery[$source_file->id][0]->id}}"
+                                        data-toggle="modal" data-target="#modal-actionNote">
+                                           Reject
+                                          </button>
+                                       
                                          </td> 
                                          <td></td>
                                         @else 
                                         <td>
                                               {{$deliver_withFiles->translator_delivery[$source_file->id][0]->status}} <br> 
-                                            
+                                              <p><b>Notes</b> :  {{$deliver_withFiles->translator_delivery[$source_file->id][0]->notes}} </p>
+                                              @if($deliver_withFiles->translator_delivery[$source_file->id][0]->improvedFiles)
+                                                <ul>
+                                                @foreach($deliver_withFiles->translator_delivery[$source_file->id][0]->improvedFiles as $improvedFile)   
+                                                <li class="text-primary">
+                                                  <a href="{{asset('storage/'.$improvedFile['file'])}}"
+                                                    download="{{$improvedFile['name']}}">
+                                                      {{str_limit($improvedFile['file_name'],40)}}
+                                                  </a>
+                                                </li>
+                                                @endforeach
+                                                </ul>
+                                              @endif
                                               </td>
                                               
                                              
@@ -324,22 +337,22 @@ td{
           <!--/.col (right) -->
         </div>
 <!-- /.modal -->
-<div class="modal fade in" id="modal-default" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
-      <center>
+<div class="modal fade in" id="modal-actionNote" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+     
           <div class="modal-dialog center">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Rejection Notes</h4>
+                <h4 class="modal-title">Add Notes</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-              <form action="{{route('vendor.acion-on-deliveryFile',
-        ['deliveryId'=> $deliveryId,'action'=>'rejected'])}}" method="get" enctype="multipart/form-data">
+              <form id="reject-form" enctype="multipart/form-data">
                     @csrf
-                <input name="notes" type="text" class="form-control" required> 
-              
+                <input name="notes" type="text" class="form-control" placeholder="None .."> 
+               <input type="hidden" id="deliveryId" name="deliveryId">
+               <input type="hidden" id="action" name="action">
               </div>
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -348,11 +361,12 @@ td{
                 </form>
               </div>
             </div>
-            </center>
+            
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
-
+        </div>
+         
         <!-- /.row -->
       </div><!-- /.container-fluid -->
      
@@ -368,6 +382,45 @@ $(function () {
   bsCustomFileInput.init();
  
  
+});
+
+$('.action').click(function(){
+  $deliveryId = $(this).attr('id');
+  $('#deliveryId').val($deliveryId);  
+ 
+});  
+$('.reject').click(function(){
+   $('#action').val('rejected');
+});  
+$('.accept').click(function(){
+   $('#action').val('accepted');
+});   
+$('#reject-form').submit(function(e) {
+       e.preventDefault();
+       let formData = new FormData(this);
+  $.ajax({
+        data: formData,
+        url: "{{route('vendor.acion-on-deliveryFile') }}",
+        type: 'POST',
+        contentType: false,
+           processData: false,
+           success: (response) => {
+             if(response){
+              this.reset();
+               //console.log(response) 
+              swal("Done! Sent Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            //console.log(data);
+           }
+  });
+
 });
 
 </script>

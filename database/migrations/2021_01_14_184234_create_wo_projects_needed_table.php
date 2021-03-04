@@ -23,6 +23,7 @@ class CreateWoProjectsNeededTable extends Migration
             $table->float('client_rateValue');
             $table->string('vendor_suggest_rateUnit')->nullable();
             $table->float('vendor_suggest_rateValue')->default(0);
+            $table->boolean('has_proofAndFinalize');
             $table->string('status')->default('pending');
             $table->timestamps();
         });

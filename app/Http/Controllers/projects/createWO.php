@@ -81,7 +81,11 @@ class createWO extends Controller
        $WO->status = 'pending';
        $WO->sent_docs = $request->input('sent_docs'); 
        $WO->save();
-       $this->storeWo_Tasks($WO->id);
+       $is_otherLanguage = false;
+       $withProof_language = ['Arabic', 'English'];
+       if( !in_array($WO->from_language, $withProof_language) || !in_array($WO->to_language, $withProof_language)  )
+          $is_otherLanguage = true;
+       $this->storeWo_Tasks($WO->id, $is_otherLanguage);
          // UPLOAD FILES
         if ($request->hasFile('source_files')) {
             $this->uploadWoAttachments($WO, 'source_files','source_file');
@@ -95,7 +99,7 @@ class createWO extends Controller
       return redirect(route('management.view-allWo'));
     }
     
-    public function storeWo_Tasks($wo_id){
+    public function storeWo_Tasks($wo_id, $is_otherLanguage){
       $taskNum = request()['tasksNum'];
       for($i=1; $i<=$taskNum; $i++){
          $task = new woTasksNeeded();
@@ -106,7 +110,8 @@ class createWO extends Controller
          $task->client_rateValue = request()['client_rateValue'.$i];
          $task->vendor_suggest_rateUnit = request()['vendor_rateUnit'.$i];
          $task->vendor_suggest_rateValue = request()['vendor_rateValue'.$i];
-         $task->save();
+         $task->has_proofAndFinalize = ($task->type == 'dtp' ||  $is_otherLanguage)? false : true;
+         $task->save(); 
       }
       
     }

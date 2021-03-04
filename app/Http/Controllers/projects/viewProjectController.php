@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use DateTime;
 use \stdClass;
 use App\User;
+use App\improvedFiles;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\projectUpdate;
 class viewProjectController extends Controller
@@ -30,6 +31,7 @@ class viewProjectController extends Controller
  
     public function index($id){
         $project = projects::findOrFail($id);
+        $has_proofAndFinalize = $project->woTasksNeeded->has_proofAndFinalize;
         [$delivery_files,$deliveryHistory_files] =  $this->getProject_Deliveriesfiles($project);    
         ($project->type == 'linked')? $view = 'admins.viewProject_linked': $view = 'admins.viewproject';
         $deliveries_edited = $this->getSource_acceptedDelivery_edited($project);
@@ -37,7 +39,8 @@ class viewProjectController extends Controller
         $reference_files = $this->getprojectsFiles($project);
         $source_files = $project->project_sourceFile;
         $deadline_difference = $this->deadline_difference($project);
-        return view($view)->with(['project'=>$project,'source_files'=>$source_files, 'reference_files'=> $reference_files,
+        return view($view)->with(['project'=>$project, 'has_proofAndFinalize'=>$has_proofAndFinalize,
+        'source_files'=>$source_files, 'reference_files'=> $reference_files,
           'delivery_files'=>$delivery_files,
          'deliveryHistory_files'=>$deliveryHistory_files, 'deliveries_edited'=>$deliveries_edited,
           'deadline_difference'=>$deadline_difference]);
@@ -200,12 +203,25 @@ class viewProjectController extends Controller
         return back();
     }
 
-    public function complete_reOpen_vendorStage($stage, $complete){
-        $stage = projectStage::findOrFail($stage);  
+    public function complete_reOpen_vendorStage(Request $request){
+        $request->validate([
+            
+            'complete' => 'required',
+            'stageId' => 'required',
+          ]);
+        $stageId = $request->input('stageId'); 
+        $complete = $request->input('complete');  
+        $stage = projectStage::findOrFail($stageId); 
+        if($complete){
+            if($request->input('wordsCount'))
+                $stage->vendor_wordsCount = $request->input('wordsCount');
+        }      
+         
         $stage->status = ($complete)? 'completed' : 'accepted'; //1 >> complete
+        
         $stage->save();
 
-        return back();
+        return response()->json(['success'=>'Done Successfully']);      
     }
     
     public function sendFinalized_toNextProject($finalizedFile){
@@ -386,27 +402,30 @@ class viewProjectController extends Controller
                    
              }
         }
-        public function deliveryFile_action($deliveryId, $action){
+        public function deliveryFile_action(){
             ////// validate parameters
+            $action = request()['action'];
+            $deliveryId = request()['deliveryId'];
             $delivery = vendorDelivery::findOrFail($deliveryId);
             $delivery->isReceived = true;
             $actions = ['accepted', 'rejected'];
             if(!in_array($action, $actions))
               abort(404);
            
-   
            if($action == 'accepted')
              $this->accept_deliveryFile($delivery) ;
            else
             $this->reject_deliveryFile($delivery) ;
            
-           return back();    
+           return  response()->json(['success'=>'Done Successfully']);     
         }  
         public function accept_deliveryFile($delivery){
            $delivery->status = 'accepted';
            $stage = projectStage::where('id', $delivery->stage_id)->first();
            $stage->increment('accepted_docs');
            $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'accepted' : 'pending';
+           if(request()['notes']) 
+               $delivery->notes = request()['notes'];
            if( $stage->status == 'accepted'){
           
            }
@@ -417,13 +436,43 @@ class viewProjectController extends Controller
           
         }
         public function reject_deliveryFile($delivery){
-           $delivery->notes = request()['notes'];
+           if(request()['notes']) 
+               $delivery->notes = request()['notes'];
            $delivery->status = 'rejected'; /* *************************************** */
            //mail
            $delivery->save();
         }
    
-           
+        public function deliveryFile_improve(){
+            ////// validate parameters
+            
+            $deliveryId = request()['deliveryId_improve'];
+            $delivery = vendorDelivery::find($deliveryId);
+            $delivery->status = 'improved';
+            if(request()['notes_improved'])
+                    $delivery->notes = request()['notes_improved'];
+            $delivery->save();
+            
+            $project_id = $delivery->project_id;
+            foreach (request()->file('improved_files') as $attachment) {
+                $extension = $attachment->extension();
+                $fileName = $project_id . $deliveryId.'_' . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
+            
+                $filePath = '/improved_files/' . $project_id . '/'.$deliveryId.'/';
+                Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
+    
+                //save each file 
+                $improvedFile =new improvedFiles();
+                $improvedFile->deliveryFile_id = $deliveryId;
+                $improvedFile->created_by = Auth::user()->id;
+                $improvedFile->file_name = $attachment->getClientOriginalName();
+                $improvedFile->file = $filePath . $fileName;
+                $improvedFile->extension = $extension;
+                $improvedFile->save();
+                }
+
+                return response()->json(['success'=>'File Uploaded Successfully']);      
+        }
         public function destroy($projectId){
             $project = projects::findOrFail($projectId);
             $project->delete();

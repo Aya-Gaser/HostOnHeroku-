@@ -190,8 +190,10 @@ class viewAllProjectsController extends Controller
     
    
 
-     public function deliveryFile_action($deliveryId, $action){
+     public function deliveryFile_action(){
          ////// validate parameters
+         $action = request()['action'];
+         $deliveryId = request()['deliveryId'];
          $delivery = vendorDelivery::findOrFail($deliveryId);
          $delivery->isReceived = true;
          $actions = ['accepted', 'rejected'];
@@ -221,7 +223,8 @@ class viewAllProjectsController extends Controller
        
      }
      public function reject_deliveryFile($delivery){
-        $delivery->notes = request()['notes'];
+        if(request()['notes']) 
+               $delivery->notes = request()['notes'];
         $delivery->status = 'rejected'; /* *************************************** */
         //mail
         $delivery->save();
