@@ -19,8 +19,22 @@ class vendorDelivery extends Model
      }
      public function User(){
         return $this->belongsTo('App\User'); 
-     }
+     }/*
      public function test(){
         return $this->where('stage_id',$this->projectStage); 
-     }
+     }*/
+
+     public  static function boot() {
+      parent::boot();
+   
+      static::deleting(function($vendorDelivery) {
+          //remove related rows region and city
+         /* $project->project_sourceFile->each(function($sourceFile) {
+              $sourceFile->vendorDelivery()->delete();
+          }); */
+          $sourceFile->improvedFiles()->delete();//
+          
+          return true;
+      });
+   }
 }

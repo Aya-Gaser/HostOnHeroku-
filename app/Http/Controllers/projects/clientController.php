@@ -47,7 +47,6 @@ class clientController extends Controller
     public function destroy($client_id){
         $client = client::findOrFail($client_id);
         $client->delete();
-        return back();
-    }
+        return response()->json(['success'=>'Deleted Successfully']);    }
     
 }

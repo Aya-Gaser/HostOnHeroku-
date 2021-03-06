@@ -140,6 +140,7 @@ class viewWoController extends Controller
     }
 
     public function addTask($woId){
+      $wo = WO::find($woId);
       $task = new woTasksNeeded();
       $task->wo_id = $woId;
       $task->type = request()['task_type']; 
@@ -148,23 +149,29 @@ class viewWoController extends Controller
       $task->client_rateValue = request()['client_rateValue'];
       $task->vendor_suggest_rateUnit = request()['vendor_rateUnit'];
       $task->vendor_suggest_rateValue = request()['vendor_rateValue'];
+      $is_otherLanguage = false;
+      $withProof_language = ['Arabic', 'English'];
+      if( !in_array($wo->from_language, $withProof_language) || !in_array($wo->to_language, $withProof_language)  )
+          $is_otherLanguage = true;
+      $task->has_proofAndFinalize = ($task->type == 'dtp' ||  $is_otherLanguage)? false : true;
       $task->save();
 
       alert()->success('Task Added Successfully !')->autoclose(false);
       return back();
     }
+
     public function destroyTask($taskId){
        $task = woTasksNeeded::findOrFail($taskId);
        $task->delete();
 
        alert()->success('Task Deleted Successfully !')->autoclose(false);
-      return back();
+       return response()->json(['success'=>'Deleted Successfully']);
     }
     public function destroyWoFile($fileId){
        $file = woFiles::findOrFail($fileId);
        $file->delete();
        alert()->success('File Deleted Successfully !')->autoclose(15);
-       return back();
+       return response()->json(['success'=>'Deleted Successfully']);
     }
 
     public function destroy($woId){

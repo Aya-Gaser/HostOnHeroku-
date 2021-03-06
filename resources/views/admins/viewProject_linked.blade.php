@@ -76,15 +76,14 @@ td{
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
                                        download="{{$file['file']}}">
-                                        {{$file['file_name']}}
+                                       {{str_limit($file['file_name'],40)}}
                                     </a>
-                                    <a href="{{route('management.delete-file',['id'=>$file['id'],
-                                    'type'=>'source']) }}"
-                                       class="btn btn-danger btn-sm ml-2">
+                                    <input type="hidden" value="{{$file['id']}}" id="fileIdsource">
+                                    <button id="source"
+                                       class="btn btn-danger btn-sm ml-2 deleteProjectFile">
                                             <span class="btn-inner--icon"><i
                                                     class="far fa-trash-alt"></i></span>
-                                    </a>
-                                   
+                                    </button>
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
@@ -100,12 +99,12 @@ td{
                                        download="{{$file['name']}}">
                                         {{str_limit($file['file_name'],50)}}
                                     </a>
-                                    <a href="{{route('management.delete-file',['id'=>$file['id'],
-                                    'type'=>'source']) }}"
-                                       class="btn btn-danger btn-sm ml-2">
+                                    <input type="hidden" value="{{$file['id']}}" id="fileIdref">
+                                    <button id="ref"
+                                       class="btn btn-danger btn-sm ml-2 deleteProjectFile">
                                             <span class="btn-inner--icon"><i
                                                     class="far fa-trash-alt"></i></span>
-                                    </a>
+                                    </button>
                                     
                                 </li>
                                 <div class="clearfix mb-2"></div>
@@ -1017,21 +1016,27 @@ $('#deleteProject').click(function(){
         dangerMode: true,
     })
     .then((willDelete) => {
-          if (willDelete) {
-            $.ajax({
+      if (willDelete) {
+        $.ajax({
         url:" {{route('management.delete-project', $project->id) }}",
         type: 'POST',
-        dataType: 'text',
+        dataType: 'json',
+        contentType: false,
+        processData: false,
         data: {
           woId: {{ $project->id}}
         //  category_id: category_id,
         },
         success:function(response) {
-           // tasks on reponse
-          /* swal("Done! Your data has been deleted", {
-              icon: "success",
-            }); */
-            window.location.href = '{{route('management.view-allProjects', 'all' )}}';
+          if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done! Deleted Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              window.location.href = '{{route('management.view-allProjects', 'all' )}}';
+            }) 
+           }
         }
       })           
           } else {
@@ -1109,7 +1114,54 @@ $('#improve-form').submit(function(e) {
             console.log(data);
            }
   });
-});  
+}); 
+
+$('.deleteProjectFile').click(function(){
+ $fileType = $(this).attr('id');
+ $fileId = $('#fileId'+$fileType).val();
+ var url = "{{ route('management.delete-projectFile',['id'=>'fileId', 'type'=>'fileType'] )}}";
+url = url.replace('fileType', $fileType);
+url = url.replace('fileId', $fileId);
+ 
+swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+       // type: "warning",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+      //console.log(url)
+          if (willDelete) {
+        $.ajax({
+        url:url,
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        data: { fileId: $fileId},
+       
+        success:function(response) {
+          if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done! Deleted Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+        },
+        error: function(data) { 
+           // console.log(data);
+           }
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
+});
+
 </script>
 @include('layouts.partials._file_input_plugin_script')
 

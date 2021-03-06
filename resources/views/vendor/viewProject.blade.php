@@ -21,7 +21,7 @@ td{
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>My Projects</h1>
+          
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -41,7 +41,7 @@ td{
 
       <div class="row">
       <div class="col-md-12">
-            <div class="card card-success shadow-sm">
+            <div class="card card-primary shadow-sm">
               <div class="card-header">
                 <h3 class="card-title">Project Details </h3>
 
@@ -114,10 +114,61 @@ td{
                     </div>
                     </div>
                   
-                    <br>
-                        <br>
+                    <br><br>
+                    @if($project->status == 'reviewed')
+                    <div class="card card-success">
+                          <div class="card-header">
+                            <h5> Reviewed Files  
+                             </h5>
+                          </div>
+                          <div class="card-body">
+                          <div class="table-responsive">
+                            <table class="table table table-striped">
+                              <thead>
+                                  <tr>
+                                  
+                                  <th width="">Working File</th>
+                                  <th width="">Reviewed File</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                            @foreach($project->project_sourceFile as $file)                                
+                                <tr>
+                                 <td> 
+                                <li class="text-primary">
+                                  <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file']}}">
+                                       {{str_limit($file->file_name,50)}}
+                                  </a>
+                                   
+                                </li>
+                              </td>
+                             <td> 
+                             <ul>
+                             @foreach($file->proofed_vendorFile as $proofed)  
+                             
+                             <li class="text-primary">
+                                  <a href="{{asset('storage/'.$proofed['file'])}}"
+                                       download="{{$proofed['file']}}">
+                                       {{str_limit($proofed->file_name,50)}}
+                                  </a>
+                                   
+                                </li>
+                              NOTES :  {{$proofed['note']}}  
+                             @endforeach   
+                             </ul>
+                            </td>
+                            
+                            </tr>
+                            @endforeach
+                            </tbody>
+                            </table>
+                           </div>
+                         </div> 
+                       </div>    
+                     @endif
                        
-                        <div class="card">
+                        <div class="card card-dark">
                           <div class="card-header">
                             <h5> Working Files  
                              </h5>
@@ -235,12 +286,10 @@ td{
              <h4> Delivery History </h4>
              </div>
              <div class="card-body">
-             @php $i=0; @endphp
              @foreach($thisVendor_delivery as $delivery)
-             @php $i++; @endphp
                              <div class="card" style="margin-bottom:15px;">
                                 <div class="card-header">
-                                <h5> Delivery #  {{$i}}  </h5>
+                                <h5> Delivery #  {{$loop->iteration}}  </h5>
                                 </div>
                                 <div class="card-body">
                                    <div class="row col-md-12">

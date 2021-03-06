@@ -54,7 +54,7 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::get('allWo', 'projects\allWoController@index')->middleware('auth')->name('view-allWo');
     Route::get('/viewWo/{id}', 'projects\viewWoController@index')->middleware('auth')->name('view-wo');
    
-    Route::get('/delete-woFile/{fileId}', 'projects\viewWoController@destroyWoFile')->middleware('auth')
+    Route::post('/delete-woFile/{fileId}', 'projects\viewWoController@destroyWoFile')->middleware('auth')
     ->where(['fileId'=>'[0-9]+'])->name('delete-woFile');
     Route::post('/delete-wo/{woId}', 'projects\viewWoController@destroy')->middleware('auth')
     ->where(['woId'=>'[0-9]+'])->name('delete-wo');
@@ -67,15 +67,15 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::get('/createProject-data/{id}/{type}', 'projects\createProjectController@index')->middleware('auth')
     ->where(['id'=>'[0-9]+', 'type'=> '[a-z]+'])->name('create-project');
     
-    Route::get('/file-delete/{id}/{type}', 'projects\viewProjectController@deleteAttachment')
-    ->where(['id'=>'[0-9]+', 'type'=>'[a-z]+'])->name('delete-file');
+    Route::post('/file-delete/{id}/{type}', 'projects\viewProjectController@deleteAttachment')
+    ->where(['id'=>'[0-9]+', 'type'=>'[a-z]+'])->name('delete-projectFile');
     //// store project
     Route::post('/createProject/{wo}/{isLinked}', 'projects\createProjectController@store')->middleware('auth')
     ->where(['wo'=>'[0-9]+', 'isLinked'=> '[0-1]'])->name('store-project');
     //// view project
     Route::get('/viewProject/{id}', 'projects\viewProjectController@index')->middleware('auth')
     ->where(['id'=>'[0-9]+'])->name('view-project');
-    Route::get('/delete-project/{projectId}', 'projects\viewProjectController@destroy')->middleware('auth')
+    Route::post('/delete-project/{projectId}', 'projects\viewProjectController@destroy')->middleware('auth')
     ->where(['projectId'=>'[0-9]+'])->name('delete-project');
     Route::post('/updateProject/{id}', 'projects\viewProjectController@updateProject')->middleware('auth')
     ->where(['id'=>'[0-9]+'])->name('update-project');
@@ -118,7 +118,7 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     ->where(['filter'=>'[a-z]+'])->name('allTasks-finalization');
     Route::get('/task-finalization/{taskId}', 'projects\finalizationController@taskFinalization')->middleware('auth')
     ->where(['taskId'=>'[0-9]+'])->name('task-finalization');
-    Route::post('/upload-finalizedFile/{taskId}/{type}', 'projects\finalizationController@store_finalizedFile')->middleware('auth')
+    Route::post('/upload-finalizedFile/{taskId}', 'projects\finalizationController@store_finalizedFile')->middleware('auth')
     ->where(['taskId'=>'[0-9]+', 'type'=>'[aA-zZ]+'])->name('upload-finalizedFile');
 
     Route::get('/delete-finalizedFile/{finalizedFile}', 'projects\finalizationController@delete_finalizedFile')->middleware('auth')
@@ -145,7 +145,7 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::post('/updateVendor-data/{vendor}', 'projects\vendorController@updateVendor')->middleware('auth')
     ->where(['vendor'=>'[0-9]+'])->name('update-vendor');
 
-    Route::get('/delete-vendor/{vendor}', 'projects\vendorController@destroy')->middleware('auth')
+    Route::post('/delete-vendor/{vendor}', 'projects\vendorController@destroy')->middleware('auth')
     ->where(['vendor'=>'[0-9]+'])->name('delete-vendor');
     ////view clients
     Route::get('/view-allclients', 'projects\clientController@allclients')->middleware('auth')
@@ -160,7 +160,7 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::post('/updateclient-data/{client}', 'projects\clientController@updateclient')->middleware('auth')
     ->where(['client'=>'[0-9]+'])->name('update-client');
 
-    Route::get('/delete-client/{client}', 'projects\clientController@destroy')->middleware('auth')
+    Route::post('/delete-client/{client}', 'projects\clientController@destroy')->middleware('auth')
     ->where(['client'=>'[0-9]+'])->name('delete-client');
 
 

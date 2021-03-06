@@ -70,7 +70,7 @@ class vendorController extends Controller
     public function destroy($vendor_id){
         $vendor = User::findOrFail($vendor_id);
         $vendor->delete();
-        return back();
+        return response()->json(['success'=>'Deleted Successfully']); 
     }
     
 }

@@ -18,6 +18,9 @@ use App\editedFile;
 use App\proofedFile;
 use App\woTasksNeeded;
 use App\finalizedFile;
+use App\Mail\projectsManger_FinalFiles;
+use Illuminate\Support\Facades\Mail;
+
 class finalizationController extends Controller
 {
     public function __construct()
@@ -60,34 +63,44 @@ class finalizationController extends Controller
         ]);
     }
 
-    public function store_finalizedFile($taskId, $type){
+    public function store_finalizedFile($taskId){
         
         $task = woTasksNeeded::findOrFail($taskId);
-        $inputType = $type.'_file';
-        if(request()->file($inputType)){
-           // $attachment = request()->file('projectManager_file');
-            foreach(request()->file($inputType) as $attachment){
-                $extension = $attachment->extension();
-                $fileName = $taskId . '_' . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
-                $filePath = '/wo_finalizedFiles/' . $taskId . '/';
-                Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
-                $finalizedFile = new finalizedFile();
-                $finalizedFile->woTask_id =$taskId;
-                $finalizedFile->file_name = $attachment->getClientOriginalName();
-                $finalizedFile->type = $inputType;
-                $finalizedFile->file = $filePath . $fileName;
-                $finalizedFile->extension = $extension;
-                $finalizedFile->created_by = Auth::user()->id;
-                $finalizedFile->save();
-                //return  'kkkkkkkk';
-            }
-            $task->status = 'finalized';
-            $task->save();
+        
+        if(request()->file('projectManager_file')){
+          $this->uploadFiles($taskId, 'projectManager_file');
+          Mail::to('ayagaser39@gmail.com')->send(new projectsManger_FinalFiles($task->wo_id));
+          //Projects.tarjamatllc@gmail.com
         }
+        if(request()->file('client_file')){
+            $this->uploadFiles($taskId, 'client_file');
+          }
+            
+        $task->status = 'finalized';
+        $task->save();
+        
         alert()->success('Uploaded Successfully !')->autoclose(false);
         return back();
         
         //return 'hh';
+    }
+
+    public function uploadFiles($taskId, $inputType){
+        foreach(request()->file($inputType) as $attachment){
+            $extension = $attachment->extension();
+            $fileName = $taskId . '_' . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
+            $filePath = '/wo_finalizedFiles/' . $taskId . '/';
+            Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
+            $finalizedFile = new finalizedFile();
+            $finalizedFile->woTask_id =$taskId;
+            $finalizedFile->file_name = $attachment->getClientOriginalName();
+            $finalizedFile->type = $inputType;
+            $finalizedFile->file = $filePath . $fileName;
+            $finalizedFile->extension = $extension;
+            $finalizedFile->created_by = Auth::user()->id;
+            $finalizedFile->save();
+            //return  'kkkkkkkk';
+        }
     }
     public function getWo_sourceFiles($woId){
         $wo = WO::find($woId);

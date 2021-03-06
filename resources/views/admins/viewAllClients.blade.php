@@ -81,6 +81,7 @@
                       <th>Name</th>
                       <th>Created at</th>
                       <th >Total Projects </th>
+                      <th></th>
                      
                     </tr>
                   </thead>
@@ -104,9 +105,9 @@
                        <button type="buton" class="btn btn-success"> View </button>
                        </a>      
 
-                        <a href="{{route('management.delete-client',$client->id)}}"> 
-                       <button type="buton" class="btn btn-danger"> Delete </button>
-                       </a>       
+                     
+                       <button id="{{$client->id}}" type="buton" class="btn btn-danger deleteClient"> Delete </button>
+                            
                      </td>
                      </tr>
                    @endforeach
@@ -157,6 +158,51 @@ $(function () {
  
  $("#client_type option[id="+type+"]").attr("selected", "selected");
 */
+$('.deleteClient').click(function(){
+  $clientId = $(this).attr('id');
+ var url = "{{ route('management.delete-client','id' )}}";
+ url = url.replace('id', $clientId);
+  swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+        type: "warning",
+        
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+        url:url,
+        type: 'POST',
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        data: {clientId: $clientId},
+        //  category_id: category_id,
+        
+        success:function(response) {
+          if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done! Deleted Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+             location.reload();
+            }) 
+           }
+        },
+        error: function(data) { 
+            console.log(data);
+           }
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
+}); 
+
+
 });
 
 </script>

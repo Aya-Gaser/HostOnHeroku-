@@ -35,13 +35,13 @@ td{
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-     @php $deliveryId=0; @endphp
+   
     
       <div class="row">
       <div class="col-md-10">
             <div class="card card-success shadow-sm">
               <div class="card-header">
-                <h3 class="card-title">client Information </h3>
+                <h3 class="card-title">Client Information </h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -53,14 +53,15 @@ td{
                 <div class="card-body">
              <p class="data"> <Span class="head"> ID : </Span>{{$client->id}} </p>
               <p class="data"> <Span class="head">Name : </Span>{{$client->name}} </p>
-             
+              <p class="data"> <Span class="head">Code : </Span>{{$client->code}} </p>
+
               <p class="data"> <Span class="head"> Created at : </Span> 
              {{ UTC_To_LocalTime($client->created_at, Auth::user()->timezone)}}
                 </p>
                <p>
-               <a href="{{route('management.delete-client',$client->id)}}"> 
-                       <button type="buton" class="btn btn-danger"> Delete </button>
-                       </a>   
+              
+                  <button id="deleteClient" type="buton" class="btn btn-danger"> Delete </button>
+                      
                  </p>      
               
               </div>
@@ -70,7 +71,7 @@ td{
               <div class="card-body">
             
                           <div class="card-header">
-                            <h5> client Projects  </h5>
+                            <h5> Client WOs  </h5>
                           </div>
                           <div class="card-body">
                           <div class="table-responsive">
@@ -79,27 +80,26 @@ td{
                                         <tr>
                                         
                                         <th width="10%">ID</th>
-                                        <th width="15%">Name</th>
-                                        <th width="20%">Created at</th>
-                                        <th width="15%">Type</th>
+                                        <th width="20%">Created On</th>
+                                        <th width="20%">Deadline</th>
                                         <th width="13%">Status</th>
                                         <th width="15%"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                    
-                                    @foreach($client->Wo as $project)
+                                    @foreach($client->Wo as $wo)
                                      <tr>
-                                       <td> {{$project->id}} </td>
-                                       <td> {{$project->name}} </td>
+                                       <td> {{$wo->id}} </td>
                                        <td> 
-                                       {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone) }} 
+                                       {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone) }} 
                                        </td>
-                                       <td> {{App\projects::find($project->project_id)->type}} </td>
-                                       <td> {{$project->type}} </td>
-                                       <td> {{$project->status}} </td>
                                        <td> 
-                                        <a href="{{route('management.view-project',$project->id)}}"> 
+                                       {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone) }} 
+                                        </td>
+                                       <td> {{$wo->status}} </td>
+                                       <td> 
+                                        <a href="{{route('management.view-wo',$wo->id)}}"> 
                                           <button type="buton" class="btn btn-success"> View </button>
                                         </a>  
                                        </td>
@@ -162,7 +162,48 @@ $(function () {
       "ordering": false,"info": true,
     });
   
+$('#deleteClient').click(function(){
  
+ swal({
+       title: "Are you sure?",
+       text: "You will not be able to recover this data!",
+       type: "warning",
+       
+       buttons: true,
+       dangerMode: true,
+   })
+   .then((willDelete) => {
+         if (willDelete) {
+           $.ajax({
+       url: "{{ route('management.delete-client', $client->id)}}",
+       type: 'POST',
+       dataType: 'json',
+       contentType: false,
+       processData: false,
+      
+       //  category_id: category_id,
+       
+       success:function(response) {
+         if(response){
+             //this.reset();
+              //console.log(response) 
+             swal("Done! Deleted Successfuly", {
+             icon: "success"
+           }).then((ok) =>{ 
+             window.location.href = "{{route('management.view-allClients' )}}";
+           }) 
+          }
+       },
+       error: function(data) { 
+           console.log(data);
+          }
+     })           
+         } else {
+           swal("Your data is safe!");
+         }
+       });
+}); 
+
 });
 
 

@@ -18,9 +18,11 @@ use App\project_sourceFile;
 use Auth;
 use App\vendorDelivery;
 use App\projectStage;
-use App\editedFile;
+use App\editedFile; 
 use App\proofedFile;
 use App\woTasksNeeded;
+use App\Mail\readyToFinalizeFile;
+
 class proofingController extends Controller
 {
     public function __construct()
@@ -107,6 +109,8 @@ class proofingController extends Controller
        
         if($request->file('client_file')){
             $this->upload_proofedAttachments($sourceFileId,$project_id, $taskId, 'client_file');
+            Mail::to('ayagaser39@gmail.com')->send(new readyToFinalizeFile($project->wo_id));
+            //Reeno.tarjamat@gmail.com
         }
         $sourceFile->isReadyToFinalize = true;
         $sourceFile->save();

@@ -461,7 +461,7 @@ $('.proof').click(function(){
 $('#uploadProof-form').submit(function(e) {
        e.preventDefault();
        let formData = new FormData(this);
-       this.reset();
+       //this.reset();
         $.ajax({
         data: formData,
         url: "{{ route('management.store-proofingFiles') }}",

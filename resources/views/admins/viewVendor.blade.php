@@ -64,9 +64,9 @@ td{
                <span id="showPass" style="cursor:pointer; color:red;">  <i class="fas fa-eye"></i> </span>
                 </p>
               <p>
-               <a href="{{route('management.delete-vendor', $vendor['id'] )}}"> 
-                       <button type="buton" class="btn btn-danger"> Delete </button>
-                       </a>   
+               
+                       <button id="deleteVendor" type="buton" class="btn btn-danger"> Delete </button>
+                     
                  </p> 
               
               </div>
@@ -179,7 +179,51 @@ $(function () {
   } else {
     x.style.display = "none";
   }
- }); 
+ });
+
+ $('#deleteVendor').click(function(){
+ 
+  swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+        type: "warning",
+        
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+        url: "{{ route('management.delete-vendor', $vendor->id)}}",
+        type: 'POST',
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+       
+        //  category_id: category_id,
+        
+        success:function(response) {
+          if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done! Deleted Successfuly", {
+              icon: "success"
+            }).then((ok) =>{ 
+              window.location.href = "{{route('management.view-allVendors' )}}";
+            }) 
+           }
+        },
+        error: function(data) { 
+            console.log(data);
+           }
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
+}); 
+
+
 });
 
 

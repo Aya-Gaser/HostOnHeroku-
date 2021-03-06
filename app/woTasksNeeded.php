@@ -45,11 +45,11 @@ class woTasksNeeded extends Model
       static::deleting(function($task) {
           //remove related rows region and city
           
-          $task->project_sourceFile()->delete();//
+          
           $task->finalizedFile()->delete();//
           $task->proofedFile()->delete();//
           $task->project()->delete();// 
-          $task->projectStage()->delete();//
+         
           return true;
       });
    }

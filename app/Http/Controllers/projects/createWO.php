@@ -14,6 +14,8 @@ use App\WO;
 use Auth;
 use App\woTasksNeeded;
 use App\woFiles;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\newWoCreated;
 class createWO extends Controller
 {
 
@@ -93,7 +95,9 @@ class createWO extends Controller
         if ($request->hasFile('reference_files')) {
             $this->uploadWoAttachments($WO, 'reference_files','reference_file');
         } 
-      
+        Mail::to('ayagaser39@gmail.com')->send(new newWoCreated($WO->id));
+         //Projects.tarjamatllc@gmail.com
+
         alert()->success('Wo Created Successfully !')->autoclose(false);
         //return response()->json(['success'=>'File Uploaded Successfully']);      
       return redirect(route('management.view-allWo'));

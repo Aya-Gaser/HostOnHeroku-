@@ -13,17 +13,11 @@ td{
   word-break: break-all;
 }
 
-#modal-proof .modal-content{
+#modal-uploadFinalization .modal-content{
   overflow-y: scroll;
-  height: 450px;
+  height: 350px;
 }
-#modal-sendToVendor .modal-content{
-  height:300px;
 
-}
-#completeReview-div{
-  display:none;
-}
 .card-body.p-0 .table tbody>tr>td:first-of-type{
   padding-left:10px;
 }
@@ -70,9 +64,17 @@ ul{
                   </button>
                 </div>
                 </div>
-             
+               
                 <div class="card-body">
              <p class="data"> <Span class="head"> WO ID : </Span>{{$task->wo_id}} </p>
+             <p class="data"> <Span class="head"> Client : </Span>
+             @if(App\client::find($task->WO['client_id']))
+                {{App\client::find($task->WO->client_id)->code}} - {{App\client::find($task->WO->client_id)->name}}
+                @else 
+                {{$task->WO['client_id']}} - <span class="text-danger"> DELETED </span>
+                @endif
+             </p>   
+             
              <p class="data" > <Span class="head"> Language  : </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
               <p class="data"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
               <p class="data text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
@@ -212,8 +214,12 @@ ul{
            
             <div class="card card-success col-md-12">
               <div class="card-header">
-                              <h5> Files Editing & Proofing 
-                                </h5>
+                  <h5> Files Finalization</h5>
+               <div class="card-tools">
+               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-uploadFinalization">
+                Upload Files
+              </button>   
+              </div>
               </div>
               <div class="card-body">
             
@@ -269,17 +275,7 @@ ul{
                          @endforeach
                          </p> 
                            <p> 
-                             <form id="projectManager_file" action="{{route('management.upload-finalizedFile',['taskId'=>$task->id, 'type'=>'projectManager'] )}}" method="post" enctype="multipart/form-data">
-                                  @csrf
-                                  <div class="form-group ">
-                                      <div class="file-loading">  
-                                      <input id="delivery_files" name="projectManager_file[]" 
-                                        class="kv-explorer " type="file" multiple required>  
-                                        </div>
-                                  </div>
-                                <button type="submit" class="btn btn-primary" > 
-                                  Upload </button>
-                              </form>  
+                            
                             </p>
                           </td>
 
@@ -300,19 +296,7 @@ ul{
                          
                          @endforeach
                          </p> 
-                         <p> 
-                            <form action="{{route('management.upload-finalizedFile',['taskId'=>$task->id, 'type'=>'client'] )}}" method="post" enctype="multipart/form-data">
-                                  @csrf
-                                  <div class="form-group ">
-                                      <div class="file-loading">  
-                                      <input id="delivery_files" name="client_file[]" 
-                                        class="kv-explorer " type="file" multiple required>  
-                                        </div>
-                                  </div>
-                                <button type="submit" class="btn btn-primary" > 
-                                  Upload </button>
-                            </form>  
-                          </p>
+                        
                           </td>
                          
                          </tr>
@@ -343,110 +327,41 @@ ul{
 <!-- /.modal -->
 
 
-<div class="row modal fade in" id="modal-proof" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
-     
-          <div class="modal-dialog col-md-12 center" style="max-width:750px;">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Upload Prooing Files </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-              <form method="post" id="uploadProof-form" enctype="multipart/form-data">
-                @csrf
-                <input type="hidden" value="" name="sourceFileId" id="sourceFileId">
-                 <div class="row">   
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="form-control-label"
-                      for="source_document">Vendor File <span class="required">*</span></label>
-                  
-                      <div class="file-loading col-md-2">  
-                        <input id="vendor_file" name="vendor_file"
-                        class="kv-explorer" type="file" required>  
-                        </div>
-                    </div>
-                  </div> 
-                  <div class="form-group col-md-6">
-                  <label class="form-control-label" for="client_rateValue1"> Notes</label>
-                   <input name="vendor_file_note" type="text" class="form-control" placeholder="Notes for vendor"> 
-                  </div>
-                </div>
-
-                <div class="row">   
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="form-control-label"
-                      for="source_document">Client File </label>
-                  
-                      <div class="file-loading col-md-2">  
-                        <input id="client_file" name="client_file"
-                        class="kv-explorer" type="file" >  
-                        </div>
-                    </div>
-                  </div> 
-                  <div class="form-group col-md-6">
-                  <label class="form-control-label" for="client_rateValue1">Notes</label>
-                   <input name="client_file_note" type="text" class="form-control" placeholder="Notes for Client File "> 
-                  </div>
-                </div>
-
-              </div>
-              <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" id='save' class="btn btn-success"> save
-                </button> 
-              </form>
-              </div>
-            </div>
-            
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-</div>
-  <div class="row modal fade in" id="modal-sendToVendor" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+  <div class="row modal fade in" id="modal-uploadFinalization" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
      
      <div class="modal-dialog col-md-12 center" style="max-width:750px;">
        <div class="modal-content">
          <div class="modal-header">
-           <h4 class="modal-title">Send Full Review To Vendor </h4>
+           <h4 class="modal-title">Upload Finalized Files </h4>
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
          </div>
          <div class="modal-body">
-         <form id="completeReview-form" action="" method="post" enctype="multipart/form-data">
-         @csrf
-           <div class="card-body">
-           <input type="hidden" value="" name="jobId" id="jobId">
-           <div class="row">
-             <div class="form-group col-md-6">
-               <label class="form-control-label" for="words_count">Word Count<span
-                   class="required">*</span></label>
-               <input type="number" min="0" step="1" class="form-control" name="words_count"
-                value="" id="words_count" required>
-
-             </div>
-             <div class="form-group col-md-6">
-                   <label class="form-control-label" for="quality_points">Quality Points<span
-                       class="required">*</span></label>
-                   <input type="number" min="0" class="form-control" name="quality_points"
-                   value="" id="quality_points" required>
-
-             </div>
-           </div>   
-
-    
-       
-             </div>
-       <!-- /.card -->
-
-       <div class="card-footer" id="submit_div">
-             <button type="submit" class="btn btn-primary">Send</button>
-           </div>
-         </form>
+         <form id="projectManager_file" action="{{route('management.upload-finalizedFile', $task->id)}}" method="post" enctype="multipart/form-data">
+              @csrf
+              <div class="form-group ">
+              <label class="form-control-label" for="project_type">project Manager File(s)
+                    <span class="required">*</span>
+                    </label>
+                  <div class="file-loading">  
+                  <input id="delivery_files" name="projectManager_file[]" 
+                    class="kv-explorer " type="file" multiple required>  
+                    </div>
+              </div>
+           
+              <div class="form-group ">
+              <label class="form-control-label" for="project_type">Client File(s)
+                    <span class="required">*</span>
+                    </label>
+                  <div class="file-loading">  
+                  <input id="delivery_files" name="client_file[]" 
+                    class="kv-explorer " type="file" multiple required>  
+                    </div>
+              </div>
+            <button type="submit" class="btn btn-primary" > 
+              Upload </button>
+        </form>  
          </div>
        </div>
        

@@ -22,6 +22,8 @@ use App\User;
 use App\improvedFiles;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\projectUpdate;
+use App\Mail\deliveryAction; 
+use App\Mail\readyToProofFile;
 class viewProjectController extends Controller
 {
     public function __construct()
@@ -124,9 +126,9 @@ class viewProjectController extends Controller
        $project->isReadyToProof = true;
        $project->save();
        $editedFile = new editedFile();
-        $editedFile->project_id = $project->id;
-        $editedFile->sourceFile_id = $sourceFile;
-        $editedFile->created_by = Auth::user()->id;
+       $editedFile->project_id = $project->id;
+       $editedFile->sourceFile_id = $sourceFile;
+       $editedFile->created_by = Auth::user()->id;
         $this->send_toFinalization($sourceFile);
        //get file
        $attachment = request()['edited_file'];
@@ -139,6 +141,9 @@ class viewProjectController extends Controller
        $editedFile->file = $filePath . $fileName;
        $editedFile->extension = $extension;
        $editedFile->save();
+       
+       Mail::to('ayagaser39@gmail.com')->send(new readyToProofFile($project->wo_id));
+       //hoda.tarjamat@gmail.com
 
        return back();
          
@@ -160,33 +165,13 @@ class viewProjectController extends Controller
         $sourceFile = project_sourceFile::find($sourceFile);  
         $sourceFile->isReadyToProof = true; 
         $sourceFile->save();
+        Mail::to('hoda.tarjamat@gmail.com')->send(new readyToProofFile($sourceFile->project->wo_id));
+
        // alert()->success('Project Created Successfully !')->autoclose(false);    
         return back();
      }
 
-     public function store_finalizedFile($project, $sourceFile ){
-        $project = projects::find($project);
-        //$sourceFile = project_sourceFile::find($sourceFile);
-
-         $finalizedFile = new finalizedFile();
-         $finalizedFile->project_id = $project->id;
-         $finalizedFile->sourceFile_id = $sourceFile;
-         $finalizedFile->created_by = Auth::user()->id;
-        //get file
-        $attachment = request()['finalized_file'];
-        $extension = $attachment->extension();
-        $fileName = $project->wo_id . '_'.$project->id . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
-        $filePath = '/wo_finalizedFiles/' . $project->wo_id . '/';
-        Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
- 
-        $finalizedFile->file_name = $attachment->getClientOriginalName();
-        $finalizedFile->file = $filePath . $fileName;
-        $finalizedFile->extension = $extension;
-        $finalizedFile->save();
- 
-        return back();
-          
-      }
+     
       public function delete_finalizedFile($finalizedFile){
         $finalizedFile = finalizedFile::findOrFail($finalizedFile);
         $finalizedFile->delete();
@@ -256,8 +241,7 @@ class viewProjectController extends Controller
             else
                 $file = projectFile::find($fileId);
             $file->delete();
-            
-            return back();
+            return response()->json(['success'=>'Deleted Successfully']);      
 
         }
         public function complete_reOpen_project($project, $complete){
@@ -421,7 +405,7 @@ class viewProjectController extends Controller
         }  
         public function accept_deliveryFile($delivery){
            $delivery->status = 'accepted';
-           $stage = projectStage::where('id', $delivery->stage_id)->first();
+           $stage = projectStage::find($delivery->stage_id);
            $stage->increment('accepted_docs');
            $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'accepted' : 'pending';
            if(request()['notes']) 
@@ -429,8 +413,8 @@ class viewProjectController extends Controller
            if( $stage->status == 'accepted'){
           
            }
-           //mail
-          
+           // SEND MAIL TO VENDOR
+           $this->vendorEmail_deliveryAction($stage, 'Accepted');
            $stage->save();
            $delivery->save();
           
@@ -439,10 +423,19 @@ class viewProjectController extends Controller
            if(request()['notes']) 
                $delivery->notes = request()['notes'];
            $delivery->status = 'rejected'; /* *************************************** */
-           //mail
            $delivery->save();
+           // SEND MAIL TO VENDOR
+           $stage = projectStage::find($delivery->stage_id);
+           $this->vendorEmail_deliveryAction($stage, 'Rejected');
         }
-   
+        public function vendorEmail_deliveryAction($stage, $action)
+        {
+           $vendor_id = $stage->vendor_id;
+           $vendor = User::find($vendor_id);
+           if($vendor->email)
+             Mail::to($vendor->email)->send(new deliveryAction($stage->wo_id, $action));
+
+        }
         public function deliveryFile_improve(){
             ////// validate parameters
             
@@ -471,13 +464,16 @@ class viewProjectController extends Controller
                 $improvedFile->save();
                 }
 
-                return response()->json(['success'=>'File Uploaded Successfully']);      
+            $stage = projectStage::find($delivery->stage_id);
+            $this->vendorEmail_deliveryAction($stage, 'improved');
+           
+            return response()->json(['success'=>'File Uploaded Successfully']);      
         }
         public function destroy($projectId){
             $project = projects::findOrFail($projectId);
             $project->delete();
-            alert()->success('Wo Deleted Successfully !')->autoclose(15);
-              //return response()->json(['success'=>'File Uploaded Successfully']);      
+            //alert()->success('Wo Deleted Successfully !')->autoclose(15);
+            return response()->json(['success'=>'Deleted Successfully']);      
            // return redirect(route('management.view-allWo'));
          }
       

@@ -64,7 +64,13 @@ td{
                 <p class="data col-md-6"> <Span class="head"> Created At : </Span>
                 {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
                 </p>
-                <p class="data col-md-6"> <Span class="head"> Client : </Span> {{App\client::find($wo->client_id)->first()->code}} - {{App\client::find($wo->client_id)->first()->name}}  </p>
+                <p class="data col-md-6"> <Span class="head"> Client :
+                     @if(App\client::find($wo['client_id']))
+                     {{App\client::find($wo->client_id)->code}} - {{App\client::find($wo->client_id)->name}}
+                      @else 
+                      {{$wo['client_id']}} - <span class="text-danger"> DELETED </span>
+                      @endif
+                 </Span>   </p>
                 <p class="data text-danger col-md-6" > <Span class="head"> Deadline  : </Span>
                 {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
                 </p>
@@ -108,11 +114,11 @@ td{
                                        download="{{$file['file']}}">
                                         {{$file['file_name']}}
                                     </a>
-                                    <a href="{{route('management.delete-woFile', $file['id'] ) }}"
-                                       class="btn btn-danger btn-sm ml-2">
+                                    <button id="{{$file['id']}}"
+                                       class="btn btn-danger btn-sm ml-2 deleteWoFile">
                                             <span class="btn-inner--icon"><i
                                                     class="far fa-trash-alt"></i></span>
-                                    </a>   
+                                    </button>   
                                    
                                 </li>
                                 <div class="clearfix mb-2"></div>
@@ -131,11 +137,11 @@ td{
                                        download="{{$file['name']}}">
                                         {{str_limit($file['file_name'],50)}}
                                     </a>
-                                    <a href="{{route('management.delete-woFile', $file['id'] ) }}"
-                                       class="btn btn-danger btn-sm ml-2">
+                                    <button id="{{$file['id']}}"
+                                       class="btn btn-danger btn-sm ml-2 deleteWoFile">
                                             <span class="btn-inner--icon"><i
                                                     class="far fa-trash-alt"></i></span>
-                                    </a> 
+                                    </button>
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
@@ -308,71 +314,186 @@ td{
               </form>
             </div>
                 <br>
-                      <div class="card col-md-12">
-                  <div class="card-header">
-                  <h4 style="position:relative; top:10px;"> WO Projects </h4>
+           <div class=" card-dark col-md-12">
+              <div class="card-header">
+                  <h4 style="position:relative; top:10px;"> WO Tasks </h4>
                   <div class="card-tools">
+                      
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-addTask">
+                          Add Task </button>
+                     
                       <a href="{{ route('management.create-project',['id'=> $wo->id,
-                      'type'=> 'single'] )}}">
-                    <button type="ok" class="btn btn-primary ">Add Single Project</button>
-                            </a>
-                    <a href="{{ route('management.create-project',['id'=> $wo->id,
-                        'type'=> 'linked' ] )}}">
-                    <button type="ok" class="btn btn-success ">Add Linked Project</button>
-                    </a>
+                       'type'=> 'single'] )}}">
+                        <button type="ok" class="btn btn-primary ">Add Single Project</button>
+                      </a>
+                      <a href="{{ route('management.create-project',['id'=> $wo->id,
+                          'type'=> 'linked' ] )}}">
+                      <button type="ok" class="btn btn-success ">Add Linked Project</button>
+                      </a>
                   </div>  
                   </div>
                   <div class="card-body">
-                  @php $i=0; @endphp
-                  @foreach($projects as $project)
-                  @php $i++; @endphp
-                      <div class="card" style="margin-bottom:15px;">
-                        <div class="card-header">
-                        <h5> Project #  {{$i}}  </h5>
+                  @foreach($wo->woTasksNeeded as $task)
+
+                  <div class="row">
+                    <div class="card card-noPadding card-success col-12" style="margin-bottom:15px;">
+                      <div class="card-header">
+                        <h5 class="card-title"> Task #  {{$loop->iteration}}  </h5>
+                        
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
                         </div>
-                        <div class="card-body">
+                      </div>
+                      <div class="card-body">
                           <div class="row col-md-12">
                             <div class="col-md-3">
-                            <p class="head">  ID </p>
-                            <p class="data">  {{$project->id}} </p>
+                            <p class="head">  Type </p>
+                            <p class="data">  {{$task->type}} </p>
                             </div>
                             <div class="col-md-3">
-                            <p class="head"> Created at </p>
+                            <p class="head"> Client Word Count </p>
                               <p class="data"> 
-                              {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone)}}
-                            
+                             
+                              @if($task->client_wordsCount)  {{$task->client_wordsCount}}
+                              @else   <span class="text-danger"> Target </span> 
+                              @endif
                               </p>
                             </div>
                             
                             <div class="col-md-3">
-                            <p class="head">  Type </p>
+                            <p class="head">  Client Unit </p>
                             <p class="data">  
-                            {{$project->type}}
+                            {{$task->client_rateUnit}}
                             </p>
                             </div>
                             <div class="col-md-3">
-                            <p class="head">  Status </p>
-                            <p class="data">   {{$project->status}} </p>
+                            <p class="head">  Client Rate </p>
+                            <p class="data">   {{$task->client_rateValue}} </p>
                             </div>
+                            <div class="col-md-3">
+                            <p class="head">  Vendor Unit (Suggest) </p>
+                            <p class="data">   {{$task->vendor_suggest_rateUnit}} </p>
+                            </div>
+                            <div class="col-md-3">
+                            <p class="head">  Vendor Rate  (Suggest) </p>
+                            <p class="data">   {{$task->vendor_suggest_rateValue}} </p>
+                            </div> 
+                            <div class="col-md-3">
+                            <p class="head">  Status</p>
+                            <p class="data">   {{$task->status}} </p>
+                            </div>
+                            <div class="col-md-3">
+                              <button type="button" class="btn btn-danger btn-sm deleteTask" id="{{$task->id}}">
+                                <i class="fas fa-trash">
+                                </i>
+                                Delete Task
+                              </button>
+                            </div>  
+                          </div>
+                          <div class="row">
+                          <div class="card card-noPadding card-primary col-12">
+                            <div class="card-header">
+                              <h5 class="card-title"> Jobs In Task </h5>
+                              <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+                              
+                              </div>
+                            </div>  
+                            <div class="card-body p-0 table-responsive">
+                          <table class="table table-striped table-sm table-bordered" 
+                          style="padding-left:5px;">
+                          <thead>
+                            <tr>
+                            <th style="width: " >
+                                 Vendor
+                                </th>
+                                <th style="width: " >
+                                 Deadline
+                                </th>
+                                <th style="width: ">
+                                Status
+                                </th>
+                                <th style="width: ">
+                               
+                                </th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                      
+                      @foreach ($task->project as $project)
+                      
+                          <tr>
+                            <td> 
+                              @if($project->translator) 
+                                {{$project->translator->name}}
+                              @else
+                                <span class="text-danger"> None Yet </span>
+                            @endif
+                             </td>
+                           
+                            <td>
+                            
+                            {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}
+                            </td>
+                            <td>
+                             {{$project->status}}
+                            </td>
+                            <td>
+                             <button type="ok" class="btn btn-primary" style=" float: right; margin-right:10px;"> 
+                              <a href="{{route('management.view-project',$project->id)}}">
+                              View </a>
+                             </button>
+                            </td> 
+                          </tr>   
+                        @endforeach
+                  
+                        </tbody>
+                    </table>
+                  </div>
+                  </div> 
+                  </div> 
+            <div class="row">
+              <div class="col-sm-6 col-md-6">
+                   
+              
+                        <h4> Final Documents </h4>
+                        <br>
                         
-                        </div>
-                        <button type="ok" class="btn btn-primary" style=" float: right; margin-right:10px;"> 
-                          <a href="{{route('management.view-project',$project->id)}}">
-                          See Full Project </a>
-                          </button>
-                        </div>
-                      </div>
-                      @endforeach
+                            @forelse($task->finalized_projectManagerFile as $file)                                
+                                <li class="text-primary">
+                                <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file']}}">
+                                        {{$file['file_name']}}
+                                    </a>
+                                   
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">No documents found</li>
+                            @endforelse
+                            <br>
+                           </div> 
+                          </div> 
+                        
                     </div>
-                    </div>                  
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        
+                  </div>
+                  @endforeach
+                </div>
+                </div>  
+              </div>                  
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    
 <!-- /.modal -->
-<div class="modal fade in" id="modal-default" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
-      <center>
+<div class="modal fade in" id="modal-addTask" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+  
           <div class="modal-dialog center">
             <div class="modal-content">
               <div class="modal-header">
@@ -392,7 +513,7 @@ td{
                       <span class="required">*</span>
                       </label>
                       <select class="form-control" name="task_type" id="task_type"
-                        data-placeholder="select Task Type">
+                        data-placeholder="select Task Type" required>
                         <option disabled >Select</option>
                         <option value="Translation" >Translation  </option>
                         <option value="Editing" >Editing  </option>
@@ -404,7 +525,7 @@ td{
                     <label class="form-control-label" for="client_wordsCount">Client Word Count<span
                     class="required">*</span></label>
                     <input type="number" min="0" class="form-control" name="client_wordsCount"
-                     id="client_wordsCount" placeholder="Enter 0 if Target">
+                     id="client_wordsCount" placeholder="Enter 0 if Target" required>
                   </div>
                 </div>  
                 <div class="row">  
@@ -415,9 +536,9 @@ td{
                       <span class="required">*</span>
                       </label>
                       <select class="form-control" name="client_rateUnit" id="client_rateUnit"
-                        data-placeholder="select Client Rate Unit">
+                        data-placeholder="select Client Rate Unit" required>
                         <option disabled >Select</option>
-                        <option value="Words Count" >Word Count  </option>
+                        <option value="Word Count" >Word Count  </option>
                         <option value="Hour" >Hour  </option>
                         <option value="Flat" >Flat  </option>
                       </select>
@@ -426,7 +547,7 @@ td{
                     <label class="form-control-label" for="client_rateValue">Client Rate<span
                     class="required">*</span></label>
                     <input type="number" min="0.01" step="0.01" class="form-control" name="client_rateValue"
-                     value="0.15" id="client_rateValue" placeholder="">
+                     value="0.15" id="client_rateValue" placeholder="" required>
                   </div>
                  </div>
                  <div class="row">  
@@ -435,9 +556,9 @@ td{
                       <span class="required">*</span>
                       </label>
                       <select class="form-control" name="vendor_rateUnit" id="vendor_rateUnit"
-                        data-placeholder="select vendor Rate Unit">
+                        data-placeholder="select vendor Rate Unit" required>
                         <option disabled >Select</option>
-                        <option value="Words Count" >Words Count  </option>
+                        <option value="Word Count" >Words Count  </option>
                         <option value="Hour" >Hour  </option>
                         <option value="Flat" >Flat  </option>
                       </select>
@@ -446,7 +567,7 @@ td{
                     <label class="form-control-label" for="vendor_rateValue">Vendor Rate<span
                     class="required">*</span></label>
                     <input type="number" min="0.01" step="0.01" class="form-control" name="vendor_rateValue"
-                    value="0.03" id="vendor_rateValue" placeholder="Enter .. ">
+                    value="0.03" id="vendor_rateValue" required>
                   </div>
 
               
@@ -462,7 +583,7 @@ td{
                 </form>
               </div>
             </div>
-            </center>
+          
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
@@ -533,11 +654,16 @@ $('#deleteWo').click(function(){
         //  category_id: category_id,
         },
         success:function(response) {
-           // tasks on reponse
-          /* swal("Done! Your data has been deleted", {
-              icon: "success",
-            }); */
-            window.location.href = '{{route('management.view-allWo')}}';
+          if(response){
+             // this.reset();
+               //console.log(response) 
+              swal("Done! Deleted Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              window.location.href = '{{route('management.view-allWo')}}';
+
+            }) 
+           }
         }
       })           
           } else {
@@ -545,13 +671,55 @@ $('#deleteWo').click(function(){
           }
         });
 });
+$('.deleteWoFile').click(function(){
+ $fileId = $(this).attr('id');
+ var url = "{{ route('management.delete-woFile','id' )}}";
+url = url.replace('id', $fileId);
+ 
+swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+       // type: "warning",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+          if (willDelete) {
+        $.ajax({
+        url:url,
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        data: { fileId: $fileId},
+       
+        success:function(response) {
+          if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done! Deleted Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+        },
+        error: function(data) { 
+            //console.log(data);
+           }
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
+});
+
 
 $('.deleteTask').click(function(){
  $taskd = $(this).attr('id');
  var url = "{{ route('management.delete-task', 'id') }}";
 url = url.replace('id', $taskd);
  
-$('#'+$taskd).click(function(){
   swal({
         title: "Are you sure?",
         text: "You will not be able to recover this data!",
@@ -562,19 +730,27 @@ $('#'+$taskd).click(function(){
     })
     .then((willDelete) => {
           if (willDelete) {
-            $.ajax({
+        $.ajax({
         url:url,
         type: 'POST',
-        dataType: 'text',
+        contentType: false,
+        processData: false,
         data: { taskId: $taskd},
        
         success:function(response) {
-           // tasks on reponse
-          /* swal("Done! Your data has been deleted", {
-              icon: "success",
-            }); */
-            location.reload();
-        }
+          if(response){
+             // this.reset();
+               //console.log(response) 
+              swal("Done! Deleted Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+        },
+        error: function(data) { 
+            console.log(data);
+           }
       })           
           } else {
             swal("Your data is safe!");
@@ -582,7 +758,7 @@ $('#'+$taskd).click(function(){
         });
 });
 })
-})
+
 </script>
 @include('layouts.partials._file_input_plugin_script')     
 @endsection

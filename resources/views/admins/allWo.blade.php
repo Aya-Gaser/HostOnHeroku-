@@ -87,9 +87,11 @@
                       </td>
                      
                       <td>
-                    
-                      {{App\client::where('id', $Pending_wo['client_id'])->first()->code}}
-                      
+                      @if(App\client::find($Pending_wo['client_id']))
+                      {{App\client::find($Pending_wo['client_id'])->code}}
+                      @else 
+                      {{$Pending_wo['client_id']}} - <span class="text-danger"> DELETED </span>
+                      @endif
                       </td>
                       <td>
                       {{ UTC_To_LocalTime($Pending_wo['deadline'], Auth::user()->timezone)}}
@@ -169,8 +171,11 @@
                       </td>
                     
                       <td>
-                    
-                      {{App\client::where('id', $completed_wo['client_id'])->first()->code}}
+                      @if(App\client::find($completed_wo['client_id']))
+                      {{App\client::find($completed_wo['client_id'])->code}}
+                      @else 
+                      {{$completed_wo['client_id']}} - <span class="text-danger"> DELETED </span>
+                      @endif
                       
                       </td>
                       <td>

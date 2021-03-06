@@ -21,10 +21,10 @@ class project_sourceFile extends Model
 
      public function editedFile(){
         return $this->hasOne('App\editedFile','sourceFile_id');
-    }
+    }/*
     public function finalizedFile(){
         return $this->hasOne('App\finalizedFile','sourceFile_id');
-    }
+    }*/
     public function proofedFile(){
         return $this->hasMany('App\proofedFile','sourceFile_id');
      } 
@@ -50,7 +50,7 @@ class project_sourceFile extends Model
                 $sourceFile->vendorDelivery()->delete();
             }); */
             $sourceFile->vendorDelivery()->delete();//
-            $sourceFile->finalizedFile()->delete();//
+            //$sourceFile->finalizedFile()->delete();//
             $sourceFile->editedFile()->delete();// 
             $sourceFile->proofedFile()->delete();// 
             return true;

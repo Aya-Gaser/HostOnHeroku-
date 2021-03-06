@@ -57,7 +57,6 @@ public  static function boot() {
            $sourceFile->vendorDelivery()->delete();
        });
        $project->project_sourceFile()->delete();//
-       $project->finalizedFile()->delete();//
        $project->proofedFile()->delete();//
        $project->projectFile()->delete();// 
        $project->projectStage()->delete();//
