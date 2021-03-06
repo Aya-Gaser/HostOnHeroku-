@@ -142,7 +142,7 @@ class viewProjectController extends Controller
        $editedFile->extension = $extension;
        $editedFile->save();
        
-       Mail::to('ayagaser39@gmail.com')->send(new readyToProofFile($project->wo_id));
+       Mail::to('hoda.tarjamat@gmail.com')->send(new readyToProofFile($project->wo_id));
        //hoda.tarjamat@gmail.com
 
        return back();

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-/// php artisan migrate --path=/database/migrations/2021_03_03_205514_create_improved_files_table.php
+/// php artisan migrate --path=/database/migrations/2021_01_11_195338_create_project_source_file_table.php
 //2021_02_01_221424_create_wo_files_table
 class CreateRolesPermissionsTable extends Migration
 {

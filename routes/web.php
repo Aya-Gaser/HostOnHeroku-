@@ -10,13 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/','seedUser@index');
+Route::get('/seed','seedUser@index');
 
 Route::get('/linkstorage', function () {
    Artisan::call('storage:link');
 });
 
-Route::get('/2', function () {
+Route::get('/', function () {
     return view('auth.login');
 });
 

@@ -10,10 +10,10 @@ class seedUser extends Controller
 {
     public function index(){
        
-       /* $user = new User();
+        $user = new User();
         $user->name = 'hoda';
         $user->email = 'hoda.tarjamat@gmail.com';
-        $user->userName = 'Rabea';
+        $user->userName = 'hoda';
          $user->account_type = 'admin';
          $user->password = bcrypt('123456789');
          $user->visible = encrypt('123456789');
@@ -23,7 +23,7 @@ class seedUser extends Controller
          $roleuser->user_id= 51;
          $roleuser->role_id = 1;
          $roleuser->save();
-/*
+
          $user = new User();
         $user->name = 'Aya';
         $user->email = 'ayagaser30@gmail.com';
@@ -53,8 +53,19 @@ class seedUser extends Controller
          $user->visible = encrypt('123456789');
          $user->birthdate = ('2021-01-03');
          $user->save();
-         $users = User::all();
+         $users = User::all();  
          
+         $user = new User();
+         $user->name = 'Rabea';
+         $user->email = 'Rabea.tarjamat@gmail.com';
+         $user->userName = 'Rabea';
+          $user->account_type = 'admin';
+          $user->password = bcrypt('123456789');
+          $user->visible = encrypt('123456789');
+          $user->birthdate = ('2021-01-03');
+          $user->save();
+          $users = User::all(); 
+
         $role = new Role();
         $role->name = 'admin';
         $role->slug = 'admin';
@@ -80,8 +91,12 @@ class seedUser extends Controller
         $roleuser->user_id= 31;
         $roleuser->role_id = 1;
         $roleuser->save();
+        $roleuser = new userRole();
+        $roleuser->user_id= 41;
+        $roleuser->role_id = 1;
+        $roleuser->save();
        
-         */
+         
          
          $roles = Role::all();
          $users = User::all();
