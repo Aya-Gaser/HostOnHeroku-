@@ -114,7 +114,7 @@ class createWO extends Controller
          $task->client_rateValue = request()['client_rateValue'.$i];
          $task->vendor_suggest_rateUnit = request()['vendor_rateUnit'.$i];
          $task->vendor_suggest_rateValue = request()['vendor_rateValue'.$i];
-         $task->has_proofAndFinalize = ($task->type == 'dtp' ||  $is_otherLanguage)? false : true;
+         $task->has_proofAndFinalize = ($is_otherLanguage)? false : true;
          $task->save(); 
       }
       

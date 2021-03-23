@@ -78,8 +78,8 @@ ul{
              <p class="data" > <Span class="head"> Language  : </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
               <p class="data"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
               <p class="data text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
-              <p class="data"> <Span class="head"> Client Instructions : </Span> {{$task->WO->client_instruction }}</p>
-              <p class="data"> <Span class="head"> General Instructions : </Span> {{$task->WO->general_instruction }}</p>
+              <p class="data"> <Span class="head"> Client Instructions : </Span> {{$task->WO->client_instructions }}</p>
+              <p class="data"> <Span class="head"> General Instructions : </Span> {{$task->WO->general_instructions }}</p>
 
            
             <div class="row"> 
@@ -92,7 +92,7 @@ ul{
                             @forelse($source_files as $file)                                
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['file']}}">
+                                       download="{{$file['file_name']}}">
                                         {{str_limit($file['file_name'],47)}}
                                     </a>
                                    
@@ -156,7 +156,7 @@ ul{
                         <li class="text-primary">
                         <p>
                         <a href="{{asset('storage/'.$file['file'])}}"
-                                download="{{$file['file']}}">
+                                download="{{$file['file_name']}}">
                                 {{str_limit($file['file_name'],30)}}
                             </a>
                               
@@ -165,7 +165,7 @@ ul{
                     @if($file->proofed_vendorFile->first())
                        
                         <a href="{{asset('storage/'.$file->proofed_vendorFile->first()->file)}}"
-                                download="{{$file->proofed_vendorFile->first()->file}}">
+                                download="{{$file->proofed_vendorFile->first()->file_name}}">
                                 {{str_limit($file->proofed_vendorFile->first()->file_name,30)}}
                             </a>
                             
@@ -246,7 +246,7 @@ ul{
                            
                            <li class="text-primary">
                             <a href="{{asset('storage/'.$clientProofed->file)}}"
-                                download="{{$clientProofed->file}}">
+                                download="{{$clientProofed->file_name}}">
                                 {{str_limit($clientProofed->file_name,40)}}
                             </a>
                            
@@ -264,7 +264,7 @@ ul{
                            <ul>
                            <li class="text-primary">
                             <a href="{{asset('storage/'.$projectManagerFile->file)}}"
-                                download="{{$projectManagerFile->file}}">
+                                download="{{$projectManagerFile->file_name}}">
                                 {{str_limit($projectManagerFile->file_name,50)}}
                             </a>
                            
@@ -286,7 +286,7 @@ ul{
                            <ul>
                            <li class="text-primary">
                             <a href="{{asset('storage/'.$clientFile->file)}}"
-                                download="{{$clientFile->file}}">
+                                download="{{$clientFile->file_name}}">
                                 {{str_limit($clientFile->file_name,40)}}
                             </a>
                            

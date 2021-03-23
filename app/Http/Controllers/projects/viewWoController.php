@@ -153,7 +153,7 @@ class viewWoController extends Controller
       $withProof_language = ['Arabic', 'English'];
       if( !in_array($wo->from_language, $withProof_language) || !in_array($wo->to_language, $withProof_language)  )
           $is_otherLanguage = true;
-      $task->has_proofAndFinalize = ($task->type == 'dtp' ||  $is_otherLanguage)? false : true;
+      $task->has_proofAndFinalize = ($is_otherLanguage)? false : true;
       $task->save();
 
       alert()->success('Task Added Successfully !')->autoclose(false);

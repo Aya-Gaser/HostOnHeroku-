@@ -36,6 +36,9 @@ th{
 .table{
   padding:0;
 }
+.no-padding{
+  padding:0px;
+}
 </style>
 @endsection
 
@@ -63,40 +66,48 @@ th{
     <section class="content">
     
       <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title"> Ordered By Clients Deadline </h3>
-        </div>
-        <div class="card-body ">
+      
           @foreach($wos as $wo)
-          <div class="card collapsed-card">
-            <div class="card-header"  style="background-color: #549c36; color:white;">
-              <div class="card-tools">
-                <button type="button" style="color:white; font-size:20px;" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-plus"></i>
-                </button>
-              </div>
+          <div class="card ">
+            <div class="card-header no-padding"  style="padding:10px 0px 0px 10px; background-color: #549c36; color:white;">
+             
                 <div class="row" style="font-size:18px;">
                   <p class="col-md-1"> ID :  {{$wo->id}} </p>
                   <p class="col-md-2"> Client ID : {{$wo->client_id}} </p>
                   <p class="col-md-3"> Deadline :
                   {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}} </p>
                   <p class="col-md-2">  {{$wo->from_language}} ▸ {{$wo->to_language}}  </p>
-                  <p class="col-md-2"> Created By : {{App\User::find($wo->created_by_id)->name}} </p>
+                  <p class="col-md-2"> Created By :  </p>
                   <p class="col-md-2"> 
                    <a href=" {{route('management.view-wo',$wo->id)}}"> 
-                     <button type="button" class="btn" style="background-color:#343a40;color:white;"> VIEW FULL WO </button>
+                     <button type="button" class="btn" style="background-color:#343a40;color:white;"> View WO Details </button>
                    </a>
                   </p>
 
                 </div>
-            
-          </div>
-            <div class="card-body ">
-           
-              
-            <div class="row">  
-                @foreach($wo->projects as $project)
+               </div> 
+               <div class="card-body no-padding">
+               @foreach($wo->woTasksNeeded as $task)
+               
+                <div class="card card-primary collapsed-card">
+                <div class="card-header"  style="padding:8px 10px 0px 7px; color:white;">
+                  <div class="card-tools">
+                    <button type="button" style="color:white; font-size:20px;" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                    </div>
+                    <div class="row">
+                    <p class="col-md-1 text-dark font-weight-bold" > Task # {{$loop->iteration}}  </p>
+                    <p class="col-md-2"> Type :  {{$task->type}} </p>
+                  <p class="col-md-3"> Word Count : {{$task->client_wordsCount}} </p>
+                  <p class="col-md-3"> Unit : {{$task->client_rateUnit}}
+                  <p class="col-md-3"> Status : {{$task->status}}   </p>
+                    
+                    </div>
+                </div>   
+                <div class="card-body "> 
+                <div class="row">  
+                @foreach($task->project as $project)
                 
                    @foreach($project->projectStage as $stage)
                   
@@ -133,7 +144,7 @@ th{
                       <tr> 
                         <td> </td> 
                        
-                         <td > {{count($project->finalizedFile)}}  </td> 
+                         <td > </td> 
                         
                       </tr>
                     
@@ -141,13 +152,18 @@ th{
 
                   @endforeach
                       </div>
+                </div>  
+                @endforeach
+          </div>
+              
+           
              
             </div>
           
            </div>  
            @endforeach 
             
-           </div>
+           
         
           
         

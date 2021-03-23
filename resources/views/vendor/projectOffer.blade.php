@@ -69,7 +69,7 @@
                             @forelse($source_files as $file)                                
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['file']}}">
+                                       download="{{$file['file_name']}}">
                                         {{$file['file_name']}}
                                     </a>
                                    
@@ -84,7 +84,7 @@
                             @forelse($reference_file as $file)                               
                                 <li class="text-primary">
                                     <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
+                                       download="{{$file['file_name']}}">
                                         {{str_limit($file['file_name'],50)}}
                                     </a>
                                     

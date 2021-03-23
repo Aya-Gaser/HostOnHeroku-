@@ -115,15 +115,13 @@ class viewOfferController extends Controller
 
                 if($project->isLinked)
                     $this->inviteVendor2($stage);
-                else
-                  $project->status = 'on progress';    
-                
+                   
             }
-            else if($vendor == 2){
+            else if($vendor == 2)
                  $project->editor_id = Auth::user()->id;
-                 $project->status = 'on progress';
-                 
-            }
+            
+            $project->status = 'on progress';
+            $this->update_taskStatus($project);
             $stage->vendor_id = Auth::user()->id;
             $stage->save();
             $project->save();
@@ -134,8 +132,14 @@ class viewOfferController extends Controller
        $this->sendMail_toProjectCreator($project->id, 'Accepted', $stage->type );
        return redirect(route('vendor.dashboard'));
        
-      
     }
+
+    public function update_taskStatus($project){
+        $task = $project->woTaskNeeded;
+        $task->status = 'With Vendor';
+        $task->save();
+    }
+    
     public function declineOffer($stage_id, $group, $vendor){
         $stage = projectStage::findOrFail($stage_id);
 

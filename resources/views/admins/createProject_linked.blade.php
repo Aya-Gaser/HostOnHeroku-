@@ -65,8 +65,56 @@
               <p class="data"> <Span class="head"> Created At : </Span> 
               {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
                </p>
-              </div>
-             
+            
+              <div class="row">
+               <div class="col-sm-6 col-md-6 form-group">
+                        <h4> Source Document </h4>
+                        <br>
+                        
+                            @forelse($source_files as $file)                                
+                                <li class="text-primary">
+                                <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file_name']}}">
+                                        {{$file['file_name']}}
+                                    </a>
+                                    <button id="{{$file['id']}}"
+                                       class="btn btn-danger btn-sm ml-2 deleteWoFile">
+                                            <span class="btn-inner--icon"><i
+                                                    class="far fa-trash-alt"></i></span>
+                                    </button>   
+                                   
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">No documents found</li>
+                            @endforelse
+                            <br>
+                        
+                        </div> 
+                          <div class="col-sm-6 col-md-6 form-group">
+                            <h4> Reference files </h4>
+                           <br>
+                            @forelse($reference_file as $file)                               
+                                <li class="text-primary">
+                                    <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file_name']}}">
+                                        {{str_limit($file['file_name'],50)}}
+                                    </a>
+                                    <button id="{{$file['id']}}"
+                                       class="btn btn-danger btn-sm ml-2 deleteWoFile">
+                                            <span class="btn-inner--icon"><i
+                                                    class="far fa-trash-alt"></i></span>
+                                    </button>
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">No documents found</li>
+                            @endforelse
+                            <br>
+                           
+                        </ul>
+                    </div>
+                </div>
                 
               </div>
               <!-- /.card-body -->

@@ -98,7 +98,7 @@ td{
                             @forelse($reference_file as $file)                               
                                 <li class="text-primary">
                                     <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
+                                       download="{{$file['file_name']}}">
                                         {{str_limit($file['file_name'],50)}}
                                     </a>
                                     
@@ -137,7 +137,7 @@ td{
                                  <td> 
                                 <li class="text-primary">
                                   <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['file']}}">
+                                       download="{{$file['file_name']}}">
                                        {{str_limit($file->file_name,50)}}
                                   </a>
                                    
@@ -149,7 +149,7 @@ td{
                              
                              <li class="text-primary">
                                   <a href="{{asset('storage/'.$proofed['file'])}}"
-                                       download="{{$proofed['file']}}">
+                                       download="{{$proofed['file_name']}}">
                                        {{str_limit($proofed->file_name,50)}}
                                   </a>
                                    
@@ -237,7 +237,7 @@ td{
                                                 @foreach($deliver_withFiles->thisVendor_delivery[$source_file->id][0]->improvedFiles as $improvedFile)   
                                                 <li class="text-primary">
                                                   <a href="{{asset('storage/'.$improvedFile['file'])}}"
-                                                    download="{{$improvedFile['name']}}">
+                                                    download="{{$improvedFile['file_name']}}">
                                                       {{str_limit($improvedFile['file_name'],40)}}
                                                   </a>
                                                 </li>

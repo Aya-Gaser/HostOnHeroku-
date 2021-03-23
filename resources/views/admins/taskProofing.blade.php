@@ -73,8 +73,8 @@ td{
              <p class="data" > <Span class="head"> Language  : </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
               <p class="data"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
               <p class="data text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
-              <p class="data"> <Span class="head"> Client Instructions : </Span> {{$wo->client_instruction }}</p>
-              <p class="data"> <Span class="head"> General Instructions : </Span> {{$wo->general_instruction }}</p>
+              <p class="data"> <Span class="head"> Client Instructions : </Span> {{$task->WO->client_instructions }}</p>
+              <p class="data"> <Span class="head"> General Instructions : </Span> {{$task->WO->general_instructions }}</p>
 
            
             <div class="row"> 
@@ -87,7 +87,7 @@ td{
                             @forelse($source_files as $file)                                
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['file']}}">
+                                       download="{{$file['file_name']}}">
                                         {{str_limit($file['file_name'],47)}}
                                     </a>
                                    
@@ -146,7 +146,7 @@ td{
                    @forelse($project->project_sourceFile as $file)                                
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['file']}}">
+                                       download="{{$file['file_name']}}">
                                         {{str_limit($file['file_name'],40)}}
                                     </a>
                                    
@@ -500,8 +500,8 @@ $('.sendToVendor').click(function(){
            success: (response) => {
              if(response){
               response = JSON.parse(response.success);
-              $('#maxQuality_points').val(response['qp']);
-              $('#quality_points').val(response['maxQp']);
+              $('#maxQuality_points').val(response['maxQp']);
+              $('#quality_points').val(response['qp']);
             //console.log(response);
              }
              

@@ -407,11 +407,11 @@ class viewProjectController extends Controller
            $delivery->status = 'accepted';
            $stage = projectStage::find($delivery->stage_id);
            $stage->increment('accepted_docs');
-           $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'accepted' : 'pending';
+          // $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'accepted' : 'pending';
            if(request()['notes']) 
                $delivery->notes = request()['notes'];
            if( $stage->status == 'accepted'){
-          
+               
            }
            // SEND MAIL TO VENDOR
            $this->vendorEmail_deliveryAction($stage, 'Accepted');

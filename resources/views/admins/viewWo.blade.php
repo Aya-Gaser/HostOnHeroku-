@@ -111,7 +111,7 @@ td{
                             @forelse($source_files as $file)                                
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['file']}}">
+                                       download="{{$file['file_name']}}">
                                         {{$file['file_name']}}
                                     </a>
                                     <button id="{{$file['id']}}"
@@ -134,7 +134,7 @@ td{
                             @forelse($reference_file as $file)                               
                                 <li class="text-primary">
                                     <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['name']}}">
+                                       download="{{$file['file_name']}}">
                                         {{str_limit($file['file_name'],50)}}
                                     </a>
                                     <button id="{{$file['id']}}"
@@ -467,7 +467,7 @@ td{
                             @forelse($task->finalized_projectManagerFile as $file)                                
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
-                                       download="{{$file['file']}}">
+                                       download="{{$file['file_name']}}">
                                         {{$file['file_name']}}
                                     </a>
                                    
@@ -478,6 +478,27 @@ td{
                             @endforelse
                             <br>
                            </div> 
+                           <div class="col-sm-6 col-md-6">
+                   
+              
+                   <h4> Final Client Documents </h4>
+                   <br>
+                   
+                       @forelse($task->finalized_clientFile as $file)                                
+                           <li class="text-primary">
+                           <a href="{{asset('storage/'.$file['file'])}}"
+                                  download="{{$file['file_name']}}">
+                                   {{$file['file_name']}}
+                               </a>
+                              
+                           </li>
+                           <div class="clearfix mb-2"></div>
+                       @empty
+                           <li class="text-danger">No documents found</li>
+                       @endforelse
+                       <br>
+                      </div> 
+                             
                           </div> 
                         
                     </div>

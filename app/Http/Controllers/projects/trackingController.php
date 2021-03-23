@@ -20,7 +20,7 @@ class trackingController extends Controller
     }
 
     public function index(){
-        $wos = WO::with('projects', 'projects.projectStage', 'projects.finalizedFile')->orderBy('deadline','asc')->get();
+        $wos = WO::with('projects', 'projects.projectStage')->orderBy('deadline','asc')->get();
 
         return view('admins.tracking')->with(['wos'=>$wos]);
     }
