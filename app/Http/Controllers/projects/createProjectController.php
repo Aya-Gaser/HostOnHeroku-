@@ -165,7 +165,6 @@ class createProjectController extends Controller
         $stage->type = $project_type;
         //instructions_editing
         $stage->lastIn_project = $IsLast;
-        $stage->status = 'Undelivered'; 
         $required_docs_inputName = ($isLinkedEditing)? 'required_docs_edit' : 'required_docs';
         $deadline_inputName = ($isLinkedEditing)? 'delivery_deadline_edit' : 'delivery_deadline';
         $vendorRate_inputName = ($isLinkedEditing)? 'vendor_rate_edit' : 'vendor_rate';

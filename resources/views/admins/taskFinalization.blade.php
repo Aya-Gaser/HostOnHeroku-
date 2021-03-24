@@ -50,7 +50,9 @@ ul{
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-     @php $sourceFile=0; @endphp
+          <input type="hidden" value="" name="taskId" id="taskId">
+          <input type="hidden" value="" id="complete" name="complete">
+
     
       <div class="row">
       <div class="col-md-10">
@@ -65,9 +67,12 @@ ul{
                 </div>
                 </div>
                
-                <div class="card-body">
-             <p class="data"> <Span class="head"> WO ID : </Span>{{$task->wo_id}} </p>
-             <p class="data"> <Span class="head"> Client : </Span>
+            <div class="card-body">
+              <div class="row">
+             <p class="data col-md-6"> <Span class="head"> WO ID : </Span>{{$task->wo_id}} </p>
+             <p class="data col-md-6"> <Span class="head"> Type : </Span>{{$task->type}} </p>
+
+             <p class="data col-md-6"> <Span class="head"> Client : </Span>
              @if(App\client::find($task->WO['client_id']))
                 {{App\client::find($task->WO->client_id)->code}} - {{App\client::find($task->WO->client_id)->name}}
                 @else 
@@ -75,13 +80,25 @@ ul{
                 @endif
              </p>   
              
-             <p class="data" > <Span class="head"> Language  : </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
-              <p class="data"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
-              <p class="data text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
-              <p class="data"> <Span class="head"> Client Instructions : </Span> {{$task->WO->client_instructions }}</p>
-              <p class="data"> <Span class="head"> General Instructions : </Span> {{$task->WO->general_instructions }}</p>
-
-           
+             <p class="data col-md-6" > <Span class="head"> Language  : </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
+              <p class="data col-md-6"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
+              <p class="data col-md-6 text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
+              <p class="data col-md-6"> <Span class="head"> Client Instructions : </Span> {{$task->WO->client_instructions }}</p>
+              <p class="data col-md-6"> <Span class="head"> General Instructions : </Span> {{$task->WO->general_instructions }}</p>
+              <p class="data col-md-6"> <Span class="head"> Status : </Span>{{$task->status}} </p>
+              <div class="col-md-6">
+                @if($task->status != 'Completed')
+                    
+                    <button type="button" id="{{$task->id}}" class="btn btn-success completeTask complete" > 
+                            Set Task Completed &check;&check; </button>
+                        </a> 
+                    @else        
+                        <button type="button" id="{{$task->id}}" class="btn btn-success completeStage reopen" > 
+                            RE-OPEN Task</button>
+                      
+                      @endif  
+                 </div>     
+           </div>
             <div class="row"> 
               <div class="col-sm-6 col-md-6">
                     <div class="form-group">
@@ -170,7 +187,7 @@ ul{
                             </a>
                             
                     @else
-                      <span class="text-danger"> NONE YET </span>   
+                      <span class="text-danger"> NONE </span>   
                   
                     @endif
                       </p>    
@@ -453,6 +470,67 @@ $('#completeReview-form').submit(function(e) {
 }); 
 */
 })
+$('.complete').click(function(){
+  $('#complete').val(1);
+}); 
+
+$('.completeTask').click(function(){
+  $taskId = "{{$task->id}}";
+  console.log($taskId)
+  $('#taskId').val($taskId);
+  //console.log($stageId);
+  $.ajax({
+        data: { taskId : $taskId,
+          complete: 1},
+        url: "{{ route('management.complete_reopen_task') }}",
+        type: 'POST',
+        dataType: 'json',
+        //contentType: false,
+        //   processData: false,
+           success: (response) => {
+              if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            console.log(data);
+           }
+  });
+  
+});
+ 
+$('.reopen').click(function(){
+  $.ajax({
+        data: {taskId : "{{$task->id}}",
+              complete : 0 },
+        url: "{{route('management.complete_reopen_task') }}",
+        type: 'POST',
+        //contentType: false,
+           //processData: false,
+           success: (response) => {
+             if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            console.log(data);
+           }
+  });
+}); 
 
 </script>
 @include('layouts.partials._file_input_plugin_script')

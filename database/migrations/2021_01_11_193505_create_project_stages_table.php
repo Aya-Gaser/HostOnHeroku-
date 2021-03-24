@@ -34,8 +34,8 @@ class CreateProjectStagesTable extends Migration
             $table->integer('required_docs');
             $table->integer('accepted_docs')->default(0);
             $table->dateTime('deadline');
-            $table->string('instructions')->default('None');; 
-            $table->string('status');
+            $table->string('instructions')->default('None');
+            $table->string('status')->default('Undelivered');
             $table->timestamps();
            
         });

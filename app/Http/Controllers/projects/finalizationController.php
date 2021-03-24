@@ -76,7 +76,7 @@ class finalizationController extends Controller
             $this->uploadFiles($taskId, 'client_file');
           }
             
-        $task->status = 'finalized';
+        //$task->status = 'finalized';
         $task->save();
         
         alert()->success('Uploaded Successfully !')->autoclose(false);
@@ -106,5 +106,25 @@ class finalizationController extends Controller
         $wo = WO::find($woId);
         $files = $wo->woFiles->where('type', 'source_file');
         return $files;
+    }
+
+    public function complete_reOpen_woTask(Request $request){
+        $request->validate([
+            
+            'complete' => 'required',
+            'taskId' => 'required',
+          ]);
+        $complete = $request->input('complete');  
+        $taskId = $request->input('taskId');  
+        $task = woTasksNeeded::findOrFail($taskId); 
+         
+        $task->status = ($complete)? 'Completed' : 'Open'; //1 >> complete
+        foreach($task->project as $project){
+            $project->status = 'Completed';
+            $project->save();
+        }
+        $task->save();
+
+        return response()->json(['success'=>'Done Successfully']);      
     }
 }

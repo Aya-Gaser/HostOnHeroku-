@@ -156,7 +156,7 @@ class viewAllProjectsController extends Controller
            // echo $interval->format('%Y years %m months %d days %H hours %i minutes');  
             $delivery->save();
 
-            $stage->status = 'pending';
+            //$stage->status = 'pending';
            // $stage->lastDelivery_id = $delivery->id;
             $stage->save();
 
@@ -212,10 +212,12 @@ class viewAllProjectsController extends Controller
         $delivery->status = 'accepted';
         $stage = projectStage::where('id', $delivery->stage_id)->first();
         $stage->increment('accepted_docs');
-        $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'accepted' : 'pending';
+       
+        $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'Delivered' : 'Undelivered';
+       /*
         if( $stage->status == 'accepted'){
        
-        }
+        }*/
         //mail
        
         $stage->save();

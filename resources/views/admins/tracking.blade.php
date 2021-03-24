@@ -24,13 +24,13 @@ th{
 .deadline{
   word-break:keep-all;
 }
-.translation{
+.vendor{
   background-color:#d96c3d;
 }
-.dtp{
+.editing{
   background-color:#ca3d54;
 }
-.editing{
+.proof{
   background-color:#3c6e65;
 }
 .table{
@@ -77,7 +77,7 @@ th{
                   <p class="col-md-3"> Deadline :
                   {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}} </p>
                   <p class="col-md-2">  {{$wo->from_language}} ▸ {{$wo->to_language}}  </p>
-                  <p class="col-md-2"> Created By :  </p>
+                  <p class="col-md-2"> Created By : {{App\User::find($wo->created_by)->userName}} </p>
                   <p class="col-md-2"> 
                    <a href=" {{route('management.view-wo',$wo->id)}}"> 
                      <button type="button" class="btn" style="background-color:#343a40;color:white;"> View WO Details </button>
@@ -99,11 +99,18 @@ th{
                     <div class="row">
                     <p class="col-md-1 text-dark font-weight-bold" > Task # {{$loop->iteration}}  </p>
                     <p class="col-md-2"> Type :  {{$task->type}} </p>
-                  <p class="col-md-3"> Word Count : {{$task->client_wordsCount}} </p>
-                  <p class="col-md-3"> Unit : {{$task->client_rateUnit}}
-                  <p class="col-md-3"> Status : {{$task->status}}   </p>
-                    
-                    </div>
+                  <p class="col-md-2"> Word Count : {{$task->client_wordsCount}} </p>
+                  <p class="col-md-2"> Unit : {{$task->client_rateUnit}}
+                  <p class="col-md-2"> Finalzed Files : {{count($task->proofed_clientFile)}} of {{count($wo->woSourceFiles)}}   </p>
+                  <p class="col-md-2"> Status : {{$task->status}}
+
+                 </div>
+                 <div class="row">
+                 <p class="col-md-2"> Jobs in Task : {{count($task->project)}}   </p>
+                 @foreach($task->project as $project)
+                 <p class="col-md-3"> Job #{{$loop->iteration}} Status : {{$project->status}}   </p>
+                 @endforeach
+                 </div>
                 </div>   
                 <div class="card-body "> 
                 <div class="row">  
@@ -111,9 +118,9 @@ th{
                 
                    @foreach($project->projectStage as $stage)
                   
-                     <table class="table table-bordered col-md-2 stage" width="100%">
+                     <table class="table table-bordered col-md-2 stage " width="100%">
                      <tr>
-                      <td colspan="3" style="text-align:center;color:white;" class="{{$stage->type}}">  {{$stage->type}}  </td>
+                      <td colspan="3" style="text-align:center;color:white;" class="vendor">  {{$stage->type}}  </td>
                       </tr> 
                       <tr> 
                         <th width="33%"> vendor </th>  <th class="deadline" width="45%"> Deadline </th>
@@ -125,30 +132,45 @@ th{
                              @endif 
                               </td>  
                         <td class="deadline"> {{date('d/m/Y H:i', strtotime($stage->deadline))}} </td>
-                        <td>{{$stage->accepted_docs}} OF {{$stage->required_docs}}  </td>
+                        <td>{{$stage->accepted_docs}} of {{$stage->required_docs}}  </td>
                        
                       </tr>
                       </table>
                       
                       @endforeach
-                      <table class="table table-bordered col-md-2" style="background-color: #ccc; height:170px;">
+                  @if($task->has_proofAndFinalize && $project->type != 'Dtp')   
+                   <!-- *********** PROJECT MANAGER EDITING ************-->
+                   <table class="table table-bordered col-md-2 " style=" height:170px;">
                      <tr>
-                      <td colspan="2" style="text-align:center; height:37px;">  Proof/Finalization  </td>
+                      <td colspan="2" style="text-align:center; height:37px; color:white" class="editing">  Editing (Projects Manager)  </td>
                       </tr> 
                      
                       <tr> 
-                        <th width="50%"> Finalizier </th> 
-                         <th width="50%">  Finalized Files </th>
-                      </tr>
-                     
-                      <tr> 
-                        <td> </td> 
+                        <th width="100%"> Edited Files </th> 
                        
-                         <td > </td> 
-                        
+                      </tr>
+                      <tr> 
+                         <td>{{count($project->project_sourceFile_readyToProof)}} of {{count($project->project_sourceFile)}} </td> 
                       </tr>
                     
                       </table>
+                  @elseif($task->has_proofAndFinalize)   
+                    <!-- *********** PROOFING ************-->
+                    <table class="table table-bordered col-md-2 " style="height:170px;">
+                      <tr>
+                      <td colspan="2" style="text-align:center; height:37px; color:white" class="proof">  Proofing  </td>
+                      </tr> 
+                     
+                      <tr> 
+                        <th width="100%"> Proofed Files </th> 
+                       
+                      </tr>
+                      <tr> 
+                         <td>{{count($project->project_sourceFile_readyTofilnalize)}} of {{count($project->project_sourceFile)}} </td> 
+                      </tr>
+                    
+                      </table>
+                 @endif
 
                   @endforeach
                       </div>

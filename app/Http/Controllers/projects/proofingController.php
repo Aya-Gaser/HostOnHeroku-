@@ -37,7 +37,7 @@ class proofingController extends Controller
         else 
             $tasks = woTasksNeeded::where('status', $filter)
                      ->with('readyToProof_projects')->get();
-            $readyToProof_tasks = [];
+        $readyToProof_tasks = [];
         foreach($tasks as $task){
            if(count($task->readyToProof_projects))
                array_push($readyToProof_tasks, $task);
@@ -99,8 +99,7 @@ class proofingController extends Controller
          $project_id = $sourceFile->project_id; 
          $project = projects::find($project_id);
          $taskId = $project->woTask_id;
-         $project->isReadyToFinalize = true;
-         $project->save();
+         
         // proofedFile
         
         if($request->file('vendor_file')){
@@ -109,13 +108,22 @@ class proofingController extends Controller
        
         if($request->file('client_file')){
             $this->upload_proofedAttachments($sourceFileId,$project_id, $taskId, 'client_file');
-            Mail::to('Reeno.tarjamat@gmail.com')->send(new readyToFinalizeFile($project->wo_id));
+        //    Mail::to('Reeno.tarjamat@gmail.com')->send(new readyToFinalizeFile($project->wo_id));
             //
         }
         $sourceFile->isReadyToFinalize = true;
         $sourceFile->save();
+        
+        $readyToFinalize_files = $project->project_sourceFile->where('isReadyToFinalize', true);
+         if(count($project->project_sourceFile) == count($readyToFinalize_files) ) 
+        {    $project->status = 'Within Finalization';
+             
+        }
+        
+        $project->isReadyToFinalize = true;
+        $project->save();
         $task = woTasksNeeded::find($project->woTask_id);
-        $task->status = 'proofed';
+        //$task->status = 'proofed';
         $task->save();
        // return back();
        return response()->json([ 'success'=> 'Form is successfully submitted!']);
@@ -140,7 +148,7 @@ class proofingController extends Controller
                                ->where('type', 'translation')->first();  
           $stage->vendor_maxQualityPoints =  $request->input('maxQuality_points');  
           $stage->vendor_qualityPoints =  $request->input('quality_points'); 
-          $stage->status = 'reviewed';
+          //$stage->status = 'reviewed';
           $stage->save();                  
           Mail::to($vendor->email)->send(new reviewCompleted($project->wo_id));
           

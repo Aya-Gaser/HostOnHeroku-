@@ -171,7 +171,7 @@
 
                     </div>
             <div class="form-group col-md-6">
-                  <label class="form-control-label" for="quality_points">Quality Points<span
+                  <label class="form-control-label" for="quality_points">Max Quality Points<span
                       class="required">*</span></label>
                   <input type="number" min="0" class="form-control" name="maxQuality_points"
                     id="quality_points" placeholder="Enter 0 if Target " required>
@@ -326,9 +326,9 @@ $(".form_datetime").datetimepicker({
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,
-        startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
+        startDate: new Date(new Date().getTime()),
         minuteStep: 15,
-        highlightedDates:[new Date('2021-03-05')],
+       
         endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
       /*  beforeShowDay: function(date) {
           calender_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+('0'+date.getDate()).slice(-2);

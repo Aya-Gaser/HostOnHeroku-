@@ -255,7 +255,7 @@ td{
                                            Accept
                                           </button>
                                           <br><br>
-                                        @if($has_proofAndFinalize || $project->type == 'dtp')
+                                        @if($has_proofAndFinalize && $project->type != 'Dtp')
                                         <button type="button" class="btn btn-danger action reject" id="{{$delivery_files->translator_delivery[$source_file->id][0]->id}}"
                                         data-toggle="modal" data-target="#modal-actionNote">
                                            Reject
@@ -321,7 +321,7 @@ td{
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-        @if($has_proofAndFinalize)   
+        @if($has_proofAndFinalize && $project->type != 'Dtp')   
             <div class="card col-md-12">
               <div class="card-body">
             
@@ -371,17 +371,19 @@ td{
                                         {{str_limit($source_file->editedFile->file_name,50)}}
                                     </a>
                                     </p> 
-                                    
+                                    <!-- 
                                     <p>
+                                   
                                      <a method="post" href="{{route('management.delete-editedFile',$source_file->editedFile->id)}}">
                                           <button type="button" class="btn btn-danger" > 
                                           Delete File </button>
                                       </a>    
                                           
                                      </p>
+                                     -->
                                    </td>
                                   
-                                      @elseif(!$source_file->readyTo_finalize)
+                                      @elseif(!$source_file->isReadyToProof)
                                       <td>
                                       <p> 
                                       <form action="{{route('management.upload-editedFile',['project'=>$project->id, 'sourceFile'=>$source_file->id] )}}" method="post" enctype="multipart/form-data">
@@ -398,7 +400,7 @@ td{
                                           </p>
                                           <a href="{{route('management.send-toFinalization',$source_file->id)}}">
                                           <button type="button" class="btn btn-primary" > 
-                                            Send To Finalization </button>
+                                            Send Without Editing To Finalization </button>
                                             </a>
                                            </td> 
                                           @else 

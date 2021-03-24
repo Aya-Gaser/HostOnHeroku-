@@ -120,8 +120,8 @@ class viewOfferController extends Controller
             else if($vendor == 2)
                  $project->editor_id = Auth::user()->id;
             
-            $project->status = 'on progress';
-            $this->update_taskStatus($project);
+            $project->status = 'With Vendor';
+           // $this->update_taskStatus($project);
             $stage->vendor_id = Auth::user()->id;
             $stage->save();
             $project->save();

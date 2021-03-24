@@ -1,7 +1,7 @@
 @component('mail::message')
 # Project : {{str_pad($wo_id, 4, "0", STR_PAD_LEFT )}} Has Been Updated.
 @if($isFiles)
-#New Working Files Has Been Upload 
+#New Working Files Has Been Uploaded 
 @endif
 @if($updates)
 #Some Data Has Been Updated 

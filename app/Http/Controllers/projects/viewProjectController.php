@@ -70,7 +70,7 @@ class viewProjectController extends Controller
         $delivery_files =  projects::with('project_sourceFile') ->findOrFail($project->id); 
         
         $firstStage = projectStage::where('project_id', $project->id)->first(); 
-        if($project->status == 'on progress' ){
+       // if($project->status == 'on progress' ){
             ///get translator deliveries 
             $translator_delivery = vendorDelivery::where('vendor_id',$project->translator_id)
                                                  ->where('stage_id',$firstStage->id);
@@ -80,7 +80,7 @@ class viewProjectController extends Controller
           //  }
             $delivery_files->translator_delivery = $translator_delivery_g;
             $deliveryHistory_files['translator_delivery'] = $translator_delivery;
-        }
+      //  }
         ///get editor deliveries 
 
         if( $project->type == 'linked' &&  $project->status == 'on progress' ){
@@ -122,9 +122,7 @@ class viewProjectController extends Controller
      }
 
      public function store_EditedFile($project, $sourceFile){
-       $project = projects::find($project);
-       $project->isReadyToProof = true;
-       $project->save();
+       
        $editedFile = new editedFile();
        $editedFile->project_id = $project->id;
        $editedFile->sourceFile_id = $sourceFile;
@@ -161,11 +159,19 @@ class viewProjectController extends Controller
      }
 
      public function send_toFinalization($sourceFile){
-       
+      
         $sourceFile = project_sourceFile::find($sourceFile);  
         $sourceFile->isReadyToProof = true; 
         $sourceFile->save();
-        Mail::to('hoda.tarjamat@gmail.com')->send(new readyToProofFile($sourceFile->project->wo_id));
+
+        $project = projects::find($sourceFile->project_id);
+        $project->isReadyToProof = true;
+        $readyToProof_files = $project->project_sourceFile->where('isReadyToProof', true);
+        if(count($project->project_sourceFile) == count($readyToProof_files) ) 
+        {    $project->status = 'Within Proofing';
+             $project->save();
+        }
+       // Mail::to('hoda.tarjamat@gmail.com')->send(new readyToProofFile($sourceFile->project->wo_id));
 
        // alert()->success('Project Created Successfully !')->autoclose(false);    
         return back();
@@ -202,13 +208,13 @@ class viewProjectController extends Controller
                 $stage->vendor_wordsCount = $request->input('wordsCount');
         }      
          
-        $stage->status = ($complete)? 'completed' : 'accepted'; //1 >> complete
+        $stage->status = ($complete)? 'Completed' : 'Delivered'; //1 >> complete
         
         $stage->save();
 
         return response()->json(['success'=>'Done Successfully']);      
     }
-    
+   /* 
     public function sendFinalized_toNextProject($finalizedFile){
         $finalizedFile = finalizedFile::findOrFail($finalizedFile);
         $project = projects::findOrFail($finalizedFile->project_id);
@@ -234,7 +240,7 @@ class viewProjectController extends Controller
         return back();
 
         }
-
+*/
         public function deleteAttachment($fileId, $type){
             if($type == 'source')
                 $file = project_sourceFile::find($fileId);
@@ -258,15 +264,17 @@ class viewProjectController extends Controller
             $files = false;
             if(request()['project_name_edit'])
                $project->name = request()['project_name_edit'];
-            if ($request->hasFile('source_files')) {
+            
+            if (request()->hasFile('source_files')) {
                 $this->uploadWoAttachments($project->id, 'source_files','source_file');
                 $files = true;
+                
             }
-            if ($request->hasFile('reference_files')) {
+            if (request()->hasFile('reference_files')) {
                 $this->uploadWoAttachments($project->id, 'reference_files','reference_file');
                 $files = true;
             }
-            if ($request->hasFile('target_files')) {
+            if (request()->hasFile('target_files')) {
                 $this->uploadWoAttachments($project->id, 'target_files','target_file');
                 $files = true;
             }
@@ -274,9 +282,11 @@ class viewProjectController extends Controller
            if($files){
                $stages = $project->projectStage;
                foreach($stages as $stage){
+                   $stage->increment('required_docs');
+                   $stage->save();
                    $vendor_id = $stage->vendor_id;
-                   if($vendor_id && $stage->status != 'completed'){
-                      $vendor = User::find($vendor);
+                   if($vendor_id && $stage->status != 'Completed'){
+                      $vendor = User::find($vendor_id);
                       Mail::to($vendor->email)->send(new projectUpdate($project->wo_id,$files, null));
                     }   
                 }
@@ -378,7 +388,8 @@ class viewProjectController extends Controller
                       $project_sourceFile->file_name = $attachment->getClientOriginalName();
                       $project_sourceFile->file = $filePath . $fileName;
                       $project_sourceFile->extension = $extension;
-                      $project_sourceFile->readyTo_finalize = false;
+                      $project_sourceFile->isReadyToProof = false;
+                      $project_sourceFile->isReadyToFinalize = false;
                       $project_sourceFile->save();
                   
       
@@ -406,13 +417,15 @@ class viewProjectController extends Controller
         public function accept_deliveryFile($delivery){
            $delivery->status = 'accepted';
            $stage = projectStage::find($delivery->stage_id);
+           $project = projects::find($stage->project_id);
            $stage->increment('accepted_docs');
-          // $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'accepted' : 'pending';
+           $project->status = ($stage->accepted_docs == $stage->required_docs)? 'Within Editing' : 'With Vendor';
+           if($project->type == 'Dtp')
+                $this->send_toFinalization($delivery->sourceFile_id);
+           $project->save();
            if(request()['notes']) 
                $delivery->notes = request()['notes'];
-           if( $stage->status == 'accepted'){
-               
-           }
+           
            // SEND MAIL TO VENDOR
            $this->vendorEmail_deliveryAction($stage, 'Accepted');
            $stage->save();

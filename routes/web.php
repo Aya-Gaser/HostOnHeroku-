@@ -123,7 +123,10 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
 
     Route::get('/delete-finalizedFile/{finalizedFile}', 'projects\finalizationController@delete_finalizedFile')->middleware('auth')
     ->where(['editedFile'=>'[0-9]+'])->name('delete-finalizedFile');
+    Route::post('/complete_reopen_task', 'projects\finalizationController@complete_reOpen_woTask')->middleware('auth')
+    ->name('complete_reopen_task');
 
+    
     Route::get('/complete-sourceFile/{sourceFile}/{compelte}', 'projects\finalizationController@complete_reOpen_sourceFile')->middleware('auth')
     ->where(['sourceFile'=>'[0-9]+', 'compelte'=> '[0-1]'])->name('complete-sourceFile');
 

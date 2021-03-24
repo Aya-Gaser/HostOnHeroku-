@@ -28,6 +28,9 @@ class WO extends Model
     public function woFiles(){
         return $this->hasMany('App\woFiles','wo_id');
     }
+    public function woSourceFiles(){
+        return $this->woFiles()->where('type','source_file');
+    }
     public  static function boot() {
         parent::boot();
 
