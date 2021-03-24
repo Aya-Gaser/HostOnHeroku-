@@ -171,7 +171,7 @@ class viewProjectController extends Controller
         {    $project->status = 'Within Proofing';
              $project->save();
         }
-       // Mail::to('hoda.tarjamat@gmail.com')->send(new readyToProofFile($sourceFile->project->wo_id));
+        Mail::to('hoda.tarjamat@gmail.com')->send(new readyToProofFile($sourceFile->project->wo_id));
 
        // alert()->success('Project Created Successfully !')->autoclose(false);    
         return back();

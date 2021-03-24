@@ -108,7 +108,7 @@ class proofingController extends Controller
        
         if($request->file('client_file')){
             $this->upload_proofedAttachments($sourceFileId,$project_id, $taskId, 'client_file');
-        //    Mail::to('Reeno.tarjamat@gmail.com')->send(new readyToFinalizeFile($project->wo_id));
+            Mail::to('Reeno.tarjamat@gmail.com')->send(new readyToFinalizeFile($project->wo_id));
             //
         }
         $sourceFile->isReadyToFinalize = true;
