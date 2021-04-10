@@ -51,11 +51,11 @@ td{
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> ID : </Span>{{$client->id}} </p>
-              <p class="data"> <Span class="head">Name : </Span>{{$client->name}} </p>
-              <p class="data"> <Span class="head">Code : </Span>{{$client->code}} </p>
+             <p class="data"> <Span class="head"> ID: </Span>{{$client->id}} </p>
+              <p class="data"> <Span class="head">Name: </Span>{{$client->name}} </p>
+              <p class="data"> <Span class="head">Number: </Span>{{$client->code}} </p>
 
-              <p class="data"> <Span class="head"> Created at : </Span> 
+              <p class="data"> <Span class="head"> Created on: </Span> 
              {{ UTC_To_LocalTime($client->created_at, Auth::user()->timezone)}}
                 </p>
                <p>
@@ -80,7 +80,7 @@ td{
                                         <tr>
                                         
                                         <th width="10%">ID</th>
-                                        <th width="20%">Created On</th>
+                                        <th width="20%">Created on</th>
                                         <th width="20%">Deadline</th>
                                         <th width="13%">Status</th>
                                         <th width="15%"></th>

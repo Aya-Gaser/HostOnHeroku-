@@ -49,20 +49,20 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <p class="data"> <Span class="head"> ID : </Span>{{$wo->id}} </p>
-              <p class="data"> <Span class="head"> Deadline  : </Span>
+              <p class="data"> <Span class="head"> ID: </Span>{{$wo->id}} </p>
+              <p class="data"> <Span class="head"> Deadline: </Span>
               {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
               </p>
-              <p class="data"> <Span class="head"> Client Number : </Span> {{App\client::find($wo->client_id)->code}} </p>
-              <p class="data" > <Span class="head"> Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
-              <p class="data"> <Span class="head"> Created At : </Span>
+              <p class="data"> <Span class="head"> Client Number: </Span> {{App\client::find($wo->client_id)->code}} </p>
+              <p class="data" > <Span class="head"> Language: </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
+              <p class="data"> <Span class="head"> Created on: </Span>
               {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
                 </p>
                 
             
               <div class="row">
                <div class="col-sm-6 col-md-6 form-group">
-                        <h4> Source Document </h4>
+                        <h4> Source Document(s) </h4>
                         <br>
                         
                             @forelse($source_files as $file)                                
@@ -80,7 +80,7 @@
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                         
@@ -102,7 +102,7 @@
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                            
@@ -227,7 +227,7 @@
                <textarea class="form-control" name="instructions" rows="3" placeholder="None ..."></textarea>
              </div>
              <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <label for="exampleInputEmail1"> Number of Files <span class="required">*</span></label>
                 <input type="number" step="1" min="1" class="form-control" name="required_docs" id="" placeholder="Enter sent files number" required>
               </div>
            </div>  
@@ -236,7 +236,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="form-control-label"
-                       for="source_document">Working Files<span class="required">*</span></label>
+                       for="source_document">Working File(s)<span class="required">*</span></label>
                    
                        <div class="file-loading col-md-2">  
                         <input id="source_files" name="source_files[]"
@@ -249,7 +249,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="form-control-label"
-                       for="source_document">Reference Files </label>
+                       for="source_document">Reference File(s) </label>
                    
                        <div class="file-loading">  
                         <input id="reference_files" name="reference_files[]"

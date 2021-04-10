@@ -9,17 +9,17 @@ $quality_points =  ($stage->vendor_maxQualityPoints)?  $stage->vendor_maxQuality
 @component('mail::message')
 Hello,
 <br>
-This is a message from Tarjamat alerting you of a new project offer available that matched your profile.
+# This is a message from Tarjamat alerting you of a new project offer.
 @component('mail::table')
 | Project Data                  | Info                                                      |
 | ------------------------- | ---------------------------------------------------------------------------:|
-| Assignment Type           | {{$stage->type}}                                                      |
+| Task Type                 | {{$stage->type}}                                                      |
 | Language                  | {{$stage->project->WO->from_language .'▸'.$stage->project->WO->to_language}}                          |
 | Word Count                | {{$words_count}}                                                  |
-| MAX Quality Points            | {{$quality_points}}                                                   |
+| MAX Quality Points        | {{$quality_points}}                                                   |
 | Rate Unit                 | {{$stage['vendor_rateUnit']}}                                                          |
 | Rate                      | {{$stage['vendor_rate']}}                                                          |
-| Offer Expires at          | {{UTC_To_LocalTime($acceptanceDeadline,$vendor->timezone)}} |
+| Offer Expires on          | {{UTC_To_LocalTime($acceptanceDeadline,$vendor->timezone)}} |
 | Final Delivery Deadline   | {{UTC_To_LocalTime($stage->deadline,$vendor->timezone)}}   |
 @endcomponent
 Please login to the system to view the full project details and Accept or Decline this offer
@@ -28,4 +28,7 @@ If you have any questions, do not hesitate to contact us at this email : Project
 @component('mail::button', ['url' =>$link, 'color' => 'success'])
     View Full Project Data
 @endcomponent
+
+Thank You,<br>
+Tarjamt LLC 
 @endcomponent

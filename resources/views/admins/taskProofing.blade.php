@@ -43,7 +43,7 @@ td{
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('management.dashboard')}}">Home</a></li>
-              <li class="breadcrumb-item active">Task Proofing</li>
+              <li class="breadcrumb-item active">Proofing Task</li>
             </ol>
           </div>
         </div>
@@ -69,19 +69,19 @@ td{
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> WO ID : </Span>{{$task->wo_id}} </p>
-             <p class="data" > <Span class="head"> Language  : </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
-              <p class="data"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
-              <p class="data text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
-              <p class="data"> <Span class="head"> Client Instructions : </Span> {{$task->WO->client_instructions }}</p>
-              <p class="data"> <Span class="head"> General Instructions : </Span> {{$task->WO->general_instructions }}</p>
+             <p class="data"> <Span class="head"> WO ID: </Span>{{$task->wo_id}} </p>
+             <p class="data" > <Span class="head"> Language: </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
+              <p class="data"> <Span class="head"> Created on: </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
+              <p class="data text-danger"> <Span class="head"> Deadline: </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
+              <p class="data"> <Span class="head"> Client Instructions: </Span> {{$task->WO->client_instructions }}</p>
+              <p class="data"> <Span class="head"> General Instructions: </Span> {{$task->WO->general_instructions }}</p>
 
            
             <div class="row"> 
               <div class="col-sm-6 col-md-6">
                     <div class="form-group">
                     <br>
-                        <h4> Source Documents </h4>
+                        <h4> Source Document(s) </h4>
                         <br>
                         
                             @forelse($source_files as $file)                                
@@ -95,7 +95,7 @@ td{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                             
@@ -154,7 +154,7 @@ td{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                      @endforelse
                      </ul>
                   </td>
@@ -274,7 +274,7 @@ td{
                                           {{str_limit($vendorFile->file_name,50)}}
                                       </a>
                                       </p> 
-                                      <p> <span class="text-success">Notes : </span>  {{$vendorFile->note}} </p>
+                                      <p> <span class="text-success">Notes: </span>  {{$vendorFile->note}} </p>
                                      @endforeach
                                     </td>
                                     <td>
@@ -286,7 +286,7 @@ td{
                                           {{str_limit($clientFile->file_name,50)}}
                                       </a>
                                       </li> 
-                                      <p> <span class="text-success">Notes : </span>  {{$clientFile->note}} </p>
+                                      <p> <span class="text-success">Notes: </span>  {{$clientFile->note}} </p>
                                      @endforeach 
                                     @else 
                                     <p class="text-danger"> NONE </p>

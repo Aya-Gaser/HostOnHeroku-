@@ -17,7 +17,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">All Projects</li>
+              <li class="breadcrumb-item active">Proofing Tasks</li>
             </ol>
           </div>
         </div>
@@ -57,7 +57,7 @@
                       <th>Client Deadline</th>
                       <th>Type</th>
                       <th>Total Proofed Files</th>
-                      <th> Created At</th>
+                      <th> Created on</th>
                      <th> </th>
                     </tr>
                   </thead>

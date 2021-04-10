@@ -112,7 +112,7 @@ class createProjectController extends Controller
     //$project->words_count = $request->input('words_count');
    // $project->instructions = $request->input('instructions');
     $project->created_by = Auth::user()->id;
-    $project->status = 'pending';
+    $project->status = 'Pending';
     $project->save();
     $transStage =null;
     $editStage =null; 

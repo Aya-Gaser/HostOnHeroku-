@@ -8,6 +8,6 @@ Use this temporary password : tarjamatNewMember@1234
 Login
 @endcomponent
 
-Thanks,<br>
+Thank You,<br>
 Tarjamt LLC 
 @endcomponent

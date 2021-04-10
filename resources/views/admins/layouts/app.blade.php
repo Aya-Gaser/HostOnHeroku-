@@ -155,14 +155,14 @@ tr{
           <a href="{{route('management.projects-tracking')}}" 
           class="nav-link {{ isActive('management.projects-tracking')}}">
             <i class="far fa-eye nav-icon"></i>
-            <p>Projects Tracking</p>
+            <p>Project Tracking</p>
           </a>
         </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
-                Work Needed
+                Work Orders
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -178,7 +178,7 @@ tr{
                 <a href="{{route('management.view-allWo')}}" 
                 class="nav-link {{ isActive('management.view-allWo')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View All WO</p>
+                  <p>View All WOs</p>
                 </a>
               </li>
              
@@ -199,7 +199,7 @@ tr{
                 <a href="{{route('management.view-allProjects', 'progress') }}" 
                 class="nav-link {{ isActive('management.view-allProjects')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>On Progress Projects</p>
+                  <p>In Progress Projects</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -234,14 +234,14 @@ tr{
                 <a href="{{route('management.allTasks-proofing', 'pending') }}" 
                 class="nav-link {{ isActive('management.allTasks-proofing')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Tasks Proofing</p>
+                  <p>Proofing Tasks </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('management.allTasks-finalization', 'proofed') }}" 
                 class="nav-link {{ isActive('management.allTasks-finalization')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Tasks Finalization</p>
+                  <p>Finalization Tasks </p>
                 </a>
               </li>
               

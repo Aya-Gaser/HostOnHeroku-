@@ -56,43 +56,43 @@ td{
               <!-- /.card-header -->
               <div class="card-body">
               <div class="row">
-              <p class="col-md-6 data"> <Span class="head"> ID  : </Span>{{$project->wo_id}} </p>
-              <p class="col-md-6 data"> <Span class="head"> Started At : </Span>
+              <p class="col-md-6 data"> <Span class="head"> ID: </Span>{{$project->wo_id}} </p>
+              <p class="col-md-6 data"> <Span class="head"> Started on: </Span>
               {{UTC_To_LocalTime($project->created_at,
                                         Auth::user()->timezone) }}  </p>
-              <p class="col-md-6 data"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
-              <p class="col-md-6 data text-danger"> <Span class="head"> Deadline  : 
+              <p class="col-md-6 data"> <Span class="head">  Language: </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
+              <p class="col-md-6 data text-danger"> <Span class="head"> Deadline: 
               </Span>{{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
               
     
               
-              <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
+              <p class="data col-md-6"> <Span class="head">  Word Count: </Span>
               @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else 
               <span class="pending">  Target </span> @endif</p>
-              <p class="data col-md-6"> <Span class="head"> MAX Quality Points  : </Span>
+              <p class="data col-md-6"> <Span class="head"> MAX Quality Points: </Span>
               @if($stage->vendor_maxQualityPoints) {{$stage->vendor_maxQualityPoints}} 
               @else <span class="pending">  Target </span> @endif</p>
-              <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
-              <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
+              <p class="data col-md-6"> <Span class="head">  Rate Unit: </Span>{{$stage->vendor_rateUnit}} </p>
+              <p class="data col-md-6"> <Span class="head">  Rate: </Span>{{$stage->vendor_rate}} </p>
 
               
-              <p class="col-md-6 data"> <Span class="head"> Instruction : 
+              <p class="col-md-6 data"> <Span class="head"> Instruction: 
               </Span> {{  $stage->instructions }} </p>
-              <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
+              <p class="col-md-6 data"> <Span class="head"> Sent Files Number: 
               </Span> {{  $stage->required_docs }} </p>
               
-              <p class="col-md-6 data"> <Span class="head"> Deadline Time Left : 
+              <p class="col-md-6 data"> <Span class="head"> Time until Deadline: 
               </Span>  {!! $deadline_difference !!} </p>
-              <p class="data col-md-6"> <Span class="head"> Status  : </Span>
+              <p class="data col-md-6"> <Span class="head"> Status: </Span>
                   {{$stage->status}} </p>
               </div>
               <div class="col-sm-12 col-md-12">
                     <div class="form-group">
                     <br>
                     
-              <h4> Reference files </h4>
+              <h4> Reference Document(s) </h4>
                            <br>
                            <ul>
                             @forelse($reference_file as $file)                               
@@ -105,7 +105,7 @@ td{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                            
@@ -118,7 +118,7 @@ td{
                     @if($project->status == 'reviewed')
                     <div class="card card-success">
                           <div class="card-header">
-                            <h5> Reviewed Files  
+                            <h5> Reviewed Document(s)  
                              </h5>
                           </div>
                           <div class="card-body">
@@ -127,8 +127,8 @@ td{
                               <thead>
                                   <tr>
                                   
-                                  <th width="">Working File</th>
-                                  <th width="">Reviewed File</th>
+                                  <th width="">Working Document</th>
+                                  <th width="">Reviewed Document</th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -154,7 +154,7 @@ td{
                                   </a>
                                    
                                 </li>
-                              NOTES :  {{$proofed['note']}}  
+                              NOTES:  {{$proofed['note']}}  
                              @endforeach   
                              </ul>
                             </td>
@@ -170,7 +170,7 @@ td{
                        
                         <div class="card card-dark">
                           <div class="card-header">
-                            <h5> Working Files  
+                            <h5> Working Document(s)  
                              </h5>
                           </div>
                           <div class="card-body">
@@ -231,7 +231,7 @@ td{
                                               </td>
                                               <td>
                                               {{ $deliver_withFiles->thisVendor_delivery[$source_file->id][0]->status }}
-                                              <p><b>Notes</b> :  {{$deliver_withFiles->thisVendor_delivery[$source_file->id][0]->notes}} </p>
+                                              <p><b>Notes</b>:  {{$deliver_withFiles->thisVendor_delivery[$source_file->id][0]->notes}} </p>
                                               @if($deliver_withFiles->thisVendor_delivery[$source_file->id][0]->improvedFiles)
                                                 <ul>
                                                 @foreach($deliver_withFiles->thisVendor_delivery[$source_file->id][0]->improvedFiles as $improvedFile)   
@@ -300,7 +300,7 @@ td{
                                          </p>
                                         </div>
                                         <div class="col-md-3">
-                                        <p class="head"> Source File </p>
+                                        <p class="head"> Source Document </p>
                                          <p class="data"> 
                                          <a href="{{asset('storage/'.App\project_sourceFile::find($delivery->sourceFile_id)->file)}}"
                                        download="{{App\project_sourceFile::find($delivery->sourceFile_id)->file_name}}">
@@ -310,7 +310,7 @@ td{
                                         </div>
                                         
                                         <div class="col-md-3">
-                                        <p class="head"> #Delivered File </p>
+                                        <p class="head"> #Delivered Document </p>
                                         <p class="data">  
                                         <a href="{{asset('storage/'.$delivery->file)}}"
                                        download="{{$delivery->file_name}}">

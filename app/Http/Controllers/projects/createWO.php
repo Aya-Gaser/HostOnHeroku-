@@ -80,7 +80,7 @@ class createWO extends Controller
        $WO->general_instructions = ($request->input('general_instructions'))? $request->input('general_instructions') : 'none';
        $WO->isHandeled = false;
        $WO->created_by = Auth::user()->id;
-       $WO->status = 'pending';
+       $WO->status = 'Pending';
        $WO->sent_docs = $request->input('sent_docs'); 
        $WO->save();
        $is_otherLanguage = false;

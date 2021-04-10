@@ -33,17 +33,17 @@
                   <h5> Profile Information</h5>      
               </div>
               <div class="card-body">
-              <p class="data"> <Span class="head"> ID : </Span>{{$user->id}} </p>
-              <p class="data"> <Span class="head">Name : </Span>{{$user->name}} </p>
-              <p class="data"> <Span class="head"> User Name  : </Span>{{$user->userName}} </p>
-              <p class="data"> <Span class="head"> Email	  : </Span>{{$user->email}} </p>
-              <p class="data"> <Span class="head"> Native Language  : </Span>{{$user->native_language}} </p>
-              <p class="data"> <Span class="head"> Timezone	  : </Span>{{$user->timezone}} </p>
-              <p class="data"> <Span class="head"> Birth Date : </Span>  {{$user->birthdate}} </p>
-              <p class="data"> <Span class="head"> Created at : </Span> 
+              <p class="data"> <Span class="head"> ID: </Span>{{$user->id}} </p>
+              <p class="data"> <Span class="head">Name: </Span>{{$user->name}} </p>
+              <p class="data"> <Span class="head"> User Name: </Span>{{$user->userName}} </p>
+              <p class="data"> <Span class="head"> Email: </Span>{{$user->email}} </p>
+              <p class="data"> <Span class="head"> Native Language: </Span>{{$user->native_language}} </p>
+              <p class="data"> <Span class="head"> Timezone: </Span>{{$user->timezone}} </p>
+              <p class="data"> <Span class="head"> Birth Date: </Span>  {{$user->birthdate}} </p>
+              <p class="data"> <Span class="head"> Created on: </Span> 
              {{ UTC_To_LocalTime($user->created_at,$user->timezone)}}
                 </p> 
-                <p class="data"> <Span class="head">Password : </Span> 
+                <p class="data"> <Span class="head">Password: </Span> 
                <span id="password">{{ decrypt($user->visible) }} </span>
                <span id="showPass" style="cursor:pointer; color:red;">  <i class="fas fa-eye"></i> </span>
                 </p>
@@ -101,7 +101,10 @@
                       <select default="arabic" class="selectpicker form-control" data-live-search="true" name="native_language" id="client_number">
                    <option disabled selected >Select / Insert Language</option>
                    <option
-                        value="arabic" > arabic
+                        value="Arabic" > Arabic
+                    </option>
+                    <option
+                        value="English" > English
                     </option>
                     </select>
                     </div>

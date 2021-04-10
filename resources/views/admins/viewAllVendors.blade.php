@@ -56,7 +56,7 @@
                     <input type="email" class="form-control" name="email"  placeholder="">
                  </div>
                  <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Created at</label>
+                   <label for="exampleInputEmail1">Created on</label>
                     <input type="date" class="form-control" name="created_at"  placeholder="">
                  </div>
                  

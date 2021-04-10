@@ -76,10 +76,10 @@
                       <select class="selectpicker form-control" data-live-search="true" name="native_language" id="client_number" required>
                    <option disabled>Select / Insert Language</option>
                    <option
-                        value="arabic" > Arabic
+                        value="Arabic" > Arabic
                     </option>
                     <option
-                        value="arabic" > English
+                        value="English" > English
                     </option>
                     </select>
                     </div>

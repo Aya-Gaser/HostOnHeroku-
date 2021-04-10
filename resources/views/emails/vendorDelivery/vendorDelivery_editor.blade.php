@@ -1,7 +1,7 @@
 @component('mail::message')
-# Project : {{str_pad($project_id, 4, "0", STR_PAD_LEFT )}} Has New Ready Working File.
+# Project {{str_pad($project_id, 4, "0", STR_PAD_LEFT )}} Has New Ready Working File.
 Please Login To Take Some Action.
 
-Thanks,<br>
+Thank You,<br>
 Tarjamt LLC 
 @endcomponent

@@ -40,7 +40,7 @@ ul{
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('management.dashboard')}}">Home</a></li>
-              <li class="breadcrumb-item active">Task Proofing</li>
+              <li class="breadcrumb-item active">Finalization Task</li>
             </ol>
           </div>
         </div>
@@ -69,10 +69,10 @@ ul{
                
             <div class="card-body">
               <div class="row">
-             <p class="data col-md-6"> <Span class="head"> WO ID : </Span>{{$task->wo_id}} </p>
-             <p class="data col-md-6"> <Span class="head"> Type : </Span>{{$task->type}} </p>
+             <p class="data col-md-6"> <Span class="head"> WO ID: </Span>{{$task->wo_id}} </p>
+             <p class="data col-md-6"> <Span class="head"> Type: </Span>{{$task->type}} </p>
 
-             <p class="data col-md-6"> <Span class="head"> Client : </Span>
+             <p class="data col-md-6"> <Span class="head"> Client: </Span>
              @if(App\client::find($task->WO['client_id']))
                 {{App\client::find($task->WO->client_id)->code}} - {{App\client::find($task->WO->client_id)->name}}
                 @else 
@@ -80,12 +80,12 @@ ul{
                 @endif
              </p>   
              
-             <p class="data col-md-6" > <Span class="head"> Language  : </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
-              <p class="data col-md-6"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
-              <p class="data col-md-6 text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
-              <p class="data col-md-6"> <Span class="head"> Client Instructions : </Span> {{$task->WO->client_instructions }}</p>
-              <p class="data col-md-6"> <Span class="head"> General Instructions : </Span> {{$task->WO->general_instructions }}</p>
-              <p class="data col-md-6"> <Span class="head"> Status : </Span>{{$task->status}} </p>
+             <p class="data col-md-6" > <Span class="head"> Language: </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
+              <p class="data col-md-6"> <Span class="head"> Created on: </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
+              <p class="data col-md-6 text-danger"> <Span class="head"> Deadline: </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
+              <p class="data col-md-6"> <Span class="head"> Client Instructions: </Span> {{$task->WO->client_instructions }}</p>
+              <p class="data col-md-6"> <Span class="head"> General Instructions: </Span> {{$task->WO->general_instructions }}</p>
+              <p class="data col-md-6"> <Span class="head"> Status: </Span>{{$task->status}} </p>
               <div class="col-md-6">
                 @if($task->status != 'Completed')
                     
@@ -103,7 +103,7 @@ ul{
               <div class="col-sm-6 col-md-6">
                     <div class="form-group">
                     <br>
-                        <h4> Source Documents </h4>
+                        <h4> Source Document(s) </h4>
                         <br>
                         
                             @forelse($source_files as $file)                                
@@ -117,7 +117,7 @@ ul{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                             

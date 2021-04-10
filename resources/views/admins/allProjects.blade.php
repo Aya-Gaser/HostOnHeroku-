@@ -56,7 +56,7 @@
                     
                       <th>ID</th>
                       <th>Name</th>
-                      <th>Created at</th>
+                      <th>Created on</th>
                       <th>Type</th>
                       <th>Status</th>
                       <th ></th>

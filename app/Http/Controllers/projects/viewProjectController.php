@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\projectUpdate;
 use App\Mail\deliveryAction; 
 use App\Mail\readyToProofFile;
+use App\Mail\CompleteStageVendor;
 class viewProjectController extends Controller
 {
     public function __construct()
@@ -83,7 +84,7 @@ class viewProjectController extends Controller
       //  }
         ///get editor deliveries 
 
-        if( $project->type == 'linked' &&  $project->status == 'on progress' ){
+        if( $project->type == 'linked' &&  $project->status == 'in progress' ){
             $editStage = projectStage::where('project_id', $project->id)
                                      ->where('type', 'editing')->first(); 
 
@@ -203,9 +204,12 @@ class viewProjectController extends Controller
         $stageId = $request->input('stageId'); 
         $complete = $request->input('complete');  
         $stage = projectStage::findOrFail($stageId); 
+        $vendor = User::find($stage->vendor_id);
         if($complete){
             if($request->input('wordsCount'))
                 $stage->vendor_wordsCount = $request->input('wordsCount');
+            Mail::to($vendor->email)->send(new CompleteStageVendor($stage->wo_id, $stage->id));
+    
         }      
          
         $stage->status = ($complete)? 'Completed' : 'Delivered'; //1 >> complete
@@ -252,7 +256,7 @@ class viewProjectController extends Controller
         }
         public function complete_reOpen_project($project, $complete){
             $project = projects::findOrFail($project);  
-            $project->status = ($complete)? 'completed' : 'on progress'; //1 >> complete
+            $project->status = ($complete)? 'completed' : 'in progress'; //1 >> complete
             $project->save();
     
             return back();

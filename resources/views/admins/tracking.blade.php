@@ -51,6 +51,7 @@ th{
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Projects Tracking</h1>
+           
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -64,7 +65,7 @@ th{
 
     <!-- Main content -->
     <section class="content">
-    
+    <p class="head"> In Order according to Client Deadline </p>
       <!-- Default box -->
       
           @foreach($wos as $wo)
@@ -72,12 +73,12 @@ th{
             <div class="card-header no-padding"  style="padding:10px 0px 0px 10px; background-color: #549c36; color:white;">
              
                 <div class="row" style="font-size:18px;">
-                  <p class="col-md-1"> ID :  {{$wo->id}} </p>
-                  <p class="col-md-2"> Client ID : {{$wo->client_id}} </p>
-                  <p class="col-md-3"> Deadline :
+                  <p class="col-md-1"> ID:  {{$wo->id}} </p>
+                  <p class="col-md-2"> Client ID: {{$wo->client_id}} </p>
+                  <p class="col-md-3"> Deadline:
                   {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}} </p>
                   <p class="col-md-2">  {{$wo->from_language}} ▸ {{$wo->to_language}}  </p>
-                  <p class="col-md-2"> Created By : {{App\User::find($wo->created_by)->userName}} </p>
+                  <p class="col-md-2"> Created By: {{App\User::find($wo->created_by)->userName}} </p>
                   <p class="col-md-2"> 
                    <a href=" {{route('management.view-wo',$wo->id)}}"> 
                      <button type="button" class="btn" style="background-color:#343a40;color:white;"> View WO Details </button>
@@ -98,17 +99,17 @@ th{
                     </div>
                     <div class="row">
                     <p class="col-md-1 text-dark font-weight-bold" > Task # {{$loop->iteration}}  </p>
-                    <p class="col-md-2"> Type :  {{$task->type}} </p>
-                  <p class="col-md-2"> Word Count : {{$task->client_wordsCount}} </p>
-                  <p class="col-md-2"> Unit : {{$task->client_rateUnit}}
-                  <p class="col-md-2"> Finalzed Files : {{count($task->proofed_clientFile)}} of {{count($wo->woSourceFiles)}}   </p>
-                  <p class="col-md-2"> Status : {{$task->status}}
+                    <p class="col-md-2"> Type:  {{$task->type}} </p>
+                  <p class="col-md-2"> Word Count: {{$task->client_wordsCount}} </p>
+                  <p class="col-md-2"> Unit: {{$task->client_rateUnit}}
+                  <p class="col-md-2"> Finalzed File(s): {{count($task->proofed_clientFile)}} of {{count($wo->woSourceFiles)}}   </p>
+                  <p class="col-md-2"> Status: {{$task->status}}
 
                  </div>
                  <div class="row">
-                 <p class="col-md-2"> Jobs in Task : {{count($task->project)}}   </p>
+                 <p class="col-md-2"> Jobs in Task: {{count($task->project)}}   </p>
                  @foreach($task->project as $project)
-                 <p class="col-md-3"> Job #{{$loop->iteration}} Status : {{$project->status}}   </p>
+                 <p class="col-md-3"> Job #{{$loop->iteration}} Status: {{$project->status}}   </p>
                  @endforeach
                  </div>
                 </div>   

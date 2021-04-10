@@ -37,7 +37,7 @@
                   <div class="input-group input-group-sm" style="width: 150px;">
                   <div class="card-tools form-group float-right" style="">
                   <select onchange="window.location.href=this.value;" class="browser-default custom-select" id="filter" style="width:150px;">
-                   <option id="bb" value="{{ route('vendor.view-myProjects', 'undelivered') }} "> UnDelivered </option>
+                   <option id="bb" value="{{ route('vendor.view-myProjects', 'Not delivered') }} "> Not Delivered </option>
                    <option value="{{ route('vendor.view-myProjects', 'pending') }} "> Pending </option> 
                    <option value="{{ route('vendor.view-myProjects', 'accepted') }} "> Completed </option>
                    <option value="{{ route('vendor.view-myProjects', 'all') }}"> ALL </option>

@@ -77,9 +77,9 @@
                     <tr>
                     
                       <th>ID</th>
-                      <th>code</th>
+                      <th>Number</th>
                       <th>Name</th>
-                      <th>Created at</th>
+                      <th>Created on</th>
                       <th >Total Projects </th>
                       <th></th>
                      

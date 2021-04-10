@@ -81,7 +81,7 @@
               <p class="data"> <Span class="head"> Client Rate  : </Span>{{$wo->client_rate}} </p>
               <p class="data"> <Span class="head"> From Language  : </Span>{{$wo->from_language}} </p>
               <p class="data"> <Span class="head"> To Language  : </Span>{{$wo->to_language}} </p>
-              <p class="data"> <Span class="head"> Created At : </Span>
+              <p class="data"> <Span class="head"> Created on : </Span>
               {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
                 </p>
               </div>

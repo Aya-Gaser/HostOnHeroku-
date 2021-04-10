@@ -1,10 +1,11 @@
 @component('mail::message')
-# Project : {{str_pad($wo_id, 4, "0", STR_PAD_LEFT )}} Has Been Updated.
+# Project {{str_pad($wo_id, 4, "0", STR_PAD_LEFT )}} Has Been Updated.
 @if($isFiles)
-#New Working Files Has Been Uploaded 
+#Please note that there was a change in the file(s).
+ Please login to use the new file(s).
 @endif
 @if($updates)
-#Some Data Has Been Updated 
+#Some project details Has Been Updated 
 @component('mail::table')
 | Data          | From             | To               |
 | ------------- |:----------------:| ----------------:|
@@ -15,6 +16,6 @@
 
 @endif
 
-Thanks,<br>
+Thank You,<br>
 Tarjamt LLC 
 @endcomponent

@@ -67,7 +67,7 @@
                     </select>
                   </div>
                     <div class="form-group col-md-6">
-                      <label for="exampleInputEmail1">Client PO Number <span class="required">*</span></label>
+                      <label for="exampleInputEmail1">Client PO Number/Description <span class="required">*</span></label>
                       <input type="text"  class="form-control" name="po_number" id="" placeholder="Enter PO number" required>
                     </div>
                  </div>
@@ -82,7 +82,7 @@
                   </div>
                  </div>
                  <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <label for="exampleInputEmail1"> Number of Files <span class="required">*</span></label>
                 <input type="number" step="1" min="1" class="form-control" name="sent_docs" id="" placeholder="Enter sent files number" required>
               </div> 
                </div>  
@@ -146,16 +146,16 @@
                       <select class="select2 form-control" name="task_type1" id="task_type1"
                         data-placeholder="select Task Type" required>
                         <option disabled >Select</option>
-                        <option value="translation" >Translation  </option>
-                        <option value="editing" >Editing  </option>
-                        <option value="dtp" >DTP  </option>
-                        <option value="linked" >Linked  </option>
+                        <option value="Translation" >Translation  </option>
+                        <option value="Editing" >Editing  </option>
+                        <option value="Dtp" >DTP  </option>
+                        <option value="Linked" >Linked  </option>
                       </select>
                   </div>
                  
                 </div>  
                 <div class="row">  
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-3 hide">
                     <label class="form-control-label" for="client_wordsCount1">Client Word Count<span
                     class="required">*</span></label>
                     <input type="number" min="0" class="form-control" name="client_wordsCount1"
@@ -172,6 +172,8 @@
                         <option value="Word Count" >Word Count  </option>
                         <option value="Hour" >Hour  </option>
                         <option value="Flat" >Flat  </option>
+                        <option value="page" >Page  </option>
+                        <option value="image" >Image  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-2">
@@ -191,6 +193,8 @@
                         <option value="Word Count" >Word Count  </option>
                         <option value="Hour" >Hour  </option>
                         <option value="Flat" >Flat  </option>
+                        <option value="page" >Page  </option>
+                        <option value="image" >Image  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-2">
@@ -208,7 +212,7 @@
                 <div class="form-group col-md-2">
                    <button type="button" id="addTask" class="" 
                    style="border:none; background:transparent; color:green; font-weight:bold;">
-                   <i class="fas fa-plus"></i> Add more task </button>
+                   <i class="fas fa-plus"></i> Add more tasks </button>
                 </div> 
                 <div class="row">  
                  <div class="col-sm-6">
@@ -233,7 +237,7 @@
                    <div class="col-md-6">
                      <div class="form-group">
                        <label class="form-control-label"
-                        for="source_document">Source Files <span class="required">*</span></label>
+                        for="source_document">Source Document(s) <span class="required">*</span></label>
                     
                         <div class="file-loading col-md-2">  
                          <input id="source_files" name="source_files[]"
@@ -246,7 +250,7 @@
                    <div class="col-md-6">
                      <div class="form-group">
                        <label class="form-control-label"
-                        for="source_document">Reference Files</label>
+                        for="source_document">Reference Document(s)</label>
                     
                         <div class="file-loading">  
                          <input id="reference_files" name="reference_files[]"
@@ -339,10 +343,10 @@ $('#addTask').click(function(){
                 <select class="form-control" name="task_type`+$task+`" id="task_type`+$task+`"
                   data-placeholder="select Task Type" required>
                   <option disabled >Select</option>
-                  <option value="translation" >Translation  </option>
-                  <option value="editing" >Editing  </option>
-                  <option value="dtp" >DTP  </option>
-                  <option value="linked" >Linked  </option>
+                  <option value="Translation" >Translation  </option>
+                  <option value="Editing" >Editing  </option>
+                  <option value="Dtp" >DTP  </option>
+                  <option value="Linked" >Linked  </option>
                 </select>
             </div>
             <div class="form-group col-md-2 col-sm-2 justify-content-center align-self-center"
@@ -354,7 +358,7 @@ $('#addTask').click(function(){
             </div>
           </div>  
           <div class="row">
-            <div class="form-group col-md-3 col-sm-10">
+            <div class="form-group col-md-3 col-sm-10 hide">
               <label class="form-control-label" for="client_wordsCount`+$task+`">Client Words Count<span
               class="required">*</span></label>
               <input type="number" min="0" class="form-control" name="client_wordsCount`+$task+`"
@@ -371,6 +375,8 @@ $('#addTask').click(function(){
                   <option value="words_count" >Words Count  </option>
                   <option value="hour" >Hour  </option>
                   <option value="flat" >Flat  </option>
+                  <option value="page" >Page  </option>
+                  <option value="image" >Image  </option>
                 </select>
             </div>
             <div class="form-group col-md-2 col-sm-10">
@@ -390,6 +396,8 @@ $('#addTask').click(function(){
                   <option value="words_count" >Words Count  </option>
                   <option value="hour" >Hour  </option>
                   <option value="flat" >Flat  </option>
+                  <option value="page" >Page  </option>
+                  <option value="image" >Image  </option>
                 </select>
             </div>
             <div class="form-group col-md-2 col-sm-10">

@@ -58,54 +58,54 @@ td{
               <!-- /.card-header -->
               <div class="card-body">
               <div class="row">
-              <p class="data col-md-6"> <Span class="head"> ID :  </Span>
+              <p class="data col-md-6"> <Span class="head"> ID:  </Span>
                 {{$wo->id}}
                 </p>
-                <p class="data col-md-6"> <Span class="head"> Created At : </Span>
+                <p class="data col-md-6"> <Span class="head"> Created on: </Span>
                 {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
                 </p>
-                <p class="data col-md-6"> <Span class="head"> Client :
+                <p class="data col-md-6"> <Span class="head"> Client:
                      @if(App\client::find($wo['client_id']))
                      {{App\client::find($wo->client_id)->code}} - {{App\client::find($wo->client_id)->name}}
                       @else 
                       {{$wo['client_id']}} - <span class="text-danger"> DELETED </span>
                       @endif
                  </Span>   </p>
-                <p class="data text-danger col-md-6" > <Span class="head"> Deadline  : </Span>
+                <p class="data text-danger col-md-6" > <Span class="head"> Deadline: </Span>
                 {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
                 </p>
-                <p class="data col-md-6"> <Span class="head"> Clint PO Number  : </Span>{{$wo->po_number}}</p>
-                <p class="data col-md-6"> <Span class="head"> Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
+                <p class="data col-md-6"> <Span class="head"> Client PO Number/Description: </Span>{{$wo->po_number}}</p>
+                <p class="data col-md-6"> <Span class="head"> Language: </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
               </div>
               <div class="row">
                 
                
-                <p class="data col-md-6"> <Span class="head"> Number Of Files :  </Span>
+                <p class="data col-md-6"> <Span class="head"> Number of Files:  </Span>
                 {{$wo->sent_docs}}
                 </p>
-                <p class="data col-md-6"> <Span class="head">Created By :  </Span>
+                <p class="data col-md-6"> <Span class="head">Created By:  </Span>
                 {{App\User::find($wo->created_by)->name}}
                 </p>
                 
              
               
-               <p class="data col-md-6"> <Span class="head"> Client Instructions : </Span>
+               <p class="data col-md-6"> <Span class="head"> Client Instructions: </Span>
                  {{ $wo->client_instructions}}
                </p>
-               <p class="data col-md-6"> <Span class="head"> General Instructions : </Span>
+               <p class="data col-md-6"> <Span class="head"> General Instructions: </Span>
                  {{ $wo->general_instructions}}
                </p>
-               <p class="data col-md-12"> <Span class="head"> Recieve : 
-               @if($wo->isReceived) <Span class="data"> Recieved &check;&check; </span>
+               <p class="data col-md-12"> <Span class="head"> recieved: 
+               @if($wo->isReceived) <Span class="data"> recieved &check;&check; </span>
                @else
-               <a href="{{route('management.recieve-wo',$wo->id)}}"> <button class="btn btn-success"> Recieve </button> </a>
+               <a href="{{route('management.recieve-wo',$wo->id)}}"> <button class="btn btn-success"> recieve </button> </a>
                  @endif </Span>
               
                </p>
               </div>               
              <div class="row">
                <div class="col-sm-6 col-md-6 form-group">
-                        <h4> Source Document </h4>
+                        <h4> Source Document(s) </h4>
                         <br>
                         
                             @forelse($source_files as $file)                                
@@ -123,7 +123,7 @@ td{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                         
@@ -145,7 +145,7 @@ td{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                            
@@ -155,8 +155,8 @@ td{
                
               <p> 
                 
-                 <button type="button" id="deleteWo" class="btn btn-danger">Delete Wo</button>
-                 <button type="update" id="update" class="btn btn-primary">Update Wo</button>
+                 <button type="button" id="deleteWo" class="btn btn-danger">Delete WO</button>
+                 <button type="update" id="update" class="btn btn-primary">Update WO</button>
                </p>   
                
           </div>
@@ -271,7 +271,7 @@ td{
                  </div>
                
                  <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <label for="exampleInputEmail1"> Number of Files <span class="required">*</span></label>
                 <input type="number" step="1" min="1" class="form-control" name="sent_docs" id="" value="{{$wo->sent_docs}}" required>
               </div>
                  <div class="row">
@@ -279,7 +279,7 @@ td{
                  <div class="col-md-6">
                    <div class="form-group">
                      <label class="form-control-label"
-                      for="source_document">Source Files <span class="required">*</span></label>
+                      for="source_document">Source Document(s) <span class="required">*</span></label>
                   
                       <div class="file-loading col-md-2">  
                        <input id="source_files" name="source_files[]"
@@ -292,7 +292,7 @@ td{
                  <div class="col-md-6">
                    <div class="form-group">
                      <label class="form-control-label"
-                      for="source_document">Reference Files <span class="required"></span></label>
+                      for="source_document">Reference Document(s) <span class="required"></span></label>
                   
                       <div class="file-loading">  
                        <input id="reference_files" name="reference_files[]"
@@ -474,7 +474,7 @@ td{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                            </div> 
@@ -494,7 +494,7 @@ td{
                            </li>
                            <div class="clearfix mb-2"></div>
                        @empty
-                           <li class="text-danger">No documents found</li>
+                           <li class="text-danger">None</li>
                        @endforelse
                        <br>
                       </div> 

@@ -38,16 +38,16 @@
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> ID : </Span>{{$user->id}} </p>
-              <p class="data"> <Span class="head">Name : </Span>{{$user->name}} </p>
-              <p class="data"> <Span class="head"> User Name  : </Span>{{$user->userName}} </p>
-              <p class="data"> <Span class="head"> Email	  : </Span>{{$user->email}} </p>
-              <p class="data"> <Span class="head"> Timezone	  : </Span>{{$user->timezone}} </p>
-              <p class="data"> <Span class="head"> Birth Date : </Span>  {{$user->birthdate}} </p>
-              <p class="data"> <Span class="head"> Created at : </Span> 
+             <p class="data"> <Span class="head"> ID: </Span>{{$user->id}} </p>
+              <p class="data"> <Span class="head">Name: </Span>{{$user->name}} </p>
+              <p class="data"> <Span class="head"> User Name: </Span>{{$user->userName}} </p>
+              <p class="data"> <Span class="head"> Email: </Span>{{$user->email}} </p>
+              <p class="data"> <Span class="head"> Timezone: </Span>{{$user->timezone}} </p>
+              <p class="data"> <Span class="head"> Birth Date: </Span>  {{$user->birthdate}} </p>
+              <p class="data"> <Span class="head"> Created on: </Span> 
              {{ UTC_To_LocalTime($user->created_at,$user->timezone)}}
                 </p> 
-                <p class="data"> <Span class="head">Password : </Span> 
+                <p class="data"> <Span class="head">Password: </Span> 
                <span id="password">{{ decrypt($user->visible) }} </span>
                <span id="showPass" style="cursor:pointer; color:red;">  <i class="fas fa-eye"></i> </span>
                 </p>

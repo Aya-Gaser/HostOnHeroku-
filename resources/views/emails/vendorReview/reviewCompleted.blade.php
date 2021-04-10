@@ -1,7 +1,7 @@
 @component('mail::message')
-# Project : {{str_pad($wo_id, 4, "0", STR_PAD_LEFT )}} Has Been Reviewed. 
-Please Login To Check Final Grading and Submit Invoice.  
+# Project {{str_pad($wo_id, 4, "0", STR_PAD_LEFT )}} is successfully graded. 
+Please Login To Check Final Grading.  
 
-Thanks,<br>
+Thank You,<br>
 Tarjamt LLC 
 @endcomponent

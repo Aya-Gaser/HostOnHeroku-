@@ -49,17 +49,17 @@ td{
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> ID : </Span>{{$vendor->id}} </p>
-              <p class="data"> <Span class="head">Name : </Span>{{$vendor->name}} </p>
-              <p class="data"> <Span class="head"> User Name  : </Span>{{$vendor->userName}} </p>
-              <p class="data"> <Span class="head"> Native Language  : </Span>{{$vendor->native_language}} </p>
-              <p class="data"> <Span class="head"> Email	  : </Span>{{$vendor->email}} </p>
-              <p class="data"> <Span class="head"> Timezone	  : </Span>{{$vendor->timezone}} </p>
-              <p class="data"> <Span class="head"> Birth Date : </Span>  {{$vendor->birthdate}} </p>
-              <p class="data"> <Span class="head"> Created at : </Span> 
+             <p class="data"> <Span class="head"> ID: </Span>{{$vendor->id}} </p>
+              <p class="data"> <Span class="head">Name: </Span>{{$vendor->name}} </p>
+              <p class="data"> <Span class="head"> User Name: </Span>{{$vendor->userName}} </p>
+              <p class="data"> <Span class="head"> Native Language: </Span>{{$vendor->native_language}} </p>
+              <p class="data"> <Span class="head"> Email: </Span>{{$vendor->email}} </p>
+              <p class="data"> <Span class="head"> Timezone: </Span>{{$vendor->timezone}} </p>
+              <p class="data"> <Span class="head"> Birth Date: </Span>  {{$vendor->birthdate}} </p>
+              <p class="data"> <Span class="head"> Created on: </Span> 
              {{ UTC_To_LocalTime($vendor->created_at, Auth::user()->timezone)}}
                 </p> 
-                <p class="data"> <Span class="head">Password : </Span> 
+                <p class="data"> <Span class="head">Password: </Span> 
                <span id="password">{{ decrypt($vendor->visible) }} </span>
                <span id="showPass" style="cursor:pointer; color:red;">  <i class="fas fa-eye"></i> </span>
                 </p>
@@ -86,7 +86,7 @@ td{
                                         
                                         <th width="10%">ID</th>
                                         <th width="15%">Name</th>
-                                        <th width="20%">Created at</th>
+                                        <th width="20%">Created on</th>
                                         <th width="15%">Type</th>
                                         <th width="15%">Role</th>
                                         <th width="13%">Status</th>

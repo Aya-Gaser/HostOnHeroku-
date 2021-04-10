@@ -36,26 +36,26 @@
               <!-- /.card-header -->
               <div class="card-body ">
               <div class="row">
-              <p class="data col-md-6"> <Span class="head"> Project Type : </Span> {{$stage->type}} </p>
-              <p class="data col-md-6"> <Span class="head">  Language  : </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
-              <p class="data col-md-6"> <Span class="head">  Word Count  : </Span>
+              <p class="data col-md-6"> <Span class="head"> Project Type: </Span> {{$stage->type}} </p>
+              <p class="data col-md-6"> <Span class="head">  Language: </Span>{{$wo->from_language}} ▸ {{$wo->to_language}} </p>
+              <p class="data col-md-6"> <Span class="head">  Word Count: </Span>
               @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}}
                @else <span class="pending">  Target </span> @endif</p>
-              <p class="data col-md-6"> <Span class="head"> MAX Quality Points  : </Span>
+              <p class="data col-md-6"> <Span class="head"> MAX Quality Points: </Span>
               @if($stage->vendor_maxQualityPoints) {{$stage->vendor_maxQualityPoints}}
                @else <span class="pending">  Target </span> @endif</p>
-              <p class="data col-md-6"> <Span class="head">  Rate Unit  : </Span>{{$stage->vendor_rateUnit}} </p>
-              <p class="data col-md-6"> <Span class="head">  Rate  : </Span>{{$stage->vendor_rate}} </p>
-              <p class="col-md-6 data"> <Span class="head"> Instruction : 
+              <p class="data col-md-6"> <Span class="head">  Rate Unit: </Span>{{$stage->vendor_rateUnit}} </p>
+              <p class="data col-md-6"> <Span class="head">  Rate: </Span>{{$stage->vendor_rate}} </p>
+              <p class="col-md-6 data"> <Span class="head"> Instruction: 
               </Span> {{  $stage->instructions }} </p>
-              <p class="col-md-6 data"> <Span class="head"> Sent Files Number : 
+              <p class="col-md-6 data"> <Span class="head"> Sent Files Number: 
               </Span> {{  $stage->required_docs }} </p>
-              <p class="data text-danger col-md-6"> <Span class="head"> Final Delivery Deadline  : </Span>
+              <p class="data text-danger col-md-6"> <Span class="head"> Final Delivery Deadline: </Span>
               {{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
-              <p class="data text-danger col-md-6"> <Span class="head"> Offer Expires Date :  </Span>
-              @php $date = ($group == 1)? 'G1_acceptance_deadline' : "G2_acceptance_deadline"; @endphp
+              <p class="data text-danger col-md-6"> <Span class="head"> Offer Expires Date:  </Span>
+              @php $date = ($group == 1)? 'G1_acceptance_deadline': "G2_acceptance_deadline"; @endphp
               {{UTC_To_LocalTime($stage->$date,
                                         Auth::user()->timezone) }}
                  </p>
@@ -63,7 +63,7 @@
               <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                     <br>
-                        <h4> Working Documents </h4>
+                        <h4> Working Document(s) </h4>
                         <br>
                         
                             @forelse($source_files as $file)                                
@@ -76,10 +76,10 @@
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
-                            <h4> Reference files </h4>
+                            <h4> Reference Document(s) </h4>
                            <br>
                             @forelse($reference_file as $file)                               
                                 <li class="text-primary">
@@ -91,7 +91,7 @@
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                            

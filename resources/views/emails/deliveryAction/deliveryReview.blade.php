@@ -1,12 +1,16 @@
 @php 
 $wo_id = str_pad($wo_id, 4, '0', STR_PAD_LEFT );
 if($action == 'improved')
-$body = "# Your Delivery In Project ". $wo_id." Is "."Reviewed And Improvements Required.
-Please Login To Check Required Improvements.";
+$info = "please find the marked file(s) attached"
+else if($action == 'accepted')
+$info = "they were accepted." 
 else 
-$body = "# Your Delivery In Project ". $wo_id. " Is " .$action.
-"Please Login To Check Your Grade.";
+$info = "however, they were rejected. Please refer to the instructions and take any necessary action."   
+
+$body = "# Project ". $wo_id. " Delivery Update " .
+"Thank you for delivering the document(s), ". $info
 @endphp
+
 
 @component('mail::message')
 {{$body}}

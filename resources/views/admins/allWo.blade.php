@@ -25,7 +25,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Work Needed</h1>
+            <h1>Work Orders</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -72,7 +72,7 @@
                       Language
                       </th>
                       <th style="width:  " >
-                        Created At
+                        Created on
                       </th>
                       <th style="width:">
                      
@@ -127,7 +127,7 @@
       <!-- /.card -->
       <div class="card card-success">
         <div class="card-header">
-          <h3 class="card-title">Handeled WO</h3>
+          <h3 class="card-title">Handled WO</h3>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -155,7 +155,7 @@
                       Language
                       </th>
                       <th style="width: " >
-                        Created At
+                        Created on
                       </th>
                       <th style="width:">
                      

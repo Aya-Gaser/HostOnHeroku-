@@ -55,13 +55,13 @@ td{
              
             <div class="card-body">
              <div class="row">
-             <p class="data col-md-6"> <Span class="head"> ID : </Span>{{$project->id}} </p>
-             <p class="data col-md-6"> <Span class="head"> Name : </Span>{{$project->name}} </p>
-             <p class="data col-md-6" > <Span class="head"> Language  : </Span>{{$project->WO->from_language}} ▸ {{$project->WO->to_language}}</p>
-              <p class="data col-md-6"> <Span class="head"> Created At : </Span>  {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone) }} </p>
-              <p class="data col-md-6"> <Span class="head"> Deadline Time Left : </Span> {!! $deadline_difference !!}</p>
+             <p class="data col-md-6"> <Span class="head"> ID: </Span>{{$project->id}} </p>
+             <p class="data col-md-6"> <Span class="head"> Name: </Span>{{$project->name}} </p>
+             <p class="data col-md-6" > <Span class="head"> Language: </Span>{{$project->WO->from_language}} ▸ {{$project->WO->to_language}}</p>
+              <p class="data col-md-6"> <Span class="head"> Created on: </Span>  {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone) }} </p>
+              <p class="data col-md-6"> <Span class="head"> Time until Deadline: </Span> {!! $deadline_difference !!}</p>
 
-              <p class="data col-md-6 text-danger"> <Span class="head"> Deadline : </Span> {{UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
+              <p class="data col-md-6 text-danger"> <Span class="head"> Deadline: </Span> {{UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
 
              </div> 
              <br>
@@ -69,7 +69,7 @@ td{
               <div class="col-sm-6 col-md-6">
                    
               
-                        <h4> Working Documents </h4>
+                        <h4> Working Document(s) </h4>
                         <br>
                         
                             @forelse($source_files as $file)                                
@@ -88,7 +88,7 @@ td{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                            </div> 
@@ -111,7 +111,7 @@ td{
                                 </li>
                                 <div class="clearfix mb-2"></div>
                             @empty
-                                <li class="text-danger">No documents found</li>
+                                <li class="text-danger">None</li>
                             @endforelse
                             <br>
                             
@@ -272,7 +272,7 @@ td{
                                         <td>
                                        
                                               <p>{{$delivery_files->translator_delivery[$source_file->id][0]->status}}</p>
-                                              <p><b>Notes</b> :{{$delivery_files->translator_delivery[$source_file->id][0]->notes}}</p>  <br> 
+                                              <p><b>Notes</b>:{{$delivery_files->translator_delivery[$source_file->id][0]->notes}}</p>  <br> 
                                               @if($delivery_files->translator_delivery[$source_file->id][0]->improvedFiles)
                                                 <ul>
                                                 @foreach($delivery_files->translator_delivery[$source_file->id][0]->improvedFiles as $improvedFile)   
@@ -295,12 +295,12 @@ td{
                                          
                                           @else
                                           <td style="color:red; font-size:21px;">
-                                          NOT READY YET </td> <td></td>  
+                                          Not delivered </td> <td></td>  
                                           
                                           @endif
                                           @empty
                                           <td style="color:red; font-size:21px;">
-                                          NOT READY YET </td> <td></td><td></td>  
+                                          Not delivered </td> <td></td><td></td>  
                                        
                                     
 
@@ -412,7 +412,7 @@ td{
 
                                         
                                          @else 
-                                         <td style="color:red; font-size:21px;"> NOT READY YET </td> <td> </td> <td></td>   
+                                         <td style="color:red; font-size:21px;"> Not delivered </td> <td> </td> <td></td>   
                                           
                                           @endif
                                          
@@ -448,28 +448,28 @@ td{
              @php $stage = App\projectStage::where('project_id', $project->id)
                                               ->first(); @endphp
                                               
-                <p class="data col-md-4"> <Span class="head"> Deadline  : </Span>
+                <p class="data col-md-4"> <Span class="head"> Deadline: </Span>
                
                 {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
-                <p class="data col-md-4"> <Span class="head">  Word Count  : </Span>
+                <p class="data col-md-4"> <Span class="head">  Word Count: </Span>
                   @if($stage->vendor_wordsCount)  {{$stage->vendor_wordsCount}}
                   @else   <span class="text-danger"> Target </span> 
                   @endif    
                 </p>
-                <p class="data col-md-4"> <Span class="head"> MAX Quality Points  : </Span>
+                <p class="data col-md-4"> <Span class="head"> MAX Quality Points: </Span>
                   @if($stage->vendor_maxQualityPoints)  {{$stage->vendor_maxQualityPoints}}
                   @else   <span class="text-danger"> Target </span> 
                   @endif
                  </p>
-                <p class="data col-md-4"> <Span class="head"> Unit : </Span>{{$stage->vendor_rateUnit}} </p>
-                <p class="data col-md-4"> <Span class="head"> Translator Rate  : </Span>{{$stage->vendor_rate}} </p>
+                <p class="data col-md-4"> <Span class="head"> Unit: </Span>{{$stage->vendor_rateUnit}} </p>
+                <p class="data col-md-4"> <Span class="head"> Translator Rate: </Span>{{$stage->vendor_rate}} </p>
 
-                <p class="data col-md-4"> <Span class="head">Translator : </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
+                <p class="data col-md-4"> <Span class="head">Translator: </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
                 @else <span class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
-                <p class="data col-md-4"> <Span class="head"> Number Of Files  : </Span>
+                <p class="data col-md-4"> <Span class="head"> Number of File: </Span>
                
                {{$stage->required_docs}} </p>
-                <p class="data col-md-4"> <Span class="head"> Status  : </Span>
+                <p class="data col-md-4"> <Span class="head"> Status: </Span>
                
                   {{$stage->status}} </p>
                 <p>
@@ -485,7 +485,7 @@ td{
                   
                  @endif       
                     </p>
-              <p class="data col-md-12"> <Span class="head"> Instructions  : </Span>{{$stage->instructions}} </p>
+              <p class="data col-md-12"> <Span class="head"> Instructions: </Span>{{$stage->instructions}} </p>
      
                    
               </div>
@@ -553,7 +553,7 @@ td{
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Number Of Files <span class="required">*</span></label>
+                <label for="exampleInputEmail1"> Number of Files <span class="required">*</span></label>
                 <input type="number" step="1" min="1" class="form-control" name="required_docs_{{$stage->id}}" value="{{$stage->required_docs}}" required>
               </div>
                 </div>
@@ -648,7 +648,7 @@ td{
      <div class="modal-dialog center">
        <div class="modal-content">
          <div class="modal-header">
-           <h4 class="modal-title">Set Final Data</h4>
+           <h4 class="modal-title">Final Word Count</h4>
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
