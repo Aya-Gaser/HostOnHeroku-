@@ -37,7 +37,7 @@ class vendorNewDelivery extends Mailable
         return $this->markdown('emails.vendorDelivery.'.$markdown)
         ->with(['project_id'=>$this->project->wo_id, 'vendor_name'=>$this->vendor_name])
        ->from('ayagaser30@example.com')
-       ->subject('Project : '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
+       ->subject('Project '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
        .' Has New Delivey')->delay(15); 
     }
 }

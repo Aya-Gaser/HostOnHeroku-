@@ -33,7 +33,7 @@ class allVendorsDeclined extends Mailable
         return $this->markdown('emails.offerAction.allVendorsDeclined')
         ->with(['project_id'=>$this->project->id, 'wo_id'=>$this->project->wo_id, 'stage_type'=>$this->stage_type])
        ->from('ayagaser30@example.com')
-       ->subject('Project : '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
+       ->subject('Project '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
        .' Has Been Declined By All Vendors ')->delay(15); 
     }
 }

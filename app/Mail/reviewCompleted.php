@@ -31,7 +31,7 @@ class reviewCompleted extends Mailable
         return $this->markdown('emails.vendorReview.reviewCompleted')
         ->with(['wo_id'=>$this->wo_id])
        ->from('ayagaser30@example.com')
-       ->subject('Project : '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
+       ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
        .' Has Been Reviewed')->delay(15); 
     }
 }

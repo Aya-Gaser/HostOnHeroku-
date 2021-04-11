@@ -15,6 +15,10 @@ $body = "# Project ". $wo_id. " Delivery Update " .
 @component('mail::message')
 {{$body}}
 
+@component('mail::button', ['url' =>route("vendor.view-project",$wo_id), 'color' => 'success'])
+    View
+@endcomponent
+
 Thank You,<br>
 Tarjamt LLC 
 @endcomponent

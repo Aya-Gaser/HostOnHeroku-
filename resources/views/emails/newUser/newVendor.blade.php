@@ -8,7 +8,7 @@ Use this temporary password : tarjamatNewMember@1234
 Login
 @endcomponent
 
-@component('mail::button', ['url' =>'{{route("/")}}', 'color' => 'success'])
+@component('mail::button', ['url' =>route("/"), 'color' => 'success'])
     Login
 @endcomponent
 

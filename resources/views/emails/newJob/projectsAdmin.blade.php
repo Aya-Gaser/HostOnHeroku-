@@ -25,6 +25,7 @@ Hello,
 Please login to the system to view the full project details and Accept or Decline this offer
 <br>
 If you have any questions, do not hesitate to contact us at this email : Projects.TarjamatLLC@gmail.com.
+
 @component('mail::button', ['url' =>$link, 'color' => 'success'])
     View Full Project Data
 @endcomponent

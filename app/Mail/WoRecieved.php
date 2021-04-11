@@ -33,7 +33,7 @@ class WoRecieved extends Mailable
         return $this->markdown('emails.wo.woRecieved')
                      ->with(['wo_id'=>$this->wo_id])
                     ->from('ayagaser30@example.com')
-                    ->subject('WO :'.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
+                    ->subject('WO '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
                     .' has been recieved')->delay(15); 
     }
 }

@@ -16,7 +16,7 @@
 
 @endif
 
-@component('mail::button', ['url' =>'{{route("vendor.view-project",$wo_id)}}', 'color' => 'success'])
+@component('mail::button', ['url' =>route("vendor.view-project",$wo_id), 'color' => 'success'])
     View
 @endcomponent
 
