@@ -56,7 +56,6 @@
                       <th>WO ID</th>
                       <th>Client Deadline</th>
                       <th>Type</th>
-                      <th>Total Proofed Files</th>
                       <th> Created on</th>
                      <th> </th>
                     </tr>
@@ -72,7 +71,6 @@
                       <td> 
                       {{$task['type'] }}
                     </td>
-                    <td> Total Proofed Files </td>
                      <td> 
                       {{ UTC_To_LocalTime($task['created_at'], Auth::user()->timezone) }}
                     </td>

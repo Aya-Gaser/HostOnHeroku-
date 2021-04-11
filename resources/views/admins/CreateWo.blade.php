@@ -193,8 +193,8 @@
                         <option value="Word Count" >Word Count  </option>
                         <option value="Hour" >Hour  </option>
                         <option value="Flat" >Flat  </option>
-                        <option value="page" >Page  </option>
-                        <option value="image" >Image  </option>
+                        <option value="Page" >Page  </option>
+                        <option value="Image" >Image  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-2">
@@ -372,11 +372,11 @@ $('#addTask').click(function(){
                 <select class="form-control" name="client_rateUnit`+$task+`" id="client_rateUnit`+$task+`"
                   data-placeholder="select Client Rate Unit" required>
                   <option disabled >Select</option>
-                  <option value="words_count" >Words Count  </option>
-                  <option value="hour" >Hour  </option>
-                  <option value="flat" >Flat  </option>
-                  <option value="page" >Page  </option>
-                  <option value="image" >Image  </option>
+                  <option value="Word Count" >Word Count  </option>
+                  <option value="Hour" >Hour  </option>
+                  <option value="Flat" >Flat  </option>
+                  <option value="Page" >Page  </option>
+                  <option value="Image" >Image  </option>
                 </select>
             </div>
             <div class="form-group col-md-2 col-sm-10">
