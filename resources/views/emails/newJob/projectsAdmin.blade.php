@@ -15,8 +15,10 @@ Hello,
 | ------------------------- | ---------------------------------------------------------------------------:|
 | Task Type                 | {{$stage->type}}                                                      |
 | Language                  | {{$stage->project->WO->from_language .'▸'.$stage->project->WO->to_language}}                          |
+@if($stage->type != 'Dtp')
 | Word Count                | {{$words_count}}                                                  |
 | MAX Quality Points        | {{$quality_points}}                                                   |
+@endif
 | Rate Unit                 | {{$stage['vendor_rateUnit']}}                                                          |
 | Rate                      | {{$stage['vendor_rate']}}                                                          |
 | Offer Expires on          | {{UTC_To_LocalTime($acceptanceDeadline,$vendor->timezone)}} |

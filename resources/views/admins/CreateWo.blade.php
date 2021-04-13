@@ -159,7 +159,7 @@
                     <label class="form-control-label" for="client_wordsCount1">Client Word Count<span
                     class="required">*</span></label>
                     <input type="number" min="0" class="form-control" name="client_wordsCount1"
-                     id="client_wordsCount1" placeholder="Enter 0 if Target" required>
+                     id="client_wordsCount1" placeholder="Enter 0 if Target/DTP" required>
                   </div>
 
                   <div class="form-group col-md-2">
@@ -172,8 +172,8 @@
                         <option value="Word Count" >Word Count  </option>
                         <option value="Hour" >Hour  </option>
                         <option value="Flat" >Flat  </option>
-                        <option value="page" >Page  </option>
-                        <option value="image" >Image  </option>
+                        <option value="Page" >Page  </option>
+                        <option value="Image" >Image  </option>
                       </select>
                   </div>
                   <div class="form-group col-md-2">
@@ -362,7 +362,7 @@ $('#addTask').click(function(){
               <label class="form-control-label" for="client_wordsCount`+$task+`">Client Words Count<span
               class="required">*</span></label>
               <input type="number" min="0" class="form-control" name="client_wordsCount`+$task+`"
-               id="client_wordsCount`+$task+`" placeholder="Enter 0 if Target" required>
+               id="client_wordsCount`+$task+`" placeholder="Enter 0 if Target/DTP" required>
             </div>
 
             <div class="form-group col-md-2 col-sm-10">

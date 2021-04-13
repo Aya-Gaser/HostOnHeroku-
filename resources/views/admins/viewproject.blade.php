@@ -451,6 +451,7 @@ td{
                 <p class="data col-md-4"> <Span class="head"> Deadline: </Span>
                
                 {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
+               @if($project->type != 'Dtp')
                 <p class="data col-md-4"> <Span class="head">  Word Count: </Span>
                   @if($stage->vendor_wordsCount)  {{$stage->vendor_wordsCount}}
                   @else   <span class="text-danger"> Target </span> 
@@ -461,25 +462,34 @@ td{
                   @else   <span class="text-danger"> Target </span> 
                   @endif
                  </p>
+                 @endif
                 <p class="data col-md-4"> <Span class="head"> Unit: </Span>{{$stage->vendor_rateUnit}} </p>
                 <p class="data col-md-4"> <Span class="head"> Translator Rate: </Span>{{$stage->vendor_rate}} </p>
 
                 <p class="data col-md-4"> <Span class="head">Translator: </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
                 @else <span class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
                 <p class="data col-md-4"> <Span class="head"> Number of File: </Span>
-               
+              
                {{$stage->required_docs}} </p>
                 <p class="data col-md-4"> <Span class="head"> Status: </Span>
                
                   {{$stage->status}} </p>
                 <p>
-                @if($stage->status != 'completed')
+                @if($stage->status != 'Completed')
+                  @if($project->type != 'Dtp')
                    
-                <button type="button" id="{{$stage->id}}" data-toggle="modal" data-target="#modal-completeStage"
-                class="btn btn-success completeStage complete" > 
-                        Completed Job &check;&check; </button>
-                    </a> 
-                @else        
+                  <button type="button" id="{{$stage->id}}" data-toggle="modal" data-target="#modal-completeStage"
+                  class="btn btn-success completeStage complete" > 
+                          Completed Job &check;&check; </button>
+                      </a> 
+                  @else 
+                   <button type="button" id="{{$stage->id}}" class="complete btn btn-success completeStageDTP" > 
+                          Completed Job &check;&check; </button>
+                      </a> 
+                  @endif
+
+                @else 
+
                     <button type="button" id="{{$stage->id}}" class="btn btn-success completeStage reopen" > 
                         RE-OPEN </button>
                   
@@ -505,7 +515,7 @@ td{
               <form id="updateStage" action="{{route('management.update-stage',$stage->id)}}" method="post" enctype="multipart/form-data">
               @csrf
                 <div class="card-body">
-               
+                @if($project->type != 'Dtp')
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label class="form-control-label" for="words_count">Word Count<span
@@ -521,7 +531,8 @@ td{
                         value="{{$stage->vendor_maxQualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
 
                   </div>
-                </div>   
+                </div>  
+                @endif 
                 <div class="row">          
   
                   <div class="form-group col-md-6">
@@ -954,7 +965,36 @@ $('.reopen').click(function(){
             console.log(data);
            }
   });
-}); 
+});
+$('.completeStageDTP').click(function(){ 
+  $stageId = $(this).attr('id');
+  $('#stageId').val($stageId);
+  $('#wordsCount').val(0);
+  let formData = new FormData(document.getElementById('completeStage-form'));
+  $.ajax({
+        data: formData,
+        url: "{{route('management.complete-stage') }}",
+        type: 'POST',
+        contentType: false,
+         processData: false,
+           success: (response) => {
+             if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done! Sent Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            console.log(data);
+           }
+  });
+});
+
 //route('management.complete-stage',['stage'=>$stage->id,'compelte'=>1] )
 $('#completeStage-form').submit(function(e) {
        e.preventDefault();

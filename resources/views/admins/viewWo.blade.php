@@ -546,7 +546,7 @@ td{
                     <label class="form-control-label" for="client_wordsCount">Client Word Count<span
                     class="required">*</span></label>
                     <input type="number" min="0" class="form-control" name="client_wordsCount"
-                     id="client_wordsCount" placeholder="Enter 0 if Target" required>
+                     id="client_wordsCount" placeholder="Enter 0 if Target/DTP" required>
                   </div>
                 </div>  
                 <div class="row">  

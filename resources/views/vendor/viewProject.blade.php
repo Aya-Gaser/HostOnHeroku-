@@ -67,24 +67,24 @@ td{
                </p>
               
     
-              
+            @if($stage->type != 'Dtp')
               <p class="data col-md-6"> <Span class="head">  Word Count: </Span>
               @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else 
               <span class="pending">  Target </span> @endif</p>
               <p class="data col-md-6"> <Span class="head"> MAX Quality Points: </Span>
               @if($stage->vendor_maxQualityPoints) {{$stage->vendor_maxQualityPoints}} 
               @else <span class="pending">  Target </span> @endif</p>
+            @endif  
               <p class="data col-md-6"> <Span class="head">  Rate Unit: </Span>{{$stage->vendor_rateUnit}} </p>
               <p class="data col-md-6"> <Span class="head">  Rate: </Span>{{$stage->vendor_rate}} </p>
-
               
-              <p class="col-md-6 data"> <Span class="head"> Instruction: 
-              </Span> {{  $stage->instructions }} </p>
               <p class="col-md-6 data"> <Span class="head"> Sent Files Number: 
               </Span> {{  $stage->required_docs }} </p>
               
               <p class="col-md-6 data"> <Span class="head"> Time until Deadline: 
               </Span>  {!! $deadline_difference !!} </p>
+              <p class="col-md-6 data"> <Span class="head"> Instruction: 
+              </Span> {{  $stage->instructions }} </p>
               <p class="data col-md-6"> <Span class="head"> Status: </Span>
                   {{$stage->status}} </p>
               </div>
@@ -281,7 +281,7 @@ td{
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-           <div class="card col-md-10">
+           <div class="card card-warning col-md-10">
              <div class="card-header">
              <h4> Delivery History </h4>
              </div>
