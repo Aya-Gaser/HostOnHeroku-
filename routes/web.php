@@ -216,7 +216,16 @@ Route::group(['middleware' => 'role:vendor', 'prefix' => 'vendor-panel',
     ///// editor in linked project acion-on-deliveryFile
     Route::post('/action-deliveryFile', 'vendor\viewAllProjectsController@deliveryFile_action')->middleware('auth')
     ->where([])->name('acion-on-deliveryFile');
+    /********************* INVOICE  ****************************/
+    Route::get('create-workOrder-invoice/{stageId}', 'vendor\invoice\invoiceController@generateProjectInvoice')->middleware('auth')
+    ->where('stageId', '[0-9]+')->name('get-workInvoice');
 
+    Route::post('add-workOrder-invoice', 'vendor\invoice\invoiceController@addProjectInvoice')->middleware('auth')
+    ->name('add-workInvoice'); 
+    Route::get('view-allInvoices', 'vendor\invoice\invoiceController@viewAllInvoices')->middleware('auth')
+    ->where('invoiceId', '[0-9]+')->name('view-vendorInvoice');
+    Route::get('view-Invoice/{invoiceId}', 'vendor\invoice\invoiceController@viewInvoice')->middleware('auth')
+    ->where('invoiceId', '[0-9]+')->name('view-vendorInvoice');
  });
 
  Auth::routes();
