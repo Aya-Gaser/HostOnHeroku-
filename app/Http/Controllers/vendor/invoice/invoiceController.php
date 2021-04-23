@@ -8,6 +8,7 @@ use App\projectStage;
 use App\vendorInvoice;
 use App\vendorWorkInvoiceItem;
 use Auth;
+use App\vendorNonWorkInvoiceItem;
 //  'stageId' => 'required|unique:project_stages,id',
 class invoiceController extends Controller
 {
@@ -52,7 +53,7 @@ class invoiceController extends Controller
         $workInvoiceItem->total = $request->input('total');
         $workInvoiceItem->save();
 
-        $stage = projectStage::find($request->input('stageId'));
+        $stage = projectStage::findOrFail($request->input('stageId'));
         $stage->status = 'invoiced';
         $stage->save();
 
@@ -62,7 +63,7 @@ class invoiceController extends Controller
 
     public function checkOpenInvoice($vendor_id){
         $openInvoice = vendorInvoice::where('vendor_id', $vendor_id)
-                                    ->where('status', 'open')->first();
+                                    ->where('status', 'Open')->first();
         if($openInvoice)
             return $openInvoice;
         return null;                                
@@ -75,7 +76,37 @@ class invoiceController extends Controller
 
         return $invoice->id;
     }
+    public function createNonWorkInvoice(){
+        return view('vendor.invoice.createNonWorkInvoice');
+    }
 
+    public function addNonWorkInvoice(Request $request){
+        $request->validate([
+            'invoice_item' => 'required',
+            'amount'=>'required|numeric',
+            'note'=>'required|string',
+            
+          ]);
+        $invioce_id = 0;  
+        $openInvoice = $this->checkOpenInvoice(Auth::user()->id); 
+        if($openInvoice){
+            $invioce_id = $openInvoice->id;
+            $openInvoice->total =  $openInvoice->total + $request->input('amount');
+            $openInvoice->save();
+        }
+        else{
+            $invioce_id = $this->createVendorInvoice(Auth::user()->id, $request->input('amount'));
+        }
+        $nonworkInvoiceItem = new vendorNonWorkInvoiceItem();
+        $nonworkInvoiceItem->invoiceId = $invioce_id;
+        $nonworkInvoiceItem->invoice_item = $request->input('invoice_item');
+        $nonworkInvoiceItem->amount = $request->input('amount');
+        $nonworkInvoiceItem->note = $request->input('note');
+        $nonworkInvoiceItem->save();
+
+        return response()->json([ 'success'=> 'Form is successfully submitted!']);
+
+    }
     public function viewAllInvoices(){
         $invoices = vendorInvoice::where('vendor_id', Auth::user()->id)->get();
 
@@ -83,8 +114,20 @@ class invoiceController extends Controller
     }
 
     public function viewInvoice($invioce_id){
-        $invoice = vendorInvoice::find($invioce_id);
+        $invoice = vendorInvoice::findOrFail($invioce_id);
 
         return view('vendor.invoice.viewInvoice')->with(['invoice'=>$invoice]);
+    }
+
+    public function submitInvoice(Request $request){
+        $request->validate([
+            'invoiceId' => 'required',
+          ]);
+        $invoice = vendorInvoice::findOrFail($request->input('invoiceId'));  
+        $invoice->status = 'Pending';
+        $invoice->save();
+        
+        return response()->json([ 'success'=> 'Form is successfully submitted!']);
+
     }
 }

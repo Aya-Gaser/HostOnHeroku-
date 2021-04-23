@@ -165,8 +165,20 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
 
     Route::post('/delete-client/{client}', 'projects\clientController@destroy')->middleware('auth')
     ->where(['client'=>'[0-9]+'])->name('delete-client');
+   ////////////////// INVOICES /////////////////
+   Route::get('/view-allInvoices/{filtr}', 'invoice\invoiceController@viewAllInvoices')->middleware('auth')
+   ->where(['filter'=>'[a-z]+'])->name('view-allInvoices'); 
+   Route::get('/view-Invoice/{id}', 'invoice\invoiceController@viewInvoice')->middleware('auth')
+   ->where(['id'=>'[0-9]+'])->name('view-invoice'); 
+   Route::post('/invoice-action', 'invoice\invoiceController@actionOnInvoice')->middleware('auth')
+   ->name('invoice-action');
 
-
+   Route::get('/view-allReadyToPayInvoices/{f}', 'invoice\invoiceController@viewAllReadyToPayInvoices')->middleware('auth')
+   ->where(['fltr'=>'[a-z]+'])->name('view-allReadyToPayInvoices'); 
+   Route::get('/view-paymentInvoice/{id}', 'invoice\invoiceController@viewPaymentInvoice')->middleware('auth')
+   ->where(['id'=>'[0-9]+'])->name('view-paymentInvoice'); 
+   Route::post('/invoice-payment', 'invoice\invoiceController@payInvoice')->middleware('auth')
+   ->name('invoice-payment');
  
  });
 
@@ -219,13 +231,22 @@ Route::group(['middleware' => 'role:vendor', 'prefix' => 'vendor-panel',
     /********************* INVOICE  ****************************/
     Route::get('create-workOrder-invoice/{stageId}', 'vendor\invoice\invoiceController@generateProjectInvoice')->middleware('auth')
     ->where('stageId', '[0-9]+')->name('get-workInvoice');
-
     Route::post('add-workOrder-invoice', 'vendor\invoice\invoiceController@addProjectInvoice')->middleware('auth')
     ->name('add-workInvoice'); 
+
+    Route::get('create-nonWork-invoice', 'vendor\invoice\invoiceController@createNonWorkInvoice')->middleware('auth')
+    ->name('get-nonWorkInvoice');
+    Route::post('add-nonWork-invoice', 'vendor\invoice\invoiceController@addNonWorkInvoice')->middleware('auth')
+    ->name('add-nonWorkInvoice'); 
+    
     Route::get('view-allInvoices', 'vendor\invoice\invoiceController@viewAllInvoices')->middleware('auth')
-    ->where('invoiceId', '[0-9]+')->name('view-vendorInvoice');
+    ->name('view-vendorAllInvoices');
+    
     Route::get('view-Invoice/{invoiceId}', 'vendor\invoice\invoiceController@viewInvoice')->middleware('auth')
     ->where('invoiceId', '[0-9]+')->name('view-vendorInvoice');
+
+    Route::post('submit-invoice', 'vendor\invoice\invoiceController@submitInvoice')->middleware('auth')
+    ->name('submit-invoice'); 
  });
 
  Auth::routes();

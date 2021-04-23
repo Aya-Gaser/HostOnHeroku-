@@ -47,7 +47,7 @@ class finalizationController extends Controller
 
     public function validateFilter($filter){
         $filters = ['proofed', 'finalized', 'all'];
-        return in_array($filter, $filters);
+        return in_array($filter, $filters); 
      }
     
     public function taskFinalization($taskId){

@@ -84,7 +84,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="addInvoice-form" action="{{route('management.update-stage',$stage->id)}}" method="post" enctype="multipart/form-data">
+              <form id="addInvoice-form" action="" method="post" enctype="multipart/form-data">
               @csrf
                 <div class="card-body">
                

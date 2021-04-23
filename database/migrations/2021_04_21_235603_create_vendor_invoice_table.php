@@ -18,7 +18,7 @@ class CreateVendorInvoiceTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('vendor_id');
             $table->float('total');
-            $table->string('status')->default('open');
+            $table->string('status')->default('Open');
             $table->timestamps();
         });
     }

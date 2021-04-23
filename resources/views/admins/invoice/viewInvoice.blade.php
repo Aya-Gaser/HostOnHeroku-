@@ -1,4 +1,4 @@
-@extends('vendor.layouts.app')
+@extends('admins.layouts.app')
 @section('style')
 <style>
 
@@ -22,7 +22,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{route('vendor.dashboard')}}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{route('management.dashboard')}}">Home</a></li>
               <li class="breadcrumb-item active">View Invoice</li>
             </ol>
           </div>
@@ -46,7 +46,7 @@
               <!-- /.card-header -->
               <div class="card-body ">
               <div class="row">
-              <p class="data col-md-4"> <Span class="head"> Name: </Span>  {{App\User::find($invoice['vendor_id'])->name }} </p>
+              <p class="data col-md-4"> <Span class="head"> Vendor Name: </Span>  {{App\User::find($invoice['vendor_id'])->name }} </p>
                         
               <p class="col-md-4 data"> <Span class="head"> Total:</Span> {{$invoice->total}} </p>
               <p class="col-md-4 data"> <Span class="head"> Status:</Span> {{$invoice->status}} </p>
@@ -111,12 +111,7 @@
                             <td>
                             {{$invoiceItem->total}}                        
                             </td>
-                            @if($invoice->status == 'Open')
-                            <td> 
-                            <button type="button" class="btn btn-warning">Edit </button>
-                            <button type="button" class="btn btn-danger">Delete </button>
-                             </td>
-                            @endif 
+                            
                             @endforeach
                         </tr>
                 
@@ -174,12 +169,7 @@
                             <td>
                             {{$invoiceItem->note}}                        
                             </td>
-                            @if($invoice->status == 'Open')
-                            <td> 
-                            <button type="button" class="btn btn-warning">Edit </button>
-                            <button type="button" class="btn btn-danger">Delete </button>
-                             </td>
-                            @endif 
+                            
                         
                             @endforeach
                         </tr>
@@ -190,10 +180,10 @@
         <!-- /.card-body -->
         </div>
          @endif
-           @if($invoice->status == 'Open')
+           @if($invoice->status == 'Pending')
                 <div class="card-footer" id="generatedInvoice_btns" style="text-align:right;">
-                    <button id="deleteInvoice" class="btn btn-danger">Delete</button>
-                    <button id="submitInvoice" type="ok" class="btn btn-success ">Submit</button>                   
+                    <button id="rejectInvoice" class="btn btn-danger invoiceAction">Reject</button>
+                    <button id="approveInvoice" type="ok" class="btn btn-success invoiceAction">Approve</button>                   
                     
                </div>
             @endif   
@@ -206,6 +196,7 @@
               @csrf
 
               <input type="hidden" id="invoiceId" name="invoiceId" value="{{$invoice->id}}">
+              <input type="hidden" id="action" name="action" >
 
               </form>
 
@@ -233,33 +224,18 @@
 
 <script>
 $(function () {
-    $('#editInvoice').click(function(){
-        $('#edit_div_invoice').fadeIn();
-        $('#generatedInvoice_btns').fadeOut();
-        
-        document.getElementById('edit_div_invoice').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
-    });
-    $('#rate').keyup(function () {
-                var unit_count = $('#words_count').val();
-                var rate = $('#rate').val();
-                var total = unit_count * rate;
-                $('#total').val(total);
-            });
-
-
-    $('#words_count').keyup(function () {
-        var unit_count = $('#words_count').val();
-        var rate = $('#rate').val();
-        var total = unit_count * rate;
-        $('#total').val(total);
-    });
-
-    $('#submitInvoice').click(function(){ 
+ $('#approveInvoice').click(function(){ 
+    $('#action').val(1)
+ });   
+ $('#rejectInvoice').click(function(){ 
+    $('#action').val(0)
+ });
+    $('.invoiceAction').click(function(){ 
        
         let formData = new FormData(document.getElementById('invoice-form'));
         $.ajax({
                 data: formData,
-                url: "{{route('vendor.submit-invoice') }}",
+                url: "{{route('management.invoice-action') }}",
                 type: 'POST',
                 contentType: false,
                 processData: false,
