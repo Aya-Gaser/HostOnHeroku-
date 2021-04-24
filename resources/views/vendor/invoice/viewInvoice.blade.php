@@ -2,9 +2,6 @@
 @section('style')
 <style>
 
-#edit_div_invoice{
-  display : none;
-}
 
 </style>
 

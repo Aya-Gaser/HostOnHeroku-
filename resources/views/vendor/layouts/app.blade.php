@@ -185,10 +185,43 @@ tr{
                   <p>All Projects</p>
                 </a>
               </li>
+              </ul>
+          </li>
+          </li>
+              <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+               My Invoices
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+            <li class="nav-item">
+                <a href="{{route('vendor.view-readyWorkOrder-invoices') }}" 
+                class="nav-link {{ isActive('vendor.view-readyWorkOrder-invoices')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ready Work Order Invoices</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('vendor.create-nonWorkInvoice') }}" 
+                class="nav-link {{ isActive('vendor.create-nonWorkInvoice')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Non Work Order Invoices</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('vendor.view-vendorAllInvoices', 'Pending') }}" 
+                class="nav-link {{ isActive('vendor.view-vendorAllInvoices')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View All Invoices</p>
+                </a>
+              </li>
               
-            </ul>
-          </li>
-          </li>
+
+           
           <br>
           <hr style="background-color:#ccc;">
           <li class="nav-item">

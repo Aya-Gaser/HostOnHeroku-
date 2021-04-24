@@ -206,8 +206,8 @@ class viewProjectController extends Controller
         $stage = projectStage::findOrFail($stageId); 
         $vendor = User::find($stage->vendor_id);
         if($complete){
-            if($request->input('wordsCount'))
-                $stage->vendor_wordsCount = $request->input('wordsCount');
+            if($request->input('unitCount'))
+                $stage->vendor_unitCount = $request->input('unitCount');
             Mail::to($vendor->email)->send(new CompleteStageVendor($stage->wo_id, $stage->id));
     
         }      
@@ -306,11 +306,11 @@ class viewProjectController extends Controller
                 $isUser = true;
             }   
             $updates = [];
-            if(request()['words_count_'.$stage->id] ){ 
-                if($stage->vendor_wordsCount != request()['words_count_'.$stage->id]){
-                    $old_wordCount = ($stage->vendor_wordsCount)? $stage->vendor_wordsCount : 'Target';
-                    $updates['Word Count'] = [$old_wordCount, request()['words_count_'.$stage->id]];
-                    $stage->vendor_wordsCount = request()['words_count_'.$stage->id];
+            if(request()['unit_count_'.$stage->id] ){ 
+                if($stage->vendor_unitCount != request()['unit_count_'.$stage->id]){
+                    $old_wordCount = ($stage->vendor_unitCount)? $stage->vendor_unitCount : 'Target';
+                    $updates['Word Count'] = [$old_wordCount, request()['unit_count_'.$stage->id]];
+                    $stage->vendor_unitCount = request()['unit_count_'.$stage->id];
                 }
             }  
             if(request()['maxQuality_points_'.$stage->id]){ 

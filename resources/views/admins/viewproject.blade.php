@@ -453,7 +453,7 @@ td{
                 {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
                @if($project->type != 'Dtp')
                 <p class="data col-md-4"> <Span class="head">  Word Count: </Span>
-                  @if($stage->vendor_wordsCount)  {{$stage->vendor_wordsCount}}
+                  @if($stage->vendor_unitCount)  {{$stage->vendor_unitCount}}
                   @else   <span class="text-danger"> Target </span> 
                   @endif    
                 </p>
@@ -518,10 +518,10 @@ td{
                 @if($project->type != 'Dtp')
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <label class="form-control-label" for="words_count">Word Count<span
+                    <label class="form-control-label" for="unit_count">Unit Count<span
                         class="required">*</span></label>
-                    <input type="number" min="0" step="1" class="form-control" name="words_count_{{$stage->id}}"
-                     value="{{$stage->vendor_wordsCount}}" id="words_count" placeholder="Enter 0 if Target " required>
+                    <input type="number" min="0" step="1" class="form-control" name="unit_count_{{$stage->id}}"
+                     value="{{$stage->vendor_unitCount}}" id="unit_count" placeholder="Enter 0 if Target " required>
 
                   </div>
                   <div class="form-group col-md-6">
@@ -659,7 +659,7 @@ td{
      <div class="modal-dialog center">
        <div class="modal-content">
          <div class="modal-header">
-           <h4 class="modal-title">Final Word Count</h4>
+           <h4 class="modal-title">Final Unit Count</h4>
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
@@ -667,7 +667,7 @@ td{
          <div class="modal-body">
          <form id="completeStage-form" enctype="multipart/form-data">
                @csrf
-           <input id="wordsCount" name="wordsCount" type="number" class="form-control"> 
+           <input id="unitCount" name="unitCount" type="number" class="form-control"> 
         
           <input type="hidden" value="" name="stageId" id="stageId">
           <input type="hidden" id="complete" name="complete">
@@ -919,7 +919,7 @@ $('.completeStage').click(function(){
   //console.log($stageId);
   $.ajax({
         data: { stageId : $stageId},
-        url: "{{ route('management.helper_getStage_WordCount') }}",
+        url: "{{ route('management.helper_getStage_info') }}",
         type: 'POST',
         dataType: 'json',
         //contentType: false,
@@ -927,7 +927,7 @@ $('.completeStage').click(function(){
            success: (response) => {
              if(response){
               response = JSON.parse(response.success);
-              $('#wordsCount').val(response['wordsCount']);
+              $('#unitCount').val(response['unitCount']);
               //console.log(response['wordsCount']);
              }
              
@@ -969,7 +969,7 @@ $('.reopen').click(function(){
 $('.completeStageDTP').click(function(){ 
   $stageId = $(this).attr('id');
   $('#stageId').val($stageId);
-  $('#wordsCount').val(0);
+  $('#unitCount').val(0);
   let formData = new FormData(document.getElementById('completeStage-form'));
   $.ajax({
         data: formData,

@@ -393,11 +393,11 @@ $('#addTask').click(function(){
                 <select class="form-control" name="vendor_rateUnit`+$task+`" id="vendor_rateUnit`+$task+`"
                   data-placeholder="select vendor Rate Unit" required>
                   <option disabled >Select</option>
-                  <option value="words_count" >Words Count  </option>
-                  <option value="hour" >Hour  </option>
-                  <option value="flat" >Flat  </option>
-                  <option value="page" >Page  </option>
-                  <option value="image" >Image  </option>
+                  <option value="Word count" >Word Count  </option>
+                  <option value="Hour" >Hour  </option>
+                  <option value="Flat" >Flat  </option>
+                  <option value="Page" >Page  </option>
+                  <option value="Image" >Image  </option>
                 </select>
             </div>
             <div class="form-group col-md-2 col-sm-10">

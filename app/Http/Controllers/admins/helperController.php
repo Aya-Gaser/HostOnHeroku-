@@ -23,7 +23,7 @@ class helperController extends Controller
        $data = json_encode(array('qp'=>$stage->vendor_qualityPoints, 'maxQp'=>$stage->vendor_maxQualityPoints));
        return response()->json(['success'=> $data]);      
     }
-    public function getStage_wordsCount( Request $request){
+    public function getStage_info( Request $request){
         $request->validate([
        
             'stageId' => 'required'
@@ -31,7 +31,7 @@ class helperController extends Controller
        
        $stage = projectStage::find($request->input('stageId'));
       
-       $data = json_encode(array('wordsCount'=>$stage->vendor_wordsCount));
+       $data = json_encode(array('unitCount'=>$stage->vendor_unitCount));
        return response()->json(['success'=> $data]);      
     }
 }

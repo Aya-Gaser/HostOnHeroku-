@@ -169,10 +169,10 @@
            
             <div class="row">
             <div class="form-group col-md-6">
-                  <label class="form-control-label" for="words_count">Words Count<span
+                  <label class="form-control-label" for="unit_count">Unit Count<span
                       class="required">*</span></label>
-                  <input type="number" min="0" step="1" class="form-control" name="words_count"
-                  id="words_count" placeholder="Enter 0 if Target " required>
+                  <input type="number" min="0" step="1" class="form-control" name="unit_count"
+                  id="unit_count" placeholder="Enter 0 if Target " required>
 
                     </div>
             <div class="form-group col-md-6">
@@ -291,10 +291,10 @@
                 </div>
                 <div class="row">
             <div class="form-group col-md-6">
-                  <label class="form-control-label" for="words_count">Word Count<span
+                  <label class="form-control-label" for="unit_count">Unit Count<span
                       class="required">*</span></label>
-                  <input type="number" min="0" step="1" class="form-control" name="words_count_edit"
-                  id="words_count" placeholder="Enter 0 if Target " required>
+                  <input type="number" min="0" step="1" class="form-control" name="unit_count_edit"
+                  id="unit_count" placeholder="Enter 0 if Target " required>
 
                     </div>
             <div class="form-group col-md-6">

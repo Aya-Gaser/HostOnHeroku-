@@ -2,7 +2,7 @@
 @php
 
 $acceptanceDeadline = ($group == 'GROUP_1') ?  $stage->G1_acceptance_deadline:  $stage->G2_acceptance_deadline;
-$words_count =  ($stage->vendor_wordsCount)?  $stage->vendor_wordsCount : "Target";
+$unit_count =  ($stage->vendor_unitCount)?  $stage->vendor_unitCount : "Target";
 $quality_points =  ($stage->vendor_maxQualityPoints)?  $stage->vendor_maxQualityPoints : "Target";
 
 @endphp
@@ -16,7 +16,7 @@ Hello,
 | Task Type                 | {{$stage->type}}                                                      |
 | Language                  | {{$stage->project->WO->from_language .'▸'.$stage->project->WO->to_language}}                          |
 @if($stage->type != 'Dtp')
-| Word Count                | {{$words_count}}                                                  |
+| Word Count                | {{$unit_count}}                                                  |
 | MAX Quality Points        | {{$quality_points}}                                                   |
 @endif
 | Rate Unit                 | {{$stage['vendor_rateUnit']}}                                                          |

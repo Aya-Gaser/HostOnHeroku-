@@ -28,8 +28,8 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     /* HELPERS */ 
     Route::post('/helper_getStageQP', 'admins\helperController@getStage_qualityPoints')->middleware('auth')
     ->name('helper_getStageQP'); 
-    Route::post('/helper_getStageWC', 'admins\helperController@getStage_wordsCount')->middleware('auth')
-    ->name('helper_getStage_WordCount');
+    Route::post('/helper_getStageInfo', 'admins\helperController@getStage_info')->middleware('auth')
+    ->name('helper_getStage_info');
     Route::get('/first-login', 'admins\dashboardController@first')->middleware('auth')
     ->name('first-login');
     Route::post('/first-login', 'admins\dashboardController@completeData')->middleware('auth')
@@ -229,17 +229,19 @@ Route::group(['middleware' => 'role:vendor', 'prefix' => 'vendor-panel',
     Route::post('/action-deliveryFile', 'vendor\viewAllProjectsController@deliveryFile_action')->middleware('auth')
     ->where([])->name('acion-on-deliveryFile');
     /********************* INVOICE  ****************************/
+    Route::get('ready-workOrder-invoices', 'vendor\invoice\invoiceController@viewReady_workOrderInvoices')->middleware('auth')
+    ->name('view-readyWorkOrder-invoices');
     Route::get('create-workOrder-invoice/{stageId}', 'vendor\invoice\invoiceController@generateProjectInvoice')->middleware('auth')
-    ->where('stageId', '[0-9]+')->name('get-workInvoice');
+    ->where('stageId', '[0-9]+')->name('create-workInvoice');
     Route::post('add-workOrder-invoice', 'vendor\invoice\invoiceController@addProjectInvoice')->middleware('auth')
     ->name('add-workInvoice'); 
 
     Route::get('create-nonWork-invoice', 'vendor\invoice\invoiceController@createNonWorkInvoice')->middleware('auth')
-    ->name('get-nonWorkInvoice');
+    ->name('create-nonWorkInvoice');
     Route::post('add-nonWork-invoice', 'vendor\invoice\invoiceController@addNonWorkInvoice')->middleware('auth')
     ->name('add-nonWorkInvoice'); 
     
-    Route::get('view-allInvoices', 'vendor\invoice\invoiceController@viewAllInvoices')->middleware('auth')
+    Route::get('view-allInvoices/{f}', 'vendor\invoice\invoiceController@viewAllInvoices')->middleware('auth')
     ->name('view-vendorAllInvoices');
     
     Route::get('view-Invoice/{invoiceId}', 'vendor\invoice\invoiceController@viewInvoice')->middleware('auth')

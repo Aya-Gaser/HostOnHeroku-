@@ -17,6 +17,11 @@ class invoiceController extends Controller
          $this->middleware('auth');
      }  
 
+    public function viewReady_workOrderInvoices(){
+        $stages = projectStage::where('vendor_id', Auth::user()->id)
+                              ->where('status', 'Completed')->get();
+        return view('vendor.invoice.viewReady_workOrderInvoices')->with(['stages'=>$stages]);                        
+    } 
     public function generateProjectInvoice($stageId){
         $stage = projectStage::findOrFail($stageId);
         if($stage->status != 'Completed')
@@ -107,11 +112,19 @@ class invoiceController extends Controller
         return response()->json([ 'success'=> 'Form is successfully submitted!']);
 
     }
-    public function viewAllInvoices(){
-        $invoices = vendorInvoice::where('vendor_id', Auth::user()->id)->get();
-
+    public function viewAllInvoices($filter){
+        if(!$this->validateFilter($filter)) abort(404);
+        if($filter == 'All')
+            $invoices = vendorInvoice::where('vendor_id', Auth::user()->id)->get();
+        else
+            $invoices = vendorInvoice::where('vendor_id', Auth::user()->id)
+                                     ->where('status', $filter)->get();
         return view('vendor.invoice.viewAllInvoices')->with(['invoices'=>$invoices]);
     }
+    public function validateFilter($filter){
+        $filters = ['Open', 'Pending', 'Approved', 'Rejected', 'Paid', 'All'];
+        return in_array($filter, $filters); 
+     }
 
     public function viewInvoice($invioce_id){
         $invoice = vendorInvoice::findOrFail($invioce_id);

@@ -247,6 +247,34 @@ tr{
               
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                 Vendor Invoices
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+             
+              <li class="nav-item"> 
+                <a href="{{route('management.view-allInvoices', 'Pending') }}" 
+                class="nav-link {{ isActive('management.view-allInvoices')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Invoices Validation </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('management.view-allReadyToPayInvoices', 'Approved') }}" 
+                class="nav-link {{ isActive('management.view-allReadyToPayInvoices')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Invoices Payment </p>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
          
           <li class="nav-item">
             <a href="#" class="nav-link">

@@ -7,7 +7,11 @@ use App\Http\Controllers\Controller;
 use App\vendorInvoice;
 use App\vendorWorkInvoiceItem;
 use Auth;
-
+use App\Mail\invoice\invoiceAction;
+use App\Mail\invoice\invoicePyment;
+use App\projectStage;
+use App\User;
+use Illuminate\Support\Facades\Mail;
 class invoiceController extends Controller
 {
     public function __construct()
@@ -44,7 +48,10 @@ class invoiceController extends Controller
         $invoice = vendorInvoice::findOrFail($request->input('invoiceId'));  
         ($request->input('action'))? $invoice->status = 'Approved': $invoice->status = 'Rejected'; 
         $invoice->save();
-        //mail to vendor
+
+        $vendor = User::find($invoice->vendor_id);
+        Mail::to($vendor->email)->send(new invoiceAction($invoice->id, $invoice->status));
+
         return response()->json([ 'success'=> 'Form is successfully submitted!']);
 
 
@@ -71,7 +78,11 @@ class invoiceController extends Controller
         $invoice = vendorInvoice::findOrFail($request->input('invoiceId'));  
         $invoice->status = 'Paid'; 
         $invoice->save();
-        //mail to vendor
+
+        $vendor = User::find($invoice->vendor_id);
+        Mail::to($vendor->email)->send(new invoicePyment($invoice->id));
+
+       
         return response()->json([ 'success'=> 'Form is successfully submitted!']);
 
 

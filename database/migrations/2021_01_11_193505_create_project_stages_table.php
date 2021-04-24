@@ -28,7 +28,7 @@ class CreateProjectStagesTable extends Migration
            // $table->float('vendor_rate');
             $table->string('vendor_rateUnit');
             $table->float('vendor_rate');
-            $table->integer('vendor_wordsCount')->default(0);
+            $table->integer('vendor_unitCount')->default(0);
             $table->integer('vendor_qualityPoints')->default(0);
             $table->integer('vendor_maxQualityPoints')->default(0);
             $table->integer('required_docs');

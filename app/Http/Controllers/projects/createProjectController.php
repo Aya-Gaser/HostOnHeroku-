@@ -169,7 +169,7 @@ class createProjectController extends Controller
         $deadline_inputName = ($isLinkedEditing)? 'delivery_deadline_edit' : 'delivery_deadline';
         $vendorRate_inputName = ($isLinkedEditing)? 'vendor_rate_edit' : 'vendor_rate';
         $acceptance_deadline = ($isLinkedEditing)? 'acceptance_deadline_edit' : 'acceptance_deadline';
-        $words_count_inputName = ($isLinkedEditing)? 'words_count_edit' : 'words_count';
+        $unit_count_inputName = ($isLinkedEditing)? 'unit_count_edit' : 'unit_count';
         $maxQuality_points_inputName = ($isLinkedEditing)? 'maxQuality_points_edit' : 'maxQuality_points';
         $vendorRate_unit_inputName = ($isLinkedEditing)? 'rate_unit_edit' : 'rate_unit';
         $instruction_inputName = ($isLinkedEditing)? 'instructions_edit' : 'instructions';
@@ -179,7 +179,7 @@ class createProjectController extends Controller
         $stage->required_docs = request()[$required_docs_inputName];
         if(request()[$instruction_inputName])
           $stage->instructions = request()[$instruction_inputName];
-        $stage->vendor_wordsCount = request()[$words_count_inputName];
+        $stage->vendor_unitCount = request()[$unit_count_inputName];
         $stage->vendor_maxQualityPoints = request()[$maxQuality_points_inputName];
         $stage->vendor_rateUnit = request()[$vendorRate_unit_inputName];
         $stage->vendor_rate = request()[$vendorRate_inputName];

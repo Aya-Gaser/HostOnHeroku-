@@ -69,7 +69,7 @@ td{
     
             @if($stage->type != 'Dtp')
               <p class="data col-md-6"> <Span class="head">  Word Count: </Span>
-              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}} @else 
+              @if($stage->vendor_unitCount) {{$stage->vendor_unitCount}} @else 
               <span class="pending">  Target </span> @endif</p>
               <p class="data col-md-6"> <Span class="head"> MAX Quality Points: </Span>
               @if($stage->vendor_maxQualityPoints) {{$stage->vendor_maxQualityPoints}} 
