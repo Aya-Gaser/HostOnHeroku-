@@ -131,8 +131,7 @@ $(function () {
                 processData: false,
                 success: (response) => {
                     if(response){
-                      response = JSON.parse(response.success);
-                      window.location.href = "{{route('vendor.view-vendorInvoice',"+ $response['invoiceId']+ " )}}"
+                    
                     swal("Done! Added Successfuly", {
                     icon: "success"
                     }).then((ok) =>{

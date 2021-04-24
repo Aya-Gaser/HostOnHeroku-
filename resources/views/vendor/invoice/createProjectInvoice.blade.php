@@ -200,7 +200,7 @@ $(function () {
     });
 
     $('.submitInvoice').click(function(){ 
-       
+       url = "{{route('vendor.view-vendorInvoice', 'id' )}}"
         let formData = new FormData(document.getElementById('addInvoice-form'));
         $.ajax({
                 data: formData,
@@ -211,7 +211,7 @@ $(function () {
                 success: (response) => {
                     if(response){
                       response = JSON.parse(response.success);
-                      window.location.href = "{{route('vendor.view-vendorInvoice',"+ $response['invoiceId']+ " )}}" 
+                      //window.location.href =  
                     swal("Done! Added Successfuly", {
                     icon: "success"
                     }).then((ok) =>{
