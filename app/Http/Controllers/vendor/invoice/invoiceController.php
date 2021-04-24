@@ -62,8 +62,8 @@ class invoiceController extends Controller
         $stage->status = 'invoiced';
         $stage->save();
 
-        return response()->json([ 'success'=> 'Form is successfully submitted!']);
-
+        $data = json_encode(array('invoiceId'=>$invioce_id));
+        return response()->json([ 'success'=> $data]);
     }
 
     public function checkOpenInvoice($vendor_id){
@@ -108,8 +108,9 @@ class invoiceController extends Controller
         $nonworkInvoiceItem->amount = $request->input('amount');
         $nonworkInvoiceItem->note = $request->input('note');
         $nonworkInvoiceItem->save();
-
-        return response()->json([ 'success'=> 'Form is successfully submitted!']);
+        
+        $data = json_encode(array('invoiceId'=>$invioce_id));
+        return response()->json([ 'success'=> $data]);
 
     }
     public function viewAllInvoices($filter){
