@@ -43,10 +43,13 @@ class invoiceController extends Controller
     public function actionOnInvoice(Request $request){
         $request->validate([
             'invoiceId' => 'required',
-            'action'=>'required|in:0,1'
+            'action'=>'required|in:0,1',
+            //'notes'=>'string'
           ]);
         $invoice = vendorInvoice::findOrFail($request->input('invoiceId'));  
         ($request->input('action'))? $invoice->status = 'Approved': $invoice->status = 'Rejected'; 
+        if($request->input('notes'))
+            $invoice->note = $request->input('notes');
         $invoice->save();
 
         $vendor = User::find($invoice->vendor_id);

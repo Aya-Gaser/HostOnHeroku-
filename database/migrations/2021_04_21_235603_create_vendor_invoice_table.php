@@ -19,6 +19,7 @@ class CreateVendorInvoiceTable extends Migration
             $table->unsignedBigInteger('vendor_id');
             $table->float('total');
             $table->string('status')->default('Open');
+            $table->string('note')->default('none');
             $table->timestamps();
         });
     }

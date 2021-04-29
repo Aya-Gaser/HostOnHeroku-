@@ -47,7 +47,10 @@
                         
               <p class="col-md-4 data"> <Span class="head"> Total:</Span> {{$invoice->total}} </p>
               <p class="col-md-4 data"> <Span class="head"> Status:</Span> {{$invoice->status}} </p>
-
+              @if($invoice->status != 'Pending' && $invoice->status != 'Open')
+                 <p class="col-md-4 data"> <Span class="head"> Notes:</Span> {{$invoice->note}} </p>
+                @endif
+               
             </div>  
             @if(count($invoice->vendorWorkInvoiceItem))
              <!-- ************* WORK ORDER INVOICE ITEMS *************** -->

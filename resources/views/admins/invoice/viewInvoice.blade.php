@@ -50,7 +50,9 @@
                         
               <p class="col-md-4 data"> <Span class="head"> Total:</Span> {{$invoice->total}} </p>
               <p class="col-md-4 data"> <Span class="head"> Status:</Span> {{$invoice->status}} </p>
-
+              @if($invoice->status != 'Pending' && $invoice->status != 'Open')
+                 <p class="col-md-4 data"> <Span class="head"> Notes:</Span> {{$invoice->note}} </p>
+                @endif
             </div>  
             @if(count($invoice->vendorWorkInvoiceItem))
              <!-- ************* WORK ORDER INVOICE ITEMS *************** -->
@@ -103,13 +105,20 @@
                             {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}}
                             </td>
                             <td>
-                            {{$invoiceItem->rate_unit}}
+                            {{$invoiceItem->rate_unit}} <br>
+                            System : {{App\projectStage::find($invoiceItem->stageId)->vendor_rateUnit}}
+                            </td>
+                            <td> 
+                            {{$invoiceItem->rate}} <br>
+                            System : {{App\projectStage::find($invoiceItem->stageId)->vendor_rate}}                       
+                            </td>
+                            <td> 
+                            {{$invoiceItem->unit_count}} <br>
+                            System : {{App\projectStage::find($invoiceItem->stageId)->vendor_unitCount}}                       
                             </td>
                             <td>
-                            {{$invoiceItem->rate}}                        
-                            </td>
-                            <td>
-                            {{$invoiceItem->total}}                        
+                            {{$invoiceItem->total}} <br>
+                            System : {{App\projectStage::find($invoiceItem->stageId)->vendor_unitCount * App\projectStage::find($invoiceItem->stageId)->vendor_rate}}                       
                             </td>
                             
                             @endforeach
@@ -182,9 +191,12 @@
          @endif
            @if($invoice->status == 'Pending')
                 <div class="card-footer" id="generatedInvoice_btns" style="text-align:right;">
-                    <button id="rejectInvoice" class="btn btn-danger invoiceAction">Reject</button>
-                    <button id="approveInvoice" type="ok" class="btn btn-success invoiceAction">Approve</button>                   
-                    
+                    <button type="button" class="btn btn-danger action reject" data-toggle="modal" data-target="#modal-invoiceAction">
+                          Reject
+                    </button>
+                    <button type="button" class="btn btn-success action approve" data-toggle="modal" data-target="#modal-invoiceAction">
+                          Approve
+                    </button>
                </div>
             @endif   
                </div>
@@ -192,13 +204,39 @@
             </div> 
             
                <!-- **************** EDIT INVOICE **************************************** -->
-               <form id="invoice-form" action="" method="post" enctype="multipart/form-data">
-              @csrf
-
-              <input type="hidden" id="invoiceId" name="invoiceId" value="{{$invoice->id}}">
+             
+              <!-- /.modal -->
+<div class="modal fade in" id="modal-invoiceAction" style=" overflow-y:hidden; border:none; box-shadow:none; background-color:transparent;padding:auto;">
+     
+     <div class="modal-dialog center">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h4 class="modal-title">Are You Sure</h4>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+         <form id="invoice-form" enctype="multipart/form-data">
+               @csrf
+            <label> Note (optional) </label>    
+           <input name="notes" type="text" class="form-control" placeholder="None .."> 
+           <input type="hidden" id="invoiceId" name="invoiceId" value="{{$invoice->id}}">
               <input type="hidden" id="action" name="action" >
-
-              </form>
+         </div>
+         <div class="modal-footer justify-content-between">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-success"> save
+           </button> 
+           </form>
+         </div>
+       </div>
+       
+       <!-- /.modal-content -->
+     </div>
+     <!-- /.modal-dialog -->
+   </div>  
+<!-- ************************************************************ -->
 
             
               <!-- /.card-body -->
@@ -224,15 +262,16 @@
 
 <script>
 $(function () {
- $('#approveInvoice').click(function(){ 
+ $('.approve').click(function(){ 
     $('#action').val(1)
  });   
- $('#rejectInvoice').click(function(){ 
+ $('.reject').click(function(){ 
     $('#action').val(0)
  });
-    $('.invoiceAction').click(function(){ 
-       
-        let formData = new FormData(document.getElementById('invoice-form'));
+    $('#invoice-form').submit(function(e){ 
+      e.preventDefault();
+       $('#modal-invoiceAction').fadeOut();
+        let formData = new FormData(this);
         $.ajax({
                 data: formData,
                 url: "{{route('management.invoice-action') }}",
