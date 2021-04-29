@@ -53,13 +53,13 @@
                </p>
               
               <p class="data col-md-6"> <Span class="head">  Rate Unit: </Span>{{$stage->vendor_rateUnit}} </p>
-              <p class="data col-md-6"> <Span class="head">  Word Count: </Span>
-              @if($stage->vendor_wordsCount) {{$stage->vendor_wordsCount}}
+              <p class="data col-md-6"> <Span class="head">  Unit Count: </Span>
+              @if($stage->vendor_unitCount) {{$stage->vendor_unitCount}}
                @else <span class="pending">  Target </span> @endif</p>
               <p class="data col-md-6"> <Span class="head">  Rate: </Span>{{$stage->vendor_rate}} </p>
              
               <p class="col-md-6 data"> <Span class="head"> Total: 
-              </Span> {{$stage->vendor_wordsCount * $stage->vendor_rate}} </p>
+              </Span> {{$stage->vendor_unitCount * $stage->vendor_rate}} </p>
              
               
             </div>  
@@ -116,10 +116,10 @@
                 </div>
                 <div class="row">  
                   <div class="form-group col-md-6">
-                    <label class="form-control-label" for="words_count">Word Count<span
+                    <label class="form-control-label" for="unit_count">Unit Count<span
                         class="required">*</span></label>
-                    <input type="number" min="0" step="1" class="form-control" name="words_count"
-                     value="{{$stage->vendor_wordsCount}}" id="words_count" placeholder="Enter 0 if Target " required>
+                    <input type="number" min="0" step="1" class="form-control" name="unit_count"
+                     value="{{$stage->vendor_unitCount}}" id="unit_count" placeholder="Enter 0 if Target " required>
 
                   </div>
                   
@@ -134,7 +134,7 @@
               
                 <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Total <span class="required">*</span></label>
-                <input id="total" name="total" type="number" class="form-control" name="required_docs_{{$stage->id}}" value="{{$stage->vendor_wordsCount * $stage->vendor_rate}}" required readonly>
+                <input id="total" name="total" type="number" class="form-control" name="required_docs_{{$stage->id}}" value="{{$stage->vendor_unitCount * $stage->vendor_rate}}" required readonly>
               </div>
                 </div>
           
@@ -185,15 +185,15 @@ $(function () {
         document.getElementById('edit_div_invoice').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
     });
     $('#rate').keyup(function () {
-                var unit_count = $('#words_count').val();
+                var unit_count = $('#unit_count').val();
                 var rate = $('#rate').val();
                 var total = unit_count * rate;
                 $('#total').val(total);
             });
 
 
-    $('#words_count').keyup(function () {
-        var unit_count = $('#words_count').val();
+    $('#unit_count').keyup(function () {
+        var unit_count = $('#unit_count').val();
         var rate = $('#rate').val();
         var total = unit_count * rate;
         $('#total').val(total);
@@ -202,6 +202,7 @@ $(function () {
     $('.submitInvoice').click(function(){ 
        url = "{{route('vendor.view-vendorInvoice', 'id' )}}"
         let formData = new FormData(document.getElementById('addInvoice-form'));
+        var url = "{{ route('vendor.view-vendorInvoice','id' )}}";
         $.ajax({
                 data: formData,
                 url: "{{route('vendor.add-workInvoice') }}",
@@ -211,11 +212,12 @@ $(function () {
                 success: (response) => {
                     if(response){
                       response = JSON.parse(response.success);
-                      //window.location.href =  
+                      $invoiceId = response['invoiceId'];
+                      url = url.replace('id', $invoiceId);
                     swal("Done! Added Successfuly", {
                     icon: "success"
                     }).then((ok) =>{
-                    location.reload();
+                      window.location.href = url
                     }) 
                 }
                     

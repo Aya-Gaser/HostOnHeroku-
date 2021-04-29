@@ -243,7 +243,7 @@ $(function () {
                     if(response){
                     //this.reset();
                     //console.log(response) 
-                    swal("Done! Added Successfuly", {
+                    swal("Done Successfuly", {
                     icon: "success"
                     }).then((ok) =>{
                     location.reload();

@@ -219,7 +219,9 @@ tr{
                   <p>View All Invoices</p>
                 </a>
               </li>
-              
+              </ul>
+          </li>
+          </li>
 
            
           <br>

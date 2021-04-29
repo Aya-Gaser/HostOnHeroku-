@@ -1,14 +1,14 @@
 @php 
 $wo_id = str_pad($wo_id, 4, '0', STR_PAD_LEFT );
 if($action == 'improved')
-$info = "please find the marked file(s) attached"
+$info = "please find the marked file(s) attached";
 else if($action == 'accepted')
-$info = "they were accepted." 
+$info = "they were accepted." ;
 else 
-$info = "however, they were rejected. Please refer to the instructions and take any necessary action."   
+$info = "however, they were rejected. Please refer to the instructions and take any necessary action." ;  
 
 $body = "# Project ". $wo_id. " Delivery Update " .
-"Thank you for delivering the document(s), ". $info
+"Thank you for delivering the document(s), ". $info;
 @endphp
 
 

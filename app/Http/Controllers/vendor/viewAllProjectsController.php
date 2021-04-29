@@ -156,9 +156,10 @@ class viewAllProjectsController extends Controller
            // echo $interval->format('%Y years %m months %d days %H hours %i minutes');  
             $delivery->save();
 
-            //$stage->status = 'pending';
-           // $stage->lastDelivery_id = $delivery->id;
-            $stage->save();
+            if($stage->accepted_docs >= $stage->required_docs){
+                $stage->status = 'Delivered';
+                $stage->save();
+            }
 
             if($project->type =='linked' && $stage->type == 'translation'){
               //mail to editor

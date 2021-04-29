@@ -122,10 +122,10 @@ class viewProjectController extends Controller
           return null;                         
      }
 
-     public function store_EditedFile($project, $sourceFile){
-       
+     public function store_EditedFile($project_id, $sourceFile){
+       $project = projects::findOrFail($project_id);
        $editedFile = new editedFile();
-       $editedFile->project_id = $project->id;
+       $editedFile->project_id = $project_id;
        $editedFile->sourceFile_id = $sourceFile;
        $editedFile->created_by = Auth::user()->id;
         $this->send_toFinalization($sourceFile);
@@ -209,10 +209,14 @@ class viewProjectController extends Controller
             if($request->input('unitCount'))
                 $stage->vendor_unitCount = $request->input('unitCount');
             Mail::to($vendor->email)->send(new CompleteStageVendor($stage->wo_id, $stage->id));
-    
+            $stage->status = 'Completed';
         }      
-         
-        $stage->status = ($complete)? 'Completed' : 'Delivered'; //1 >> complete
+        else{
+            if($stage->accepted_docs >= $stage->required_docs)
+                $stage->status = 'Delivered';
+            else 
+                $stage->status = 'Undelivred';   
+        } 
         
         $stage->save();
 

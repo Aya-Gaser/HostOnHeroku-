@@ -66,7 +66,7 @@
                     <thead>
                         <tr>                            
                             <th style="width: " >
-                                WO ID
+                                Project ID
                             </th>
                             <th style="width: ">
                             Task

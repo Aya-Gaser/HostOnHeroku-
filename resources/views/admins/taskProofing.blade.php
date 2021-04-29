@@ -218,7 +218,7 @@ td{
                                 <tr class="bg-dark"> 
                                    <td colspan="4">Job #{{$jobFiles->id}} Files</td>
                                    <td> 
-                                   @if($jobFiles->status != 'reviewed')
+                                   @if($jobFiles->status != 'proofed')
                                     <button type="button" class="sendToVendor btn center" data-toggle="modal" data-target="#modal-sendToVendor"
                                      id="{{$jobFiles->id}}" style=" background-color:#eb6434; color:white;"> Send Files To Vendor </button>
                                    @else 
@@ -459,6 +459,7 @@ $('.proof').click(function(){
   $('#sourceFileId').val($sourceID);
 });
 $('#uploadProof-form').submit(function(e) {
+       $('#modal-proof').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
        //this.reset();
@@ -507,11 +508,12 @@ $('.sendToVendor').click(function(){
              
             },
             error: function(data) { 
-            //console.log(data);
+            console.log(data);
            }
   });
 });
 $('#completeReview-form').submit(function(e) {
+       $('#modal-sendToVendor').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
  
@@ -533,7 +535,7 @@ $('#completeReview-form').submit(function(e) {
            }
            },
            error: function(response){
-             // console.log(response);
+              console.log(response);
               //  $('#image-input-error').text(response.responseJSON.errors.file);
            }
       

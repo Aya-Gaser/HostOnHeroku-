@@ -49,20 +49,9 @@
                       <label class="form-control-label" for="vendor_rateUnit"> Invoice Item
                       <span class="required">*</span>
                       </label>
-                      <select class="form-control" name="invoice_item" id="invoice_item"
-                        data-placeholder="select invoice item" required>
-                        <option selected >Select</option>
-                        <option value="Cell Phone" >Cell Phone  </option>
-                        <option value="Salary" >Salary  </option>
-                        <option value="Internet" >Internet  </option>
-                        <option value="Advance" >Advance  </option>
-                        <option value="Repayment Against Future Work" >Repayment Against Future Work  </option>
-                        <option value="Repayment of Advance Payment" >Repayment of Advance Payment  </option>
-                        <option value="Birthday" >Birthday  </option>
-                        <option value="Bonus" >Bonus  </option>
-                        <option value="Eid Bonus" >Eid Bonus  </option>
-                        <option value="Contest Bonus" >Contest Bonus  </option>
-                      </select>
+                      <input type="text" class="form-control" name="invoice_item" id="invoice_item"
+                        placeholder="enter invoice item" required>
+                       
                   </div>
                
                   <div class="form-group col-md-6">
@@ -121,7 +110,8 @@ $(function () {
     $('#addInvoice-form').submit(function(e) {
        e.preventDefault();
        let formData = new FormData(this); 
-       
+      var url = "{{ route('vendor.view-vendorInvoice','id' )}}";
+      
         //let formData = new FormData(document.getElementById('addInvoice-form'));
         $.ajax({
                 data: formData,
@@ -131,11 +121,14 @@ $(function () {
                 processData: false,
                 success: (response) => {
                     if(response){
-                    
+                      response = JSON.parse(response.success);
+                      $invoiceId = response['invoiceId'];
+                      url = url.replace('id', $invoiceId);
                     swal("Done! Added Successfuly", {
                     icon: "success"
                     }).then((ok) =>{
-                    location.reload();
+                   // location.reload();
+                   window.location.href = url
                     }) 
                 }
                     

@@ -15,10 +15,11 @@ class reviewCompleted extends Mailable
      * Create a new message instance.
      *
      * @return void
-     */ protected $wo_id;
-    public function __construct($wo_id)
+     */ protected $wo_id, $project_id;
+    public function __construct($wo_id, $project_id)
     {
         $this->wo_id = $wo_id;
+        $this->project_id = $project_id;
     }
 
     /**
@@ -29,7 +30,7 @@ class reviewCompleted extends Mailable
     public function build()
     {
         return $this->markdown('emails.vendorReview.reviewCompleted')
-        ->with(['wo_id'=>$this->wo_id])
+        ->with(['wo_id'=>$this->wo_id, 'project_id'=>$this->project_id])
        ->from('ayagaser30@example.com')
        ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
        .' Has Been Reviewed')->delay(15); 

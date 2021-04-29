@@ -33,7 +33,7 @@ class invoiceController extends Controller
         $request->validate([
             'completion_date' => 'required',
             'rate_unit'=>'required|in:Word Count,Page,Image,Flat,Hour',
-            'words_count'=>'required|numeric',
+            'unit_count'=>'required|numeric',
             'rate'=>'required|numeric',
             'total'=>'required|numeric',
             'stageId' => 'required',
@@ -53,7 +53,7 @@ class invoiceController extends Controller
         $workInvoiceItem->stageId = $request->input('stageId');
         $workInvoiceItem->invoiceId = $invioce_id;
         $workInvoiceItem->rate_unit = $request->input('rate_unit');
-        $workInvoiceItem->unit_count = $request->input('words_count');
+        $workInvoiceItem->unit_count = $request->input('unit_count');
         $workInvoiceItem->rate = $request->input('rate');
         $workInvoiceItem->total = $request->input('total');
         $workInvoiceItem->save();

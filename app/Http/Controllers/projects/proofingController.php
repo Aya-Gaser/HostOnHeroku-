@@ -139,7 +139,7 @@ class proofingController extends Controller
           ]);
           $projectId = $request->input('jobId');
           $project = projects::find($projectId);
-          $project->status = 'reviewed';
+          $project->status = 'proofed';
           $project->save();
 
           $vendor = User::find($project->translator_id);
@@ -148,9 +148,14 @@ class proofingController extends Controller
                                ->where('type', 'translation')->first();  
           $stage->vendor_maxQualityPoints =  $request->input('maxQuality_points');  
           $stage->vendor_qualityPoints =  $request->input('quality_points'); 
-          //$stage->status = 'reviewed';
-          $stage->save();                  
-          Mail::to($vendor->email)->send(new reviewCompleted($project->wo_id));
+          $stage->status = 'reviewed';
+          $stage->save();
+          
+          $woTask = woTasksNeeded::find($project->woTask_id);
+          $woTask->status = 'proofed';
+          $woTask->save();
+          
+          Mail::to($vendor->email)->send(new reviewCompleted($project->wo_id, $projectId));
           
           return response()->json([ 'success'=> 'Form is successfully submitted!']);
      

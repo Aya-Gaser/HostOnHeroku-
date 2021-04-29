@@ -692,14 +692,15 @@ td{
           <div class="modal-dialog center">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Add Notes</h4>
+                <h4 class="modal-title">Are You Sure</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-              <form id="reject-form" enctype="multipart/form-data">
+              <form id="deliveryAction-form" enctype="multipart/form-data">
                     @csrf
+                 <label> Note (optional) </label>    
                 <input name="notes" type="text" class="form-control" placeholder="None .."> 
                <input type="hidden" id="deliveryId" name="deliveryId">
                <input type="hidden" id="action" name="action">
@@ -855,7 +856,8 @@ $('.reject').click(function(){
 $('.accept').click(function(){
    $('#action').val('accepted');
 });   
-$('#reject-form').submit(function(e) {
+$('#deliveryAction-form').submit(function(e) {
+       $('#modal-actionNote').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
   $.ajax({
@@ -877,7 +879,7 @@ $('#reject-form').submit(function(e) {
              
             },
             error: function(data) { 
-            //console.log(data);
+            console.log(data);
            }
   });
 
@@ -997,6 +999,7 @@ $('.completeStageDTP').click(function(){
 
 //route('management.complete-stage',['stage'=>$stage->id,'compelte'=>1] )
 $('#completeStage-form').submit(function(e) {
+      $('#modal-completeStage').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
   $.ajax({
