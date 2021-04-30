@@ -9,7 +9,7 @@ use App\userRole;
 class seedUser extends Controller
 {
     public function index(){
-/*       
+      
         $user = new User();
         $user->name = 'hoda';
         $user->email = 'hoda.tarjamat@gmail.com';
@@ -74,26 +74,26 @@ class seedUser extends Controller
         $role->name = 'vendor';
         $role->slug = 'vendor';
         $role->save(); 
-*/
+
         $roleuser = new userRole();
-        $roleuser->user_id= 4;
-        $roleuser->role_id = 4;
+        $roleuser->user_id= 1;
+        $roleuser->role_id = 1;
         $roleuser->save();
         $roleuser = new userRole();
-        $roleuser->user_id= 14;
-        $roleuser->role_id = 4;
+        $roleuser->user_id= 11;
+        $roleuser->role_id = 1;
         $roleuser->save();
         $roleuser = new userRole();
-        $roleuser->user_id= 24;
-        $roleuser->role_id = 4;
+        $roleuser->user_id= 21;
+        $roleuser->role_id = 1;
         $roleuser->save();
         $roleuser = new userRole();
-        $roleuser->user_id= 34;
-        $roleuser->role_id = 4;
+        $roleuser->user_id= 31;
+        $roleuser->role_id = 1;
         $roleuser->save();
         $roleuser = new userRole();
-        $roleuser->user_id= 44;
-        $roleuser->role_id = 4;
+        $roleuser->user_id= 41;
+        $roleuser->role_id = 1;
         $roleuser->save();
        
          
