@@ -95,6 +95,10 @@ class seedUser extends Controller
         $roleuser->user_id= 41;
         $roleuser->role_id = 1;
         $roleuser->save();
+        $roleuser = new userRole();
+        $roleuser->user_id= 51;
+        $roleuser->role_id = 1;
+        $roleuser->save();
        
          
          
