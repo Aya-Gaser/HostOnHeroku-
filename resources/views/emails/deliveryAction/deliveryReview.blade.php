@@ -8,7 +8,8 @@ else
 $info = "however, they were rejected. Please refer to the instructions and take any necessary action." ;  
 
 $body = "# Project ". $wo_id. " Delivery Update " .
-"Thank you for delivering the document(s), ". $info;
+"Thank you for delivering the document(s), "
+. $info;
 @endphp
 
 
