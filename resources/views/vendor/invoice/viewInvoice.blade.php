@@ -80,6 +80,9 @@
                             <th style="width:  " >
                             Rate Unit
                             </th>
+                            <th style="width:  " >
+                             Unit Count
+                            </th>
                             <th style="width:">
                             Rate
                             </th>
@@ -104,6 +107,9 @@
                             </td>
                             <td>
                             {{$invoiceItem->rate_unit}}
+                            </td>
+                            <td>
+                            {{$invoiceItem->unit_count}}
                             </td>
                             <td>
                             {{$invoiceItem->rate}}                        
