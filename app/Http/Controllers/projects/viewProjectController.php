@@ -486,7 +486,7 @@ class viewProjectController extends Controller
                 }
 
             $stage = projectStage::find($delivery->stage_id);
-            $this->vendorEmail_deliveryAction($stage, 'improved');
+            $this->vendorEmail_deliveryAction($stage, 'Improved');
            
             return response()->json(['success'=>'File Uploaded Successfully']);      
         }

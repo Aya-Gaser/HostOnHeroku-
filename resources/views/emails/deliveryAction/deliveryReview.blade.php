@@ -1,8 +1,8 @@
 @php 
 $wo_id = str_pad($wo_id, 4, '0', STR_PAD_LEFT );
-if($action == 'improved')
+if($action == 'Improved')
 $info = "please find the marked file(s) attached";
-else if($action == 'accepted')
+else if($action == 'Accepted')
 $info = "they were accepted." ;
 else 
 $info = "however, they were rejected. Please refer to the instructions and take any necessary action." ;  
