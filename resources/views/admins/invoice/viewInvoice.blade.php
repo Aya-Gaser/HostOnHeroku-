@@ -5,7 +5,14 @@
 #edit_div_invoice{
   display : none;
 }
-
+.data2,.head2{
+    font-size:13.5px;
+    font-family:verdana; 
+    color:#c51d1d;
+}
+.data2{
+  font-weight:bold;
+}
 </style>
 
 @endsection
@@ -76,17 +83,22 @@
                             <th style="width: ">
                             Task
                             </th>
-                            <th style="width: ">
-                             Date
-                            </th>
+                           
                             <th style="width:  " >
                             Rate Unit
                             </th>
+                            
                             <th style="width:">
                             Rate
                             </th>
+                            <th style="width:  " >
+                           Unit Count
+                            </th>
+                            <th style="width: ">
+                             Date
+                            </th>
                             <th style="width:">
-                            Total
+                            Amount
                             </th>
                          </tr>
                     </thead>
@@ -101,28 +113,30 @@
                             {{App\projectStage::find($invoiceItem->stageId)->type}}
                            
                             </td>
-                            <td>
-                            {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}}
-                            </td>
+                            
                             <td>
                             {{$invoiceItem->rate_unit}} <br>
-                            System : {{App\projectStage::find($invoiceItem->stageId)->vendor_rateUnit}}
+                               <span class="data2 col-md-4"> <Span class="head2"> System : </Span>  {{App\projectStage::find($invoiceItem->stageId)->vendor_rateUnit}}  </span> 
                             </td>
                             <td> 
                             {{$invoiceItem->rate}} <br>
-                            System : {{App\projectStage::find($invoiceItem->stageId)->vendor_rate}}                       
+                               <span class="data2 col-md-4"> <Span class="head2"> System : </Span>  {{App\projectStage::find($invoiceItem->stageId)->vendor_rate}}   </span>                      
                             </td>
                             <td> 
                             {{$invoiceItem->unit_count}} <br>
-                            System : {{App\projectStage::find($invoiceItem->stageId)->vendor_unitCount}}                       
+                               <span class="data2 col-md-4"> <Span class="head2"> System : </Span>  {{App\projectStage::find($invoiceItem->stageId)->vendor_unitCount}}  </span>                    
                             </td>
                             <td>
-                            {{$invoiceItem->total}} <br>
-                            System : {{App\projectStage::find($invoiceItem->stageId)->vendor_unitCount * App\projectStage::find($invoiceItem->stageId)->vendor_rate}}                       
+                            {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}} 
                             </td>
-                            
+                            <td>
+                            {{$invoiceItem->amount}} <br>
+                               <span class="data2 col-md-4"> <Span class="head2"> System : </Span>  {{App\projectStage::find($invoiceItem->stageId)->vendor_unitCount * App\projectStage::find($invoiceItem->stageId)->vendor_rate}}  </span>                     
+                            </td>
+                          
+                          </tr>
                             @endforeach
-                        </tr>
+                       
                 
                     </tbody>
                 </table>
@@ -148,18 +162,20 @@
                     <thead>
                         <tr>                            
                            
-                            <th style="width:  " >
-                            Date
-                            </th>
                             <th style="width:">
                             Invoice Item
                             </th>
+                            <th style="width:25%">
+                            Note
+                            </th>
+                            <th style="width:  " >
+                            Date
+                            </th>
+                            <th></th> <th></th>
                             <th style="width:">
                             Amount
                             </th>
-                            <th style="width:">
-                            Note
-                            </th>
+                            
                         </tr>
                     </thead>
                     <tbody id="">
@@ -167,17 +183,19 @@
                     <tr>
                            
                             <td>
-                            {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}}
-                            </td>
-                            <td>
                             {{$invoiceItem->invoice_item}}
-                            </td>
-                            <td>
-                            {{$invoiceItem->amount}}                        
                             </td>
                             <td>
                             {{$invoiceItem->note}}                        
                             </td>
+                            <td>
+                            {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}}
+                            </td>
+                            <td></td> <td></td>
+                            <td>
+                            {{$invoiceItem->amount}}                        
+                            </td>
+                           
                             
                         
                             @endforeach
@@ -187,18 +205,21 @@
                 </table>
                 </div>
         <!-- /.card-body -->
-        </div>
+        </div> 
          @endif
-           @if($invoice->status == 'Pending')
+          
                 <div class="card-footer" id="generatedInvoice_btns" style="text-align:right;">
+                <span class="data col-md-4" style="padding-right: 56px;"> <Span class="head"> Total: </Span>  {{$invoice->total}} </span>
+                @if($invoice->status == 'Pending')
                     <button type="button" class="btn btn-danger action reject" data-toggle="modal" data-target="#modal-invoiceAction">
                           Reject
                     </button>
                     <button type="button" class="btn btn-success action approve" data-toggle="modal" data-target="#modal-invoiceAction">
                           Approve
                     </button>
+                @endif       
                </div>
-            @endif   
+          
                </div>
               </div>
             </div> 

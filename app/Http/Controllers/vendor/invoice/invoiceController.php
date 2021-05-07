@@ -159,9 +159,15 @@ class invoiceController extends Controller
           ]);
         $nonworkInvoiceItem = vendorNonWorkInvoiceItem::findOrFail($request->input('invoice_id')); 
         $nonworkInvoiceItem->invoice_item = $request->input('invoice_item');
+        $oldAmount = $nonworkInvoiceItem->amount;
         $nonworkInvoiceItem->amount = $request->input('amount');
         $nonworkInvoiceItem->note = $request->input('note');
         $nonworkInvoiceItem->save();
+
+        $vendorInvoice = vendorInvoice::findOrFail($nonworkInvoiceItem->invoiceId);
+        $vendorInvoice->total = $vendorInvoice->total - $oldAmount;  //subtract old amount
+        $vendorInvoice->total = $vendorInvoice->total + $request->input('amount'); // add new amount
+        $vendorInvoice->save();
         
         $data = json_encode(array('invoiceId'=>$nonworkInvoiceItem->invoiceId));
         return response()->json([ 'success'=> $data]);
@@ -173,7 +179,13 @@ class invoiceController extends Controller
             'invoiceItem_type'=>'required'
         ]);
         if($request->input('invoiceItem_type') == 'workItem')
+        {
             $invoiceItem = vendorWorkInvoiceItem::findOrFail($request->input('invoiceItem_id'));
+            $stage = projectStage::find( $invoiceItem->stageId);
+            $stage->status = 'Completed';
+            $stage->save();
+
+        }
         else
             $invoiceItem = vendorNonWorkInvoiceItem::findOrFail($request->input('invoiceItem_id'));
 
@@ -186,5 +198,39 @@ class invoiceController extends Controller
 
             
     }
+
+    public function view_editWorkInvoice($invoiceItem_id){
+        $workInvoiceItem = vendorWorkInvoiceItem::findOrFail($invoiceItem_id);
+        $stage = projectStage::find( $workInvoiceItem->stageId);
+
+        return view('vendor.invoice.editProjectInvoice')->with(['stage'=>$stage, 'invoiceItem'=>$workInvoiceItem]);
+    }
+    public function editProjectInvoice(Request $request){
+        $request->validate([
+            'completion_date' => 'required',
+            'rate_unit'=>'required|in:Word Count,Page,Image,Flat,Hour',
+            'unit_count'=>'required|numeric',
+            'rate'=>'required|numeric',
+            'total'=>'required|numeric',
+            'invoiceItemId' => 'required',
+          ]);
+       
+        $workInvoiceItem = vendorWorkInvoiceItem::findOrFail($request->input('invoiceItemId'));
+        $workInvoiceItem->rate_unit = $request->input('rate_unit');
+        $workInvoiceItem->unit_count = $request->input('unit_count');
+        $workInvoiceItem->rate = $request->input('rate');
+        $oldAmount = $workInvoiceItem->amount;
+        $workInvoiceItem->amount = $request->input('total');
+        $workInvoiceItem->save();
+
+        $vendorInvoice = vendorInvoice::findOrFail($workInvoiceItem->invoiceId);
+        $vendorInvoice->total = $vendorInvoice->total - $oldAmount;  //subtract old amount
+        $vendorInvoice->total = $vendorInvoice->total + $request->input('total'); // add new amount
+        $vendorInvoice->save();
+
+        $data = json_encode(array('invoiceId'=>$workInvoiceItem->invoiceId));
+        return response()->json([ 'success'=> $data]);
+    }
+
 
 }

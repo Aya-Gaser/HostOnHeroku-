@@ -74,9 +74,7 @@
                             <th style="width: ">
                             Task
                             </th>
-                            <th style="width: ">
-                             Date
-                            </th>
+                          
                             <th style="width:  " >
                             Rate Unit
                             </th>
@@ -86,8 +84,12 @@
                             <th style="width:">
                             Rate
                             </th>
+                            <th style="width: ">
+                             Date
+                            </th>
+                           
                             <th style="width:">
-                            Total
+                            Amount
                             </th>
                          </tr>
                     </thead>
@@ -103,9 +105,6 @@
                            
                             </td>
                             <td>
-                            {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}}
-                            </td>
-                            <td>
                             {{$invoiceItem->rate_unit}}
                             </td>
                             <td>
@@ -115,12 +114,19 @@
                             {{$invoiceItem->rate}}                        
                             </td>
                             <td>
+                            {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}}
+                            </td>
+                           
+                            <td>
                             {{$invoiceItem->amount}}                        
                             </td>
                             @if($invoice->status == 'Open')
                             <td> 
-                            <button type="button" class="btn btn-warning">Edit </button>
-                            <button type="button" class="btn btn-danger" onclick="delete_invoiceItem('{{$invoiceItem->id}}', 'workItem')">Delete </button>
+                            <button type="button" class="btn btn-warning">
+                              <a href="{{route('vendor.view-editWorkInvoice', $invoiceItem->id)}}"> 
+                                Edit </a>
+                             </button>    
+                             <button type="button" class="btn btn-danger" onclick="delete_invoiceItem('{{$invoiceItem->id}}', 'workItem')">Delete </button>
                              </td>
                             @endif 
                             @endforeach
@@ -150,18 +156,20 @@
                     <thead>
                         <tr>                            
                            
-                            <th style="width:  " >
-                            Date
-                            </th>
                             <th style="width:">
                             Invoice Item
                             </th>
+                            <th style="width:25%">
+                            Note
+                            </th>
+                            <th style="width:  " >
+                            Date
+                            </th>
+                            <th></th> <th></th>
                             <th style="width:">
                             Amount
                             </th>
-                            <th style="width:">
-                            Note
-                            </th>
+                            
                         </tr>
                     </thead>
                     <tbody id="">
@@ -169,16 +177,17 @@
                     <tr>
                            
                             <td>
-                            {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}}
-                            </td>
-                            <td>
                             {{$invoiceItem->invoice_item}}
                             </td>
                             <td>
-                            {{$invoiceItem->amount}}                        
+                            {{$invoiceItem->note}}                        
                             </td>
                             <td>
-                            {{$invoiceItem->note}}                        
+                            {{ UTC_To_LocalTime($invoiceItem['created_at'], Auth::user()->timezone)}}
+                            </td>
+                            <td></td> <td></td>
+                            <td>
+                            {{$invoiceItem->amount}}                        
                             </td>
                             @if($invoice->status == 'Open')
                             <td> 
@@ -196,15 +205,21 @@
                     </tbody>
                 </table>
                 </div>
+               
         <!-- /.card-body -->
         </div>
          @endif
-           @if($invoice->status == 'Open')
-                <div class="card-footer" id="generatedInvoice_btns" style="text-align:right;">
-                    <button id="submitInvoice" type="ok" class="btn btn-success ">Submit</button>                   
-                    
+           
+                <div class="card-footer " id="generatedInvoice_btns" style="text-align:right;">
+                <span class="data col-md-4" style="padding-right: 56px;"> <Span class="head"> Total: </Span>  {{$invoice->total}} </span>
+                @if($invoice->status == 'Open')
+                    <button id="submitInvoice" type="ok" class="col-md-2 btn btn-success" @if($invoice->total <= 0) disabled @endif >Submit</button>                   
+                @endif 
+                @if($invoice->status == 'Rejected')
+                    <button id="submitInvoice" type="ok" class="col-md-2 btn btn-success" @if($invoice->total <= 0) disabled @endif >Re-Submit</button>                   
+                @endif           
                </div>
-            @endif   
+            
                </div>
               </div>
             </div> 
