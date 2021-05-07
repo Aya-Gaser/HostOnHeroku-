@@ -249,6 +249,15 @@ Route::group(['middleware' => 'role:vendor', 'prefix' => 'vendor-panel',
 
     Route::post('submit-invoice', 'vendor\invoice\invoiceController@submitInvoice')->middleware('auth')
     ->name('submit-invoice'); 
+
+    Route::get('view-edit-nonWork-invoice/{id}', 'vendor\invoice\invoiceController@view_editNonWorkInvoice')->middleware('auth')
+    ->where('id', '[0-9]+')->name('view-editNonWorkInvoice');
+    Route::post('edit-nonWork-invoice', 'vendor\invoice\invoiceController@editNonWorkInvoice')->middleware('auth')
+    ->name('edit-nonWorkInvoice'); 
+    
+    Route::post('delete-invoiceItem', 'vendor\invoice\invoiceController@destroyInvoiceItem')->middleware('auth')
+    ->name('delete-invoiceItem'); 
+    
  });
 
  Auth::routes();

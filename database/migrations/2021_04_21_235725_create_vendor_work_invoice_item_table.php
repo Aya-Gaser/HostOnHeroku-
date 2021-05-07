@@ -22,7 +22,7 @@ class CreateVendorWorkInvoiceItemTable extends Migration
             $table->string('rate_unit');
             $table->integer('unit_count');
             $table->float('rate');
-            $table->float('total');
+            $table->float('amount');
             $table->timestamps();
         });
     }

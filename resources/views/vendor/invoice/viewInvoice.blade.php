@@ -115,12 +115,12 @@
                             {{$invoiceItem->rate}}                        
                             </td>
                             <td>
-                            {{$invoiceItem->total}}                        
+                            {{$invoiceItem->amount}}                        
                             </td>
                             @if($invoice->status == 'Open')
                             <td> 
                             <button type="button" class="btn btn-warning">Edit </button>
-                            <button type="button" class="btn btn-danger">Delete </button>
+                            <button type="button" class="btn btn-danger" onclick="delete_invoiceItem('{{$invoiceItem->id}}', 'workItem')">Delete </button>
                              </td>
                             @endif 
                             @endforeach
@@ -182,8 +182,11 @@
                             </td>
                             @if($invoice->status == 'Open')
                             <td> 
-                            <button type="button" class="btn btn-warning">Edit </button>
-                            <button type="button" class="btn btn-danger">Delete </button>
+                            <button type="button" class="btn btn-warning">
+                              <a href="{{route('vendor.view-editNonWorkInvoice', $invoiceItem->id)}}"> 
+                                Edit </a>
+                             </button>
+                            <button type="button" class="btn btn-danger" onclick="delete_invoiceItem('{{$invoiceItem->id}}', 'nonWork')">Delete </button>
                              </td>
                             @endif 
                         
@@ -198,7 +201,6 @@
          @endif
            @if($invoice->status == 'Open')
                 <div class="card-footer" id="generatedInvoice_btns" style="text-align:right;">
-                    <button id="deleteInvoice" class="btn btn-danger">Delete</button>
                     <button id="submitInvoice" type="ok" class="btn btn-success ">Submit</button>                   
                     
                </div>
@@ -221,6 +223,12 @@
             <!-- /.card -->
           </div>
       </div>
+      <form id="delete-invoiceItem" action="" method="post" enctype="multipart/form-data">
+              @csrf
+        <input type="hidden" name="invoiceItem_type" id="invoiceItem_type">
+        <input type="hidden" name="invoiceItem_id" id="invoiceItem_id">
+        
+      </form>
        
            
           </div>
@@ -238,6 +246,55 @@
 @section('script')
 
 <script>
+  function delete_invoiceItem(invoiceId, invoiceType){
+      $('#invoiceItem_id').val(invoiceId);
+      $('#invoiceItem_type').val(invoiceType);
+    
+
+    // $('#delete_invoiceItem').click(function(){
+    swal({
+          title: "Are you sure?",
+          text: "You will not be able to recover this data!",
+          type: "warning",
+          
+          buttons: true,
+          dangerMode: true,
+      })
+      .then((willDelete) => {
+            if (willDelete) {
+              let formData = new FormData(document.getElementById('delete-invoiceItem'));
+          $.ajax({
+          data: formData,
+          url:" {{route('vendor.delete-invoiceItem')}}",
+          type: 'POST',
+          dataType: 'json',
+          contentType: false,
+          processData: false,
+        
+          //  category_id: category_id,
+          
+          success:function(response) {
+            if(response){
+                //this.reset();
+                //console.log(response) 
+                swal("Done! Deleted Successfuly", {
+                icon: "success"
+              }).then((ok) =>{
+                window.location.reload();
+              }) 
+            }
+          },
+          error: function(data) { 
+              console.log(data);
+            }
+          })           
+            } else {
+              swal("Your data is safe!");
+            }
+          });
+       
+  }
+
 $(function () {
     $('#editInvoice').click(function(){
         $('#edit_div_invoice').fadeIn();
@@ -287,7 +344,11 @@ $(function () {
         });
     });
 
-});
+    /// delete
+});    
+
+
+
 </script>
 @endsection 
 @endsection

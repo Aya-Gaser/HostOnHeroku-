@@ -55,7 +55,7 @@ class invoiceController extends Controller
         $workInvoiceItem->rate_unit = $request->input('rate_unit');
         $workInvoiceItem->unit_count = $request->input('unit_count');
         $workInvoiceItem->rate = $request->input('rate');
-        $workInvoiceItem->total = $request->input('total');
+        $workInvoiceItem->amount = $request->input('total');
         $workInvoiceItem->save();
 
         $stage = projectStage::findOrFail($request->input('stageId'));
@@ -82,7 +82,7 @@ class invoiceController extends Controller
         return $invoice->id;
     }
     public function createNonWorkInvoice(){
-        return view('vendor.invoice.createNonWorkInvoice');
+        return view('vendor.invoice.createNonWorkInvoice')->with(['isEdit'=>0]);
     }
 
     public function addNonWorkInvoice(Request $request){
@@ -144,4 +144,47 @@ class invoiceController extends Controller
         return response()->json([ 'success'=> 'Form is successfully submitted!']);
 
     }
+
+    public function view_editNonWorkInvoice($invoiceItem_id){
+        $nonworkInvoiceItem = vendorNonWorkInvoiceItem::findOrFail($invoiceItem_id);
+        return view('vendor.invoice.createNonWorkInvoice')->with(['isEdit'=>1, 'invoiceItem'=>$nonworkInvoiceItem]);
+    }
+    public function editNonWorkInvoice(Request $request){
+        $request->validate([
+            'invoice_id' => 'required',
+            'invoice_item' => 'required',
+            'amount'=>'required|numeric',
+            'note'=>'required|string',
+            
+          ]);
+        $nonworkInvoiceItem = vendorNonWorkInvoiceItem::findOrFail($request->input('invoice_id')); 
+        $nonworkInvoiceItem->invoice_item = $request->input('invoice_item');
+        $nonworkInvoiceItem->amount = $request->input('amount');
+        $nonworkInvoiceItem->note = $request->input('note');
+        $nonworkInvoiceItem->save();
+        
+        $data = json_encode(array('invoiceId'=>$nonworkInvoiceItem->invoiceId));
+        return response()->json([ 'success'=> $data]);
+
+    }
+    public function destroyInvoiceItem(Request $request){
+        $request->validate([
+            'invoiceItem_id' => 'required',
+            'invoiceItem_type'=>'required'
+        ]);
+        if($request->input('invoiceItem_type') == 'workItem')
+            $invoiceItem = vendorWorkInvoiceItem::findOrFail($request->input('invoiceItem_id'));
+        else
+            $invoiceItem = vendorNonWorkInvoiceItem::findOrFail($request->input('invoiceItem_id'));
+
+        $vendorInvoice = vendorInvoice::findOrFail($invoiceItem->invoiceId);
+        $vendorInvoice->total = $vendorInvoice->total - $invoiceItem->amount;
+        $vendorInvoice->save();
+
+        $invoiceItem->delete();
+        return response()->json([ 'success'=> 'deleted successfully']);
+
+            
+    }
+
 }
