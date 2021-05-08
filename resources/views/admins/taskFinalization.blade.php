@@ -90,7 +90,7 @@ ul{
                 @if($task->status != 'Completed')
                     
                     <button type="button" id="{{$task->id}}" class="btn btn-success completeTask complete" > 
-                            Set Task Completed &check;&check; </button>
+                            Finalization Completed &check;&check; </button>
                         </a> 
                     @else        
                         <button type="button" id="{{$task->id}}" class="btn btn-success completeStage reopen" > 

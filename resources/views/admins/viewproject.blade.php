@@ -890,6 +890,7 @@ $('.improve').click(function(){
   $('#deliveryId_improve').val($deliveryId);
 });
 $('#improve-form').submit(function(e) {
+      $('#improve-form').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
   $.ajax({
