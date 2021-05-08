@@ -12,6 +12,8 @@ use App\projectStage;
 use App\editedFile;
 use SweetAlert;
 use App\finalizedFile;
+use App\woTasksNeeded;
+
 class trackingController extends Controller
 {
     public function __construct()
@@ -25,4 +27,12 @@ class trackingController extends Controller
         return view('admins.tracking')->with(['wos'=>$wos]);
     }
 
+
+    public function archiveTask($taskId){
+        $task = woTasksNeeded::findOrFail($taskId);
+        $task->status = 'Archived';
+        $task->save();
+
+        return response()->json(['success'=> 'task Archived']);
+    }
 }

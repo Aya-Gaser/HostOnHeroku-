@@ -57,7 +57,7 @@ class viewProjectController extends Controller
         $sign = '<span class="text-success">Before deadline</span>';
         $diff = $current_date_time->diff($deadline);
         //$diff->format(' %d days %H hours %i minutes ').$sign;
-        return $diff->format(' %d days %H hours %i minutes ').$sign;;
+        return $diff->format(' %d days %H hours %i minutes ');
 
     }
     public function getprojectsFiles($project){

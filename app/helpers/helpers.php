@@ -8,6 +8,16 @@ if (!function_exists('isActive')) {
         return request()->routeIs($name) ? 'activeNav' : '';
     }
 }
+if (!function_exists('selectInputVal')) {
+    function selectInputVal($old = null, $exist = null, $value)
+    {
+        if ($old) {
+            echo $old == $value ? 'selected' : null;
+        } else {
+            echo $exist == $value ? 'selected' : null;
+        }
+    }
+}
 
 if (!function_exists('UTC_To_LocalTime')) {
     function UTC_To_LocalTime($date, $userTimezone, $withTime=false ){

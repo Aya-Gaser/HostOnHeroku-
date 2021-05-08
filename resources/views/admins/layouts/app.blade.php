@@ -155,7 +155,14 @@ tr{
           <a href="{{route('management.projects-tracking')}}" 
           class="nav-link {{ isActive('management.projects-tracking')}}">
             <i class="far fa-eye nav-icon"></i>
-            <p>Project Tracking</p>
+            <p>Project Tracking</p>  
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{route('management.view-vendorPeriodInvoices')}}" 
+          class="nav-link {{ isActive('management.view-vendorPeriodInvoices')}}">
+            <i class="far fa-folder nav-icon"></i>
+            <p>Vendor Invoice Reports</p>  
           </a>
         </li>
           <li class="nav-item">

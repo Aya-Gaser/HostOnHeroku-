@@ -72,7 +72,7 @@ footer {
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
-                            <h1 class="text-success" style="font-weight:bold;">Welcome To Tarjamt</h1>
+                            <h1 class="text-success" style="font-weight:bold;">Welcome To Tarjamat</h1>
                         </div>
                     </div>
                 </div>

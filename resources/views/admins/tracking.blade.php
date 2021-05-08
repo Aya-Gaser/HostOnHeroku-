@@ -89,7 +89,7 @@ th{
                </div> 
                <div class="card-body no-padding">
                @foreach($wo->woTasksNeeded as $task)
-               
+               @if($task->status != 'Archived')
                 <div class="card card-primary collapsed-card">
                 <div class="card-header"  style="padding:8px 10px 0px 7px; color:white;">
                   <div class="card-tools">
@@ -103,8 +103,10 @@ th{
                   <p class="col-md-2"> Word Count: {{$task->client_wordsCount}} </p>
                   <p class="col-md-2"> Unit: {{$task->client_rateUnit}}
                   <p class="col-md-2"> Finalzed File(s): {{count($task->proofed_clientFile)}} of {{count($wo->woSourceFiles)}}   </p>
-                  <p class="col-md-2"> Status: {{$task->status}}
-
+                  <p class="col-md-2"> Status: {{$task->status}} </p>
+                  @if($task->status == 'Completed')
+                  <button class='btn btn-dark col-md-1' onclick="archiveTask('{{$task->id}}')">Archive </button>
+                  @endif
                  </div>
                  <div class="row">
                  <p class="col-md-2"> Jobs in Task: {{count($task->project)}}   </p>
@@ -176,7 +178,8 @@ th{
                   @endforeach
                       </div>
                 </div>  
-                @endforeach
+               @endif 
+              @endforeach
           </div>
               
            
@@ -200,5 +203,59 @@ th{
   </div>
   <!-- /.content-wrapper -->
 
- 
+  archiveTask
+  
+@section('script')
+
+<script>
+  function archiveTask(taskId){
+    var url = "{{ route('management.archive-task','id' )}}";
+    url = url.replace('id', taskId);
+    swal({
+          title: "Are you sure?",
+          text: "Task will be archived",
+          type: "warning",
+          
+          buttons: true,
+          dangerMode: true,
+      })
+      .then((willDelete) => {
+            if (willDelete) {
+          $.ajax({
+          data: taskId,
+          url: url,
+          type: 'POST',
+          dataType: 'json',
+          contentType: false,
+          processData: false,
+        
+          //  category_id: category_id,
+          
+          success:function(response) {
+            if(response){
+                //this.reset();
+                //console.log(response) 
+                swal("Done! Archived Successfuly", {
+                icon: "success"
+              }).then((ok) =>{
+                window.location.reload();
+              }) 
+            }
+          },
+          error: function(data) { 
+              console.log(data);
+            }
+          })           
+            } else {
+              swal("Task not archived");
+            }
+          });
+       
+  }
+   
+
+
+
+</script>
+@endsection 
 @endsection

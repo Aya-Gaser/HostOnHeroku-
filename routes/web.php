@@ -132,7 +132,10 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
 
     
     Route::get('/tracking', 'projects\trackingController@index')->middleware('auth')
-    ->name('projects-tracking');
+    ->name('projects-tracking'); 
+    Route::post('/archive-task/{taskId}', 'projects\trackingController@archiveTask')->middleware('auth')
+    ->where(['taskId'=>'[0-9]+'])->name('archive-task');
+
 
     ////// view vendors
 
@@ -178,8 +181,13 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
    Route::get('/view-paymentInvoice/{id}', 'invoice\invoiceController@viewPaymentInvoice')->middleware('auth')
    ->where(['id'=>'[0-9]+'])->name('view-paymentInvoice'); 
    Route::post('/invoice-payment', 'invoice\invoiceController@payInvoice')->middleware('auth')
-   ->name('invoice-payment');
- 
+   ->name('invoice-payment'); 
+   ///********************* */ invoice reports /********************* */
+   
+   Route::get('/view_vendorsInvoices-reports', 'invoice\invoiceReportsController@view_periodInvoices')->middleware('auth')
+  ->name('view-vendorPeriodInvoices'); 
+  Route::post('/view-filterd-vendorsInvoices-reports', 'invoice\invoiceReportsController@get_vendorFilterdInvoices')->middleware('auth')
+  ->name('view-filterd-vendorInvoices');
  });
 
 ////////////******************* * vendor *********************/////////////////
@@ -262,7 +270,7 @@ Route::group(['middleware' => 'role:vendor', 'prefix' => 'vendor-panel',
 
     Route::post('delete-invoiceItem', 'vendor\invoice\invoiceController@destroyInvoiceItem')->middleware('auth')
     ->name('delete-invoiceItem'); 
-     
+    
  });
 
  Auth::routes();

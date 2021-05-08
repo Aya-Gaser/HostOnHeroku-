@@ -171,8 +171,7 @@
 
                     </div>
             <div class="form-group col-md-6">
-                  <label class="form-control-label" for="quality_points">Max Quality Points<span
-                      class="required"></span></label>
+                  <label class="form-control-label" for="quality_points">Max Quality Points</label>
                   <input type="number" min="0" class="form-control" name="maxQuality_points"
                     id="quality_points" placeholder="Enter 0 if Target ">
 
