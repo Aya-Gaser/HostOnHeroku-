@@ -32,6 +32,7 @@ class proofingController extends Controller
 
     public function index($filter){
         if(!$this->validateFilter($filter)) abort(404);
+        if($filter == 'progress') $filter = 'under proofing';
         if($filter == 'all')
             $tasks = woTasksNeeded::with('readyToProof_projects')->get();
         else 
@@ -46,7 +47,8 @@ class proofingController extends Controller
         return view('admins.allTasks_proofing')->with(['tasks'=>$readyToProof_tasks]);
     }
     public function validateFilter($filter){
-       $filters = ['pending', 'proofed', 'all'];
+        if($filter == 'progress') $filter = 'under proofing';
+       $filters = ['pending', 'under proofing', 'proofed', 'all'];
        return in_array($filter, $filters);
     }
     public function taskProofing($taskId){
@@ -123,7 +125,7 @@ class proofingController extends Controller
         $project->isReadyToFinalize = true;
         $project->save();
         $task = woTasksNeeded::find($project->woTask_id);
-        //$task->status = 'proofed';
+        $task->status = 'under proofing';
         $task->save();
        // return back();
        return response()->json([ 'success'=> 'Form is successfully submitted!']);
@@ -187,5 +189,24 @@ class proofingController extends Controller
             $proofedFile->save();  
         }             
         
+    }
+    public function complete_reOpen_proofingWoTask(Request $request){
+        $request->validate([
+            
+            'complete' => 'required',
+            'taskId' => 'required',
+          ]);
+        $complete = $request->input('complete');  
+        $taskId = $request->input('taskId');  
+        $task = woTasksNeeded::findOrFail($taskId); 
+         
+        $task->status = ($complete)? 'proofed' : 'under proofing'; //1 >> complete
+        foreach($task->project as $project){
+            $project->status = 'Within Finalization';
+            $project->save();
+        }
+        $task->save();
+
+        return response()->json(['success'=>'Done Successfully']);      
     }
 }

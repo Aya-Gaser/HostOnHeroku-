@@ -39,9 +39,8 @@
 
                   <select onchange="window.location.href=this.value;" class="browser-default custom-select" id="project_status" style="width:150px;">
                    <option id="pending" value="{{ route('management.view-allProjects', 'pending') }}">  Pending </option> 
-                   <option id="progress" value="{{ route('management.view-allProjects', 'progress') }} "> on progress </option>
-
-                   <option id="completed" value="{{ route('management.view-allProjects', 'completed') }} "> Completed </option>
+                    <option id="progress" value="{{ route('management.view-allProjects', 'progress') }} "> on progress </option>
+                   <option id="Completed" value="{{ route('management.view-allProjects', 'Completed') }} "> Completed </option>
                    <option id="all" value="{{ route('management.view-allProjects', 'all') }}"> ALL </option>
                   </select>
                  </div> 

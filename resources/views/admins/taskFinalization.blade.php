@@ -470,6 +470,7 @@ $('#completeReview-form').submit(function(e) {
 }); 
 */
 })
+
 $('.complete').click(function(){
   $('#complete').val(1);
 }); 

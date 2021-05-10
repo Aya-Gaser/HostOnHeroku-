@@ -32,20 +32,24 @@ class allWoController extends Controller
 
     }
     public function allProjects($status){
-        if($status == 'progress') $status = 'on progress';
-        if( in_array($status, ['pending','completed', 'all', 'on progress' ], true )  ){
+        
+        if( in_array($status, ['pending','Completed', 'all', 'progress' ], true )  ){
             $projects = $this->getprojects_filtered($status);
             return view('admins.allProjects')->with(['projects'=> $projects]);
         }
         else 
-        abort(404);
+            abort(404);
     }
 
     public function getprojects_filtered($status){
-        if($status=='pending' || $status=='completed' || $status=='on progress')
-            $projects = projects::where('status', $status)->orderBy('created_at','desc')->get();
-        else
+        if($status=='all')
             $projects = projects::orderBy('created_at','desc')->get();
+        else if($status == 'progress')
+            $projects = projects::where('status','!=', 'pending')
+                                ->where('status','!=', 'Completed')->orderBy('created_at','desc')->get();
+        else
+            $projects = projects::where('status', $status)->orderBy('created_at','desc')->get();
+
                                                           
       return $projects;
     }

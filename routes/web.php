@@ -83,7 +83,7 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::post('/updateStage/{id}', 'projects\viewProjectController@updateStage')->middleware('auth')
     ->where(['id'=>'[0-9]+'])->name('update-stage');
     Route::get('/view-allProjects/{status}', 'projects\allWoController@allProjects')->middleware('auth')
-    ->where(['status'=> '[a-z]+'])->name('view-allProjects');
+    ->where(['status'=> '[aA-zZ]+'])->name('view-allProjects');
     /// delivery action 
 
     Route::post('/action-deliveryFile', 'projects\viewProjectController@deliveryFile_action')->middleware('auth')
@@ -105,17 +105,20 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     ->where([])->name('complete-stage');
     /* PROOFING */
     Route::get('/all-tasks-proofing/{filter}', 'projects\proofingController@index')->middleware('auth')
-    ->where(['filter'=>'[a-z]+'])->name('allTasks-proofing');
+    ->where(['filter'=>'[aA-zZ]+'])->name('allTasks-proofing');
     Route::get('/task-proofing/{taskId}', 'projects\proofingController@taskProofing')->middleware('auth')
     ->where(['taskId'=>'[0-9]+'])->name('task-proofing');
     Route::post('/proof-workingFile', 'projects\proofingController@store_proofingFiles')->middleware('auth')
     ->name('store-proofingFiles'); 
     Route::post('/send-reviewToVendor', 'projects\proofingController@send_reviewToVendor')->middleware('auth')
     ->name('send-reviewToVendor');
+
+    Route::post('/complete_reopen_proofingTask', 'projects\proofingController@complete_reOpen_proofingWoTask')->middleware('auth')
+    ->name('complete_reopen_ProofingTask');
     
     /* FINALIZATION */ 
     Route::get('/all-tasks-finalization/{filter}', 'projects\finalizationController@index')->middleware('auth')
-    ->where(['filter'=>'[a-z]+'])->name('allTasks-finalization');
+    ->where(['filter'=>'[aA-zZ]+'])->name('allTasks-finalization');
     Route::get('/task-finalization/{taskId}', 'projects\finalizationController@taskFinalization')->middleware('auth')
     ->where(['taskId'=>'[0-9]+'])->name('task-finalization');
     Route::post('/upload-finalizedFile/{taskId}', 'projects\finalizationController@store_finalizedFile')->middleware('auth')
@@ -222,7 +225,7 @@ Route::group(['middleware' => 'role:vendor', 'prefix' => 'vendor-panel',
 
     ///// projects /////////////// 
     Route::get('/my-projects/{filter}', 'vendor\viewAllProjectsController@index')->middleware('auth')
-    ->where('filter', '[a-z]+')->name('view-myProjects'); 
+    ->where('filter', '[aA-zZ]+')->name('view-myProjects'); 
 
     Route::get('/my-project/{id}', 'vendor\viewAllProjectsController@viewProject')->middleware('auth')
     ->where('id', '[0-9]+')->name('view-project');

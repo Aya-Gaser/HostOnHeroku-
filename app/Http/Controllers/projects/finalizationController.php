@@ -30,6 +30,8 @@ class finalizationController extends Controller
 
     public function index($filter){
         if(!$this->validateFilter($filter)) abort(404);
+        if($filter == 'progress') $filter = 'under finalization';
+
         if($filter == 'all')
             $tasks = woTasksNeeded::with('readyToFinalize_projects')->get();
         else
@@ -46,7 +48,8 @@ class finalizationController extends Controller
     }
 
     public function validateFilter($filter){
-        $filters = ['proofed', 'finalized', 'all'];
+        if($filter == 'progress') $filter = 'under finalization';
+        $filters = ['proofed', 'under finalization', 'Completed', 'all'];
         return in_array($filter, $filters); 
      }
     
@@ -76,7 +79,7 @@ class finalizationController extends Controller
             $this->uploadFiles($taskId, 'client_file');
           }
             
-        //$task->status = 'finalized';
+        $task->status = 'under finalization';
         $task->save();
         
         alert()->success('Uploaded Successfully !')->autoclose(false);
@@ -118,7 +121,7 @@ class finalizationController extends Controller
         $taskId = $request->input('taskId');  
         $task = woTasksNeeded::findOrFail($taskId); 
          
-        $task->status = ($complete)? 'Completed' : 'Open'; //1 >> complete
+        $task->status = ($complete)? 'Completed' : 'under finalization'; //1 >> complete
         foreach($task->project as $project){
             $project->status = 'Completed';
             $project->save();

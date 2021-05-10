@@ -209,13 +209,15 @@ class viewProjectController extends Controller
             if($request->input('unitCount'))
                 $stage->vendor_unitCount = $request->input('unitCount');
             Mail::to($vendor->email)->send(new CompleteStageVendor($stage->wo_id, $stage->id));
-            $stage->status = 'Completed';
+            $stage->readyToInvoice = 1;
+            
         }      
         else{
+            $stage->readyToInvoice = 0;
             if($stage->accepted_docs >= $stage->required_docs)
                 $stage->status = 'Delivered';
             else 
-                $stage->status = 'Undelivred';   
+                $stage->status = 'Not delivered';   
         } 
         
         $stage->save();
@@ -427,7 +429,10 @@ class viewProjectController extends Controller
            $stage = projectStage::find($delivery->stage_id);
            $project = projects::find($stage->project_id);
            $stage->increment('accepted_docs');
-           $project->status = ($stage->accepted_docs == $stage->required_docs)? 'Within Editing' : 'With Vendor';
+           if($stage->accepted_docs == $stage->required_docs){
+                $project->status = 'Within Editing';
+                $stage->status = 'Delivered';
+           } 
            if($project->type == 'Dtp')
                 $this->send_toFinalization($delivery->sourceFile_id);
            $project->save();

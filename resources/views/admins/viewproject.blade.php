@@ -473,18 +473,18 @@ td{
                {{$stage->required_docs}} </p>
                 <p class="data col-md-4"> <Span class="head"> Status: </Span>
                
-                  {{$stage->status}} </p>
+                  {{$stage->status}} @if($stage->readyToInvoice) - Ready for invoice @endif </p>
                 <p>
-                @if($stage->status != 'Completed')
+                @if($stage->readyToInvoice != 1)
                   @if($project->type != 'Dtp')
                    
                   <button type="button" id="{{$stage->id}}" data-toggle="modal" data-target="#modal-completeStage"
                   class="btn btn-success completeStage complete" > 
-                          Completed Job &check;&check; </button>
+                          Complete Job &check;&check; </button>
                       </a> 
                   @else 
                    <button type="button" id="{{$stage->id}}" class="complete btn btn-success completeStageDTP" > 
-                          Completed Job &check;&check; </button>
+                          Complete Job &check;&check; </button>
                       </a> 
                   @endif
 

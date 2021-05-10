@@ -36,10 +36,13 @@
           <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
                   <div class="card-tools form-group float-right" style="">
-                  <select onchange="window.location.href=this.value;" class="browser-default custom-select" id="filter" style="width:150px;">
-                   <option id="bb" value="{{ route('vendor.view-myProjects', 'Not delivered') }} "> Not Delivered </option>
-                   <option value="{{ route('vendor.view-myProjects', 'pending') }} "> Pending </option> 
-                   <option value="{{ route('vendor.view-myProjects', 'accepted') }} "> Completed </option>
+                  <select onchange="window.location.href=this.value;" class="browser-default custom-select" id="project_status" style="width:150px;">
+                   <option id="undelivered" value="{{ route('vendor.view-myProjects', 'undelivered') }} "> Not Delivered </option>
+                   <option id="Delivered" value="{{ route('vendor.view-myProjects', 'Delivered') }} "> Delivered </option> 
+                   <option id="reviewed" value="{{ route('vendor.view-myProjects', 'reviewed') }} "> Reviewed </option>
+                   <option id="Completed" value="{{ route('vendor.view-myProjects', 'Completed') }} "> Completed </option>
+                   <option id="invoiced" value="{{ route('vendor.view-myProjects', 'invoiced') }} "> Invoiced </option>
+
                    <option value="{{ route('vendor.view-myProjects', 'all') }}"> ALL </option>
                   </select>
                  </div>  
@@ -115,20 +118,15 @@ $(function () {
       "ordering": false,"info": true,
   });
   
- /*  // filter status  
- url = window.location.href;
+   // filter status  
+   url = window.location.href;
  splitURL = url.split('/');
- type = splitURL[splitURL.length - 1];
+ status = splitURL[splitURL.length - 1];
  
- $("#vendor_type option[id="+type+"]").attr("selected", "selected");
-*/
+ $("#project_status option[id="+status+"]").attr("selected", "selected");
 });
 
 
-//$('#filter').val($('#bb')); 
-var x = {'undelivered':0,'pending':1,'accepted' :2, 'all' :3};
-//alert(@php echo 'x[\''.$filter.'\'];' @endphp)
-$( '#filter' ).get(0).selectedIndex = @php echo 'x[\''.$filter.'\'];' @endphp
 </script>
 
 @endsection

@@ -31,8 +31,14 @@ class viewAllProjectsController extends Controller
     } 
     //// view all/status
     public function index($filter){ 
-        $this->validateFilter($filter);       
-        $stages = ($filter == 'all')? projectStage::where('vendor_id', Auth::user()->id)->get(): $this->filterProjects($filter);       
+        $this->validateFilter($filter); 
+        if($filter == 'undelivered') $filter = 'Not delivered';
+        if($filter == 'Completed')
+            $stages = projectStage::where('vendor_id', Auth::user()->id)
+                                  ->where('readyToInvoice', 1)->get();
+
+        else
+            $stages = ($filter == 'all')? projectStage::where('vendor_id', Auth::user()->id)->get(): $this->filterProjects($filter);       
         
         return view('vendor.viewAllProjects')->with(['stages'=>$stages, 'filter'=>$filter]);
     }
@@ -43,7 +49,9 @@ class viewAllProjectsController extends Controller
         return $stages;
     }
     public function validateFilter($filter){
-        $filters = array('all','undelivered', 'pending', 'accepted');
+        if($filter == 'undelivered') $filter = 'Not delivered';
+
+        $filters = array('all','Not delivered', 'Delivered', 'Completed', 'reviewed', 'invoiced');
         if(!in_array($filter, $filters))
           abort(404);
     }

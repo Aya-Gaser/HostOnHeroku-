@@ -86,7 +86,7 @@ td{
               <p class="col-md-6 data"> <Span class="head"> Instruction: 
               </Span> {{  $stage->instructions }} </p>
               <p class="data col-md-6"> <Span class="head"> Status: </Span>
-                  {{$stage->status}} </p>
+                  {{$stage->status}} @if($stage->readyToInvoice) - Ready for invoice @endif </p>
               </div>
               <div class="col-sm-12 col-md-12">
                     <div class="form-group">

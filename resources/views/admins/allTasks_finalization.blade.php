@@ -39,7 +39,9 @@
 
                   <select onchange="window.location.href=this.value;" class="browser-default custom-select" id="project_status" style="width:150px;">
                   <option id="pending" value="{{ route('management.allTasks-finalization', 'proofed') }}">  Pending </option> 
-                   <option id="progress" value="{{ route('management.allTasks-finalization', 'finalized') }} "> Finalized </option>
+                   <option id="progress" value="{{ route('management.allTasks-finalization', 'progress') }} "> Under Finalization  </option>
+                   <option id="Completed" value="{{ route('management.allTasks-finalization', 'Completed') }} "> Completed </option>
+
                    <option id="all" value="{{ route('management.allTasks-finalization', 'all') }}"> ALL </option>
                   </select>
                  </div> 
@@ -56,6 +58,7 @@
                       <th>WO ID</th>
                       <th>Client Deadline</th>
                       <th>Type</th>
+                      <th>Status</th>
                       <th> Created on</th>
                       <th> </th>
                     </tr>
@@ -70,6 +73,9 @@
                       </td>
                       <td> 
                       {{$task['type'] }}
+                    </td>
+                    <td> 
+                     @if($task['status'] == 'proofed') Pending @else {{$task['status']}} @endif
                     </td>
                      <td> 
                       {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }}

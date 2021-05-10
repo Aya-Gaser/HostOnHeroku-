@@ -19,7 +19,7 @@ class invoiceController extends Controller
 
     public function viewReady_workOrderInvoices(){
         $stages = projectStage::where('vendor_id', Auth::user()->id)
-                              ->where('status', 'Completed')->get();
+                              ->where('readyToInvoice', 1)->get();
         return view('vendor.invoice.viewReady_workOrderInvoices')->with(['stages'=>$stages]);                        
     } 
     public function generateProjectInvoice($stageId){

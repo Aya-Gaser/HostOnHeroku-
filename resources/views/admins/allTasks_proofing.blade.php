@@ -39,7 +39,9 @@
 
                   <select onchange="window.location.href=this.value;" class="browser-default custom-select" id="project_status" style="width:150px;">
                    <option id="pending" value="{{ route('management.allTasks-proofing', 'pending') }}">  Pending </option> 
-                   <option id="progress" value="{{ route('management.allTasks-proofing', 'proofed') }} "> Proofed </option>
+                   <option id="progress" value="{{ route('management.allTasks-proofing', 'progress') }} "> Under Proofing </option>
+                   <option id="proofed" value="{{ route('management.allTasks-proofing', 'proofed') }} "> Proofed </option>
+
                    <option id="all" value="{{ route('management.allTasks-proofing', 'all') }}"> ALL </option>
                   </select>
                  </div> 
@@ -56,6 +58,7 @@
                       <th>WO ID</th>
                       <th>Client Deadline</th>
                       <th>Type</th>
+                      <th> Status </th>
                       <th> Created on</th>
                      <th> </th>
                     </tr>
@@ -70,6 +73,9 @@
                       </td>
                       <td> 
                       {{$task['type'] }}
+                    </td>
+                    <td> 
+                     {{$task['status']}}
                     </td>
                      <td> 
                       {{ UTC_To_LocalTime($task['created_at'], Auth::user()->timezone) }}
@@ -121,14 +127,14 @@
       "ordering": false,"info": true,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#myTable_wrapper .col-md-6:eq(0)');
-/*  
+ 
    // filter status  
  url = window.location.href;
  splitURL = url.split('/');
  status = splitURL[splitURL.length - 1];
  
  $("#project_status option[id="+status+"]").attr("selected", "selected");
-*/
+
 </script>
 @endsection     
 </body>

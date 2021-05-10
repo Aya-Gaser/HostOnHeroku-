@@ -75,7 +75,18 @@ td{
               <p class="data text-danger"> <Span class="head"> Deadline: </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
               <p class="data"> <Span class="head"> Client Instructions: </Span> {{$task->WO->client_instructions }}</p>
               <p class="data"> <Span class="head"> General Instructions: </Span> {{$task->WO->general_instructions }}</p>
-
+              <div class="col-md-6">
+                @if($task->status != 'proofed')
+                    
+                    <button type="button" id="{{$task->id}}" class="btn btn-success completeTask complete" > 
+                            Proofing Completed &check;&check; </button>
+                        </a> 
+                    @else        
+                        <button type="button" id="{{$task->id}}" class="btn btn-success completeStage reopen" > 
+                            RE-OPEN Task</button>
+                      
+                      @endif  
+                 </div> 
            
             <div class="row"> 
               <div class="col-sm-6 col-md-6">
@@ -542,8 +553,69 @@ $('#completeReview-form').submit(function(e) {
       })           
           
 }); 
-})
 
+$('.complete').click(function(){
+  $('#complete').val(1);
+}); 
+
+$('.completeTask').click(function(){
+  $taskId = "{{$task->id}}";
+  console.log($taskId)
+  $('#taskId').val($taskId);
+  //console.log($stageId);
+  $.ajax({
+        data: { taskId : $taskId,
+          complete: 1},
+        url: "{{ route('management.complete_reopen_ProofingTask') }}",
+        type: 'POST',
+        dataType: 'json',
+        //contentType: false,
+        //   processData: false,
+           success: (response) => {
+              if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            console.log(data);
+           }
+  });
+  
+});
+ 
+$('.reopen').click(function(){
+  $.ajax({
+        data: {taskId : "{{$task->id}}",
+              complete : 0 },
+        url: "{{route('management.complete_reopen_ProofingTask') }}",
+        type: 'POST',
+        //contentType: false,
+           //processData: false,
+           success: (response) => {
+             if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done Successfuly", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+             
+            },
+            error: function(data) { 
+            console.log(data);
+           }
+  });
+})
+});
 </script>
 @include('layouts.partials._file_input_plugin_script')
 @endsection
