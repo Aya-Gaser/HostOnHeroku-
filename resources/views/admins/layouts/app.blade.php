@@ -210,7 +210,7 @@ tr{
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('management.view-allProjects', 'completed') }}" 
+                <a href="{{route('management.view-allProjects', 'Completed') }}" 
                 class="nav-link {{ isActive('management.view-allProjects')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Completed Projects</p>
