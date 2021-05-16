@@ -36,6 +36,8 @@ class viewWoController extends Controller
     }
 
     public function index(){
+        if(!Auth::user()->can('view-wo'))
+            abort(401);
         $route_id = $this->getWo_Id();
         $wo = WO::findOrFail($route_id);
         $projects = $wo->projects;

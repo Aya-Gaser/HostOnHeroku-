@@ -5,6 +5,8 @@ namespace App\Http\Controllers\projects;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\client;
+use Auth;
+
 class clientController extends Controller
 {
     public function __construct()
@@ -24,12 +26,16 @@ class clientController extends Controller
 
      }
      public function allclients(){
+        if(!Auth::user()->can('view-client'))
+            abort(401);
         $clients = client::orderBy('created_at','desc')->get();
         return view('admins.viewAllClients')->with(['clients'=> $clients]);
     
     }
    
     public function viewclient($client_id){
+        if(!Auth::user()->can('view-client'))
+            abort(401);
         $client = client::findOrFail($client_id);
         return view('admins.viewClient')->with(['client'=> $client]);
 

@@ -28,7 +28,7 @@
         <div class="row">
           <div class="col-md-12">
 
-
+          @if(Auth::user()->can('create-vendor'))
           <div class="card">
               <div class="card-header">
                   <h5> Add New Vendor</h5>      
@@ -70,6 +70,7 @@
               </form>
               </div>
           </div>
+       @endif   
       <!-- Default box -->
       <div class="card" style="padding:15px;">
              

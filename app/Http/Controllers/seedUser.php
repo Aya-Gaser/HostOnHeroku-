@@ -9,7 +9,7 @@ use App\userRole;
 use App\Permission;
 use App\rolesPermissions;
 class seedUser extends Controller
-{
+{ 
     public function index(){
       
       $userRole = new userRole();
@@ -62,7 +62,6 @@ class seedUser extends Controller
       $userRole->role_id = 4;
       $userRole->save(); 
       
-/******************************************* */
 $rolead = new Role();
    $rolead->name = 'admin';
    $rolead->slug= 'admin';
@@ -98,7 +97,6 @@ $roleams = new Role();
    $roleams->slug= 'administrativeManager_assistant';
     
 $roleams->save();
-///////////////////////////////////////////
 $Permission = new Permission();
    $Permission->name = 'view-tracking';
     $Permission->slug = 'view-tracking';
@@ -228,4 +226,5 @@ $Permission->roles()->attach($rolesa);
          $rolesPermissions = rolesPermissions::all();
          return [$roles, $users, $permissions, $rolesPermissions];
     }
+    
 }

@@ -58,7 +58,8 @@ class createProjectController extends Controller
     } 
 
     public function index($id,$type){
-       
+      if(!Auth::user()->can('create-project'))
+        abort(401);
       $route_id = $this->getWo_Id();
       $wo = WO::findOrFail($route_id);
       /*if($wo->isHandeled)

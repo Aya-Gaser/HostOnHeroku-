@@ -22,9 +22,12 @@ class trackingController extends Controller
     }
 
     public function index(){
-        $wos = WO::with('projects', 'projects.projectStage')->orderBy('deadline','asc')->get();
-
-        return view('admins.tracking')->with(['wos'=>$wos]);
+        if(Auth::user()->can('view-tracking')){
+            $wos = WO::with('projects', 'projects.projectStage')->orderBy('deadline','asc')->get();
+            return view('admins.tracking')->with(['wos'=>$wos]);
+        }
+        else 
+          abort(401);
     }
 
 

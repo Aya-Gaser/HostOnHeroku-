@@ -20,6 +20,8 @@ class invoiceController extends Controller
       } 
 
     public function viewAllInvoices($filter){
+        if(!Auth::user()->can('validate-vendorInvoice'))
+            abort(401);
        if(!$this->validateFilter($filter)) abort(404);
        if($filter == 'All')
             $invoices = vendorInvoice::where('status', '<>' , 'Open')->get();
@@ -36,6 +38,8 @@ class invoiceController extends Controller
      }
 
      public function viewInvoice($invoiceId){
+        if(!Auth::user()->can('validate-vendorInvoice'))
+             abort(401);
         $invoice = vendorInvoice::findOrFail($invoiceId);
         return view('admins.invoice.viewInvoice')->with(['invoice'=>$invoice]);
 
@@ -61,6 +65,8 @@ class invoiceController extends Controller
     }
     
     public function viewAllReadyToPayInvoices($filter){
+        if(!Auth::user()->can('validate-vendorInvoice'))
+            abort(401);
         $filters = ['Approved','Paid'];
         if(!in_array($filter, $filters))
           abort(404);
@@ -70,6 +76,8 @@ class invoiceController extends Controller
     }
 
     public function viewPaymentInvoice($invoiceId){
+        if(!Auth::user()->can('pay-vendorInvoice'))
+            abort(401);
         $invoice = vendorInvoice::findOrFail($invoiceId);
         return view('admins.invoice.invoicePayment')->with(['invoice'=>$invoice]);
 

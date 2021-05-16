@@ -29,6 +29,8 @@ class finalizationController extends Controller
     }
 
     public function index($filter){
+        if(!Auth::user()->can('view-finalization'))
+            abort(401);
         if(!$this->validateFilter($filter)) abort(404);
         if($filter == 'progress') $filter = 'under finalization';
 
@@ -54,6 +56,8 @@ class finalizationController extends Controller
      }
     
     public function taskFinalization($taskId){
+        if(!Auth::user()->can('view-finalization'))
+            abort(401);
         $task = woTasksNeeded::findOrFail($taskId);
         $source_files = $this->getWo_sourceFiles($task->wo_id);
         //$working_filesReadyToFinalize = $project->project_sourceFile_readyToFilnalize;

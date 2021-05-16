@@ -33,6 +33,8 @@ class viewProjectController extends Controller
     } 
  
     public function index($id){
+        if(!Auth::user()->can('view-project'))
+            abort(401);
         $project = projects::findOrFail($id);
         $has_proofAndFinalize = $project->woTasksNeeded->has_proofAndFinalize;
         [$delivery_files,$deliveryHistory_files] =  $this->getProject_Deliveriesfiles($project);    

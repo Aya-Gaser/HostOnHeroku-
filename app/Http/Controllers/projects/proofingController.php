@@ -31,6 +31,8 @@ class proofingController extends Controller
     } 
 
     public function index($filter){
+        if(!Auth::user()->can('view-proofing'))
+            abort(401);
         if(!$this->validateFilter($filter)) abort(404);
         if($filter == 'progress') $filter = 'under proofing';
         if($filter == 'all')
@@ -52,6 +54,8 @@ class proofingController extends Controller
        return in_array($filter, $filters);
     }
     public function taskProofing($taskId){
+        if(!Auth::user()->can('view-proofing'))
+            abort(401);
         $task = woTasksNeeded::findOrFail($taskId);
         $wo = WO::find($task->wo_id);
         $readyToProof_projects = $task->readyToProof_projects;

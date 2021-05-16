@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\vendorInvoice;
 use App\User;
-
+use Auth;
 class invoiceReportsController extends Controller
 {
     public function __construct()
@@ -14,6 +14,9 @@ class invoiceReportsController extends Controller
           $this->middleware('auth');
       }
     public function view_periodInvoices(Request $request){
+        if(!Auth::user()->can('view-invoiceReports'))
+            abort(401);
+
         $vendors = User::where('account_type', 'vendor')->get();
         $vendorInvoices = vendorInvoice::whereNotIn('status', ['Open', 'Rejected']);
         return view('admins.invoice.invoiceReports.vendorPeriodInvoices')

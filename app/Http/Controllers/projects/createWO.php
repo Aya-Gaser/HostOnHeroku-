@@ -56,6 +56,8 @@ class createWO extends Controller
     }
     
     public function getAllData(Request $request) {
+      if(!Auth::user()->can('create-wo'))
+            abort(401);
         $clients = $this->getClients();
         $languages = $this->getLanguages();
         $vendors = $this->getVendors();
