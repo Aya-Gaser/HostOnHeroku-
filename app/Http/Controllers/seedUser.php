@@ -70,32 +70,32 @@ $rolead = new Role();
 $rolead->save();
 
 $roleven = new Role();
-   $roleven->name = 'vendor',
-   $roleven->slug= 'vendor'
+   $roleven->name = 'vendor';
+   $roleven->slug= 'vendor';
     
 $roleven->save();
 
 $rolesa = new Role();
-   $rolesa->name = 'superAdmin',
-   $rolesa->slug= 'superAdmin'
+   $rolesa->name = 'superAdmin';
+   $rolesa->slug= 'superAdmin';
     
 $rolesa->save();
 
 $rolepm = new Role();
-   $rolepm->name = 'projectsManager',
-   $rolepm->slug= 'projectsManager'
+   $rolepm->name = 'projectsManager';
+   $rolepm->slug= 'projectsManager';
     
 $rolepm->save();
 
 $roleam = new Role();
-   $roleam->name = 'administrativeManager',
-   $roleam->slug= 'administrativeManager'
+   $roleam->name = 'administrativeManager';
+   $roleam->slug= 'administrativeManager';
     
 $roleam->save();
 
 $roleams = new Role();
-   $roleams->name = 'administrativeManager_assistant',
-   $roleams->slug= 'administrativeManager_assistant'
+   $roleams->name = 'administrativeManager_assistant';
+   $roleams->slug= 'administrativeManager_assistant';
     
 $roleams->save();
 ///////////////////////////////////////////
