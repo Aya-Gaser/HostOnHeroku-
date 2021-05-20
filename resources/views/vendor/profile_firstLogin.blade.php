@@ -1,6 +1,6 @@
 
 
-@extends('vendor.layouts.app')
+@extends('vendor.layouts.app_firstLogin')
 
 @section('content')
 
@@ -59,16 +59,7 @@
                  </div>
               </div>
 
-              <div class="row">  
-                   <div class="form-group col-md-6">
-                      <label for="exampleInputEmail1">Password</label>
-                       <input type="password" class="form-control" name="password" >
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="exampleInputEmail1">Confirm Password</label>
-                       <input type="password" class="form-control" name="conPass" >
-                    </div>
-                 </div>
+             
 
                  <div class="row">  
                    <div class="form-group col-md-6">
@@ -81,11 +72,33 @@
                     <option
                         value="English" > English
                     </option>
+                    <option
+                        value="Farsi" > Farsi
+                    </option>
                     </select>
                     </div>
                    
+                 <div class="form-group col-md-6">
+                      <label for="exampleInputEmail1">Timezone</label>
+                      <input type="text" name="timezone" id="timezone" class="form-control"  readonly>
+                    </div>
                  </div>
-                 <input type="hidden" name="timezone" id="timezone">
+                 <div class="row">  
+                   <div class="form-group col-md-6">
+                      <label for="exampleInputEmail1">Password <span class="required">*</span></label>
+                      <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror 
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="exampleInputEmail1">Confirm Password <span class="required">*</span></label>
+                      <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                    </div>
+                 </div>
          
                 <!-- /.card-body -->
 

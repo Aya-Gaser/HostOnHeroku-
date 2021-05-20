@@ -1,6 +1,6 @@
 
 
-@extends('admins.layouts.app')
+@extends('admins.layouts.app_firstLogin')
 
 @section('content')    
 
@@ -60,19 +60,26 @@
                  </div>
               </div>
 
+              <div class="form-group col-md-12">
+                      <label for="exampleInputEmail1">Timezone</label>
+                      <input type="text" name="timezone" id="timezone" class="form-control"  readonly>
+                    </div>
               <div class="row">  
                    <div class="form-group col-md-6">
-                      <label for="exampleInputEmail1">Password</label>
-                       <input type="password" class="form-control" name="password" >
-                    </div>
+                      <label for="exampleInputEmail1">Password <span class="required">*</span></label>
+                      <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                      @error('password')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror                    </div>
                     <div class="form-group col-md-6">
-                      <label for="exampleInputEmail1">Confirm Password</label>
-                       <input type="password" class="form-control" name="conPass" >
+                      <label for="exampleInputEmail1">Confirm Password <span class="required">*</span></label>
+                      <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                     </div>
                  </div>
 
-                
-                 <input type="hidden" name="timezone" id="timezone">
          
                 <!-- /.card-body -->
 

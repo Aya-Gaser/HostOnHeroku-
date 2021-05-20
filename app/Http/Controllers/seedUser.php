@@ -11,7 +11,7 @@ use App\rolesPermissions;
 class seedUser extends Controller
 { 
     public function index(){
-      
+      /*
       $userRole = new userRole();
       $userRole->user_id = 14;
       $userRole->role_id = 54;
@@ -218,13 +218,14 @@ $Permission = new Permission();
 $Permission->save();     
 $Permission->roles()->attach($rolesa); 
     $Permission->roles()->attach($roleam);
-         
+         */
          
          $roles = Role::all();
          $users = User::all();
+         $usersRoles = userRole::all();
          $permissions = Permission::all();
          $rolesPermissions = rolesPermissions::all();
-         return [$roles, $users, $permissions, $rolesPermissions];
+         return [$roles, $users, $permissions, $rolesPermissions, $usersRoles];
     }
     
 }

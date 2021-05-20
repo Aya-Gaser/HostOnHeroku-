@@ -60,14 +60,24 @@ class dashboardController extends Controller
       $vendor = User::findOrFail(Auth::user()->id);
       return view('vendor.profile_firstLogin')->with(['vendor'=>$vendor]);
   }
-    public function completeData(){ 
+    public function completeData(Request $request){ 
+      $request->validate([
+        'name' => 'required',
+        'email' => 'required',
+        'timezone' => 'required',
+        'birthdate' => 'required',
+        'native_language'=>'required',
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+      ]);
+
       $vendor = User::findOrFail(Auth::user()->id);
       $vendor->name = request()['name'];
       $vendor->email = request()['email'];
       $vendor->native_language = request()['native_language'];
       $vendor->timezone = request()['timezone'];
       $vendor->birthdate = request()['birthdate'];
-      //$vendor->name = request()['name'];
+      $vendor->password = bcrypt(request()['password']);
+      $vendor->visible = encrypt(request()['password']);
       $vendor->isFirstLogin = 0;
       $vendor->save();
 

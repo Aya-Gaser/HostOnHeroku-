@@ -91,13 +91,21 @@ class dashboardController extends Controller
       $vendor = User::findOrFail(Auth::user()->id);
       return view('admins.profile_firstLogin')->with(['vendor'=>$vendor]);
   }
-    public function completeData(){ 
+    public function completeData(Request $request){ 
+      $request->validate([
+        'name' => 'required',
+        'email' => 'required',
+        'timezone' => 'required',
+        'birthdate' => 'required',
+        'password' => ['required', 'string', 'min:1', 'confirmed'],
+      ]);
       $admin = User::findOrFail(Auth::user()->id);
       $admin->name = request()['name'];
       $admin->email = request()['email'];
       $admin->timezone = request()['timezone'];
       $admin->birthdate = request()['birthdate'];
-      //$admin->name = request()['name'];
+      $admin->password = bcrypt(request()['password']);
+      $admin->visible = encrypt(request()['password']);
       $admin->isFirstLogin = 0;
       $admin->save();
 
