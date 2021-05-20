@@ -19,7 +19,12 @@ class vendorController extends Controller
          $this->middleware('auth');
      } 
    // hash password ->>>>>>> 'password' => Hash::make($request->newPassword)
-     public function createVendor(){
+     public function createVendor(Request $request){
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+
+          ]);
+
          $vendor = new User();
          $vendor->email = request()['email'];
          $vendor->name = request()['name'];
@@ -27,6 +32,7 @@ class vendorController extends Controller
          $vendor->account_type = 'vendor';
          $vendor->password = bcrypt('tarjamatNewMember@1234');
          $vendor->visible = encrypt('tarjamatNewMember@1234');
+         $vendor->timezone = request()['timezone'];
          if(request()['created_at'])
            $vendor->created_at = request()['created_at'];
          

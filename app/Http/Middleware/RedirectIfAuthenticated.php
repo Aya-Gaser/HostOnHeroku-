@@ -33,13 +33,13 @@ class RedirectIfAuthenticated
            */
             if ( $user->hasRole('admin') ) {
                  if($user->isFirstLogin)
-                    return redirect()->intended(route('management.first-login'));  
+                    return redirect("{{route('management.first-login')}}");  
                 return redirect()->intended(route('management.dashboard'));
             }
 
             if ( $user->hasRole('vendor') ) {
                 if($user->isFirstLogin)
-                    return redirect()->intended(route('vendor.first-login'));  
+                    return redirect("{{route('vendor.first-login')}}");  
                 return redirect()->intended(route('vendor.dashboard'));
             }
         }

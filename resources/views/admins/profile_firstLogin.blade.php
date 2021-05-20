@@ -9,7 +9,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+    <br><br>
 
     <!-- Main content -->
     <section class="content">
@@ -43,8 +43,14 @@
               <div class="row">  
                 <div class="form-group col-md-6">
                    <label for="exampleInputEmail1">Email<span class="required">*</span></label>
-                    <input type="email" class="form-control" name="email"  value="{{$vendor->email}}" required>
-                 </div>
+                   <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$vendor->email}}" required autocomplete="email">
+
+                      @error('email')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror                 
+                </div>
                  <div class="form-group col-md-6">
                    <label for="exampleInputEmail1">Birthdate<span class="required">*</span></label>
                     <input type="date" class="form-control" name="birthdate" required>

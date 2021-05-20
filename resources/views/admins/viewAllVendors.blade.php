@@ -53,14 +53,34 @@
                    
                 <div class="form-group col-md-6">
                    <label for="exampleInputEmail1">Email</label>
-                    <input type="email" class="form-control" name="email"  placeholder="">
-                 </div>
+                   <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                      @error('email')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror                
+                </div>
                  <div class="form-group col-md-6">
                    <label for="exampleInputEmail1">Created on</label>
                     <input type="date" class="form-control" name="created_at"  placeholder="">
                  </div>
                  
               </div>
+              <div class="form-group col-md-12">
+                      <label for="exampleInputEmail1">Timezone<span class="required">*</span></label>
+                      <select class="selectpicker form-control" data-live-search="true" name="timezone" id="timezone" required>
+                   <option disabled>Select</option>
+                   <option
+                        value="Africa/Cairo" > Africa/Cairo
+                    </option>
+                    <option
+                        value="	Asia/Tehran" > 	Asia/Tehran
+                    </option>
+                    <option
+                        value="	Asia/Amman" > 	Asia/Amman
+                    </option>
+                    </select>
+                    </div>
          
                 <!-- /.card-body -->
 

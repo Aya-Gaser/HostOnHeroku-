@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'isFirstLogin'=>1,
             'account_type'=>'admin',
             'password' => bcrypt('123456789'),
-           'visible' => encrypt('123456789'),
+             'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
         ]);
         DB::table('users')->insert([
