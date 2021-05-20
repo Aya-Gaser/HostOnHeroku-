@@ -24,7 +24,7 @@ class invoiceController extends Controller
     } 
     public function generateProjectInvoice($stageId){
         $stage = projectStage::findOrFail($stageId);
-        if($stage->status != 'Completed')
+        if($stage->readyToInvoice != 1)
             abort(404);
         return view('vendor.invoice.createProjectInvoice')->with(['stage'=>$stage]);
     }
@@ -60,6 +60,7 @@ class invoiceController extends Controller
 
         $stage = projectStage::findOrFail($request->input('stageId'));
         $stage->status = 'invoiced';
+        $stage->readyToInvoice = 2;
         $stage->save();
 
         $data = json_encode(array('invoiceId'=>$invioce_id));
@@ -183,6 +184,7 @@ class invoiceController extends Controller
             $invoiceItem = vendorWorkInvoiceItem::findOrFail($request->input('invoiceItem_id'));
             $stage = projectStage::find( $invoiceItem->stageId);
             $stage->status = 'Completed';
+            $stage->readyToInvoice = 1;
             $stage->save();
 
         }
