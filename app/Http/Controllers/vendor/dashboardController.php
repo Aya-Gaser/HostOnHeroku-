@@ -65,7 +65,7 @@ class dashboardController extends Controller
         abort(404);
       $request->validate([
         'name' => 'required',
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'email' => ['required', 'string', 'email', 'max:255'],
         'timezone' => 'required',
         'birthdate' => 'required',
         'native_language'=>'required',
