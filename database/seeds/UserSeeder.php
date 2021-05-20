@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Aya',
-            'email' => 'ayagaser30@gmail.com',
+            'email' => 'ayagaser39@gmail.com',
             'userName' =>'aya',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'isFirstLogin'=>1,
             'account_type'=>'admin',
             'password' => bcrypt('123456789'),
-           'visible' => encrypt('123456789'),
+            'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
         ]);
         DB::table('users')->insert([

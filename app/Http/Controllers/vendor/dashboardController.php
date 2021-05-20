@@ -61,6 +61,8 @@ class dashboardController extends Controller
       return view('vendor.profile_firstLogin')->with(['vendor'=>$vendor]);
   }
     public function completeData(Request $request){ 
+      if(!Auth::user()->isFirstLogin)
+        abort(404);
       $request->validate([
         'name' => 'required',
         'email' => 'required',
