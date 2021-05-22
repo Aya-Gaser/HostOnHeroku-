@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('123456789'),
              'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
-        ]);reeno admin mgr, 4 bus mgr, hoda fin asst, super : gen mgr
+        ]); //reeno admin mgr, 4 bus mgr, hoda fin asst, super : gen mgr
         DB::table('users')->insert([
             'name' => 'FIN ASST',
             'email' => 'hoda.tarjamat@gmail.com',
