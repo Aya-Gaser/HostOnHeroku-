@@ -20,11 +20,11 @@ class UserSeeder extends Seeder
             'password' => bcrypt('123456789'),
              'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
-        ]);
+        ]);reeno admin mgr, 4 bus mgr, hoda fin asst, super : gen mgr
         DB::table('users')->insert([
-            'name' => 'Hoda',
+            'name' => 'FIN ASST',
             'email' => 'hoda.tarjamat@gmail.com',
-            'userName' =>'Hoda',
+            'userName' =>'FIN ASST',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
             'password' => bcrypt('123456789'),
@@ -32,9 +32,9 @@ class UserSeeder extends Seeder
             'birthdate' => ('2021-01-03'),
         ]);
         DB::table('users')->insert([
-            'name' => 'Reeno',
+            'name' => 'ADMIN MGR',
             'email' => 'Reeno.tarjamat@gmail.com',
-            'userName' =>'Reeno',
+            'userName' =>'ADMIN MGR',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
             'password' => bcrypt('123456789'),
@@ -52,9 +52,9 @@ class UserSeeder extends Seeder
             'birthdate' => ('2021-01-03'),
         ]);
         DB::table('users')->insert([
-            'name' => 'Rabea',
+            'name' => 'BUS MGR',
             'email' => 'Rabea.tarjamat@gmail.com',
-            'userName' =>'Rabea',
+            'userName' =>'BUS MGR',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
             'password' => bcrypt('123456789'),
@@ -62,9 +62,9 @@ class UserSeeder extends Seeder
             'birthdate' => ('2021-01-03'),
         ]);
         DB::table('users')->insert([
-            'name' => 'louay',
+            'name' => 'GEN MGR',
             'email' => 'louay.abdulla@gmail.com',
-            'userName' =>'louay',
+            'userName' =>'GEN MGR',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
             'password' => bcrypt('123456789'),

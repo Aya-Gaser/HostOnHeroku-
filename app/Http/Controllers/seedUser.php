@@ -75,25 +75,25 @@ $roleven = new Role();
 $roleven->save();
 
 $rolesa = new Role();
-   $rolesa->name = 'superAdmin';
+   $rolesa->name = 'General Manager';
    $rolesa->slug= 'superAdmin';
     
 $rolesa->save();
 
 $rolepm = new Role();
-   $rolepm->name = 'projectsManager';
+   $rolepm->name = 'Business Manager';
    $rolepm->slug= 'projectsManager';
     
 $rolepm->save();
 
 $roleam = new Role();
-   $roleam->name = 'administrativeManager';
+   $roleam->name = 'Administrative Manager';
    $roleam->slug= 'administrativeManager';
     
 $roleam->save();
 
 $roleams = new Role();
-   $roleams->name = 'administrativeManager_assistant';
+   $roleams->name = 'Finantial Manager';
    $roleams->slug= 'administrativeManager_assistant';
     
 $roleams->save();
@@ -175,7 +175,6 @@ $Permission = new Permission();
 $Permission->save();     
 $Permission->roles()->attach($rolesa); 
 $Permission->roles()->attach($roleam);
-    $Permission->roles()->attach($roleams);
 
 $Permission = new Permission();
    $Permission->name = 'pay-vendorInvoice';
@@ -183,7 +182,9 @@ $Permission = new Permission();
     
 $Permission->save();     
 $Permission->roles()->attach($rolesa); 
+$Permission->roles()->attach($roleam);
     $Permission->roles()->attach($roleams);
+
 
 $Permission = new Permission();
    $Permission->name = 'view-vendors';
