@@ -73,8 +73,8 @@ th{
             <div class="card-header no-padding"  style="padding:10px 0px 0px 10px; background-color: #549c36; color:white;">
              
                 <div class="row" style="font-size:18px;">
-                  <p class="col-md-1"> ID:  {{$wo->id}} </p>
-                  <p class="col-md-2"> Client ID: {{$wo->client_id}} </p>
+                  <p class="col-md-1"> ID: {{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} </p>
+                  <p class="col-md-2"> Client ID: {{str_pad($wo->client_id, 4, "0", STR_PAD_LEFT )}} </p>
                   <p class="col-md-3"> Deadline:
                   {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}} </p>
                   <p class="col-md-2">  {{$wo->from_language}} ▸ {{$wo->to_language}}  </p>
@@ -235,7 +235,7 @@ th{
             if(response){
                 //this.reset();
                 //console.log(response) 
-                swal("Done! Archived Successfuly", {
+                swal("Done! Archived Successfully", {
                 icon: "success"
               }).then((ok) =>{
                 window.location.reload();

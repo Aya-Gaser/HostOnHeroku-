@@ -96,8 +96,8 @@
                     <tbody id="">
                     @foreach ($invoice->vendorWorkInvoiceItem as $invoiceItem )
                     <tr>
-                            <td>
-                            {{App\projectStage::find($invoiceItem->stageId)->wo_id}}
+                            <td> 
+                            {{str_pad(App\projectStage::find($invoiceItem->stageId)->wo_id, 4, "0", STR_PAD_LEFT )}}
                             </td>
                             
                             <td>
@@ -292,7 +292,7 @@
             if(response){
                 //this.reset();
                 //console.log(response) 
-                swal("Done! Deleted Successfuly", {
+                swal("Done! Deleted Successfully", {
                 icon: "success"
               }).then((ok) =>{
                 window.location.reload();
@@ -345,7 +345,7 @@ $(function () {
                     if(response){
                     //this.reset();
                     //console.log(response) 
-                    swal("Done! Added Successfuly", {
+                    swal("Done! Added Successfully", {
                     icon: "success"
                     }).then((ok) =>{
                     location.reload();

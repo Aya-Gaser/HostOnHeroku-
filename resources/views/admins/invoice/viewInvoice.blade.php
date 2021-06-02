@@ -106,7 +106,7 @@
                     @foreach ($invoice->vendorWorkInvoiceItem as $invoiceItem )
                     <tr>
                             <td>
-                            {{App\projectStage::find($invoiceItem->stageId)->wo_id}}
+                            {{str_pad(App\projectStage::find($invoiceItem->stageId)->wo_id, 4, "0", STR_PAD_LEFT )}}
                             </td>
                             
                             <td>
@@ -303,7 +303,7 @@ $(function () {
                     if(response){
                     //this.reset();
                     //console.log(response) 
-                    swal("Done Successfuly", {
+                    swal("Done Successfully", {
                     icon: "success"
                     }).then((ok) =>{
                     location.reload();

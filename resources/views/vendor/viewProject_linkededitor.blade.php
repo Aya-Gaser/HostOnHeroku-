@@ -57,7 +57,7 @@ td{
               <!-- /.card-header -->
               <div class="card-body">
               <div class="row">
-              <p class="col-md-6 data"> <Span class="head"> ID: </Span>{{$project->wo_id}} </p>
+              <p class="col-md-6 data"> <Span class="head"> ID: </Span>{{str_pad($project->wo_id, 4, "0", STR_PAD_LEFT )}} </p>
               <p class="col-md-6 data"> <Span class="head"> Started on: </Span>
               {{UTC_To_LocalTime($project->created_at,
                                         Auth::user()->timezone) }}  </p>
@@ -459,7 +459,7 @@ $('#reject-form').submit(function(e) {
              if(response){
               this.reset();
                //console.log(response) 
-              swal("Done! Sent Successfuly", {
+              swal("Done! Sent Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();

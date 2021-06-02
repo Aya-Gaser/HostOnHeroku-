@@ -51,9 +51,9 @@ td{
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> ID: </Span>{{$client->id}} </p>
+             <p class="data"> <Span class="head"> ID: </Span>{{str_pad($client->id, 4, "0", STR_PAD_LEFT )}} </p>
               <p class="data"> <Span class="head">Name: </Span>{{$client->name}} </p>
-              <p class="data"> <Span class="head">Number: </Span>{{$client->code}} </p>
+              <p class="data"> <Span class="head">Number/Code: </Span>{{$client->code}} </p>
 
               <p class="data"> <Span class="head"> Created on: </Span> 
              {{ UTC_To_LocalTime($client->created_at, Auth::user()->timezone)}}
@@ -90,7 +90,7 @@ td{
                                    
                                     @foreach($client->Wo as $wo)
                                      <tr>
-                                       <td> {{$wo->id}} </td>
+                                       <td>{{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} </td>
                                        <td> 
                                        {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone) }} 
                                        </td>
@@ -187,7 +187,7 @@ $('#deleteClient').click(function(){
          if(response){
              //this.reset();
               //console.log(response) 
-             swal("Done! Deleted Successfuly", {
+             swal("Done! Deleted Successfully", {
              icon: "success"
            }).then((ok) =>{ 
              window.location.href = "{{route('management.view-allClients' )}}";

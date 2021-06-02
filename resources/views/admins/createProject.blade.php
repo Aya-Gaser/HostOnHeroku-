@@ -49,15 +49,42 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <p class="data"> <Span class="head"> ID: </Span>{{$wo->id}} </p>
-              <p class="data"> <Span class="head"> Deadline: </Span>
-              {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
-              </p>
-              <p class="data"> <Span class="head"> Client Number: </Span> {{App\client::find($wo->client_id)->code}} </p>
-              <p class="data" > <Span class="head"> Language: </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
-              <p class="data"> <Span class="head"> Created on: </Span>
-              {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
+                <div class="row">
+                <p class="data col-md-6"> <Span class="head"> ID:  </Span>
+                 {{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} 
                 </p>
+                <p class="data col-md-6"> <Span class="head"> Created on: </Span>
+                {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
+                </p>
+                <p class="data col-md-6"> <Span class="head"> Client:
+                     @if(App\client::find($wo['client_id']))
+                     {{App\client::find($wo->client_id)->code}} - {{App\client::find($wo->client_id)->name}}
+                      @else 
+                      {{$wo['client_id']}} - <span class="text-danger"> DELETED </span>
+                      @endif
+                 </Span>   </p>
+                <p class="data text-danger col-md-6" > <Span class="head"> Deadline: </Span>
+                {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
+                </p>
+                <p class="data col-md-6"> <Span class="head"> Client PO Number/Description: </Span>{{$wo->po_number}}</p>
+                <p class="data col-md-6"> <Span class="head"> Language: </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
+              </div>
+              <div class="row">
+                
+                <p class="data col-md-6"> <Span class="head"> Number of Files:  </Span>
+                {{$wo->sent_docs}}
+                </p>
+                <p class="data col-md-6"> <Span class="head">Created By:  </Span>
+                {{App\User::find($wo->created_by)->userName}}
+                </p>
+                
+               <p class="data col-md-6"> <Span class="head"> Client Instructions: </Span>
+                 {{ $wo->client_instructions}}
+               </p>
+               <p class="data col-md-6"> <Span class="head"> General Instructions: </Span>
+                 {{ $wo->general_instructions}}
+               </p>
+                </div>     
                 
             
               <div class="row">
@@ -163,23 +190,7 @@
             </div>
           
           <div class="row">
-            <div class="form-group col-md-6">
-                  <label class="form-control-label" for="unit_count">Unit Count<span
-                      class="required">*</span></label>
-                  <input type="number" min="0" step="1" class="form-control" name="unit_count"
-                  id="unit_count" placeholder="Enter 0 if Target " required>
-
-                    </div>
-            <div class="form-group col-md-6">
-                  <label class="form-control-label" for="quality_points">Max Quality Points</label>
-                  <input type="number" min="0" class="form-control" name="maxQuality_points"
-                    id="quality_points" placeholder="Enter 0 if Target ">
-
-                    </div>
-          </div>   
-          <div class="row">          
-  
-              <div class="form-group col-md-6">
+          <div class="form-group col-md-6">
                         <label class="form-control-label" for="vendor_rateUnit"> Unit
                         <span class="required">*</span>
                         </label>
@@ -191,10 +202,28 @@
                           <option value="Flat" >Flat  </option>
                         </select>
                     </div>
+            <div class="form-group col-md-6">
+                  <label class="form-control-label" for="unit_count">Unit Count<span
+                      class="required">*</span></label>
+                  <input type="number" min="0" step="1" class="form-control" name="unit_count"
+                  id="unit_count" placeholder="Enter 0 if Target " required>
+
+                    </div>
+           
+          </div>   
+          <div class="row">          
+  
+             
               <div class="form-group col-md-6">
                 <label for="exampleInputEmail1"> Rate <span class="required">*</span></label>
                 <input type="number" step="0.01" min="0.01" value="0.03" class="form-control" name="vendor_rate" id="vendor_rate" placeholder="Enter Rate" required>
               </div>
+              <div class="form-group col-md-6">
+                  <label class="form-control-label" for="quality_points">Max Quality Points</label>
+                  <input type="number" min="0" class="form-control" name="maxQuality_points"
+                    id="quality_points" placeholder="Enter 0 if Target ">
+
+                    </div>
             </div>
           <div class="row">
             <div class="col-md-6">
@@ -328,7 +357,7 @@ $(".form_datetime").datetimepicker({
         startDate: new Date(new Date().getTime()),
         minuteStep: 15,
        
-        endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
+       // endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
       /*  beforeShowDay: function(date) {
           calender_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+('0'+date.getDate()).slice(-2);
 

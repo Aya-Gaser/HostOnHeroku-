@@ -57,7 +57,7 @@ td{
              
                 <div class="card-body">
                 <div class="row">
-             <p class="data col-md-6"> <Span class="head"> ID: </Span>{{$project->id}} </p>
+             <p class="data col-md-6"> <Span class="head"> ID: </Span>{{str_pad($project->id, 4, "0", STR_PAD_LEFT )}} </p>
              <p class="data col-md-6"> <Span class="head"> Name: </Span>{{$project->name}} </p>
              <p class="data col-md-6" > <Span class="head"> Language: </Span>{{$project->WO->from_language}} ▸ {{$project->WO->to_language}}</p>
               <p class="data col-md-6"> <Span class="head"> Created on: </Span>  {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone) }} </p>
@@ -214,11 +214,11 @@ td{
                                     <thead>
                                         <tr>
                                         
-                                        <th width="25%">Working File</th>
+                                        <th width="25%">Working File(s)</th>
                                         <th width="25%">Translated</th>
                                         <th width="13%">Status / Actions</th>
                                         <th width="25%">Edited</th>
-                                        <th width="12%">Status / Actions</th>
+                                        <th width="12%">Status / Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -379,14 +379,14 @@ td{
               <div class="card-body">
             
                           <div class="card-header">
-                            <h5> Project Editing & Finalization    </h5>
+                            <h5> Stage Editing & Finalization    </h5>
                           </div>
                           <div class="table-responsive">
                                  <table class="table table table-striped">
                                     <thead>
                                         <tr>
                                         
-                                        <th width="33%">Source Document</th>
+                                        <th width="33%">Source Document(s)</th>
                                         <th width="33%">Final Accepted Delivery</th>
                                         <th width="33%">Editing </th>
                                       
@@ -1031,7 +1031,7 @@ $('#deleteProject').click(function(){
           if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done! Deleted Successfuly", {
+              swal("Done! Deleted Successfully", {
               icon: "success"
             }).then((ok) =>{
               window.location.href = '{{route('management.view-allProjects', 'all' )}}';
@@ -1070,7 +1070,7 @@ $('#reject-form').submit(function(e) {
              if(response){
               this.reset();
                //console.log(response) 
-              swal("Done! Sent Successfuly", {
+              swal("Done! Sent Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -1102,7 +1102,7 @@ $('#improve-form').submit(function(e) {
              if(response){
               this.reset();
                //console.log(response) 
-              swal("Done! Sent Successfuly", {
+              swal("Done! Sent Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -1145,7 +1145,7 @@ swal({
           if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done! Deleted Successfuly", {
+              swal("Done! Deleted Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();

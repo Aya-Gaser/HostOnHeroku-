@@ -98,7 +98,7 @@
                   <tbody id="vendors">
                    @foreach($vendorInvoices as $invoice)
                      <tr>
-                     <td> {{$invoice['id']}} </td>                    
+                     <td>{{str_pad($invoice->id, 4, "0", STR_PAD_LEFT )}} </td>                    
                      <td> 
                       {{ UTC_To_LocalTime($invoice['created_at'], Auth::user()->timezone) }}
                     </td>

@@ -205,7 +205,7 @@ $(function () {
                       response = JSON.parse(response.success);
                       $invoiceId = response['invoiceId'];
                       url = url.replace('id', $invoiceId);
-                    swal("Done! Edited Successfuly", {
+                    swal("Done! Edited Successfully", {
                     icon: "success"
                     }).then((ok) =>{
                       window.location.href = url

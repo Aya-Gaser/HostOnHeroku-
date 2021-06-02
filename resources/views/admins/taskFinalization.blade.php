@@ -69,7 +69,7 @@ ul{
                
             <div class="card-body">
               <div class="row">
-             <p class="data col-md-6"> <Span class="head"> WO ID: </Span>{{$task->wo_id}} </p>
+             <p class="data col-md-6"> <Span class="head"> WO ID: </Span>{{str_pad($task->wo_id, 4, "0", STR_PAD_LEFT )}} </p>
              <p class="data col-md-6"> <Span class="head"> Type: </Span>{{$task->type}} </p>
 
              <p class="data col-md-6"> <Span class="head"> Client: </Span>
@@ -164,7 +164,7 @@ ul{
              @foreach ($taskJobs as $project)
              
                 <tr>
-                  <td> {{$project->id}} </td>
+                  <td> {{str_pad($project->id, 4, "0", STR_PAD_LEFT )}} </td>
                   <td>
                    @foreach($project->project_sourceFile as $file)                                
                  
@@ -420,7 +420,7 @@ $('#uploadProof-form').submit(function(e) {
              if (response) {
                this.reset();
                console.log(response) 
-              swal("Done! Uploaded Successfuly", {
+              swal("Done! Uploaded Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -453,7 +453,7 @@ $('#completeReview-form').submit(function(e) {
              if (response) {
                this.reset();
                console.log(response) 
-              swal("Done! Sent Successfuly", {
+              swal("Done! Sent Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -492,7 +492,7 @@ $('.completeTask').click(function(){
               if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done Successfuly", {
+              swal("Done Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -519,7 +519,7 @@ $('.reopen').click(function(){
              if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done Successfuly", {
+              swal("Done Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();

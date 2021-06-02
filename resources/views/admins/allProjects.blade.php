@@ -65,7 +65,7 @@
                   <tbody id="projects">
                    @foreach($projects as $project)
                      <tr>
-                     <td> {{$project['id']}} </td>
+                     <td> {{str_pad($project->id, 4, "0", STR_PAD_LEFT )}} </td>
                      <td> {{$project['name']}} </td>
                     
                      <td> 

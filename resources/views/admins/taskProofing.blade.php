@@ -69,7 +69,7 @@ td{
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> WO ID: </Span>{{$task->wo_id}} </p>
+             <p class="data"> <Span class="head"> WO ID: </Span>{{str_pad($task->wo_id, 4, "0", STR_PAD_LEFT )}} </p>
              <p class="data" > <Span class="head"> Language: </Span>{{$task->WO->from_language}} ▸ {{$task->WO->to_language}}</p>
               <p class="data"> <Span class="head"> Created on: </Span>  {{ UTC_To_LocalTime($task->WO->created_at, Auth::user()->timezone) }} </p>
               <p class="data text-danger"> <Span class="head"> Deadline: </Span> {{UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}</p>
@@ -151,7 +151,7 @@ td{
              @foreach ($taskJobs as $project)
              
                 <tr>
-                  <td> {{$project->id}} </td>
+                  <td> {{str_pad($project->id, 4, "0", STR_PAD_LEFT )}} </td>
                   <td>
                    <ul>
                    @forelse($project->project_sourceFile as $file)                                
@@ -227,7 +227,7 @@ td{
                               <tbody>
                                 @foreach($deliveries_edited as $jobFiles) 
                                 <tr class="bg-dark"> 
-                                   <td colspan="4">Job #{{$jobFiles->id}} Files</td>
+                                   <td colspan="4">Job # {{str_pad($jobFiles->id, 4, "0", STR_PAD_LEFT )}} Files</td>
                                    <td> 
                                    @if($jobFiles->status != 'proofed')
                                     <button type="button" class="sendToVendor btn center" data-toggle="modal" data-target="#modal-sendToVendor"
@@ -484,7 +484,7 @@ $('#uploadProof-form').submit(function(e) {
              if (response) {
                this.reset();
                //console.log(response) 
-              swal("Done! Uploaded Successfuly", {
+              swal("Done! Uploaded Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -538,7 +538,7 @@ $('#completeReview-form').submit(function(e) {
              if (response) {
                this.reset();
                //console.log(response) 
-              swal("Done! Sent Successfuly", {
+              swal("Done! Sent Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -575,7 +575,7 @@ $('.completeTask').click(function(){
               if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done Successfuly", {
+              swal("Done Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -602,7 +602,7 @@ $('.reopen').click(function(){
              if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done Successfuly", {
+              swal("Done Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();

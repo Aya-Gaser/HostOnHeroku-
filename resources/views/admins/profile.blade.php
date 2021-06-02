@@ -38,7 +38,7 @@
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> ID: </Span>{{$user->id}} </p>
+             <p class="data"> <Span class="head"> ID: </Span>{{str_pad($user->id, 4, "0", STR_PAD_LEFT )}} </p>
               <p class="data"> <Span class="head">Name: </Span>{{$user->name}} </p>
               <p class="data"> <Span class="head"> User Name: </Span>{{$user->userName}} </p>
               <p class="data"> <Span class="head"> Email: </Span>{{$user->email}} </p>

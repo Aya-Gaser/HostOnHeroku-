@@ -49,7 +49,7 @@ td{
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> ID: </Span>{{$vendor->id}} </p>
+             <p class="data"> <Span class="head"> ID: </Span>{{str_pad($vendor->id, 4, "0", STR_PAD_LEFT )}} </p>
               <p class="data"> <Span class="head">Name: </Span>{{$vendor->name}} </p>
               <p class="data"> <Span class="head"> User Name: </Span>{{$vendor->userName}} </p>
               <p class="data"> <Span class="head"> Native Language: </Span>{{$vendor->native_language}} </p>
@@ -96,8 +96,8 @@ td{
                                     <tbody>
                                    
                                     @foreach($vendorStages as $stage)
-                                     <tr>
-                                       <td> {{$stage->project_id}} </td>
+                                     <tr> 
+                                       <td>{{str_pad($stage->project_id, 4, "0", STR_PAD_LEFT )}}  </td>
                                        <td> {{App\projects::find($stage->project_id)->name}} </td>
                                        <td> 
                                        {{ UTC_To_LocalTime($stage->created_at, Auth::user()->timezone) }} 
@@ -206,7 +206,7 @@ $(function () {
           if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done! Deleted Successfuly", {
+              swal("Done! Deleted Successfully", {
               icon: "success"
             }).then((ok) =>{ 
               window.location.href = "{{route('management.view-allVendors' )}}";

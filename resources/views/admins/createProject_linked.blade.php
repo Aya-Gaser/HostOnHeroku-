@@ -55,7 +55,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <p class="data"> <Span class="head"> ID: </Span>{{$wo->id}} </p>
+              <p class="data"> <Span class="head"> ID: </Span>{{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}}  </p>
               <p class="data"> <Span class="head"> Deadline: </Span>
               {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
                </p>
@@ -424,7 +424,7 @@ $(".form_datetime").datetimepicker({
         startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
         minuteStep: 15,
         highlightedDates:[new Date('2021-03-05')],
-        endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
+      //  endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
 
       });
     

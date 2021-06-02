@@ -120,7 +120,7 @@
                   <tbody id="vendors">
                    @foreach($vendors as $vendor)
                      <tr>
-                     <td> {{$vendor['id']}} </td>
+                     <td>{{str_pad($vendor->id, 4, "0", STR_PAD_LEFT )}} </td>
                      <td> {{$vendor['name']}} </td>
                      <td> {{$vendor['userName']}} </td>
                      <td> 
@@ -216,7 +216,7 @@ $('.deleteVendor').click(function(){
           if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done! Deleted Successfuly", {
+              swal("Done! Deleted Successfully", {
               icon: "success"
             }).then((ok) =>{
              location.reload();

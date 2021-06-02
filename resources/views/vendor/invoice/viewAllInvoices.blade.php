@@ -69,7 +69,7 @@
                   <tbody>
                   @foreach($invoices as $invoice)
                    <tr>
-                    <td> {{ $invoice['id']}} </td>
+                    <td> {{str_pad($invoice->id, 4, "0", STR_PAD_LEFT )}} </td>
                     <td> {{ $invoice['created_at']}} </td>
                     <td> {{ $invoice['total']}} </td>
                     <td> {{ $invoice['status']}} </td>

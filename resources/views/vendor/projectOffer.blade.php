@@ -27,7 +27,7 @@
       <div class="col-md-11">
             <div class="card card-success shadow-sm">
               <div class="card-header">
-                <h2 class="card-title"> Project {{$wo->id}} </h2>
+                <h2 class="card-title"> Project {{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} </h2>
 
                 
 
@@ -48,13 +48,13 @@
               <p class="data col-md-6"> <Span class="head">  Rate: </Span>{{$stage->vendor_rate}} </p>
               <p class="col-md-6 data"> <Span class="head"> Instruction: 
               </Span> {{  $stage->instructions }} </p>
-              <p class="col-md-6 data"> <Span class="head"> Sent Files Number: 
+              <p class="col-md-6 data"> <Span class="head"> Number of Working Document(s): 
               </Span> {{  $stage->required_docs }} </p>
               <p class="data text-danger col-md-6"> <Span class="head"> Final Delivery Deadline: </Span>
               {{UTC_To_LocalTime($stage->deadline,
                                         Auth::user()->timezone) }}
                </p>
-              <p class="data text-danger col-md-6"> <Span class="head"> Offer Expires Date:  </Span>
+              <p class="data text-danger col-md-6"> <Span class="head"> Offer Expires on:  </Span>
               @php $date = ($group == 1)? 'G1_acceptance_deadline': "G2_acceptance_deadline"; @endphp
               {{UTC_To_LocalTime($stage->$date,
                                         Auth::user()->timezone) }}

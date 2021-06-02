@@ -175,7 +175,7 @@ $(function () {
                       response = JSON.parse(response.success);
                       $invoiceId = response['invoiceId'];
                       url = url.replace('id', $invoiceId);
-                    swal("Done! Added Successfuly", {
+                    swal("Done! Added Successfully", {
                     icon: "success"
                     }).then((ok) =>{
                    // location.reload();
@@ -207,7 +207,7 @@ $(function () {
                       response = JSON.parse(response.success);
                       $invoiceId = response['invoiceId'];
                       url = url.replace('id', $invoiceId);
-                    swal("Done! Edited Successfuly", {
+                    swal("Done! Edited Successfully", {
                     icon: "success"
                     }).then((ok) =>{
                    // location.reload();

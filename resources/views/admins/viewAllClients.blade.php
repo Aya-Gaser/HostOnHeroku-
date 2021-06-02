@@ -89,7 +89,7 @@
                   <tbody id="clients">
                    @foreach($clients as $client)
                      <tr>
-                     <td> {{$client['id']}} </td>
+                     <td> {{str_pad($client->id, 4, "0", STR_PAD_LEFT )}}</td>
                      <td> {{$client['code']}} </td>
                      <td> {{$client['name']}} </td>
                      <td> 
@@ -186,7 +186,7 @@ $('.deleteClient').click(function(){
           if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done! Deleted Successfuly", {
+              swal("Done! Deleted Successfully", {
               icon: "success"
             }).then((ok) =>{
              location.reload();

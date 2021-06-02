@@ -33,7 +33,6 @@
                   <h5> Profile Information</h5>      
               </div>
               <div class="card-body">
-              <p class="data"> <Span class="head"> ID: </Span>{{$user->id}} </p>
               <p class="data"> <Span class="head">Name: </Span>{{$user->name}} </p>
               <p class="data"> <Span class="head"> User Name: </Span>{{$user->userName}} </p>
               <p class="data"> <Span class="head"> Email: </Span>{{$user->email}} </p>

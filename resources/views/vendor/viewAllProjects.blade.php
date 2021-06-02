@@ -71,7 +71,7 @@
                   <tbody>
                   @foreach($stages as $stage)
                    <tr>
-                    <td> {{$stage->wo_id}} </td>
+                    <td> {{str_pad($stage->wo_id, 4, "0", STR_PAD_LEFT )}} </td>
                     <td> {{App\projects::find($stage['project_id'])->name }} </td>
                     <td> {{$stage['type']}} </td>
                     <td> {{UTC_To_LocalTime(App\projects::where('id', $stage['project_id'])->first()->delivery_deadline,

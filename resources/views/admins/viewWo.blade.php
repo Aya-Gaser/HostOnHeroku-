@@ -59,7 +59,7 @@ td{
               <div class="card-body">
               <div class="row">
               <p class="data col-md-6"> <Span class="head"> ID:  </Span>
-                {{$wo->id}}
+                {{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}}
                 </p>
                 <p class="data col-md-6"> <Span class="head"> Created on: </Span>
                 {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
@@ -84,7 +84,7 @@ td{
                 {{$wo->sent_docs}}
                 </p>
                 <p class="data col-md-6"> <Span class="head">Created By:  </Span>
-                {{App\User::find($wo->created_by)->name}}
+                {{App\User::find($wo->created_by)->userName}}
                 </p>
                 
              
@@ -95,10 +95,10 @@ td{
                <p class="data col-md-6"> <Span class="head"> General Instructions: </Span>
                  {{ $wo->general_instructions}}
                </p>
-               <p class="data col-md-12"> <Span class="head"> recieved: 
-               @if($wo->isReceived) <Span class="data"> recieved &check;&check; </span>
+               <p class="data col-md-12"> <Span class="head"> Action: 
+               @if($wo->isReceived) <Span class="data"> Confirmed &check;&check; </span>
                @else
-               <a href="{{route('management.recieve-wo',$wo->id)}}"> <button class="btn btn-success"> recieve </button> </a>
+               <a href="{{route('management.recieve-wo',$wo->id)}}"> <button class="btn btn-success"> Confirmed </button> </a>
                  @endif </Span>
               
                </p>
@@ -129,7 +129,7 @@ td{
                         
                         </div> 
                           <div class="col-sm-6 col-md-6 form-group">
-                            <h4> Reference files </h4>
+                            <h4> Reference Document(s) </h4>
                            <br>
                             @forelse($reference_file as $file)                               
                                 <li class="text-primary">
@@ -395,7 +395,7 @@ td{
                           <div class="row">
                           <div class="card card-noPadding card-primary col-12">
                             <div class="card-header">
-                              <h5 class="card-title"> Jobs In Task </h5>
+                              <h5 class="card-title"> Projects </h5>
                               <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                   <i class="fas fa-minus"></i>
@@ -678,7 +678,7 @@ $('#deleteWo').click(function(){
           if(response){
              // this.reset();
                //console.log(response) 
-              swal("Done! Deleted Successfuly", {
+              swal("Done! Deleted Successfully", {
               icon: "success"
             }).then((ok) =>{
               window.location.href = '{{route('management.view-allWo')}}';
@@ -718,7 +718,7 @@ swal({
           if(response){
               //this.reset();
                //console.log(response) 
-              swal("Done! Deleted Successfuly", {
+              swal("Done! Deleted Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();
@@ -762,7 +762,7 @@ url = url.replace('id', $taskd);
           if(response){
              // this.reset();
                //console.log(response) 
-              swal("Done! Deleted Successfuly", {
+              swal("Done! Deleted Successfully", {
               icon: "success"
             }).then((ok) =>{
               location.reload();

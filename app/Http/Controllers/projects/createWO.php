@@ -100,7 +100,7 @@ class createWO extends Controller
         Mail::to('Projects.tarjamatllc@gmail.com')->send(new newWoCreated($WO->id));
          //
 
-        alert()->success('Wo Created Successfully !')->autoclose(false);
+        alert()->success('WO Created Successfully !')->autoclose(false);
         //return response()->json(['success'=>'File Uploaded Successfully']);      
       return redirect(route('management.view-allWo'));
     }

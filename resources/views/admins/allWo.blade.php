@@ -83,7 +83,7 @@
              @foreach ($allPending_wo as $Pending_wo )
               <tr>
                       <td>
-                     {{$Pending_wo['id']}}
+                      {{str_pad($Pending_wo['id'], 4, "0", STR_PAD_LEFT )}}
                       </td>
                      
                       <td>
@@ -166,8 +166,8 @@
               @foreach ($allCompleted_wo as $completed_wo )
               <tr>
                       <td>
-                     {{$completed_wo['id']}}
                     
+                     {{str_pad($completed_wo['id'], 4, "0", STR_PAD_LEFT )}}
                       </td>
                     
                       <td>

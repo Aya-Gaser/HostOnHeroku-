@@ -67,7 +67,7 @@
                    @foreach($tasks as $task)
                      <tr>
                      <td> {{$task['id']}} </td>
-                     <td> {{$task['wo_id']}} </td>
+                     <td>   {{str_pad($task['wo_id'], 4, "0", STR_PAD_LEFT )}} </td>
                      <td>
                      {{ UTC_To_LocalTime($task->WO->deadline, Auth::user()->timezone) }}
                       </td>
