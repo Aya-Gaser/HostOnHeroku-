@@ -41,7 +41,7 @@
                 <div class="row">  
                    
                 <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">code</label>
+                   <label for="exampleInputEmail1">Number</label>
                     <input type="text" class="form-control" name="code"  placeholder="">
                  </div>
                  <div class="form-group col-md-6">
@@ -77,7 +77,6 @@
                   <thead>
                     <tr>
                     
-                      <th>ID</th>
                       <th>Number</th>
                       <th>Name</th>
                       <th>Created on</th>
@@ -89,7 +88,6 @@
                   <tbody id="clients">
                    @foreach($clients as $client)
                      <tr>
-                     <td> {{str_pad($client->id, 4, "0", STR_PAD_LEFT )}}</td>
                      <td> {{$client['code']}} </td>
                      <td> {{$client['name']}} </td>
                      <td> 

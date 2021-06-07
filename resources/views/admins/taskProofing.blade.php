@@ -135,7 +135,7 @@ td{
                         #
                       </th>
                       <th style="width: " >
-                         Working Files 
+                         Working Document(s)  
                       </th>
                       <th style="width: ">
                        Instuctions
@@ -202,7 +202,7 @@ td{
            
             <div class="card card-success col-md-12">
               <div class="card-header">
-                              <h5> Files Editing & Proofing 
+                              <h5> Document(s) Editing & Proofing 
                                 </h5>
               </div>
               <div class="card-body">
@@ -214,7 +214,7 @@ td{
                                         <tr>
                                         
                                         <th>Target File</th>
-                                        <th >Edited File </th>
+                                        <th >Processed File </th>
                                         <th>Vendor File </th>
                                       
                                         <th>Client File </th>
@@ -231,9 +231,9 @@ td{
                                    <td> 
                                    @if($jobFiles->status != 'proofed')
                                     <button type="button" class="sendToVendor btn center" data-toggle="modal" data-target="#modal-sendToVendor"
-                                     id="{{$jobFiles->id}}" style=" background-color:#eb6434; color:white;"> Send Files To Vendor </button>
+                                     id="{{$jobFiles->id}}" style=" background-color:#eb6434; color:white;"> Send Document(s) To Vendor </button>
                                    @else 
-                                     <span class="text-success"> Files Sent To Vendor &check;&check; </span> 
+                                     <span class="text-success"> Document(s) Sent To Vendor &check;&check; </span> 
                                    @endif
                                    </td>
                                 </tr>  
@@ -262,7 +262,7 @@ td{
                                     </p> 
                                     
                                     @else 
-                                          <p class="pending"> <b> SENT WITHOUT EDITING</b> </p> 
+                                          <p class="pending"> <b> SENT WITHOUT Processing</b> </p> 
                                          
                                       @endif
                                    </td>
@@ -343,7 +343,7 @@ td{
           <div class="modal-dialog col-md-12 center" style="max-width:750px;">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Upload Prooing Files </h4>
+                <h4 class="modal-title">Upload Prooing Document(s) </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -406,7 +406,7 @@ td{
      <div class="modal-dialog col-md-12 center" style="max-width:750px;">
        <div class="modal-content">
          <div class="modal-header">
-           <h4 class="modal-title">Send Full Review To Vendor </h4>
+           <h4 class="modal-title">Send Reviewed Document(s) To Vendor </h4>
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>

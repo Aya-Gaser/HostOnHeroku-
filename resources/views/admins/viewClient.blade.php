@@ -51,9 +51,8 @@ td{
                 </div>
              
                 <div class="card-body">
-             <p class="data"> <Span class="head"> ID: </Span>{{str_pad($client->id, 4, "0", STR_PAD_LEFT )}} </p>
+                <p class="data"> <Span class="head">Number: </Span>{{$client->code}} </p>
               <p class="data"> <Span class="head">Name: </Span>{{$client->name}} </p>
-              <p class="data"> <Span class="head">Number/Code: </Span>{{$client->code}} </p>
 
               <p class="data"> <Span class="head"> Created on: </Span> 
              {{ UTC_To_LocalTime($client->created_at, Auth::user()->timezone)}}

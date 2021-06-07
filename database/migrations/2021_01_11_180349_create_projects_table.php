@@ -27,8 +27,8 @@ class CreateProjectsTable extends Migration
             $table->boolean('isReadyToFinalize')->default(false);
            // $table->longText('instructions')->nullable(); instructions_editing
             $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('translator_id')->nullable();
-            $table->unsignedBigInteger('editor_id')->nullable();
+            $table->unsignedBigInteger('translator_id')->default(0);
+            $table->unsignedBigInteger('editor_id')->default(0);
             $table->string('status');
 
             $table->timestamps();

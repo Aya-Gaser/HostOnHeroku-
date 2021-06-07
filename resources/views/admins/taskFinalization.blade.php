@@ -148,7 +148,7 @@ ul{
                       <th style="width: " >
                          Working Files
                          <span class="text-success">  ▸▸▸ </span>
-                           Proofed Files 
+                           Proofed Document(s)  
                         </th>
                       <th style="width: ">
                        Instuctions
@@ -231,7 +231,7 @@ ul{
            
             <div class="card card-success col-md-12">
               <div class="card-header">
-                  <h5> Files Finalization</h5>
+                  <h5> Document(s) Finalization</h5>
                <div class="card-tools">
                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-uploadFinalization">
                 Upload Files
@@ -349,7 +349,7 @@ ul{
      <div class="modal-dialog col-md-12 center" style="max-width:750px;">
        <div class="modal-content">
          <div class="modal-header">
-           <h4 class="modal-title">Upload Finalized Files </h4>
+           <h4 class="modal-title">Upload Finalized Document(s) </h4>
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>

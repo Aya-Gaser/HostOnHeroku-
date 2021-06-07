@@ -202,14 +202,14 @@ tr{
                 <a href="{{route('vendor.view-readyWorkOrder-invoices') }}" 
                 class="nav-link {{ isActive('vendor.view-readyWorkOrder-invoices')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Ready Work Order Invoices</p>
+                  <p>Completed Projects To Invoice</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('vendor.create-nonWorkInvoice') }}" 
                 class="nav-link {{ isActive('vendor.create-nonWorkInvoice')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Non Work Order Invoices</p>
+                  <p>Non-Peoject Items To Invoice</p>
                 </a>
               </li>
               <li class="nav-item">

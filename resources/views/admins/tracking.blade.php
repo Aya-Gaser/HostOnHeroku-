@@ -101,8 +101,7 @@ th{
                     <p class="col-md-1 text-dark font-weight-bold" > Task # {{$loop->iteration}}  </p>
                     <p class="col-md-2"> Type:  {{$task->type}} </p>
                   <p class="col-md-2"> Word Count: {{$task->client_wordsCount}} </p>
-                  <p class="col-md-2"> Unit: {{$task->client_rateUnit}}
-                  <p class="col-md-2"> Finalzed File(s): {{count($task->proofed_clientFile)}} of {{count($wo->woSourceFiles)}}   </p>
+                  <p class="col-md-2"> Finalized File(s): {{count($task->proofed_clientFile)}} of {{count($wo->woSourceFiles)}}   </p>
                   <p class="col-md-2"> Status: {{$task->status}} </p>
                   @if($task->status == 'Completed')
                   <button class='btn btn-dark col-md-1' onclick="archiveTask('{{$task->id}}')">Archive </button>
@@ -112,6 +111,11 @@ th{
                  <p class="col-md-2"> Jobs in Task: {{count($task->project)}}   </p>
                  @foreach($task->project as $project)
                  <p class="col-md-3"> Job #{{$loop->iteration}} Status: {{$project->status}}   </p>
+                 <p class="col-md-3"> 
+                 Translator: @if($project->translator_id){{App\User::find($project->translator_id)->name}} 
+                 @else NOT ACCEPTED @endif  </p>
+                 <p class="col-md-3"> Deadline: {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone)}} </p>
+
                  @endforeach
                  </div>
                 </div>   

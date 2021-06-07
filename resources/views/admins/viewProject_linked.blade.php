@@ -670,7 +670,7 @@ td{
                                         
                                         <th width="33%">Source Document(s)</th>
                                         <th width="33%">Final Accepted Delivery</th>
-                                        <th width="33%">Editing </th>
+                                        <th width="33%">Processed File(s) </th>
                                       
                                         </tr>
                                     </thead>
@@ -729,16 +729,16 @@ td{
                                             <label class="custom-file-label" for="exampleInputFile" style="width:170;">Choose file</label>
                                           </div>
                                           <button type="submit" class="btn btn-primary" > 
-                                            Upload Edited File </button>
+                                          Submit Processed to Finalization </button>
                                           </form>  
                                           </p> 
                                           <a href="{{route('management.send-toFinalization',$source_file->id)}}">
                                           <button type="button" class="btn btn-primary" > 
-                                            Send To Finalization </button>
+                                          Send Without Processing To Finalization </button>
                                             </a>
                                            </td> 
                                           @else 
-                                          <td> SENT WITHOUT EDITING</td> 
+                                          <td> SENT WITHOUT PROCESSING</td> 
                                          
                                       @endif
                                       

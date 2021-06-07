@@ -85,7 +85,7 @@
             </div>
         </form>
         @else
-        <h2 class="card-title"> Create Non Work order Invoice </h2>
+        <h2 class="card-title"> Create Non-Project Item To Invoice </h2>
               </div>
               <div class="card-body">
         <form id="addInvoice-form" action="" method="post" enctype="multipart/form-data">
@@ -114,7 +114,7 @@
                   
                    
                   <div class="form-group col-md-12">
-                    <label for="exampleInputEmail1"> Note <span class="required">*</span></label>
+                    <label for="exampleInputEmail1"> Description <span class="required">*</span></label>
                     <input type="text" class="form-control" 
                     name="note" id="note" required>
                   </div>
