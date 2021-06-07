@@ -204,8 +204,164 @@ td{
         </div>  
 
 
-  <!-- *********************** end update ************************* -->            
+  <!-- *********************** end update ************************* -->  
+
+ <!-- ************************* START STAGE INFO & UPDATE ************ -->
+
+  
+            <div class="card col-md-12">
+             <div class="card-header">
+             <h4> Translation Stage </h4>
+             
+                <button style="float:right;" id="updateStage" class="btn btn-primary">Update Details</button>
+               
+             </div>
+             <div class="card-body">
+             <div class="row">
+             @php $stage = App\projectStage::where('project_id', $project->id)
+                                              ->first(); @endphp
+                                              
+                <p class="data col-md-4"> <Span class="head"> Deadline: </Span>
+               
+                {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
+               @if($project->type != 'Dtp')
+                <p class="data col-md-4"> <Span class="head">  Word Count: </Span>
+                  @if($stage->vendor_unitCount)  {{$stage->vendor_unitCount}}
+                  @else   <span class="text-danger"> Target </span> 
+                  @endif    
+                </p>
+                <p class="data col-md-4"> <Span class="head"> MAX Quality Points: </Span>
+                  @if($stage->vendor_maxQualityPoints)  {{$stage->vendor_maxQualityPoints}}
+                  @else   <span class="text-danger"> Target </span> 
+                  @endif
+                 </p>
+                 @endif
+                <p class="data col-md-4"> <Span class="head"> Unit: </Span>{{$stage->vendor_rateUnit}} </p>
+                <p class="data col-md-4"> <Span class="head"> Translator Rate: </Span>{{$stage->vendor_rate}} </p>
+
+                <p class="data col-md-4"> <Span class="head">Translator: </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
+                @else <span class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
+                <p class="data col-md-4"> <Span class="head"> Number of File: </Span>
+              
+               {{$stage->required_docs}} </p>
+                <p class="data col-md-4"> <Span class="head"> Status: </Span>
+               
+                  {{$stage->status}} @if($stage->readyToInvoice) - Ready for invoice @endif </p>
+                <p>
+                @if($stage->readyToInvoice != 1)
+                  @if($project->type != 'Dtp')
+                   
+                  <button type="button" id="{{$stage->id}}" data-toggle="modal" data-target="#modal-completeStage"
+                  class="btn btn-success completeStage complete" > 
+                          Complete Job &check;&check; </button>
+                      </a> 
+                  @else 
+                   <button type="button" id="{{$stage->id}}" class="complete btn btn-success completeStageDTP" > 
+                          Complete Job &check;&check; </button>
+                      </a> 
+                  @endif
+
+                @else 
+
+                    <button type="button" id="{{$stage->id}}" class="btn btn-success completeStage reopen" > 
+                        RE-OPEN </button>
+                  
+                 @endif       
+                    </p>
+              <p class="data col-md-12"> <Span class="head"> Instructions: </Span>{{$stage->instructions}} </p>
+     
+                   
+              </div>
+               <!-- ****************update stage**************************************** -->
+           <div class="card card-primary" id="update_div_stage">
+              <div class="card-header">
+                <h3 class="card-title">Update Stage Details  </h3>
+                <div class="card-tools">
+                 
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
               <!-- /.card-header -->
+              <!-- form start -->
+              <form id="updateStage" action="{{route('management.update-stage',$stage->id)}}" method="post" enctype="multipart/form-data">
+              @csrf
+                <div class="card-body">
+                @if($project->type != 'Dtp')
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label" for="unit_count">Unit Count<span
+                        class="required">*</span></label>
+                    <input type="number" min="0" step="1" class="form-control" name="unit_count_{{$stage->id}}"
+                     value="{{$stage->vendor_unitCount}}" id="unit_count" placeholder="Enter 0 if Target " required>
+
+                  </div>
+                  <div class="form-group col-md-6">
+                        <label class="form-control-label" for="quality_points">MAX Quality Points<span
+                            class="required">*</span></label>
+                        <input type="number" min="0" class="form-control" name="maxQuality_points_{{$stage->id}}"
+                        value="{{$stage->vendor_maxQualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
+
+                  </div>
+                </div>  
+                @endif 
+                <div class="row">          
+  
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label" for="vendor_rateUnit"> Unit
+                      <span class="required">*</span>
+                      </label>
+                      <select class="form-control" name="rate_unit_{{$stage->id}}" id="rate_unit"
+                        data-placeholder="select vendor Rate Unit" required>
+                        <option disabled >Select</option>
+                        <option value="Word Count" >Word Count  </option>
+                        <option value="Hour" >Hour  </option>
+                        <option value="Flat" >Flat  </option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1"> Rate <span class="required">*</span></label>
+                    <input type="number" step="0.01" min="0.01" class="form-control" 
+                    name="vendor_rate_{{$stage->id}}" id="vendor_rate" value="{{$stage->vendor_rate}}" required>
+                  </div>
+                </div>
+                <div class="row">
+               <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
+                    <label for="exampleInputFile">Delivery Deadline <span class="required"> *</span> </label>
+                    <div style="padding:10px;" class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+                      <input name="vendor_deadline_{{$stage->id}}" style="width:90%; height:40px;" size="16"
+                      class="form-control" value="{{UTC_To_LocalTime($stage->deadline, Auth::user()->timezone)}}" type="text" value="">
+                      <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
+                      <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                <label for="exampleInputEmail1"> Number of Files <span class="required">*</span></label>
+                <input type="number" step="1" min="1" class="form-control" name="required_docs_{{$stage->id}}" value="{{$stage->required_docs}}" required>
+              </div>
+                </div>
+          
+          <div class="row">        
+                <div class="form-group col-md-12">
+              <label> Instructions</label>
+              <textarea class="form-control" name="instructions_{{$stage->id}}" rows="3" 
+              value="">{{$stage->instructions}}</textarea>
+            </div>
+          </div> 
+         
+            
+                  </div>
+            <!-- /.card -->
+
+            <div class="card-footer" id="submit_div">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+              </form>
+            </div>         
+
+
+ <!-- *************************END STAGE INFO & UPDATE ************ -->
               <div class="card col-md-12">
               <div class="card-body">
             
@@ -272,7 +428,7 @@ td{
                                         <td>
                                        
                                               <p>{{$delivery_files->translator_delivery[$source_file->id][0]->status}}</p>
-                                              <p><b>Notes</b>:{{$delivery_files->translator_delivery[$source_file->id][0]->notes}}</p>  <br> 
+                                              <p><b>Notes</b>: {{$delivery_files->translator_delivery[$source_file->id][0]->notes}}</p>  <br> 
                                               @if($delivery_files->translator_delivery[$source_file->id][0]->improvedFiles)
                                                 <ul>
                                                 @foreach($delivery_files->translator_delivery[$source_file->id][0]->improvedFiles as $improvedFile)   
@@ -436,160 +592,10 @@ td{
 
 
 
-            <div class="card col-md-12">
-             <div class="card-header">
-             <h4> Translation Stage </h4>
-             
-                <button style="float:right;" id="updateStage" class="btn btn-primary">Update Details</button>
-               
-             </div>
-             <div class="card-body">
-             <div class="row">
-             @php $stage = App\projectStage::where('project_id', $project->id)
-                                              ->first(); @endphp
-                                              
-                <p class="data col-md-4"> <Span class="head"> Deadline: </Span>
-               
-                {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
-               @if($project->type != 'Dtp')
-                <p class="data col-md-4"> <Span class="head">  Word Count: </Span>
-                  @if($stage->vendor_unitCount)  {{$stage->vendor_unitCount}}
-                  @else   <span class="text-danger"> Target </span> 
-                  @endif    
-                </p>
-                <p class="data col-md-4"> <Span class="head"> MAX Quality Points: </Span>
-                  @if($stage->vendor_maxQualityPoints)  {{$stage->vendor_maxQualityPoints}}
-                  @else   <span class="text-danger"> Target </span> 
-                  @endif
-                 </p>
-                 @endif
-                <p class="data col-md-4"> <Span class="head"> Unit: </Span>{{$stage->vendor_rateUnit}} </p>
-                <p class="data col-md-4"> <Span class="head"> Translator Rate: </Span>{{$stage->vendor_rate}} </p>
-
-                <p class="data col-md-4"> <Span class="head">Translator: </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
-                @else <span class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
-                <p class="data col-md-4"> <Span class="head"> Number of File: </Span>
-              
-               {{$stage->required_docs}} </p>
-                <p class="data col-md-4"> <Span class="head"> Status: </Span>
-               
-                  {{$stage->status}} @if($stage->readyToInvoice) - Ready for invoice @endif </p>
-                <p>
-                @if($stage->readyToInvoice != 1)
-                  @if($project->type != 'Dtp')
-                   
-                  <button type="button" id="{{$stage->id}}" data-toggle="modal" data-target="#modal-completeStage"
-                  class="btn btn-success completeStage complete" > 
-                          Complete Job &check;&check; </button>
-                      </a> 
-                  @else 
-                   <button type="button" id="{{$stage->id}}" class="complete btn btn-success completeStageDTP" > 
-                          Complete Job &check;&check; </button>
-                      </a> 
-                  @endif
-
-                @else 
-
-                    <button type="button" id="{{$stage->id}}" class="btn btn-success completeStage reopen" > 
-                        RE-OPEN </button>
-                  
-                 @endif       
-                    </p>
-              <p class="data col-md-12"> <Span class="head"> Instructions: </Span>{{$stage->instructions}} </p>
-     
-                   
-              </div>
-               <!-- ****************update stage**************************************** -->
-           <div class="card card-primary" id="update_div_stage">
-              <div class="card-header">
-                <h3 class="card-title">Update Stage Details  </h3>
-                <div class="card-tools">
-                 
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form id="updateStage" action="{{route('management.update-stage',$stage->id)}}" method="post" enctype="multipart/form-data">
-              @csrf
-                <div class="card-body">
-                @if($project->type != 'Dtp')
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label class="form-control-label" for="unit_count">Unit Count<span
-                        class="required">*</span></label>
-                    <input type="number" min="0" step="1" class="form-control" name="unit_count_{{$stage->id}}"
-                     value="{{$stage->vendor_unitCount}}" id="unit_count" placeholder="Enter 0 if Target " required>
-
-                  </div>
-                  <div class="form-group col-md-6">
-                        <label class="form-control-label" for="quality_points">MAX Quality Points<span
-                            class="required">*</span></label>
-                        <input type="number" min="0" class="form-control" name="maxQuality_points_{{$stage->id}}"
-                        value="{{$stage->vendor_maxQualityPoints}}" id="quality_points" placeholder="Enter 0 if Target " required>
-
-                  </div>
-                </div>  
-                @endif 
-                <div class="row">          
-  
-                  <div class="form-group col-md-6">
-                      <label class="form-control-label" for="vendor_rateUnit"> Unit
-                      <span class="required">*</span>
-                      </label>
-                      <select class="form-control" name="rate_unit_{{$stage->id}}" id="rate_unit"
-                        data-placeholder="select vendor Rate Unit" required>
-                        <option disabled >Select</option>
-                        <option value="Word Count" >Word Count  </option>
-                        <option value="Hour" >Hour  </option>
-                        <option value="Flat" >Flat  </option>
-                      </select>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="exampleInputEmail1"> Rate <span class="required">*</span></label>
-                    <input type="number" step="0.01" min="0.01" class="form-control" 
-                    name="vendor_rate_{{$stage->id}}" id="vendor_rate" value="{{$stage->vendor_rate}}" required>
-                  </div>
-                </div>
-                <div class="row">
-               <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
-                    <label for="exampleInputFile">Delivery Deadline <span class="required"> *</span> </label>
-                    <div style="padding:10px;" class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
-                      <input name="vendor_deadline_{{$stage->id}}" style="width:90%; height:40px;" size="16"
-                      class="form-control" value="{{UTC_To_LocalTime($stage->deadline, Auth::user()->timezone)}}" type="text" value="">
-                      <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
-                      <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
-                  </div>
-                </div>
-                <div class="form-group col-md-6">
-                <label for="exampleInputEmail1"> Number of Files <span class="required">*</span></label>
-                <input type="number" step="1" min="1" class="form-control" name="required_docs_{{$stage->id}}" value="{{$stage->required_docs}}" required>
-              </div>
-                </div>
-          
-          <div class="row">        
-                <div class="form-group col-md-12">
-              <label> Instructions</label>
-              <textarea class="form-control" name="instructions_{{$stage->id}}" rows="3" 
-              value="">{{$stage->instructions}}</textarea>
-            </div>
-          </div> 
-         
-            
-                  </div>
-            <!-- /.card -->
-
-            <div class="card-footer" id="submit_div">
-                  <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-              </form>
-            </div>
      
 
 
-  <!-- *********************** end update ************************* -->       
+  <!-- *********************** DELIVERY HISTORY ************************* -->       
             <div class="card-warning">
               <div class="card-header">
                 <h4 class="card-title" style="font-size:24px;"> Delivery History </h4>
@@ -700,7 +706,7 @@ td{
               <div class="modal-body">
               <form id="deliveryAction-form" enctype="multipart/form-data">
                     @csrf
-                 <label> Note (optional) </label>    
+                 <label> Note(s) </label>    
                 <input name="notes" type="text" class="form-control" placeholder="None .."> 
                <input type="hidden" id="deliveryId" name="deliveryId">
                <input type="hidden" id="action" name="action">
@@ -744,7 +750,7 @@ td{
                      <label class="form-control-label"
                         for="source_document">Notes </label>
                     
-                     <input name="notes_improve" type="text" class="form-control" placeholder="None .."> 
+                     <input name="notes_improve" type="text" class="form-control" placeholder="None .." required> 
                      <input type="hidden" id="deliveryId_improve" name="deliveryId_improve">
               
               </div>
@@ -852,9 +858,11 @@ $('.action').click(function(){
 });  
 $('.reject').click(function(){
    $('#action').val('rejected');
+   document.getElementById("notes").required = true;
 });  
 $('.accept').click(function(){
    $('#action').val('accepted');
+   document.getElementById("notes").required = false;
 });   
 $('#deliveryAction-form').submit(function(e) {
        $('#modal-actionNote').fadeOut();

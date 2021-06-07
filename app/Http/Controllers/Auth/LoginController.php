@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Validation\ValidationException;
 class LoginController extends Controller
@@ -33,8 +34,8 @@ class LoginController extends Controller
     {   if ( $user->hasRole('admin') ) {
              if($user->isFirstLogin)
                 return redirect()->intended(route('management.first-login'));  
-             return redirect()->intended(route('management.dashboard'));
-    
+            return redirect()->intended(route('management.dashboard'));
+
         }
 
         if ( $user->hasRole('vendor') ) {
@@ -58,12 +59,22 @@ class LoginController extends Controller
 
     protected function sendFailedLoginResponse(Request $request)
     {
-        alert()->error('Email/Username and password is wrong !', 'Opps !')->autoclose(6000);
-        throw ValidationException::withMessages(
-            [
-                'error' => [trans('auth.failed')],
-            ]
-        );
+        $errors = [$this->username() => trans('auth.failed')];
+    
+        // Load user from database
+        $user = \App\User::where($this->username(), $request->{$this->username()})->first();
+    
+        if ($user && !\Hash::check($request->password, $user->password)) {
+            $errors = ['password' => 'Wrong password'];
+        }
+    
+        if ($request->expectsJson()) {
+            return response()->json($errors, 422);
+        }
+    
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors($errors);
     }
 
     public function logout(Request $request)

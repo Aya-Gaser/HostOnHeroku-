@@ -240,7 +240,7 @@
          <div class="modal-body">
          <form id="invoice-form" enctype="multipart/form-data">
                @csrf
-            <label> Note (optional) </label>    
+            <label> Note </label>    
            <input name="notes" type="text" class="form-control" placeholder="None .."> 
            <input type="hidden" id="invoiceId" name="invoiceId" value="{{$invoice->id}}">
               <input type="hidden" id="action" name="action" >
@@ -285,9 +285,11 @@
 $(function () {
  $('.approve').click(function(){ 
     $('#action').val(1)
+    document.getElementById("notes").required = false;
  });   
  $('.reject').click(function(){ 
     $('#action').val(0)
+    document.getElementById("notes").required = true;
  });
     $('#invoice-form').submit(function(e){ 
       e.preventDefault();

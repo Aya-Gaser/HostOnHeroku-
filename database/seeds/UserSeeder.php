@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class UserSeeder extends Seeder
             'userName' =>'aya',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
-            'password' => bcrypt('123456789'),
+            'password' => Hash::make('123456789'),
              'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
         ]); //reeno admin mgr, 4 bus mgr, hoda fin asst, super : gen mgr
@@ -27,7 +28,7 @@ class UserSeeder extends Seeder
             'userName' =>'FIN ASST',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
-            'password' => bcrypt('123456789'),
+            'password' => Hash::make('123456789'),
            'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
         ]);
@@ -37,7 +38,7 @@ class UserSeeder extends Seeder
             'userName' =>'ADMIN MGR',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
-            'password' => bcrypt('123456789'),
+            'password' => Hash::make('123456789'),
             'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
         ]);
@@ -47,7 +48,7 @@ class UserSeeder extends Seeder
             'userName' =>'Projects_tarjamatllc',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
-            'password' => bcrypt('123456789'),
+            'password' => Hash::make('123456789'),
            'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
         ]);
@@ -57,7 +58,7 @@ class UserSeeder extends Seeder
             'userName' =>'BUS MGR',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
-            'password' => bcrypt('123456789'),
+            'password' => Hash::make('123456789'),
            'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
         ]);
@@ -67,7 +68,7 @@ class UserSeeder extends Seeder
             'userName' =>'GEN MGR',
             'isFirstLogin'=>1,
             'account_type'=>'admin',
-            'password' => bcrypt('123456789'),
+            'password' => Hash::make('123456789'),
            'visible' => encrypt('123456789'),
             'birthdate' => ('2021-01-03'),
         ]);
