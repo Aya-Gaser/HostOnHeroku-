@@ -4,6 +4,9 @@ namespace App\Http\Controllers\vendor\invoice;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\vendorInvoiceNotification;
+
 use App\projectStage;
 use App\vendorInvoice;
 use App\vendorWorkInvoiceItem;
@@ -141,7 +144,10 @@ class invoiceController extends Controller
         $invoice = vendorInvoice::findOrFail($request->input('invoiceId'));  
         $invoice->status = 'Pending';
         $invoice->save();
-        
+        // SEND NOTIFICATION MAIL TO VENDORS
+        Mail::to('hoda.tarjamat@gmail.com')->send(new vendorInvoiceNotification($invoice->id));
+        Mail::to('reeno.tarjamat@gmail.com')->send(new vendorInvoiceNotification($invoice->id));
+
         return response()->json([ 'success'=> 'Form is successfully submitted!']);
 
     }
