@@ -251,7 +251,18 @@
                      </div>
                    </div> 
                       
+                   <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label"
+                       for="source_document">Source File(s)<span class="required">*</span></label>
                    
+                       <div class="file-loading col-md-2">  
+                        <input id="vendorSource_files" name="vendorSource_files[]"
+                         class="kv-explorer" type="file" multiple required>  
+                         </div>
+                    </div>
+                  </div> 
+                  
                    <div class="col-md-6">
                      <div class="form-group">
                        <label class="form-control-label"

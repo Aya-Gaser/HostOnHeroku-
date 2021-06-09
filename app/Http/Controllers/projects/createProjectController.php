@@ -57,7 +57,7 @@ class createProjectController extends Controller
       return view('admins.selsctProjectType')->with([ 'wo_id' => $id, 'wo'=> $wo ]);
     } 
 
-    public function index($id,$type){
+    public function index($id,$type,$taskId){
       if(!Auth::user()->can('create-project'))
         abort(401);
       $route_id = $this->getWo_Id();
@@ -69,7 +69,7 @@ class createProjectController extends Controller
       $source_files = $wo->woFiles->where('type','source_file');
       $reference_file =$wo->woFiles->where('type','reference_file');
       $view = ($type =='linked') ? 'admins.createProject_linked' : 'admins.createProject';
-      return view($view)->with([ 'wo'=>$wo,'source_files'=>$source_files,
+      return view($view)->with([ 'wo'=>$wo,'source_files'=>$source_files,'taskId'=>$taskId,
       'reference_file'=>$reference_file, 'vendors'=>$vendors]);
     }
     
@@ -148,8 +148,8 @@ class createProjectController extends Controller
       if ($request->hasFile('reference_files')) {
           $this->uploadWoAttachments($project->id, 'reference_files','reference_file');
       }
-      if ($request->hasFile('target_files')) {
-          $this->uploadWoAttachments($project->id, 'target_files','target_file');
+      if ($request->hasFile('vendorSource_files')) {
+          $this->uploadWoAttachments($project->id, 'vendorSource_files','vendorSource_file');
       }
       
      
@@ -199,7 +199,7 @@ class createProjectController extends Controller
           $extension = $attachment->extension();
           $fileName = $project_id . '_' . $attachment->getClientOriginalName() . time() . '_' . rand(1111111111, 99999999) . str_random(10) . '.' . $extension;
           if($inputType != 'source_file'){ 
-                $filePath = '/projects_files/' . $project_id . '/';
+                $filePath = '/projects_files/'.$inputType.'/' . $project_id . '/';
                 Storage::putFileAs('public' . $filePath, new File($attachment), $fileName);
 
               //save each file 

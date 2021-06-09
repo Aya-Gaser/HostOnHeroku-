@@ -74,11 +74,11 @@ class viewOfferController extends Controller
             $wo = WO::where('id',$stage->wo_id)->first();
         
            
-            [$reference_files, $target_files] = $this->getprojectsFiles($stage->project_id);
+            [$vendorSource_files, $reference_files] = $this->getprojectsFiles($stage->project_id);
             $source_files = $project->project_sourceFile;
             return view('vendor.projectOffer')->with(['stage'=>$stage, 'vendor'=>$vendor,
              'wo'=>$wo,'group'=>$group,
-            'source_files'=>$source_files,'reference_file'=>$reference_files,'target_files'=>$target_files]); 
+            'source_files'=>$source_files,'reference_file'=>$reference_files,'vendorSource_files'=>$vendorSource_files]); 
         }
         else 
        return view('vendor.notAvailable');  
@@ -88,8 +88,8 @@ class viewOfferController extends Controller
     public function getprojectsFiles($project_id){
         $project = projects::find($project_id);
         $reference_file =$project->projectFile->where('type','reference_file');
-        $target_file =$project->projectFile->where('type','target_file');
-        return [$reference_file, $target_file];
+        $vendorSource_files =$project->projectFile->where('type','vendorSource_file');
+        return [$vendorSource_files, $reference_file];
         
     }
     //return 'g';

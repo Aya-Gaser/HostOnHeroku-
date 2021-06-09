@@ -79,6 +79,31 @@
                                 <li class="text-danger">None</li>
                             @endforelse
                             <br>
+                           </div>
+                         </div> 
+                         <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                    <br>
+                        <h4> Source Document(s) </h4>
+                        <br>
+                        
+                            @forelse($vendorSource_files as $file)                                
+                                <li class="text-primary">
+                                <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file_name']}}">
+                                        {{$file['file_name']}}
+                                    </a>
+                                   
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">None</li>
+                            @endforelse
+                            <br>
+                           </div>
+                         </div> 
+                     <div class="col-sm-6 col-md-4">
+                       <div class="form-group">
                             <h4> Reference Document(s) </h4>
                            <br>
                             @forelse($reference_file as $file)                               

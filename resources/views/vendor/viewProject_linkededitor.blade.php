@@ -83,12 +83,38 @@ td{
               <p class="col-md-6 data"> <Span class="head"> Sent Files Number: 
               </Span> {{  $stage->required_docs }} </p>
               
-              <p class="col-md-6 data"> <Span class="head"> Time until Deadline: 
+              <p class="col-md-6 data"  style="color:black;"> <Span class="head"> Time until Deadline: 
               </Span>  {!! $deadline_difference !!} </p>
               <p class="data col-md-6"> <Span class="head"> Status: </Span>
                   {{$stage->status}} </p>
-              </div>    
-              <div class="col-sm-12 col-md-12">
+              </div>   
+              <div clas="row">
+              <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                    <br>
+                    
+              <h4> Source Document(s) </h4>
+                           <br>
+                           <ul>
+                            @forelse($vendorSource_files as $file)                               
+                                <li class="text-primary">
+                                    <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file_name']}}">
+                                        {{str_limit($file['file_name'],50)}}
+                                    </a>
+                                    
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">None</li>
+                            @endforelse
+                            <br>
+                           
+             
+                            </ul>
+                    </div>
+                   </div>  
+              <div class="col-sm-6 col-md-6">
                     <div class="form-group">
                     <br>
                     
@@ -113,7 +139,7 @@ td{
                             </ul>
                     </div>
                     </div>
-                  
+                 </div>  
                     <br><br>
                     @if($project->status == 'reviewed')
                     <div class="card card-success">

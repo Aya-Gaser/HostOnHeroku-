@@ -86,10 +86,10 @@ class viewAllProjectsController extends Controller
             [$deliver_withFiles,$thisVendor_delivery] =  $this->getWo_Deliveriesfiles($stage); 
         }
          
-        [$reference_file, $target_file] =  $this->getprojectFile($project); //'wo->files';
+        [$vendorSource_files, $reference_file] =  $this->getprojectFile($project); //'wo->files';
         $deadline_difference = $this->deadline_difference($stage);
         return view($view)->with(['deliver_withFiles'=>$deliver_withFiles, 'thisVendor_delivery'=> $thisVendor_delivery,
-        'reference_file'=> $reference_file,'target_files'=> $target_file, 'wo'=>$wo, 'project'=>$project,
+        'reference_file'=> $reference_file,'vendorSource_files'=> $vendorSource_files, 'wo'=>$wo, 'project'=>$project,
          'stage'=>$stage, 'deadline_difference'=>$deadline_difference]);
 
     }
@@ -106,8 +106,8 @@ class viewAllProjectsController extends Controller
     }
     public function getprojectFile($project){
         $reference_file =$project->projectFile->where('type','reference_file');
-        $target_file =$project->projectFile->where('type','target_file');
-        return [$reference_file, $target_file];
+        $vendorSource_files =$project->projectFile->where('type','vendorSource_file');
+        return [$vendorSource_files, $reference_file];
 
     }
   

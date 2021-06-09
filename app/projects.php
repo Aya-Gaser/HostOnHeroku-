@@ -33,6 +33,9 @@ class projects extends Model
    public function project_sourceFile(){
       return $this->hasMany('App\project_sourceFile','project_id');
   }
+  public function project_vendorSourceFile(){
+   return $this->hasMany('App\vendorSourceFile','project_id');
+}
   public function project_sourceFile_readyToProof(){
      return $this->project_sourceFile()->where('isReadyToProof',1);
   }
@@ -57,6 +60,7 @@ public  static function boot() {
            $sourceFile->vendorDelivery()->delete();
        });
        $project->project_sourceFile()->delete();//
+       $project->project_vendorSourceFile()->delete();
        $project->proofedFile()->delete();//
        $project->projectFile()->delete();// 
        $project->projectStage()->delete();//

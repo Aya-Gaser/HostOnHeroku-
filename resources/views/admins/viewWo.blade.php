@@ -322,14 +322,7 @@ td{
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-addTask">
                           Add Task </button>
                      
-                      <a href="{{ route('management.create-project',['id'=> $wo->id,
-                       'type'=> 'single'] )}}">
-                        <button type="ok" class="btn btn-primary ">Add Single Project</button>
-                      </a>
-                      <a href="{{ route('management.create-project',['id'=> $wo->id,
-                          'type'=> 'linked' ] )}}">
-                      <button type="ok" class="btn btn-success ">Add Linked Project</button>
-                      </a>
+                      
                   </div>  
                   </div>
                   <div class="card-body">
@@ -341,6 +334,14 @@ td{
                         <h5 class="card-title"> Task #  {{$loop->iteration}}  </h5>
                         
                         <div class="card-tools">
+                        <a href="{{ route('management.create-project',['id'=> $wo->id,
+                       'type'=> 'single','taskId'=>$task->id] )}}">
+                        <button type="ok" class="btn btn-primary ">Add Single Project</button>
+                      </a>
+                      <a href="{{ route('management.create-project',['id'=> $wo->id,
+                          'type'=> 'linked','taskId'=>$task->id ] )}}">
+                      <button type="ok" class="btn btn-dark ">Add Linked Project</button>
+                      </a>
                           <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
                           </button>

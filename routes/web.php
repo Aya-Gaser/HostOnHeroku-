@@ -64,8 +64,8 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::get('/createProject-select/{id}', 'projects\createProjectController@selectProject_type')->middleware('auth')
     ->where(['id'=>'[0-9]+'])->name('select-projectType');
     //////createProject
-    Route::get('/createProject-data/{id}/{type}', 'projects\createProjectController@index')->middleware('auth')
-    ->where(['id'=>'[0-9]+', 'type'=> '[a-z]+'])->name('create-project');
+    Route::get('/createProject-data/{id}/{type}/{taskId}', 'projects\createProjectController@index')->middleware('auth')
+    ->where(['id'=>'[0-9]+', 'type'=> '[a-z]+','taskId'=>'[0-9]+'])->name('create-project');
     
     Route::post('/file-delete/{id}/{type}', 'projects\viewProjectController@deleteAttachment')
     ->where(['id'=>'[0-9]+', 'type'=>'[a-z]+'])->name('delete-projectFile');

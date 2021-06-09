@@ -55,7 +55,7 @@ td{
              
             <div class="card-body">
              <div class="row">
-             <p class="data col-md-6"> <Span class="head"> ID: </Span>{{str_pad($project->id, 4, "0", STR_PAD_LEFT )}} </p>
+             <p class="data col-md-6"> <Span class="head"> WO - Project: </Span>{{str_pad($project->WO->id, 4, "0", STR_PAD_LEFT )}} - {{str_pad($project->id, 4, "0", STR_PAD_LEFT )}} </p>
              <p class="data col-md-6"> <Span class="head"> Name: </Span>{{$project->name}} </p>
              <p class="data col-md-6" > <Span class="head"> Language: </Span>{{$project->WO->from_language}} ▸ {{$project->WO->to_language}}</p>
               <p class="data col-md-6"> <Span class="head"> Created on: </Span>  {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone) }} </p>
@@ -66,20 +66,46 @@ td{
              </div> 
              <br>
              <div class="row">
+             <div class="col-sm-6 col-md-6">
+                   
+              
+                   <h4> Working Document(s) </h4>
+                   <br>
+                   
+                       @forelse($source_files as $file)                                
+                           <li class="text-primary">
+                           <a href="{{asset('storage/'.$file['file'])}}"
+                                  download="{{$file['file_name']}}">
+                                  {{str_limit($file['file_name'],40)}}
+                               </a>
+                               <input type="hidden" value="{{$file['id']}}" id="fileIdsource">
+                               <button id="source"
+                                  class="btn btn-danger btn-sm ml-2 deleteProjectFile">
+                                       <span class="btn-inner--icon"><i
+                                               class="far fa-trash-alt"></i></span>
+                               </button>
+                              
+                           </li>
+                           <div class="clearfix mb-2"></div>
+                       @empty
+                           <li class="text-danger">None</li>
+                       @endforelse
+                       <br>
+                      </div> 
               <div class="col-sm-6 col-md-6">
                    
               
-                        <h4> Working Document(s) </h4>
+                        <h4> Source Document(s) </h4>
                         <br>
                         
-                            @forelse($source_files as $file)                                
+                            @forelse($vendorSource_files as $file)                                
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
                                        download="{{$file['file_name']}}">
                                        {{str_limit($file['file_name'],40)}}
                                     </a>
                                     <input type="hidden" value="{{$file['id']}}" id="fileIdsource">
-                                    <button id="source"
+                                    <button id="ref"
                                        class="btn btn-danger btn-sm ml-2 deleteProjectFile">
                                             <span class="btn-inner--icon"><i
                                                     class="far fa-trash-alt"></i></span>

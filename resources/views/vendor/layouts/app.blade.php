@@ -68,6 +68,9 @@ tr{
 .pending{
   color:#eb6434;
 }
+body a, body span, body p , body h1{
+  text-transform:capitalize;
+}
 </style>
     @yield('style')
     

@@ -164,7 +164,9 @@
                     <select class="select2 form-control" data-live-search="true" name="woTask_id" id="project_type" required>
                    <option disabled >Select</option>
                     @foreach($wo->woTasksNeeded as $task)
-                    <option value="{{$task->id}}" >{{$task->type}}</option>
+                    <option value="{{$task->id}}" {{selectInputVal(null,isset($taskId) ? $taskId : null,$task->id)}}>
+                    {{$task->type != null ? $task->type : null}}
+                   
                     @endforeach
                     </select>
                   </div>
@@ -268,6 +270,17 @@
                    
                        <div class="file-loading col-md-2">  
                         <input id="source_files" name="source_files[]"
+                         class="kv-explorer" type="file" multiple required>  
+                         </div>
+                    </div>
+                  </div> 
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label"
+                       for="source_document">Source File(s)<span class="required">*</span></label>
+                   
+                       <div class="file-loading col-md-2">  
+                        <input id="vendorSource_files" name="vendorSource_files[]"
                          class="kv-explorer" type="file" multiple required>  
                          </div>
                     </div>
