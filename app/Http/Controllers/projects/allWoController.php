@@ -35,7 +35,7 @@ class allWoController extends Controller
         
         if( in_array($status, ['pending','Completed', 'all', 'progress' ], true )  ){
             $projects = $this->getprojects_filtered($status);
-            return view('admins.allProjects')->with(['projects'=> $projects]);
+            return view('admins.allProjects')->with(['projects'=> $projects,'type'=>'All']);
         }
         else 
             abort(404);
@@ -49,6 +49,29 @@ class allWoController extends Controller
                                 ->where('status','!=', 'Completed')->orderBy('created_at','desc')->get();
         else
             $projects = projects::where('status', $status)->orderBy('created_at','desc')->get();
+
+                                                          
+      return $projects;
+    }
+    public function allProjects_type_status($type, $status){
+        
+        if( in_array($status, ['pending','Completed', 'all', 'progress' ], true ) &&  in_array($type, ['translation','editing', 'dtp', 'linked' ], true )){
+            $projects = $this->getprojects_filtered_type_status($type, $status);
+            return view('admins.allProjects')->with(['projects'=> $projects,'type'=>$type]);
+        }
+        else 
+            abort(404);
+    }
+    public function getprojects_filtered_type_status($type, $status){
+        if($status=='all')
+            $projects = projects::where('type','=', $type)->get();
+        else if($status == 'progress')
+            $projects = projects::where('type','=', $type)
+                                ->where('status','!=', 'pending')
+                                ->where('status','!=', 'Completed')->orderBy('created_at','desc')->get();
+        else
+            $projects = projects::where('type','=', $type)
+                                ->where('status', $status)->orderBy('created_at','desc')->get();
 
                                                           
       return $projects;

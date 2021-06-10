@@ -84,7 +84,9 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     ->where(['id'=>'[0-9]+'])->name('update-stage');
     Route::get('/view-allProjects/{status}', 'projects\allWoController@allProjects')->middleware('auth')
     ->where(['status'=> '[aA-zZ]+'])->name('view-allProjects');
-    /// delivery action 
+    Route::get('/view-allProjects_type/{type}/{status}', 'projects\allWoController@allProjects_type_status')->middleware('auth')
+    ->where(['status'=> '[aA-zZ]+', 'type'=>'[aA-zZ]+'])->name('view-allProjects_type');
+    /// delivery action  allProjects_type_status
 
     Route::post('/action-deliveryFile', 'projects\viewProjectController@deliveryFile_action')->middleware('auth')
     ->where([])->name('acion-on-deliveryFile');

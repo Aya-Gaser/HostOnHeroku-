@@ -8,6 +8,7 @@ use App\WO;
 use App\projects;
 use Auth;
 use App\User;
+use App\vendorInvoice;
 class dashboardController extends Controller
 {
   public function __construct()
@@ -20,6 +21,22 @@ class dashboardController extends Controller
         $CompletedWo = count(WO::where('isHandeled', true)->get());
         $pendingWo = count(WO::where('isHandeled', false)->get()); 
         $allWo = count(WO::all()); 
+        $allProjects =  count(projects::all()); 
+        $allInvoices = count(vendorInvoice::where('status','!=','rejected')->get()); 
+
+        //all invoice 
+        $vendorInvoice_pending = count(vendorInvoice::where('status', 'Pending')->get() );
+
+        $vendorInvoice_approved = count(vendorInvoice::where('status', 'Approved')->get() );
+
+        $vendorInvoice_paid = count(vendorInvoice::where('status', 'Paid')->get() );
+
+        //all projects 
+        $allProjects_pending = count(projects::where('status', 'pending')->get() );
+
+        $allProjects_progress = count(projects::where('status', 'on progress')->get() );
+
+        $allProjects_completed = count(projects::where('status', 'completed')->get() );
 
          //translation
         $translationProjects_pending = count(projects::where('type', 'translation')
@@ -65,7 +82,11 @@ class dashboardController extends Controller
           'dtpProjects_pending'=>$dtpProjects_pending, 'dtpProjects_completed'=>$dtpProjects_completed,'dtpProjects_onProgress'=>$dtpProjects_onProgress,
           'linkedProjects_onProgress'=>$linkedProjects_onProgress, 'linkedProjects_all'=>$linkedProjects_all,
           'linkedProjects_pending'=>$linkedProjects_pending, 'linkedProjects_completed'=>$linkedProjects_completed,
-          'linkedProjects_onProgress'=>$linkedProjects_onProgress ]);
+          'linkedProjects_onProgress'=>$linkedProjects_onProgress,
+          'allProjects'=>$allProjects,'allProjects_pending'=>$allProjects_pending,
+          'allProjects_progress'=>$allProjects_progress,'allProjects_completed'=>$allProjects_completed,
+          'allInvoices'=>$allInvoices, 'vendorInvoice_pending'=>$vendorInvoice_pending,
+          'vendorInvoice_approved'=>$vendorInvoice_approved,'vendorInvoice_paid'=>$vendorInvoice_paid ]);
     }
     public function profile(){
         $user = Auth::user();

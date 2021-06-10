@@ -37,6 +37,16 @@ th{
   background-color:#3c6e65;
   color:white;
 }
+.item{
+  padding:10px;
+}
+.inner a{
+  color:#fff;
+}
+.inner p,.info-box-text a {
+  text-decoration: underline;
+  color:#fff;
+}
 </style>
 @endsection
 
@@ -47,265 +57,336 @@ th{
     <section class="content-header">
       <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-4 col-6">
               <!-- small card -->
               <div class="small-box bg-danger">
                 <div class="inner">
                   <h3>{{$allWo}}</h3>
-
-                  <p>WORK NEEDED</p>
+                  <a href="{{route('management.view-allWo')}}" >
+                  <p>All WORK NEEDED</p>
+                </a>
+               
                 </div>
                 <div class="icon">
-                  <i class="fas fa-shopping-cart"></i>
+                  <i class="fas fa-dollar"></i>
                 </div>
-               
+                <div class="row item" style="">
+                <div class="info-box-content col-md-4">
+                  <span class="info-box-number">{{$notRecievedWo}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allProjects', 'all') }}" >
+                      <p>UN-RECIEVED</p>
+                    </a>
+                  </span>
+                </div>
+                
+                <div class="info-box-content col-md-4">
+                  <span class="info-box-number">{{$pendingWo}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allProjects', 'all') }}" >
+                      <p>PENDING</p>
+                    </a>
+                  </span>                </div>
+                <div class="info-box-content col-md-4">
+                  <span class="info-box-number">{{$CompletedWo}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allProjects', 'all') }}" >
+                      <p>COMPLETED</p>
+                    </a>
+                  </span>                </div>
+                </div>
               </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-danger"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">{{$notRecievedWo}}</span>
-                  <span class="info-box-number">UN-RECIEVED</span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-danger"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">{{$pendingWo}}</span>
-                  <span class="info-box-number">PENDING</span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-danger"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">{{$CompletedWo}}</span>
-                  <span class="info-box-number">COMPLETED</span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-          </div>
-      
-        <div class="row">
-            <div class="col-lg-3 col-6">
+           <!-- /************prjects ****************/ -->
+           <div class="col-lg-4 col-6">
               <!-- small card -->
-              <div class="small-box bg-warning">
+              <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{$linkedProjects_all}}</h3>
-
-                  <p>LINKED PROJECT</p>
+                  <h3>{{$allProjects}}</h3>
+                  <a href="{{route('management.view-allProjects', 'all') }}" >
+                  <p>All Projects</p>
+                </a>
+               
                 </div>
                 <div class="icon">
-                  <i class="fas fa-shopping-cart"></i>
+                  <i class="fas fa-dollar"></i>
                 </div>
+                <div class="row item" style="">
+                <div class="info-box-content col-md-4">
+                  <span class="info-box-number">{{$allProjects_pending}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allProjects', 'pending') }}" >
+                      <p>PENDING</p>
+                    </a>
+                  </span>
+                </div>
+                
+                <div class="info-box-content col-md-4">
+                <span class="info-box-number">{{$allProjects_progress}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allProjects', 'progress') }}" >
+                      <p>IN PROGRESS</p>
+                    </a>
+                  </span>
+                </div>
+                <div class="info-box-content col-md-4">
+                <span class="info-box-number">{{$allProjects_completed}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allProjects', 'Completed') }}" >
+                      <p>COMPLETED</p>
+                    </a>
+                  </span>
+                </div>
+                </div>
+              </div>
+            </div>
+           <!-- /************invoice ****************/ -->
+
+            <div class="col-lg-4 col-6">
+              <!-- small card -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{$allInvoices}}</h3>
+                  <a href="{{route('management.view-allInvoices', 'All') }}" >
+                  <p>All Vendors Invoices</p>
+                </a>
                
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">{{$linkedProjects_pending}}</span>
-                  <span class="info-box-number">PENDING</span>
                 </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">{{$linkedProjects_onProgress}}</span>
-                  <span class="info-box-number">ON PROGRESS</span>
+                <div class="icon">
+                  <i class="fas fa-dollar"></i>
                 </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">{{$linkedProjects_completed}}</span>
-                  <span class="info-box-number">COMPLETED</span>
+                <div class="row item" style="">
+                <div class="info-box-content col-md-4">
+                  <span class="info-box-number">{{$vendorInvoice_pending}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allInvoices', 'Pending') }}" >
+                      <p>PENDING</p>
+                    </a>
+                  </span>
                 </div>
-                <!-- /.info-box-content -->
+                
+                <div class="info-box-content col-md-4">
+                <span class="info-box-number">{{$vendorInvoice_approved}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allReadyToPayInvoices', 'Approved') }}" >
+                      <p>APPROVED</p>
+                    </a>
+                  </span>
+                </div>
+                <div class="info-box-content col-md-4">
+                <span class="info-box-number">{{$vendorInvoice_paid}}</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allReadyToPayInvoices', 'Paid') }}" >
+                      <p>PAID</p>
+                    </a>
+                  </span>
+                </div>
+                </div>
               </div>
-              <!-- /.info-box -->
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-6">
+            </div>
+           
+           <!-- ///////// translation  -->
+      <div class="row">
+        <div class="col-lg-4 col-6">
               <!-- small card -->
               <div class="small-box translation">
                 <div class="inner">
                   <h3>{{$translationProjects_all}}</h3>
+                  <a href="{{route('management.view-allProjects_type',['type'=>'translation','status'=>'all']) }}" >
 
                   <p>TRANSLATION</p>
+                  </a>
                 </div>
                 <div class="icon">
                   <i class="fas fa-shopping-cart"></i>
                 </div>
-               
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon translation"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="row item">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$translationProjects_pending}}</span>
-                  <span class="info-box-number">PENDING</span>
+                  <span class="info-box-text">
+                    <a href="{{route('management.view-allProjects_type',['type'=>'translation','status'=>'pending']) }}" >
+                      <p>PENDING</p>
+                    </a>
+                  </span>
                 </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon translation"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$translationProjects_onProgress}}</span>
-                  <span class="info-box-number">ON PROGRESS</span>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'translation','status'=>'progress']) }}" >
+                      <p>IN PROGRESS</p>
+                    </a>
+                  </span>
                 </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon translation"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$translationProjects_completed}}</span>
-                  <span class="info-box-number">COMPLETED</span>
-                </div>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'translation','status'=>'Completed']) }}" >
+                      <p>COMPLETED</p>
+                    </a>
+                  </span>                
+                  </div>
+               
+        
+               
                 <!-- /.info-box-content -->
+              </div>
               </div>
               <!-- /.info-box -->
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-6">
+
+  <!-- ///////// editing  -->
+      
+        <div class="col-lg-4 col-6">
               <!-- small card -->
-              <div class="small-box bg-info">
+              <div class="small-box editing">
                 <div class="inner">
                   <h3>{{$editingProjects_all}}</h3>
-
+                  <a href="{{route('management.view-allProjects_type',['type'=>'editing','status'=>'all']) }}" >
+                  
                   <p>EDITING</p>
+                  </a>
                 </div>
                 <div class="icon">
                   <i class="fas fa-shopping-cart"></i>
                 </div>
-               
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-info"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="row item">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$editingProjects_pending}}</span>
-                  <span class="info-box-number">PENDING</span>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'editing','status'=>'pending']) }}" >
+                      <p>PENDING</p>
+                    </a>
+                  </span>
                 </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-info"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$editingProjects_onProgress}}</span>
-                  <span class="info-box-number">ON PROGRESS</span>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'editing','status'=>'progress']) }}" >
+                      <p>IN PROGRESS</p>
+                    </a>
+                  </span>
                 </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon bg-info"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$editingProjects_completed}}</span>
-                  <span class="info-box-number">COMPLETED</span>
-                </div>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'editing','status'=>'Completed']) }}" >
+                      <p>COMPLETED</p>
+                    </a>
+                  </span>                
+                  </div>
+               
+        
+               
                 <!-- /.info-box-content -->
+              </div>
               </div>
               <!-- /.info-box -->
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-6">
+  <!-- ///////// DTP  -->
+      
+        <div class="col-lg-4 col-6">
               <!-- small card -->
               <div class="small-box dtp">
                 <div class="inner">
+                
                   <h3>{{$dtpProjects_all}}</h3>
+                  <a href="{{route('management.view-allProjects_type',['type'=>'dtp','status'=>'all']) }}" >
 
                   <p>DTP</p>
+                  </a>
                 </div>
                 <div class="icon">
                   <i class="fas fa-shopping-cart"></i>
                 </div>
-               
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon dtp"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="row item">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$dtpProjects_pending}}</span>
-                  <span class="info-box-number">PENDING</span>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'dtp','status'=>'pending']) }}" >
+                      <p>PENDING</p>
+                    </a>
+                  </span>
                 </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon dtp"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$dtpProjects_onProgress}}</span>
-                  <span class="info-box-number">ON PROGRESS</span>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'dtp','status'=>'progress']) }}" >
+                      <p>IN PROGRESS</p>
+                    </a>
+                  </span>
                 </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box shadow">
-                <span class="info-box-icon dtp"><i class="far fa-copy"></i></span>
-
-                <div class="info-box-content">
+                <div class="info-box-content col-md-4">
                   <span class="info-box-text">{{$dtpProjects_completed}}</span>
-                  <span class="info-box-number">COMPLETED</span>
-                </div>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'dtp','status'=>'Completed']) }}" >
+                      <p>COMPLETED</p>
+                    </a>
+                  </span>                
+                  </div>
+               
+        
+               
                 <!-- /.info-box-content -->
+              </div>
               </div>
               <!-- /.info-box -->
             </div>
+
+            </div>
+
+  <!-- ///////// linked  -->
+      
+  <div class="row">
+        <div class="col-lg-4 col-6">
+              <!-- small card -->
+              <div class="small-box bg-dark">
+                <div class="inner">
+                  <h3>{{$linkedProjects_all}}</h3>
+                  <a href="{{route('management.view-allProjects_type',['type'=>'linked','status'=>'all']) }}" >
+
+                  <p>LINKED</p>
+                  </a>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="row item">
+                <div class="info-box-content col-md-4">
+                  <span class="info-box-text">{{$linkedProjects_pending}}</span>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'linked','status'=>'pending']) }}" >
+                      <p>PENDING</p>
+                    </a>
+                  </span>
+                </div>
+                <div class="info-box-content col-md-4">
+                  <span class="info-box-text">{{$linkedProjects_onProgress}}</span>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'linked','status'=>'progress']) }}" >
+                      <p>IN PROGRESS</p>
+                    </a>
+                  </span>
+                </div>
+                <div class="info-box-content col-md-4">
+                  <span class="info-box-text">{{$linkedProjects_completed}}</span>
+                  <span class="info-box-text">
+                  <a href="{{route('management.view-allProjects_type',['type'=>'linked','status'=>'Completed']) }}" >
+                      <p>COMPLETED</p>
+                    </a>
+                  </span>                
+                  </div>
+               
+        
+               
+                <!-- /.info-box-content -->
+              </div>
+              </div>
+              <!-- /.info-box -->
+            </div>
+
+
+
           </div>
         
           <!-- /.col -->
