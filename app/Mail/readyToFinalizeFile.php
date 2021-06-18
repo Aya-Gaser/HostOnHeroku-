@@ -33,7 +33,7 @@ class readyToFinalizeFile extends Mailable
         return $this->markdown('emails.proofingAndFinalization.readyToFinalizeFile')
                      ->with(['wo_id'=>$this->wo_id])
                     ->from('ayagaser30@example.com') 
-                    ->subject('WO '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ) 
-                    .' Has New File(s) Ready To Finalization Proccess ')->delay(15); 
+                    ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ) 
+                    .' For Finalization')->delay(15); 
     }
 }

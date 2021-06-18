@@ -33,7 +33,7 @@ class deliveryAction extends Mailable
         return $this->markdown('emails.deliveryAction.deliveryReview')
                      ->with(['wo_id'=>$this->wo_id,'action'=>$this->action])
                     ->from('ayagaser30@example.com') 
-                    ->subject('Your Delivery For Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-                    .'  Has Been Reviewed')->delay(15); 
+                    ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
+                    .'Delivery '.$this->action)->delay(15); 
     }
 }

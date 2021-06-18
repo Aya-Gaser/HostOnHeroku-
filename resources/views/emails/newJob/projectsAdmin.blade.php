@@ -10,6 +10,7 @@ $quality_points =  ($stage->vendor_maxQualityPoints)?  $stage->vendor_maxQuality
 Hello,
 <br>
 # This is a message from Tarjamat alerting you of a new project offer.
+
 @component('mail::table')
 | Project Data                  | Info                                                      |
 | ------------------------- | ---------------------------------------------------------------------------:|
@@ -24,9 +25,10 @@ Hello,
 | Offer Expires on          | {{UTC_To_LocalTime($acceptanceDeadline,$vendor->timezone)}} |
 | Final Delivery Deadline   | {{UTC_To_LocalTime($stage->deadline,$vendor->timezone)}}   |
 @endcomponent
-Please login to the system to view the full project details and Accept or Decline this offer
 <br>
-If you have any questions, do not hesitate to contact us at this email : Projects.TarjamatLLC@gmail.com.
+# Please login to the system to view the full project details and Accept or Decline this offer. 
+
+#If you have any questions, do not hesitate to contact us at this email: Projects.TarjamatLLC@gmail.com.
 
 @component('mail::button', ['url' =>$link, 'color' => 'success'])
     View Full Project Data

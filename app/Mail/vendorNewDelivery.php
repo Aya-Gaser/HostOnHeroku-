@@ -35,9 +35,10 @@ class vendorNewDelivery extends Mailable
     {
         $markdown = ($this->isAdmin)? 'vendorDelivery_admin' : 'vendorDelivery_editor';
         return $this->markdown('emails.vendorDelivery.'.$markdown)
-        ->with(['project_id'=>$this->project->wo_id, 'vendor_name'=>$this->vendor_name])
+        ->with(['wo_id'=>$this->project->wo_id, 'vendor_name'=>$this->vendor_name,
+        'project_id'=>$this->project_id])
        ->from('ayagaser30@example.com')
        ->subject('Project '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
-       .' Has New Delivey')->delay(15); 
+       .' Delivery')->delay(15); 
     }
 }

@@ -33,6 +33,6 @@ class reviewCompleted extends Mailable
         ->with(['wo_id'=>$this->wo_id, 'project_id'=>$this->project_id])
        ->from('ayagaser30@example.com')
        ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-       .' Has Been Reviewed')->delay(15); 
+       .'  Final Document(s)')->delay(15); 
     }
 }

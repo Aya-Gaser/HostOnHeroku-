@@ -34,6 +34,6 @@ class CompleteStageVendor extends Mailable
                      ->with(['wo_id'=>$this->wo_id,'stage_id'=>$this->stage_id])
                     ->from('ayagaser30@example.com') 
                     ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-                    .'  is successfully completed')->delay(15); 
+                    .' Completed')->delay(15); 
     }
 }

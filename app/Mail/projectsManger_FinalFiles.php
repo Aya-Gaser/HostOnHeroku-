@@ -33,8 +33,8 @@ class projectsManger_FinalFiles extends Mailable
         return $this->markdown('emails.proofingAndFinalization.projectsManager_finalFiles')
                      ->with(['wo_id'=>$this->wo_id])
                     ->from('ayagaser30@example.com') 
-                    ->subject('Final Finalized File(s) Of WO '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ) 
-                    .' Is Available .')->delay(15); 
+                    ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ) 
+                    .' Finalized .')->delay(15); 
  
     }
 }

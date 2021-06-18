@@ -34,6 +34,6 @@ class invoicePyment extends Mailable
                      ->with(['invoice_id'=>$this->invoice_id])
                     ->from('ayagaser30@example.com') 
                     ->subject('Invoice '.str_pad( $this->invoice_id, 4, "0", STR_PAD_LEFT )
-                    .'  is successfully Paid')->delay(15); 
+                    .' has been paid.')->delay(15); 
     }
 }

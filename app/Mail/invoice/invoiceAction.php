@@ -34,6 +34,6 @@ class invoiceAction extends Mailable
                      ->with(['invoice_id'=>$this->invoice_id,'action'=>$this->action])
                     ->from('ayagaser30@example.com') 
                     ->subject('Invoice '.str_pad( $this->invoice_id, 4, "0", STR_PAD_LEFT )
-                    .'  is successfully reviewed')->delay(15); 
+                    .' '.$this->action)->delay(15); 
     }
 }

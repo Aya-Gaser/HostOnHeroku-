@@ -39,6 +39,6 @@ class offerAction extends Mailable
         'stage_type'=>$this->stage_type, 'wo_id'=>$this->project->wo_id])
        ->from('ayagaser30@example.com')
        ->subject('Project '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
-       .' Has Been '.$this->action)->delay(15); 
+       .' '.$this->action)->delay(15); 
     }
 }

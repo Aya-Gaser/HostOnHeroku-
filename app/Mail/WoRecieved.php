@@ -34,6 +34,6 @@ class WoRecieved extends Mailable
                      ->with(['wo_id'=>$this->wo_id])
                     ->from('ayagaser30@example.com')
                     ->subject('WO '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-                    .' has been recieved')->delay(15); 
+                    .'Accepted')->delay(15); 
     }
 }

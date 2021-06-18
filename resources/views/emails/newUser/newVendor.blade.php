@@ -1,9 +1,8 @@
 @component('mail::message')
-# Your Membership Account Successfully Created
+# Your User Account has been Created
 
-Please login to complete registration proccess.<br>
-Use this temporary password : tarjamatNewMember@1234
-
+Please login and complete the registration process.
+Use your email as a username and the following temporary password: TarjamatMember@1234
 
 @component('mail::button', ['url' =>route("login"), 'color' => 'success'])
     Login
