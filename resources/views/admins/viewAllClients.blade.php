@@ -158,6 +158,8 @@ $(function () {
  $("#client_type option[id="+type+"]").attr("selected", "selected");
 */
 $('.deleteClient').click(function(){
+  document.body.style.cursor='wait';           
+
   $clientId = $(this).attr('id');
  var url = "{{ route('management.delete-client','id' )}}";
  url = url.replace('id', $clientId);

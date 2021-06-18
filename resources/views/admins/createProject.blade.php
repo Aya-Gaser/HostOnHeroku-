@@ -3,7 +3,11 @@
 @section('style')
 
 @include('layouts.partials._file_input_plugin_style')
-
+<style> 
+.selected {
+  background-color: #c9cac9;
+}
+</style>
 @endsection
 @section('content')
 
@@ -254,7 +258,7 @@
             <div class="row">
              <div class="form-group col-md-6">
                <label> Instructions</label>
-               <textarea class="form-control" name="instructions" rows="3" placeholder="None ..."></textarea>
+               <textarea class="form-control" id="instructions" name="instructions" rows="3" placeholder="None ..."></textarea>
              </div>
              <div class="form-group col-md-6">
                 <label for="exampleInputEmail1"> Number of Files <span class="required">*</span></label>
@@ -277,6 +281,18 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="form-control-label"
+                       for="source_document">Reference File(s) </label>
+                   
+                       <div class="file-loading">  
+                        <input id="reference_files" name="reference_files[]"
+                         class="kv-explorer " type="file" multiple>  
+                       
+                         </div>
+                    </div>
+                  </div> 
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label"
                        for="source_document">Source File(s)<span class="required">*</span></label>
                    
                        <div class="file-loading col-md-2">  
@@ -287,18 +303,31 @@
                   </div> 
                      
                   
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="form-control-label"
-                       for="source_document">Reference File(s) </label>
-                   
-                       <div class="file-loading">  
-                        <input id="reference_files" name="reference_files[]"
-                         class="kv-explorer " type="file" multiple>  
-                       
-                         </div>
-                    </div>
-                  </div>   
+                 
+                  <div class="col-sm-6 col-md-6 form-group">
+                  <input id="selectedFiles" name="selectedFiles"
+                   class="form-control" type="hidden">     
+                        <h5>Select WO Source Document(s) </h5>
+                        <br>
+                        
+                            @forelse($source_files as $file)  
+                                                          
+                                <li class="text-primary">
+                                <input type="checkbox" onchange="inputChanged(event)" value="{{$file->id}}"/>
+                                <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file_name']}}">
+                                        {{$file['file_name']}}
+                                    </a>
+                                    
+                                   
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">None</li>
+                            @endforelse
+                            <br>
+                        
+                        </div>   
                   
                </div>   
             <!-- /.card -->
@@ -346,6 +375,23 @@
 <!-- BS-Stepper -->
 <script src="{{asset('plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
 <script>
+var selectedFiles = [];
+  function inputChanged(event) {
+  
+    if(event.target.checked){
+    event.target.parentElement.className ='selected';
+    selectedFiles.push(event.target.value.trim()) ;
+
+    }
+    else{
+    event.target.parentElement.className = '';
+    selectedFiles.pop();
+
+    }
+    trimmed = JSON.stringify(selectedFiles);
+    $('#selectedFiles').val(trimmed.substring(1, trimmed.length-1)); 
+}
+
 $(function () {
   
      //Initialize Select2 Elements
@@ -398,7 +444,11 @@ $(".form_datetime").datetimepicker({
 
       
           });
-});          
+});
+$('#createProject').submit(function(e) {
+  document.body.style.cursor='wait';           
+
+});
 </script>
 @include('layouts.partials._file_input_plugin_script')
 @endsection

@@ -69,6 +69,9 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     
     Route::post('/file-delete/{id}/{type}', 'projects\viewProjectController@deleteAttachment')
     ->where(['id'=>'[0-9]+', 'type'=>'[a-z]+'])->name('delete-projectFile');
+    Route::post('/delete-projectFile-woSource/{id}', 'projects\viewProjectController@deleteAttachment_woSourceToProject')
+    ->where(['id'=>'[0-9]+'])->name('delete-projectFile-woSource');
+    
     //// store project
     Route::post('/createProject/{wo}/{isLinked}', 'projects\createProjectController@store')->middleware('auth')
     ->where(['wo'=>'[0-9]+', 'isLinked'=> '[0-1]'])->name('store-project');

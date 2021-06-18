@@ -292,6 +292,8 @@ $(function () {
     document.getElementById("notes").required = true;
  });
     $('#invoice-form').submit(function(e){ 
+      document.body.style.cursor='wait';           
+
       e.preventDefault();
        $('#modal-invoiceAction').fadeOut();
         let formData = new FormData(this);

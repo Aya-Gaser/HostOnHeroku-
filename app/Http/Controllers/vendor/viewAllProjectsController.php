@@ -21,6 +21,9 @@ use App\deliveryFiles;
 use App\project_sourceFile;
 use Carbon\Carbon;
 use DateTime;
+use App\woFiles;
+use App\woSourceFiles_toProjectsVendors;
+
 use Illuminate\Support\Facades\Mail;
 use App\Mail\vendorNewDelivery;
 class viewAllProjectsController extends Controller
@@ -86,10 +89,11 @@ class viewAllProjectsController extends Controller
             [$deliver_withFiles,$thisVendor_delivery] =  $this->getWo_Deliveriesfiles($stage); 
         }
          
-        [$vendorSource_files, $reference_file] =  $this->getprojectFile($project); //'wo->files';
+        [$WO_vendorSource_files, $vendorSource_files, $reference_file] =  $this->getprojectFile($project); //'wo->files';
         $deadline_difference = $this->deadline_difference($stage);
         return view($view)->with(['deliver_withFiles'=>$deliver_withFiles, 'thisVendor_delivery'=> $thisVendor_delivery,
-        'reference_file'=> $reference_file,'vendorSource_files'=> $vendorSource_files, 'wo'=>$wo, 'project'=>$project,
+        'reference_file'=> $reference_file,'vendorSource_files'=> $vendorSource_files, 
+        'WO_vendorSource_files'=>$WO_vendorSource_files, 'wo'=>$wo, 'project'=>$project,
          'stage'=>$stage, 'deadline_difference'=>$deadline_difference]);
 
     }
@@ -107,7 +111,10 @@ class viewAllProjectsController extends Controller
     public function getprojectFile($project){
         $reference_file =$project->projectFile->where('type','reference_file');
         $vendorSource_files =$project->projectFile->where('type','vendorSource_file');
-        return [$vendorSource_files, $reference_file];
+        
+        $WO_vendorSource_files = woSourceFiles_toProjectsVendors::where('project_id', $project->id)->get();
+
+        return [$WO_vendorSource_files, $vendorSource_files, $reference_file];
 
     }
   

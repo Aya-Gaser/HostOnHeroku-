@@ -200,6 +200,8 @@ $(function () {
     });
 
     $('.submitInvoice').click(function(){ 
+      document.body.style.cursor='wait';           
+
        url = "{{route('vendor.view-vendorInvoice', 'id' )}}"
         let formData = new FormData(document.getElementById('addInvoice-form'));
         var url = "{{ route('vendor.view-vendorInvoice','id' )}}";

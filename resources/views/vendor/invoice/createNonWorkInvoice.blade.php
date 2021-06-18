@@ -191,6 +191,8 @@ $(function () {
     });
     /// edit 
     $('#editInvoice-form').submit(function(e) {
+      document.body.style.cursor='wait';           
+
        e.preventDefault();
        let formData = new FormData(this); 
       var url = "{{ route('vendor.view-vendorInvoice','id' )}}";

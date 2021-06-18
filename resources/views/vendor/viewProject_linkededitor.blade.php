@@ -108,6 +108,20 @@ td{
                             @empty
                                 <li class="text-danger">None</li>
                             @endforelse
+                            @forelse($WO_vendorSource_files as $file_toProject) 
+                              @php $file = App\woFiles::find($file_toProject->woSourceFile_id) @endphp
+                                                     
+                                <li class="text-primary">
+                                <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file_name']}}">
+                                       {{str_limit($file['file_name'],40)}}
+                                    </a>
+                                   
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">None</li>
+                            @endforelse
                             <br>
                            
              
@@ -311,7 +325,7 @@ td{
                                              
                                               <td>
                                             <p class="data">
-                                            <form action="{{route('vendor.send-delivery',['stage'=> $stage->id,
+                                            <form id="deliveryForm" action="{{route('vendor.send-delivery',['stage'=> $stage->id,
                                               'sourceFile'=>$source_file->id])}}" method="post" enctype="multipart/form-data">
                                              @csrf
                                              <div class="form-group">
@@ -473,6 +487,7 @@ $('.accept').click(function(){
    $('#action').val('accepted');
 });   
 $('#reject-form').submit(function(e) {
+  document.body.style.cursor='wait';
        e.preventDefault();
        let formData = new FormData(this);
   $.ajax({
@@ -499,7 +514,10 @@ $('#reject-form').submit(function(e) {
   });
 
 });
+$('#deliveryForm').submit(function(e) {
+           document.body.style.cursor='wait';           
 
+        });
 </script>
 @include('layouts.partials._file_input_plugin_script')
 

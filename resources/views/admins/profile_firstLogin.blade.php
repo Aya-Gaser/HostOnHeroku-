@@ -24,7 +24,7 @@
               </div>
               <div class="card-body">
               
-              <form action="{{route('management.first-login')}}" method="post" enctype="multipart/form-data">
+              <form id="firstLogin" action="{{route('management.first-login')}}" method="post" enctype="multipart/form-data">
               @csrf
      
                 
@@ -111,7 +111,11 @@
 <script>
         $( document ).ready(function() {
             $('#timezone').val(moment.tz.guess())
-        });        
+        });  
+        $('#firstLogin').submit(function(e) {
+           document.body.style.cursor='wait';           
+
+        });      
 </script>
 
 @endsection

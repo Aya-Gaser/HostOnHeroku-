@@ -252,7 +252,8 @@
 $(function () {
  
     $('#invoicePayment').click(function(){ 
-       
+      document.body.style.cursor='wait';           
+
         let formData = new FormData(document.getElementById('invoice-form'));
         $.ajax({
                 data: formData,

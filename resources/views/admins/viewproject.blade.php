@@ -116,6 +116,24 @@ td{
                             @empty
                                 <li class="text-danger">None</li>
                             @endforelse
+                            @forelse($WO_vendorSource_files as $file_toProject) 
+                              @php $file = App\woFiles::find($file_toProject->woSourceFile_id) @endphp
+                                <li class="text-primary">
+                                <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file_name']}}">
+                                       {{str_limit($file['file_name'],40)}}
+                                    </a>
+                                    <button id="{{$file_toProject->id}}"
+                                       class="btn btn-danger btn-sm ml-2 deleteProjectFile_woSource">
+                                            <span class="btn-inner--icon"><i
+                                                    class="far fa-trash-alt"></i></span>
+                                    </button>
+                                   
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">None</li>
+                            @endforelse
                             <br>
                            </div> 
                            <div class="col-sm-6 col-md-6">
@@ -835,6 +853,8 @@ $('#updateStage').click(function(){
   document.getElementById('update_div_stage').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
 });
 $('#deleteProject').click(function(){
+  document.body.style.cursor='wait';           
+
   swal({
         title: "Are you sure?",
         text: "You will not be able to recover this data!",
@@ -891,6 +911,8 @@ $('.accept').click(function(){
    document.getElementById("notes").required = false;
 });   
 $('#deliveryAction-form').submit(function(e) {
+  document.body.style.cursor='wait';           
+
        $('#modal-actionNote').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
@@ -924,6 +946,8 @@ $('.improve').click(function(){
   $('#deliveryId_improve').val($deliveryId);
 });
 $('#improve-form').submit(function(e) {
+  document.body.style.cursor='wait';           
+
       $('#improve-form').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
@@ -951,6 +975,8 @@ $('#improve-form').submit(function(e) {
   });
 });
 $('.completeStage').click(function(){
+  document.body.style.cursor='wait';           
+
   $stageId = $(this).attr('id');
   $('#stageId').val($stageId);
   //console.log($stageId);
@@ -979,6 +1005,8 @@ $('.complete').click(function(){
   $('#complete').val(1);
 });  
 $('.reopen').click(function(){
+  document.body.style.cursor='wait';           
+
   $.ajax({
         data: {stageId : $stageId,
               complete : 0 },
@@ -1004,6 +1032,8 @@ $('.reopen').click(function(){
   });
 });
 $('.completeStageDTP').click(function(){ 
+  document.body.style.cursor='wait';           
+
   $stageId = $(this).attr('id');
   $('#stageId').val($stageId);
   $('#unitCount').val(0);
@@ -1034,6 +1064,8 @@ $('.completeStageDTP').click(function(){
 
 //route('management.complete-stage',['stage'=>$stage->id,'compelte'=>1] )
 $('#completeStage-form').submit(function(e) {
+  document.body.style.cursor='wait';           
+
       $('#modal-completeStage').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
@@ -1062,10 +1094,57 @@ $('#completeStage-form').submit(function(e) {
 }); 
 
 $('.deleteProjectFile').click(function(){
+  document.body.style.cursor='wait';           
+
  $fileType = $(this).attr('id');
  $fileId = $('#fileId'+$fileType).val();
  var url = "{{ route('management.delete-projectFile',['id'=>'fileId', 'type'=>'fileType'] )}}";
 url = url.replace('fileType', $fileType);
+url = url.replace('fileId', $fileId);
+ 
+swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this data!",
+       // type: "warning",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+      //console.log(url)
+          if (willDelete) {
+        $.ajax({
+        url:url,
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        data: { fileId: $fileId},
+       
+        success:function(response) {
+          if(response){
+              //this.reset();
+               //console.log(response) 
+              swal("Done! Deleted Successfully", {
+              icon: "success"
+            }).then((ok) =>{
+              location.reload();
+            }) 
+           }
+        },
+        error: function(data) { 
+           // console.log(data);
+           }
+      })           
+          } else {
+            swal("Your data is safe!");
+          }
+        });
+});
+$('.deleteProjectFile_woSource').click(function(){
+  document.body.style.cursor='wait';           
+
+ $fileId = $(this).attr('id');
+ var url = "{{ route('management.delete-projectFile-woSource','fileId' )}}";
 url = url.replace('fileId', $fileId);
  
 swal({

@@ -9,6 +9,8 @@ use App\projects;
 use App\WO;
 use App\project_sourceFile;
 use Auth;
+use App\woFiles;
+
 use App\vendorDelivery;
 use App\projectStage;
 use App\editedFile;
@@ -19,6 +21,8 @@ use Carbon\Carbon;
 use DateTime;
 use \stdClass;
 use App\User;
+use App\woSourceFiles_toProjectsVendors;
+
 use App\improvedFiles;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\projectUpdate;
@@ -41,12 +45,12 @@ class viewProjectController extends Controller
         ($project->type == 'linked')? $view = 'admins.viewProject_linked': $view = 'admins.viewproject';
         $deliveries_edited = $this->getSource_acceptedDelivery_edited($project);
         //$ifNextProject = $this->ifHas_nextProject($project);
-        [$vendorSource_files,$reference_files] = $this->getprojectsFiles($project);
+        [$WO_vendorSource_files, $vendorSource_files,$reference_files] = $this->getprojectsFiles($project);
         $source_files = $project->project_sourceFile;
         $deadline_difference = $this->deadline_difference($project);
         return view($view)->with(['project'=>$project, 'has_proofAndFinalize'=>$has_proofAndFinalize,
         'source_files'=>$source_files, 'reference_files'=> $reference_files,
-          'delivery_files'=>$delivery_files,'vendorSource_files'=>$vendorSource_files,
+          'delivery_files'=>$delivery_files,'vendorSource_files'=>$vendorSource_files,'WO_vendorSource_files'=>$WO_vendorSource_files,
          'deliveryHistory_files'=>$deliveryHistory_files, 'deliveries_edited'=>$deliveries_edited,
           'deadline_difference'=>$deadline_difference]);
         
@@ -65,7 +69,10 @@ class viewProjectController extends Controller
     public function getprojectsFiles($project){
         $reference_file =$project->projectFile->where('type','reference_file');
         $vendorSource_files = $project->projectFile->where('type','vendorSource_file');
-        return [$vendorSource_files,$reference_file];
+        $WO_vendorSource_files = woSourceFiles_toProjectsVendors::where('project_id', $project->id)->get();
+       
+
+        return [$WO_vendorSource_files, $vendorSource_files, $reference_file];
         
     }
     public function getProject_Deliveriesfiles($project){
@@ -262,6 +269,11 @@ class viewProjectController extends Controller
             $file->delete();
             return response()->json(['success'=>'Deleted Successfully']);      
 
+        }
+        public function deleteAttachment_woSourceToProject($fileId){
+            $file = woSourceFiles_toProjectsVendors::find($fileId);
+            $file->delete();
+            return response()->json(['success'=>'Deleted Successfully']);  
         }
         public function complete_reOpen_project($project, $complete){
             $project = projects::findOrFail($project);  

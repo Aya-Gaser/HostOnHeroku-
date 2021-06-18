@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\projects;
-use Illuminate\Support\Facades\File;
-
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use  Illuminate\Support\Facades\Route;
@@ -108,14 +108,15 @@ class viewWoController extends Controller
         if(request()['sent_docs'] && $wo->sent_docs != request()['sent_docs'])
            $wo->sent_docs = request()['sent_docs'];     
         $wo->save(); 
-
         // UPLOAD FILES
-        if ($request->hasFile('source_files')) {
-         $this->uploadWoAttachments($wo, 'source_files','source_file');
-         }
-        if ($request->hasFile('reference_files')) {
-               $this->uploadWoAttachments($wo, 'reference_files','reference_file');
-         }
+        if (request()['source_files']) {
+            $this->uploadWoAttachments($wo, 'source_files','source_file');
+        }
+        if (request()['reference_files']) {
+            $this->uploadWoAttachments($wo, 'reference_files','reference_file');
+        } 
+      
+       
         
        alert()->success('Wo Updated Successfully !')->autoclose(false);
        return back();   

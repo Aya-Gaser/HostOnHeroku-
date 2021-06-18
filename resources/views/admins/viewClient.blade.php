@@ -162,7 +162,8 @@ $(function () {
     });
   
 $('#deleteClient').click(function(){
- 
+  document.body.style.cursor='wait';           
+
  swal({
        title: "Are you sure?",
        text: "You will not be able to recover this data!",

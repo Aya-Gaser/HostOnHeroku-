@@ -22,7 +22,8 @@ use App\project_sourceFile;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\offerAction;
 use App\Mail\allVendorsDeclined;
-
+use App\woFiles;
+use App\woSourceFiles_toProjectsVendors;
 use Illuminate\Http\RedirectResponse;
 use Carbon\Carbon;
 class viewOfferController extends Controller
@@ -74,11 +75,12 @@ class viewOfferController extends Controller
             $wo = WO::where('id',$stage->wo_id)->first();
         
            
-            [$vendorSource_files, $reference_files] = $this->getprojectsFiles($stage->project_id);
+            [$WO_vendorSource_files, $vendorSource_files, $reference_files] = $this->getprojectsFiles($stage->project_id);
             $source_files = $project->project_sourceFile;
             return view('vendor.projectOffer')->with(['stage'=>$stage, 'vendor'=>$vendor,
              'wo'=>$wo,'group'=>$group,
-            'source_files'=>$source_files,'reference_file'=>$reference_files,'vendorSource_files'=>$vendorSource_files]); 
+            'source_files'=>$source_files,'reference_file'=>$reference_files,
+            'vendorSource_files'=>$vendorSource_files, 'WO_vendorSource_files'=>$WO_vendorSource_files]); 
         }
         else 
        return view('vendor.notAvailable');  
@@ -89,7 +91,9 @@ class viewOfferController extends Controller
         $project = projects::find($project_id);
         $reference_file =$project->projectFile->where('type','reference_file');
         $vendorSource_files =$project->projectFile->where('type','vendorSource_file');
-        return [$vendorSource_files, $reference_file];
+        $WO_vendorSource_files = woSourceFiles_toProjectsVendors::where('project_id', $project->id)->get();
+
+        return [$WO_vendorSource_files, $vendorSource_files, $reference_file];
         
     }
     //return 'g';

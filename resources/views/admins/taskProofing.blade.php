@@ -466,10 +466,13 @@ $(function () {
 $jobId = 0     
 $sourceID = 0;
 $('.proof').click(function(){
+
   $sourceID = $(this).attr('id');
   $('#sourceFileId').val($sourceID);
 });
 $('#uploadProof-form').submit(function(e) {
+  document.body.style.cursor='wait';           
+
        $('#modal-proof').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
@@ -501,6 +504,8 @@ $('#uploadProof-form').submit(function(e) {
 }); 
 
 $('.sendToVendor').click(function(){
+  document.body.style.cursor='wait';           
+
   $jobId = $(this).attr('id');
   $('#jobId').val($jobId);
   $.ajax({
@@ -524,6 +529,8 @@ $('.sendToVendor').click(function(){
   });
 });
 $('#completeReview-form').submit(function(e) {
+  document.body.style.cursor='wait';           
+
        $('#modal-sendToVendor').fadeOut();
        e.preventDefault();
        let formData = new FormData(this);
@@ -559,6 +566,8 @@ $('.complete').click(function(){
 }); 
 
 $('.completeTask').click(function(){
+  document.body.style.cursor='wait';           
+
   $taskId = "{{$task->id}}";
   console.log($taskId)
   $('#taskId').val($taskId);
@@ -591,6 +600,8 @@ $('.completeTask').click(function(){
 });
  
 $('.reopen').click(function(){
+  document.body.style.cursor='wait';           
+
   $.ajax({
         data: {taskId : "{{$task->id}}",
               complete : 0 },

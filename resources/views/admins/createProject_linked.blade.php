@@ -452,7 +452,11 @@ $(".form_datetime").datetimepicker({
 
       
           });
-});         
+});  
+$('#createProject').submit(function(e) {
+  document.body.style.cursor='wait';           
+
+});       
 </script>
 @include('layouts.partials._file_input_plugin_script')
 @endsection

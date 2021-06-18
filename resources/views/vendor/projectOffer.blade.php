@@ -99,6 +99,21 @@
                             @empty
                                 <li class="text-danger">None</li>
                             @endforelse
+                            @forelse($WO_vendorSource_files as $file_toProject) 
+                              @php $file = App\woFiles::find($file_toProject->woSourceFile_id) @endphp
+                                                        
+                                <li class="text-primary">
+                                <a href="{{asset('storage/'.$file['file'])}}"
+                                       download="{{$file['file_name']}}">
+                                       {{str_limit($file['file_name'],40)}}
+                                    </a>
+
+                                   
+                                </li>
+                                <div class="clearfix mb-2"></div>
+                            @empty
+                                <li class="text-danger">None</li>
+                            @endforelse
                             <br>
                            </div>
                          </div> 
@@ -127,13 +142,13 @@
                     <div class=" col-md-2" id="submit_div" >
                     <a href="{{route('vendor.accept-offer',['stage_id'=> $stage->id,
                     'group'=> $group,'vendor'=> $vendor] )}}">
-                      <button type="ok" class="btn btn-success ">ACCEPT</button>
+                      <button onclick="document.body.style.cursor='wait';" type="ok" class="btn btn-success ">ACCEPT</button>
                       </a>
                     </div> 
                     <div class="col-md-3" id="" > 
                     <a href="{{route('vendor.decline-offer',['stage_id'=> $stage->id,
                     'group'=> $group,'vendor'=> $vendor] )}}">
-                      <button type="ok" class="btn btn-danger ">DECLINE</button>
+                      <button onclick="document.body.style.cursor='wait';" type="ok" class="btn btn-danger ">DECLINE</button>
                       </a>
                     </div>
                </div>

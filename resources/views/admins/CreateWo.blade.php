@@ -48,7 +48,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="{{route('management.create-wo')}}" method="post" enctype="multipart/form-data">
+              <form id="createWo" action="{{route('management.create-wo')}}" method="post" enctype="multipart/form-data">
               @csrf
       <div class="card-body">
                 <div class="row">  
@@ -424,7 +424,10 @@ $('body').on('click', '.removeTask', function(){ //injected html elements, event
   $('#tasksNum').val($task);
 });
 
+$('#createWo').submit(function(e) {
+  document.body.style.cursor='wait';           
 
+});
 </script>
 @include('layouts.partials._file_input_plugin_script')
 @endsection

@@ -15,13 +15,14 @@ use App\Mail\newJob;
 use Carbon\Carbon;
 use App\projectsInvitations;
 use Illuminate\Support\Facades\URL;
-
+use App\woFiles;
 use App\projects;
 use App\WO;
 use App\User;
 use App\clients;
 use App\languages;
 use Auth;
+use App\woSourceFiles_toProjectsVendors;
 use SweetAlert;
 use App\Jobs\inviteGroup2;
 use App\editingDetails;
@@ -151,11 +152,27 @@ class createProjectController extends Controller
       if ($request->hasFile('vendorSource_files')) {
           $this->uploadWoAttachments($project->id, 'vendorSource_files','vendorSource_file');
       }
+      // SELECT WO SOURCE FILES TO SEND TO VENDOR
+      if(request()['selectedFiles'])
+          $this->send_WoSourceFiles_toVendor($project->id, request()['selectedFiles']);
       
      
       alert()->success('Project Created Successfully !')->autoclose(false);
         //return response()->json(['success'=>'File Uploaded Successfully']);      
       return redirect(route('management.view-allProjects', 'all'));
+  }
+
+  public function send_WoSourceFiles_toVendor($project_id, $selectedFiles){
+    $group = explode(',', $selectedFiles);
+    foreach($group as $sourceFile_s){
+        $sourceFile_id = trim($sourceFile_s, '"');
+
+        $woSourceToVendor = new woSourceFiles_toProjectsVendors();
+        $woSourceToVendor->project_id = $project_id;
+        $woSourceToVendor->woSourceFile_id = $sourceFile_id;
+        $woSourceToVendor->save();
+        
+      } 
   }
   
   public function createStage($wo_id,$project_id, $project_type, $IsLast, $isLinkedEditing){

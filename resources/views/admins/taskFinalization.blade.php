@@ -476,6 +476,8 @@ $('.complete').click(function(){
 }); 
 
 $('.completeTask').click(function(){
+  document.body.style.cursor='wait';           
+
   $taskId = "{{$task->id}}";
   console.log($taskId)
   $('#taskId').val($taskId);
@@ -508,6 +510,8 @@ $('.completeTask').click(function(){
 });
  
 $('.reopen').click(function(){
+  document.body.style.cursor='wait';           
+
   $.ajax({
         data: {taskId : "{{$task->id}}",
               complete : 0 },

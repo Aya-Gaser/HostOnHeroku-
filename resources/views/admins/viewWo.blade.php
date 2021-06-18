@@ -657,6 +657,8 @@ $('#update').click(function(){
 //window.scrollBy(0, 200); 
 })
 $('#deleteWo').click(function(){
+  document.body.style.cursor='wait';           
+
   swal({
         title: "Are you sure?",
         text: "You will not be able to recover this data!",
@@ -694,6 +696,8 @@ $('#deleteWo').click(function(){
         });
 });
 $('.deleteWoFile').click(function(){
+  document.body.style.cursor='wait';           
+
  $fileId = $(this).attr('id');
  var url = "{{ route('management.delete-woFile','id' )}}";
 url = url.replace('id', $fileId);
@@ -738,6 +742,8 @@ swal({
 
 
 $('.deleteTask').click(function(){
+  document.body.style.cursor='wait';           
+
  $taskd = $(this).attr('id');
  var url = "{{ route('management.delete-task', 'id') }}";
 url = url.replace('id', $taskd);

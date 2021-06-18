@@ -190,6 +190,8 @@ $(function () {
  $("#vendor_type option[id="+type+"]").attr("selected", "selected");
 */
 $('.deleteVendor').click(function(){
+  document.body.style.cursor='wait';           
+
   $vendorId = $(this).attr('id');
  var url = "{{ route('management.delete-vendor','id' )}}";
  url = url.replace('id', $vendorId);

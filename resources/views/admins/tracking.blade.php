@@ -213,6 +213,8 @@ th{
 
 <script>
   function archiveTask(taskId){
+    document.body.style.cursor='wait';           
+
     var url = "{{ route('management.archive-task','id' )}}";
     url = url.replace('id', taskId);
     swal({
