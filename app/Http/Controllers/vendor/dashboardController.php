@@ -52,6 +52,8 @@ class dashboardController extends Controller
           $user->password = bcrypt(request()['password']);
           $user->visible = encrypt(request()['password']);
         }
+        if(request()['timezone'])
+          $user->timezone = request()['timezone'];
         $user->save();
         return back();  
     }

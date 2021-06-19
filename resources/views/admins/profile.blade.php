@@ -67,34 +67,34 @@
                 <div class="row">  
                    
                 <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" name="name" value="{{$user->name}}">
+                   <label for="exampleInputEmail1">Name<span class="required">*</span></label>
+                    <input type="text" class="form-control" name="name" value="{{$user->name}}" required>
                  </div>
                  <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">User Name</label>
+                   <label for="exampleInputEmail1">User Name<span class="required">*</span></label>
                     <input type="text" class="form-control" name="userName" value="{{$user->userName}}" readonly>
                  </div>
               </div>
 
               <div class="row">  
                 <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Email</label>
-                    <input type="email" class="form-control" name="email"  value="{{$user->email}}">
+                   <label for="exampleInputEmail1">Email<span class="required">*</span></label>
+                    <input type="email" class="form-control" name="email"  value="{{$user->email}}" required>
                  </div>
                  <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Birthdate</label>
-                    <input type="date" value="{{$user->birthdate}}" class="form-control" name="birthdate"  >
+                   <label for="exampleInputEmail1">Birthdate<span class="required">*</span></label>
+                    <input type="date" value="{{$user->birthdate}}" class="form-control" name="birthdate"  required>
                  </div>
               </div>
 
               <div class="row">  
                    <div class="form-group col-md-6">
-                      <label for="exampleInputEmail1">Password</label>
-                       <input type="password" class="form-control" name="password" >
+                      <label for="exampleInputEmail1">Password<span class="required">*</span></label>
+                       <input type="password" class="form-control" name="password" required>
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="exampleInputEmail1">Confirm Password</label>
-                       <input type="password" class="form-control" name="conPass" >
+                      <label for="exampleInputEmail1">Confirm Password<span class="required">*</span></label>
+                       <input type="password" class="form-control" name="conPass" required >
                     </div>
                  </div>
 
@@ -102,7 +102,7 @@
                   
                     <div class="form-group col-md-6">
                       <label for="exampleInputEmail1">Timezone</label>
-                      <input type="text" value="{{$user->timezone}}" class="form-control" name="timezone" id="timezone" readonly>
+                      <input type="text" class="form-control" name="timezone" id="timezone" readonly>
                     </div>
                    
                  </div>
