@@ -10,6 +10,8 @@ use Auth;
 use App\User;
 use App\vendorInvoice;
 use App\client;
+use App\userRole;
+use App\Role;
 class dashboardController extends Controller
 {
   public function __construct()
@@ -146,7 +148,7 @@ class dashboardController extends Controller
             
                 echo $data[0] . "<br />\n";
                 echo $data[1] . "<br />\n";
-                $this->createClient($data[0], $data[1]);
+                //$this->createClient($data[0], $data[1]);
             
         }
         fclose($handle);
@@ -163,19 +165,44 @@ class dashboardController extends Controller
   }
   public function seedVendors_excel(){
     $row = 1;
-    if (($handle = fopen("Client_Base.csv", "r")) !== FALSE) {
+    if (($handle = fopen("Tarjamat_member.csv", "r")) !== FALSE) {
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
             $num = count($data);
             echo "<p> $num fields in line $row: <br /></p>\n";
             $row++;
             
                 echo $data[0] . "<br />\n";
-                echo $data[1] . "<br />\n";
-                $this->createClient($data[0], $data[1]);
+                echo $data[3] . "<br />\n";
+                $this->createVendor($data[0], $data[3]);
             
         }
         fclose($handle);
     }
 
   }
+  public function createVendor($name, $mail){
+   
+
+     $vendor = new User();
+     $vendor->email = $mail;
+     $vendor->name = $name;
+     $vendor->userName = $name;
+     $vendor->account_type = 'vendor';
+     $vendor->password = bcrypt('tarjamatNewMember@1234');
+     $vendor->visible = encrypt('tarjamatNewMember@1234');
+     $vendor->timezone = 'UTC';
+    
+     
+    $vendor->save();
+    $roleuser = new userRole();
+    $roleuser->user_id= $vendor->id;
+    $roleuser->role_id = Role::where('name', 'vendor')->first()->id;
+    $roleuser->save();
+
+     //send mail to vendor
+     //Mail::to($vendor->email)->send(new createVendor());
+     //return back();
+
+
+ }
 }

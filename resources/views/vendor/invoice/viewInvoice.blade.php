@@ -190,7 +190,7 @@
                             <td>
                             {{$invoiceItem->amount}}                        
                             </td>
-                            @if($invoice->status == 'Open')
+                            @if($invoice->status == 'Open' || $invoice->status == 'Rejected')
                             <td> 
                             <button type="button" class="btn btn-warning">
                               <a href="{{route('vendor.view-editNonWorkInvoice', $invoiceItem->id)}}"> 

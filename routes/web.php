@@ -38,11 +38,13 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     ->name('dashboard');
     Route::get('/my-profile', 'admins\dashboardController@profile')->middleware('auth')
     ->name('admin-profile'); 
-    Route::post('/update-profile', 'admins\dashboardController@updateProfile')->middleware('auth')
-    ->name('update-profile');
+    Route::post('/update-profile/{userId}', 'admins\dashboardController@updateProfile')->middleware('auth')
+    ->where(['userId'=>'[0-9]+'])->name('update-profile');
 
     Route::get('/seedClients_excel', 'admins\dashboardController@seedClients_excel')->middleware('auth')
     ->name('seedClients_excel');
+    Route::get('/seedVendors_excel', 'admins\dashboardController@seedVendors_excel')->middleware('auth')
+    ->name('seedVendors_excel');
 
     Route::get('/createWo', 'projects\createWO@getAllData')->middleware('auth')->name('create-wo');
     Route::post('/createWo', 'projects\createWO@store')->middleware('auth')->name('create-wo');
@@ -213,8 +215,8 @@ Route::group(['middleware' => 'role:vendor', 'prefix' => 'vendor-panel',
     ->name('dashboard');
     Route::get('/my-profile', 'vendor\dashboardController@profile')->middleware('auth')
     ->name('vendor-profile');
-    Route::post('/update-profile', 'vendor\dashboardController@updateProfile')->middleware('auth')
-    ->name('update-profile');
+    Route::post('/update-profile/{userId}', 'vendor\dashboardController@updateProfile')->middleware('auth')
+    ->where(['userId'=>'[0-9]+'])->name('update-profile');
 
     ////////// offer/////////////////////
     Route::get('/project-offer/{stage_id}/{group}/{vendor}',
