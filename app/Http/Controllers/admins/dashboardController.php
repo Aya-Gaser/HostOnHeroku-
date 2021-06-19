@@ -167,7 +167,7 @@ class dashboardController extends Controller
   }
   public function seedVendors_excel(){
     $row = 1;
-    if (($handle = fopen("Tarjamat_member.csv", "r")) !== FALSE) {
+    if (($handle = fopen("Tarjamat_member2.csv", "r")) !== FALSE) {
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
             $num = count($data);
             echo "<p> $num fields in line $row: <br /></p>\n";
@@ -202,7 +202,7 @@ class dashboardController extends Controller
     $roleuser->save();
 
      //send mail to vendor
-     //Mail::to($vendor->email)->send(new createVendor());
+     Mail::to($vendor->email)->send(new createVendor());
      //return back();
 
 
