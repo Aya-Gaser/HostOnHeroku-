@@ -41,6 +41,9 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     Route::post('/update-profile', 'admins\dashboardController@updateProfile')->middleware('auth')
     ->name('update-profile');
 
+    Route::get('/excel', 'admins\dashboardController@excel')->middleware('auth')
+    ->name('excel');
+
     Route::get('/createWo', 'projects\createWO@getAllData')->middleware('auth')->name('create-wo');
     Route::post('/createWo', 'projects\createWO@store')->middleware('auth')->name('create-wo');
     Route::post('/updateWo/{woId}', 'projects\viewWoController@updateWo')->middleware('auth')

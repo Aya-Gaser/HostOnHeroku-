@@ -9,6 +9,7 @@ use App\projects;
 use Auth;
 use App\User;
 use App\vendorInvoice;
+use App\client;
 class dashboardController extends Controller
 {
   public function __construct()
@@ -133,5 +134,30 @@ class dashboardController extends Controller
       $admin->save();
 
       return redirect(route('management.dashboard'));
+  }
+
+  public function excel(){
+    $row = 1;
+    if (($handle = fopen("Client_Base.csv", "r")) !== FALSE) {
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $num = count($data);
+            echo "<p> $num fields in line $row: <br /></p>\n";
+            $row++;
+            
+                echo $data[0] . "<br />\n";
+                echo $data[1] . "<br />\n";
+                $this->createClient($data[0], $data[1]);
+            
+        }
+        fclose($handle);
+    }
+
+  }
+  public function createClient($name, $code){
+    $client = new client();
+    $client->name = $name;
+    $client->code = $code;
+    
+    $client->save();
   }
 }
