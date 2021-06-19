@@ -157,6 +157,7 @@ class dashboardController extends Controller
     $client = new client();
     $client->name = $name;
     $client->code = $code;
+    $client->type = 'Loay';
     
     $client->save();
   }
