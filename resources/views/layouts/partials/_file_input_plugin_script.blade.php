@@ -5,7 +5,7 @@
             showUpload: false,
             dropZoneEnabled: false,
             //allowedFileExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
-            maxFileSize: 5120000,
+            maxFileSize: 5120000000,
             maxFileCount: 50,
         });
     </script>--}}

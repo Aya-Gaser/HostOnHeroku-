@@ -41,12 +41,12 @@
                 <div class="row">  
                    
                 <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Number</label>
-                    <input type="text" class="form-control" name="code"  placeholder="">
+                   <label for="exampleInputEmail1">Number</label> <span class="required">*</span>
+                    <input type="text" class="form-control" name="code"  placeholder="" required>
                  </div>
                  <div class="form-group col-md-6">
-                   <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="">
+                   <label for="exampleInputEmail1">Name</label> <span class="required">*</span>
+                    <input type="text" class="form-control" name="name" placeholder="" required>
                  </div>
                  <div class="form-group col-md-6">
                     <label class="form-control-label" for="project_type">Type
@@ -56,6 +56,7 @@
                    <option disabled >Select</option>
                    <option value="Loay" >Loay</option>
                    <option value="Tarjamat" >Tarjamat</option>
+                   <option value="ٌRabea" >ٌRabea</option>
                    
                     </select>
                   </div>
