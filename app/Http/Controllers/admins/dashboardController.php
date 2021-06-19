@@ -12,6 +12,8 @@ use App\vendorInvoice;
 use App\client;
 use App\userRole;
 use App\Role;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\createVendor;
 class dashboardController extends Controller
 {
   public function __construct()
