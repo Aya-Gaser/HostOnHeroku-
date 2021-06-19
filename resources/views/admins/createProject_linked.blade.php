@@ -370,7 +370,7 @@
                     </div>  
                     
                   <div class="card-footer" id="submit_div">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button id="submitProject" type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </form>
             </div>
@@ -454,7 +454,9 @@ $(".form_datetime").datetimepicker({
           });
 });  
 $('#createProject').submit(function(e) {
-  document.body.style.cursor='wait';           
+  document.body.style.cursor='wait';   
+  $('#submitProject').attr('disabled', false)          
+        
 
 });       
 </script>

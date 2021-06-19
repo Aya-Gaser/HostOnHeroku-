@@ -89,7 +89,7 @@ ul{
               <div class="col-md-6">
                 @if($task->status != 'Completed')
                     
-                    <button @php if(!$allowComplete) disabled @endphp type="button" id="{{$task->id}}" class="btn btn-success completeTask complete" > 
+                    <button @if(!$allowComplete) disabled @endif type="button" id="{{$task->id}}" class="btn btn-success completeTask complete" > 
                             Finalization Completed &check;&check; </button>
                         </a> 
                     @else        

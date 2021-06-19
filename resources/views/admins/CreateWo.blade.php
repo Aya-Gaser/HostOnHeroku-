@@ -266,7 +266,7 @@
                 <!-- /.card-body -->
                 <input type="hidden" id="tasksNum" name="tasksNum">
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button id="submitWo" type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </form>
             </div>
@@ -425,7 +425,9 @@ $('body').on('click', '.removeTask', function(){ //injected html elements, event
 });
 
 $('#createWo').submit(function(e) {
-  document.body.style.cursor='wait';           
+  document.body.style.cursor='wait';  
+  $('#submitWo').attr('disabled', false)          
+         
 
 });
 </script>
