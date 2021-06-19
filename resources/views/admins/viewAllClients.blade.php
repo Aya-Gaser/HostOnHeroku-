@@ -56,7 +56,7 @@
                    <option disabled >Select</option>
                    <option value="Loay" >Loay</option>
                    <option value="Tarjamat" >Tarjamat</option>
-                   <option value="ٌRabea" >Rabea</option>
+                   <option value="Rabea" >Rabea</option>
                    
                     </select>
                   </div>
