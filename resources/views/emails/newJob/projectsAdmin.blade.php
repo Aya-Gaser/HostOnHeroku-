@@ -35,5 +35,5 @@ Hello,
 @endcomponent
 
 Thank You,<br>
-Tarjamt LLC 
+Tarjamat LLC 
 @endcomponent

@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use App\WO;
 class readyToFinalizeFile extends Mailable
 {
     use Queueable, SerializesModels;
@@ -16,10 +16,14 @@ class readyToFinalizeFile extends Mailable
      *
      * @return void
      */
-    protected $wo_id;
+    protected $wo_id,$wo,$wo_client;
     public function __construct($wo_id)
     {
         $this->wo_id = $wo_id;
+        $this->wo = WO::find($this->wo_id);
+        $this->wo_client = $this->wo->client->code;
+
+
     }
         
 
@@ -31,9 +35,9 @@ class readyToFinalizeFile extends Mailable
     public function build()
     {
         return $this->markdown('emails.proofingAndFinalization.readyToFinalizeFile')
-                     ->with(['wo_id'=>$this->wo_id])
-                    ->from('ayagaser30@example.com') 
+                     ->with(['wo_id'=>$this->wo_id,'wo_client'=>$this->wo->client->code])
+                    ->from('projects@arabictarjamat.com') 
                     ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ) 
-                    .' For Finalization')->delay(15); 
+                    .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' For Finalization')->delay(15); 
     }
 }

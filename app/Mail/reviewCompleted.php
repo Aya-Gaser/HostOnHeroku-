@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use App\WO;
 class reviewCompleted extends Mailable
 {
     use Queueable, SerializesModels;
@@ -15,11 +15,15 @@ class reviewCompleted extends Mailable
      * Create a new message instance.
      *
      * @return void
-     */ protected $wo_id, $project_id;
+     */ protected $wo_id, $project_id ,$wo,$wo_client;
     public function __construct($wo_id, $project_id)
     {
         $this->wo_id = $wo_id;
         $this->project_id = $project_id;
+        $this->wo = WO::find($this->wo_id);
+        $this->wo_client = $this->wo->client->code;
+
+
     }
 
     /**
@@ -30,9 +34,10 @@ class reviewCompleted extends Mailable
     public function build()
     {
         return $this->markdown('emails.vendorReview.reviewCompleted')
-        ->with(['wo_id'=>$this->wo_id, 'project_id'=>$this->project_id])
-       ->from('ayagaser30@example.com')
+        ->with(['wo_id'=>$this->wo_id, 'project_id'=>$this->project_id,
+        'wo_client'=>$this->wo->client->code])
+       ->from('projects@arabictarjamat.com')
        ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-       .'  Final Document(s)')->delay(15); 
+       .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' Final Document(s)')->delay(15); 
     }
 }

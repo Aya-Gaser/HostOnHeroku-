@@ -295,7 +295,7 @@ td{
                 @if($stage->readyToInvoice != 1)
                   @if($project->type != 'Dtp')
                    
-                  <button type="button" id="{{$stage->id}}" data-toggle="modal" data-target="#modal-completeStage"
+                  <button @if(!$allowComplete) disabled @endif type="button" id="{{$stage->id}}" data-toggle="modal" data-target="#modal-completeStage"
                   class="btn btn-success completeStage complete" > 
                           Complete Job &check;&check; </button>
                       </a> 
@@ -402,6 +402,8 @@ td{
                   <button type="submit" class="btn btn-primary">Update</button>
                 </div>
               </form>
+            </div>  
+            </div>  
             </div>         
 
 

@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use \stdClass;
+use App\WO;
 class projectUpdate extends Mailable
 {
     use Queueable, SerializesModels;
@@ -16,12 +17,16 @@ class projectUpdate extends Mailable
      *
      * @return void
      */
-    protected $wo_id, $isFiles, $updates;
+    protected $wo_id, $isFiles, $updates,$wo,$wo_client;
     public function __construct($wo_id, $isFiles, $updates )
     {
         $this->wo_id = $wo_id;
         $this->isFiles = $isFiles;
         $this->updates = $updates;
+        $this->wo = WO::find($this->wo_id);
+        $this->wo_client = $this->wo->client->code;
+
+
     }
 
     /**
@@ -33,10 +38,10 @@ class projectUpdate extends Mailable
     {
         return $this->markdown('emails.projectUpdate.projectUpdate')
                      ->with(['wo_id'=>$this->wo_id,'isFiles'=>$this->isFiles,
-                            'updates'=>$this->updates])
-                    ->from('ayagaser30@example.com') 
+                            'updates'=>$this->updates,'wo_client'=>$this->wo->client->code])
+                    ->from('projects@arabictarjamat.com') 
                     ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-                    .'  Has Been Updated')->delay(15); 
+                    .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).'  Has Been Updated')->delay(15); 
     
     }
 }

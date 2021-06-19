@@ -9,5 +9,5 @@ Use your email as a username and the following temporary password: TarjamatMembe
 @endcomponent
 
 Thank You,<br>
-Tarjamt LLC 
+Tarjamat LLC 
 @endcomponent

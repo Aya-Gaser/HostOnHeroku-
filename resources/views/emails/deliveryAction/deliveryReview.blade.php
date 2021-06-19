@@ -1,13 +1,13 @@
 @php 
 $wo_id = str_pad($wo_id, 4, '0', STR_PAD_LEFT );
 if($action == 'Improved')
-$info = "requires improvements. Please find the marked file(s) attached";
+$info = " requires improvements. Please find the marked file(s) attached. ";
 else if($action == 'Accepted')
-$info = "has been accepted." ;
+$info = " has been accepted. " ;
 else 
-$info = "has been rejected. Please refer to the instructions and take necessary action." ;  
+$info = " has been rejected. Please refer to the instructions and take necessary action. " ;  
 
-$body = "# Project ". $wo_id. " delivery ". $info;
+$body = "# Project ". $wo_id."-".$wo_client. " delivery ". $info;
 
 @endphp
 
@@ -20,5 +20,5 @@ $body = "# Project ". $wo_id. " delivery ". $info;
 @endcomponent
 
 Thank You,<br>
-Tarjamt LLC 
+Tarjamat LLC 
 @endcomponent

@@ -56,6 +56,7 @@ class finalizationController extends Controller
      }
     
     public function taskFinalization($taskId){
+        $allowComplete = 0;
         if(!Auth::user()->can('view-finalization'))
             abort(401);
         $task = woTasksNeeded::findOrFail($taskId);
@@ -63,10 +64,13 @@ class finalizationController extends Controller
         //$working_filesReadyToFinalize = $project->project_sourceFile_readyToFilnalize;
         $taskJobs = $task->project;
         $taskProofed_clientFiles = $task->proofed_clientFile;
+        if(count($task->finalized_projectManagerFile) && count($task->finalized_clientFile) )
+            $allowComplete = 1;
         
         
         return view('admins.taskFinalization')->with(['source_files'=>$source_files,
-            'taskJobs'=>$taskJobs, 'taskProofed_clientFiles'=>$taskProofed_clientFiles, 'task'=>$task
+            'taskJobs'=>$taskJobs,'allowComplete'=>$allowComplete,
+             'taskProofed_clientFiles'=>$taskProofed_clientFiles, 'task'=>$task
         ]);
     }
 

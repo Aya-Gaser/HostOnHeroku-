@@ -10,5 +10,5 @@ $info = ". Please login and take necessary action. ";
 
 
 Thank You,<br>
-Tarjamt LLC 
+Tarjamat LLC 
 @endcomponent

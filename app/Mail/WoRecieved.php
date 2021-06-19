@@ -17,10 +17,14 @@ class WoRecieved extends Mailable
      *
      * @return void
      */
-    protected $wo_id;
+    protected $wo_id,$wo,$wo_client;
     public function __construct($wo_id)
     {
         $this->wo_id = $wo_id;
+        $this->wo = WO::find($this->wo_id);
+        $this->wo_client = $this->wo->client->code;
+
+
     }
 
     /**
@@ -31,9 +35,9 @@ class WoRecieved extends Mailable
     public function build()
     {
         return $this->markdown('emails.wo.woRecieved')
-                     ->with(['wo_id'=>$this->wo_id])
-                    ->from('ayagaser30@example.com')
+                     ->with(['wo_id'=>$this->wo_id,'wo_client'=>$this->wo->client->code])
+                    ->from('projects@arabictarjamat.com')
                     ->subject('WO '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-                    .'Accepted')->delay(15); 
+                    .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' Accepted')->delay(15); 
     }
 }

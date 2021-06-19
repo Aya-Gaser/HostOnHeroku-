@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use App\WO;
 class deliveryAction extends Mailable
 {
     use Queueable, SerializesModels;
@@ -16,11 +16,16 @@ class deliveryAction extends Mailable
      *
      * @return void
      */
-    protected $wo_id, $action;
+    protected $wo_id, $action,$wo,$wo_client;
     public function __construct($wo_id, $action)
     {
         $this->wo_id = $wo_id;
         $this->action = $action;
+        $this->wo = WO::find($this->wo_id);
+        $this->wo_client = $this->wo->client->code;
+
+
+
     }
 
     /**
@@ -31,9 +36,10 @@ class deliveryAction extends Mailable
     public function build()
     {
         return $this->markdown('emails.deliveryAction.deliveryReview')
-                     ->with(['wo_id'=>$this->wo_id,'action'=>$this->action])
-                    ->from('ayagaser30@example.com') 
+                     ->with(['wo_id'=>$this->wo_id,'action'=>$this->action,
+                     'wo_client'=>$this->wo->client->code])
+                    ->from('projects@arabictarjamat.com') 
                     ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-                    .'Delivery '.$this->action)->delay(15); 
+                    .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' Delivery '.$this->action)->delay(15); 
     }
 }
