@@ -31,7 +31,7 @@
             showUpload: false,
             showRemove: true,
             dropZoneEnabled: false,
-            maxFileSize: 5120,
+            maxFileSize: 512000000,
             maxFileCount: 10,
             uploadUrl: '#',
         });
