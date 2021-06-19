@@ -447,7 +447,7 @@ $(".form_datetime").datetimepicker({
 });
 $('#createProject').submit(function(e) {
   document.body.style.cursor='wait';  
-  $('#submitProject').attr('disabled', false)          
+  $('#submitProject').attr('disabled', true)          
   
 });
 </script>

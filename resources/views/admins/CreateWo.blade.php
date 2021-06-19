@@ -426,7 +426,7 @@ $('body').on('click', '.removeTask', function(){ //injected html elements, event
 
 $('#createWo').submit(function(e) {
   document.body.style.cursor='wait';  
-  $('#submitWo').attr('disabled', false)          
+  $('#submitWo').attr('disabled', true)          
          
 
 });

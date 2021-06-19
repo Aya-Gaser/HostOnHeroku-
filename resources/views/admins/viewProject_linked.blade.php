@@ -96,7 +96,7 @@ td{
                         <h4> Source Document(s) </h4>
                         <br>
                         
-                            @forelse($vendorSource_files as $file)                                
+                            @foreach($vendorSource_files as $file)                                
                                 <li class="text-primary">
                                 <a href="{{asset('storage/'.$file['file'])}}"
                                        download="{{$file['file_name']}}">
@@ -111,9 +111,8 @@ td{
                                    
                                 </li>
                                 <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">None</li>
-                            @endforelse
+                           
+                            @endforeach
                             @forelse($WO_vendorSource_files as $file_toProject) 
                               @php $file = App\woFiles::find($file_toProject->woSourceFile_id) @endphp
                                                           
@@ -284,7 +283,7 @@ td{
                 <p>
                 @if($transStage->status != 'completed')
                     <a method="post" href="{{route('management.complete-stage',['stage'=>$transStage->id,'compelte'=>1] )}}">
-                        <button type="button" class="btn btn-success" > 
+                        <button @if(!$allowComplete) disabled @endif type="button" class="btn btn-success" > 
                         Completed &check;&check; </button>
                     </a> 
                 @else        

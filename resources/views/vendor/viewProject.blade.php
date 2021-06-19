@@ -96,7 +96,7 @@ td{
               <h4> Source Document(s) </h4>
                            <br>
                            <ul>
-                            @forelse($vendorSource_files as $file)                               
+                            @foreach($vendorSource_files as $file)                               
                                 <li class="text-primary">
                                     <a href="{{asset('storage/'.$file['file'])}}"
                                        download="{{$file['file_name']}}">
@@ -105,9 +105,8 @@ td{
                                     
                                 </li>
                                 <div class="clearfix mb-2"></div>
-                            @empty
-                                <li class="text-danger">None</li>
-                            @endforelse
+                           
+                            @endforeach
                             @forelse($WO_vendorSource_files as $file_toProject) 
                               @php $file = App\woFiles::find($file_toProject->woSourceFile_id) @endphp
                                                            

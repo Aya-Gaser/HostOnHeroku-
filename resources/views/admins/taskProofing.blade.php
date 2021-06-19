@@ -56,7 +56,7 @@ td{
      @php $sourceFile=0; @endphp
     
       <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-12">
             <div class="card card-primary shadow-sm">
               <div class="card-header">
                 <h3 class="card-title">Task Details </h3>
@@ -227,10 +227,10 @@ td{
                               <tbody>
                                 @foreach($deliveries_edited as $jobFiles) 
                                 <tr class="bg-dark"> 
-                                   <td colspan="4">Job # {{str_pad($jobFiles->id, 4, "0", STR_PAD_LEFT )}} Files</td>
-                                   <td> 
-                                   @if($jobFiles->status != 'proofed')
-                                    <button type="button" class="sendToVendor btn center" data-toggle="modal" data-target="#modal-sendToVendor"
+                                   <td colspan="2">Job # {{str_pad($jobFiles->id, 4, "0", STR_PAD_LEFT )}} Files</td>
+                                   <td colspan="3"> 
+                                   @if($jobFiles->status != 'proofed') 
+                                    <button @if(!count($jobFiles->proofedFile )) disabled @endif type="button" class="col-md-12 sendToVendor btn center" data-toggle="modal" data-target="#modal-sendToVendor"
                                      id="{{$jobFiles->id}}" style=" background-color:#eb6434; color:white;"> Send Document(s) To Vendor </button>
                                    @else 
                                      <span class="text-success"> Document(s) Sent To Vendor &check;&check; </span> 
@@ -243,7 +243,7 @@ td{
                                        <td> <p>
                                        <a href="{{asset('storage/'.$jobFiles->lastAccepted_delivery[$source_file->id][0]->file)}}"
                                        download="{{$jobFiles->lastAccepted_delivery[$source_file->id][0]->file_name}}">
-                                        {{str_limit($jobFiles->lastAccepted_delivery[$source_file->id][0]->file_name,50)}}
+                                        {{str_limit($jobFiles->lastAccepted_delivery[$source_file->id][0]->file_name,30)}}
                                     </a>
                                        </p>
                                        <p>{{ UTC_To_LocalTime($jobFiles->lastAccepted_delivery[$source_file->id][0]->created_at,
@@ -257,7 +257,7 @@ td{
                                        <p>
                                        <a href="{{asset('storage/'.$source_file->editedFile->file)}}"
                                        download="{{$source_file->editedFile->file_name}}">
-                                        {{str_limit($source_file->editedFile->file_name,50)}}
+                                        {{str_limit($source_file->editedFile->file_name,30)}}
                                     </a>
                                     </p> 
                                     
@@ -267,22 +267,14 @@ td{
                                       @endif
                                    </td>
                                   
-                                     @if(!$source_file->isReadyToFinalize) 
-                                     <td></td> <td></td>  
-                                      <td> 
-                                      <button id="{{$source_file->id }}"
-                                           type="button" class="proof btn btn-success" data-toggle="modal" data-target="#modal-proof">
-                                       Proof
-                                        </button>
-                                       </td> 
-                                        
-                                        @else 
+                                     
+                                      
                                     <td>
                                      @foreach($source_file->proofed_vendorFile as $vendorFile)
                                       <p>
                                         <a href="{{asset('storage/'.$vendorFile->file)}}"
                                         download="{{$vendorFile->file_name}}">
-                                          {{str_limit($vendorFile->file_name,50)}}
+                                          {{str_limit($vendorFile->file_name,30)}}
                                       </a>
                                       </p> 
                                       <p> <span class="text-success">Notes: </span>  {{$vendorFile->note}} </p>
@@ -303,8 +295,13 @@ td{
                                     <p class="text-danger"> NONE </p>
                                     @endif
                                     </td>
-                                   <td></td>
-                                    @endif    
+                                    <td> 
+                                      <button id="{{$source_file->id }}"
+                                           type="button" class="proof btn btn-success" data-toggle="modal" data-target="#modal-proof">
+                                       Proof
+                                        </button>
+                                       </td> 
+                                   
                                     
                                          
                                                                          
@@ -504,7 +501,6 @@ $('#uploadProof-form').submit(function(e) {
 }); 
 
 $('.sendToVendor').click(function(){
-  document.body.style.cursor='wait';           
 
   $jobId = $(this).attr('id');
   $('#jobId').val($jobId);

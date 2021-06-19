@@ -231,7 +231,7 @@ class viewProjectController extends Controller
             if($stage->accepted_docs >= $stage->required_docs)
                 $stage->status = 'Delivered';
             else 
-                $stage->status = 'Not delivered';   
+                $stage->status = 'In Progress';   
         } 
         
         $stage->save();

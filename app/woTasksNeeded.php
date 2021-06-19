@@ -29,7 +29,10 @@ class woTasksNeeded extends Model
    }
    public function proofed_clientFile(){
       return $this->proofedFile()->where('type','client_file');
-  }
+  } 
+  public function proofed_vendorFile(){
+   return $this->proofedFile()->where('type','vendor_file');
+} 
    public function finalizedFile(){
       return $this->hasMany('App\finalizedFile', 'woTask_id'); 
    }

@@ -35,7 +35,7 @@ class viewAllProjectsController extends Controller
     //// view all/status
     public function index($filter){ 
         $this->validateFilter($filter); 
-        if($filter == 'undelivered') $filter = 'Not delivered';
+        if($filter == 'undelivered') $filter = 'In Progress';
         if($filter == 'Completed')
             $stages = projectStage::where('vendor_id', Auth::user()->id)
                                   ->where('readyToInvoice', 1)->get();
@@ -229,7 +229,7 @@ class viewAllProjectsController extends Controller
         $stage = projectStage::where('id', $delivery->stage_id)->first();
         $stage->increment('accepted_docs');
        
-        $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'Delivered' : 'Undelivered';
+        $stage->status = ($stage->accepted_docs == $stage->required_docs)? 'Delivered' : 'In Progress';
        /*
         if( $stage->status == 'accepted'){
        

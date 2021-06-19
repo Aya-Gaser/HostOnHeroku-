@@ -74,7 +74,7 @@ th{
              
                 <div class="row" style="font-size:18px;">
                   <p class="col-md-1"> ID: {{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} </p>
-                  <p class="col-md-2"> Client ID: {{str_pad($wo->client_id, 4, "0", STR_PAD_LEFT )}} </p>
+                  <p class="col-md-2"> Client ID: {{str_pad($wo->client->code, 4, "0", STR_PAD_LEFT )}} </p>
                   <p class="col-md-3"> Deadline:
                   {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}} </p>
                   <p class="col-md-2">  {{$wo->from_language}} ▸ {{$wo->to_language}}  </p>
@@ -90,32 +90,34 @@ th{
                <div class="card-body no-padding">
                @foreach($wo->woTasksNeeded as $task)
                @if($task->status != 'Archived')
-                <div class="card card-primary collapsed-card">
-                <div class="card-header"  style="padding:8px 10px 0px 7px; color:white;">
+                <div class="card  collapsed-card">
+                <div class="card-header"  style="padding:8px 10px 0px 7px; ">
                   <div class="card-tools">
-                    <button type="button" style="color:white; font-size:20px;" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <button type="button" style=" font-size:20px;" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                       <i class="fas fa-plus"></i>
                     </button>
                     </div>
-                    <div class="row">
-                    <p class="col-md-1 text-dark font-weight-bold" > Task # {{$loop->iteration}}  </p>
+                    <div class="row bg-gray">
+                    <p class="col-md-1 text-dark bg-danger font-weight-bold" > Task # {{$loop->iteration}}  </p>
                     <p class="col-md-2"> Type:  {{$task->type}} </p>
                   <p class="col-md-2"> Word Count: {{$task->client_wordsCount}} </p>
                   <p class="col-md-2"> Finalized File(s): {{count($task->proofed_clientFile)}} of {{count($wo->woSourceFiles)}}   </p>
+                  <p class="col-md-2"> Jobs in Task: {{count($task->project)}}   </p>
                   <p class="col-md-2"> Status: {{$task->status}} </p>
+
                   @if($task->status == 'Completed')
                   <button class='btn btn-dark col-md-1' onclick="archiveTask('{{$task->id}}')">Archive </button>
                   @endif
                  </div>
-                 <div class="row">
-                 <p class="col-md-2"> Jobs in Task: {{count($task->project)}}   </p>
+                 <div>
                  @foreach($task->project as $project)
-                 <p class="col-md-3"> Job #{{$loop->iteration}} Status: {{$project->status}}   </p>
-                 <p class="col-md-3"> 
-                 Translator: @if($project->translator_id){{App\User::find($project->translator_id)->name}} 
-                 @else NOT ACCEPTED @endif  </p>
-                 <p class="col-md-3"> Deadline: {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone)}} </p>
-
+                 <div class="row" style="border-bottom:1px solid #ccc;">
+                  <p class="col-md-4"> Job #{{$loop->iteration}} Status: {{$project->status}}   </p>
+                  <p class="col-md-4"> 
+                  Translator: @if($project->translator_id){{App\User::find($project->translator_id)->name}} 
+                  @else NOT ACCEPTED @endif  </p>
+                  <p class="col-md-4"> Deadline: {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone)}} </p>
+                </div>
                  @endforeach
                  </div>
                 </div>   

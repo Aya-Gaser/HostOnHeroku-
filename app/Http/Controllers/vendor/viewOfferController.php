@@ -127,7 +127,7 @@ class viewOfferController extends Controller
             $project->status = 'With Vendor';
            // $this->update_taskStatus($project);
             $stage->vendor_id = Auth::user()->id;
-            $stage->status = 'on progress';
+            $stage->status = 'In Progress';
             $stage->save();
             $project->save();
             $invitation->status = 'accepted';
