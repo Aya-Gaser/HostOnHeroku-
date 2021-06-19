@@ -52,7 +52,10 @@
                   <tbody>
                   @foreach($stages as $stage)
                    <tr>
-                    <td> {{str_pad($stage['wo_id'], 4, "0", STR_PAD_LEFT )}} </td>
+                    <td>
+                    {{str_pad(App\WO::find($stage['wo_id'])->client->code, 4, "0", STR_PAD_LEFT )}}-{{str_pad($stage['wo_id'], 4, "0", STR_PAD_LEFT )}}
+
+                    </td>
                     <td> {{ $stage['type']}} </td>
                     <td> {{ $stage['status']}} </td>
                     <td> <button type="button" class="btn btn-success">

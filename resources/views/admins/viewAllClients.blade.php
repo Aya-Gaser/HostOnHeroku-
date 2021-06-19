@@ -48,6 +48,17 @@
                    <label for="exampleInputEmail1">Name</label>
                     <input type="text" class="form-control" name="name" placeholder="">
                  </div>
+                 <div class="form-group col-md-6">
+                    <label class="form-control-label" for="project_type">Type
+                    <span class="required">*</span>
+                    </label>
+                    <select class="select2 form-control" data-live-search="true" name="type" id="type" required>
+                   <option disabled >Select</option>
+                   <option value="Loay" >Loay</option>
+                   <option value="Tarjamat" >Tarjamat</option>
+                   
+                    </select>
+                  </div>
               </div>
              
          
@@ -79,6 +90,7 @@
                     
                       <th>Number</th>
                       <th>Name</th>
+                      <th>Type</th>
                       <th>Created on</th>
                       <th >Total Projects </th>
                       <th></th>
@@ -90,6 +102,7 @@
                      <tr>
                      <td> {{$client['code']}} </td>
                      <td> {{$client['name']}} </td>
+                     <td> {{$client['type']}} </td>
                      <td> 
                       {{ $client['created_at']}}
                     </td>
@@ -144,6 +157,17 @@
 
 <script>
 $(function () {
+     //Initialize Select2 Elements
+     $('.select2').select2()
+
+//Initialize Select2 Elements
+$('.select2bs4').select2({
+  theme: 'bootstrap4'
+})
+
+  bsCustomFileInput.init();
+  $('select').selectpicker();
+
   /// data table
   $("#myTable").DataTable({
       "responsive": true, "lengthChange": true, "autoWidth": true,"paging": true, "searching": true,

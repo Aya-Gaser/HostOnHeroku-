@@ -17,6 +17,7 @@ class CreateClientsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('code')->nullable();
             $table->string('name');
+            $table->string('type');
             $table->timestamps();
         });
     }

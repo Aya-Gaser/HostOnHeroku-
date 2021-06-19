@@ -36,7 +36,7 @@ class readyToProofFile extends Mailable
         return $this->markdown('emails.proofingAndFinalization.readyToProofFile')
         ->with(['wo_id'=>$this->wo_id,'wo_client'=>$this->wo->client->code])
        ->from('projects@arabictarjamat.com') 
-       ->subject('WO '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ) 
-       .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' Has New File(s) Ready To Proofing Proccess ')->delay(15); 
+       ->subject('WO '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ) 
+       .'-'.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ).' Has New File(s) Ready To Proofing Proccess ')->delay(15); 
     }
 }

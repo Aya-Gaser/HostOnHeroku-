@@ -1,5 +1,5 @@
 @component('mail::message')
-# Project {{str_pad($wo_id, 4, "0", STR_PAD_LEFT )}}-{{str_pad($wo_client, 4, "0", STR_PAD_LEFT )}}  Has Been Updated.
+# Project {{str_pad($wo_client, 4, "0", STR_PAD_LEFT )}}-{{str_pad($wo_id, 4, "0", STR_PAD_LEFT )}}  Has Been Updated.
 @if($isFiles)
 #Please note that there was a change in the file(s).
  Please login to use the new file(s).

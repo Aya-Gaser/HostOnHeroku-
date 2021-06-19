@@ -46,7 +46,7 @@ class offerAction extends Mailable
         'stage_type'=>$this->stage_type, 'wo_id'=>$this->project->wo_id,
         'wo_client'=>$this->wo->client->code])
        ->from('projects@arabictarjamat.com')
-       ->subject('Project '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
-       .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' '.$this->action)->delay(15); 
+       ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
+       .'-'.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT ).' '.$this->action)->delay(15); 
     }
 }

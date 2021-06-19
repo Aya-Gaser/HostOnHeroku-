@@ -106,7 +106,7 @@
                     @foreach ($invoice->vendorWorkInvoiceItem as $invoiceItem )
                     <tr>
                             <td>
-                            {{str_pad(App\projectStage::find($invoiceItem->stageId)->wo_id, 4, "0", STR_PAD_LEFT )}}
+                            {{str_pad(App\WO::find(App\projectStage::find($invoiceItem->stageId)->wo_id)->client->code, 4, "0", STR_PAD_LEFT )}}-{{str_pad(App\projectStage::find($invoiceItem->stageId)->wo_id, 4, "0", STR_PAD_LEFT )}}
                             </td>
                             
                             <td>

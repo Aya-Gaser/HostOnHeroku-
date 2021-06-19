@@ -40,8 +40,8 @@ class projectUpdate extends Mailable
                      ->with(['wo_id'=>$this->wo_id,'isFiles'=>$this->isFiles,
                             'updates'=>$this->updates,'wo_client'=>$this->wo->client->code])
                     ->from('projects@arabictarjamat.com') 
-                    ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-                    .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).'  Has Been Updated')->delay(15); 
+                    ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
+                    .'-'.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ).'  Has Been Updated')->delay(15); 
     
     }
 }

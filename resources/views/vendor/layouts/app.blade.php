@@ -212,7 +212,7 @@ body a, body span, body p , body h1{
                 <a href="{{route('vendor.create-nonWorkInvoice') }}" 
                 class="nav-link {{ isActive('vendor.create-nonWorkInvoice')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Non-Peoject Items To Invoice</p>
+                  <p>Non-Project Items To Invoice</p>
                 </a>
               </li>
               <li class="nav-item">

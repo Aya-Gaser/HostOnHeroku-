@@ -18,6 +18,7 @@ class clientController extends Controller
          $client = new client();
          $client->name = request()['name'];
          $client->code = request()['code'];
+         $client->type = request()['type'];
          
          $client->save();
 

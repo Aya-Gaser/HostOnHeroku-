@@ -54,6 +54,7 @@ td{
                 <p class="data"> <Span class="head">Number: </Span>{{$client->code}} </p>
               <p class="data"> <Span class="head">Name: </Span>{{$client->name}} </p>
 
+              <p class="data"> <Span class="head">Type: </Span>{{$client->type}} </p>
               <p class="data"> <Span class="head"> Created on: </Span> 
              {{ UTC_To_LocalTime($client->created_at, Auth::user()->timezone)}}
                 </p>

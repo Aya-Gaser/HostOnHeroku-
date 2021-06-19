@@ -47,8 +47,8 @@ class newJob extends Mailable
                      ->with(['stage'=>$this->stage,'project'=>$this->project, 'vendor'=> $this->vendor,
                       'group'=>$this->group,'link'=>$this->link])
                     ->from('projects@arabictarjamat.com') 
-                    ->subject('Project '.str_pad( $this->stage->wo_id, 4, "0", STR_PAD_LEFT )
-                    .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' - Action Needed')->delay(15); 
+                    ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
+                    .'-'.str_pad( $this->stage->wo_id, 4, "0", STR_PAD_LEFT ).' - Action Needed')->delay(15); 
     
   //  return $this->markdown('emails.newJob.projectsAdmin');
     }

@@ -37,7 +37,7 @@ class CompleteStageVendor extends Mailable
                      ->with(['wo_id'=>$this->wo_id,'stage_id'=>$this->stage_id,
                      'wo_client'=>$this->wo->client->code])
                     ->from('projects@arabictarjamat.com') 
-                    ->subject('Project '.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT )
-                    .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' Completed')->delay(15); 
+                    ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
+                    .'-'.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ).' Completed')->delay(15); 
     }
 }

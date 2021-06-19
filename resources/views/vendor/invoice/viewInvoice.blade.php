@@ -97,7 +97,8 @@
                     @foreach ($invoice->vendorWorkInvoiceItem as $invoiceItem )
                     <tr>
                             <td> 
-                            {{str_pad(App\projectStage::find($invoiceItem->stageId)->wo_id, 4, "0", STR_PAD_LEFT )}}
+                            {{str_pad(App\WO::find(App\projectStage::find($invoiceItem->stageId)->wo_id)->client->code, 4, "0", STR_PAD_LEFT )}}-{{str_pad(App\projectStage::find($invoiceItem->stageId)->wo_id, 4, "0", STR_PAD_LEFT )}}
+
                             </td>
                             
                             <td>
@@ -120,7 +121,7 @@
                             <td>
                             {{$invoiceItem->amount}}                        
                             </td>
-                            @if($invoice->status == 'Open')
+                            @if($invoice->status == 'Open' || $invoice->status == 'Rejected')
                             <td> 
                             <button type="button" class="btn btn-warning">
                               <a href="{{route('vendor.view-editWorkInvoice', $invoiceItem->id)}}"> 

@@ -38,7 +38,7 @@ class allVendorsDeclined extends Mailable
         ->with(['project_id'=>$this->project->id, 'wo_id'=>$this->project->wo_id,
         'wo_client'=>$this->wo->client->code, 'stage_type'=>$this->stage_type])
        ->from('projects@arabictarjamat.com')
-       ->subject('Project '.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT )
-       .'-'.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT ).' Has Been Declined By All Vendors ')->delay(15); 
+       ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
+       .'-'.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT ).' Has Been Declined By All Vendors ')->delay(15); 
     }
 }
