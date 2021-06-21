@@ -32,7 +32,7 @@ class invoicePyment extends Mailable
     {
         return $this->markdown('emails.invoice.invoicePayment')
                      ->with(['invoice_id'=>$this->invoice_id])
-                    ->from('ayagaser30@example.com') 
+                    ->from('no-reply@arabictarjamat.com') 
                     ->subject('Invoice '.str_pad( $this->invoice_id, 4, "0", STR_PAD_LEFT )
                     .' has been paid.')->delay(15); 
     }

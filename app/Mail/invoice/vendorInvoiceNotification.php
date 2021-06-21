@@ -32,7 +32,7 @@ class vendorInvoiceNotification extends Mailable
     {
         return $this->markdown('emails.invoice.invoiceNotifyManagement')
                      ->with(['invoice_id'=>$this->invoice_id])
-                    ->from('ayagaser30@example.com') 
+                    ->from('no-reply@arabictarjamat.com') 
                     ->subject('Invoice '.str_pad( $this->invoice_id, 4, "0", STR_PAD_LEFT )
                     .'  Submitted')->delay(15); 
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\projects;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+
 use App\Mail\createVendor;
 use Auth;
 use App\User;
@@ -30,8 +32,8 @@ class vendorController extends Controller
          $vendor->name = request()['name'];
          $vendor->userName = request()['userName'];
          $vendor->account_type = 'vendor';
-         $vendor->password = bcrypt('tarjamatNewMember@1234');
-         $vendor->visible = encrypt('tarjamatNewMember@1234');
+         $vendor->password = Hash::make('TarjamatMember@1234');
+         $vendor->visible = encrypt('TarjamatMember@1234');
          $vendor->timezone = request()['timezone'];
          if(request()['created_at'])
            $vendor->created_at = request()['created_at'];

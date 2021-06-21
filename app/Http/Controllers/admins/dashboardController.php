@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admins;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\WO;
+use Illuminate\Support\Facades\Hash;
+
 use App\projects;
 use Auth;
 use App\User;
@@ -192,8 +194,8 @@ class dashboardController extends Controller
      $vendor->name = $name;
      $vendor->userName = $name;
      $vendor->account_type = 'vendor';
-     $vendor->password = bcrypt('tarjamatNewMember@1234');
-     $vendor->visible = encrypt('tarjamatNewMember@1234');
+     $vendor->password = Hash::make('TarjamatMember@1234');
+     $vendor->visible = encrypt('TarjamatMember@1234');
      $vendor->timezone = 'UTC';
     
      
@@ -204,7 +206,10 @@ class dashboardController extends Controller
     $roleuser->save();
 
      //send mail to vendor
-     Mail::to($vendor->email)->send(new createVendor());
+    // Mail::to($vendor->email)->send(new createVendor());
+     Mail::send(new createVendor(), function($message) use ($vendor->email) {
+      $message->to($vendor->email);
+  });
      //return back();
 
 
