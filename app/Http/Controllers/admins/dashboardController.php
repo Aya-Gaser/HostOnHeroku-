@@ -206,10 +206,10 @@ class dashboardController extends Controller
     $roleuser->save();
 
      //send mail to vendor
-    // Mail::to($vendor->email)->send(new createVendor());
-     Mail::send(new createVendor(), function($message) use ($vendor->email) {
+     Mail::to($vendor->email)->send(new createVendor());
+   /*  Mail::send(new createVendor(), function($message) use ($vendor->email) {
       $message->to($vendor->email);
-  });
+  }); */
      //return back();
 
 

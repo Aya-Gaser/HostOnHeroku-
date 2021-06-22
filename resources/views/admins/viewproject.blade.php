@@ -283,7 +283,10 @@ td{
                 <p class="data col-md-4"> <Span class="head"> Translator Rate: </Span>{{$stage->vendor_rate}} </p>
 
                 <p class="data col-md-4"> <Span class="head">Translator: </Span> @if($project->translator_id) {{App\User::find($project->translator_id)->name}} 
-                @else <span class="text-danger"> NOT ACCEPTED YET  @endif </span> </p>
+                @else <span class="text-danger"> NOT ACCEPTED YET </span> @endif  <br> 
+                  </p>
+
+                
                 <p class="data col-md-4"> <Span class="head"> Number of File: </Span>
               
                {{$stage->required_docs}} </p>
@@ -312,7 +315,13 @@ td{
                  @endif       
                     </p>
               <p class="data col-md-12"> <Span class="head"> Instructions: </Span>{{$stage->instructions}} </p>
-     
+              <p class="data col-md-12"> <Span class="head bg-gray"> Invitations : </Span> </p>
+
+              <p class="data col-md-6"> <Span class="head"> Group1: </Span>
+                 @foreach($sent_g1 as $invite) {{App\User::find($invite->vendor_id)->name}} - {{$invite->status}} <br> @endforeach </p>
+                 <p class="data col-md-6"> <Span class="head">  Group2: </Span>
+                 @foreach($sent_g2 as $invite) {{App\User::find($invite->vendor_id)->name}} - {{$invite->status}} <br> @endforeach </p>
+                
                    
               </div>
                <!-- ****************update stage**************************************** -->

@@ -22,6 +22,7 @@ use DateTime;
 use \stdClass;
 use App\User;
 use App\woSourceFiles_toProjectsVendors;
+use App\projectsInvitations;
 
 use App\improvedFiles;
 use Illuminate\Support\Facades\Mail;
@@ -49,15 +50,26 @@ class viewProjectController extends Controller
         [$WO_vendorSource_files, $vendorSource_files,$reference_files] = $this->getprojectsFiles($project);
         $source_files = $project->project_sourceFile;
         $deadline_difference = $this->deadline_difference($project);
-
+        [$sent_g1, $sent_g2] = $this->get_projectInvitations($project->id);
         if(count($project->woTasksNeeded->finalized_projectManagerFile) && count($project->woTasksNeeded->finalized_clientFile) )
             $allowComplete = 1;
         return view($view)->with(['project'=>$project, 'has_proofAndFinalize'=>$has_proofAndFinalize,
         'source_files'=>$source_files, 'reference_files'=> $reference_files,
           'delivery_files'=>$delivery_files,'vendorSource_files'=>$vendorSource_files,'WO_vendorSource_files'=>$WO_vendorSource_files,
          'deliveryHistory_files'=>$deliveryHistory_files, 'deliveries_edited'=>$deliveries_edited,
-          'deadline_difference'=>$deadline_difference,'allowComplete'=>$allowComplete]);
+          'deadline_difference'=>$deadline_difference,'allowComplete'=>$allowComplete,
+          'sent_g1'=>$sent_g1, 'sent_g2'=>$sent_g2
+        ]);
         
+    }
+    public function get_projectInvitations($project_id){
+      $invitations_g1 = projectsInvitations::where('project_id', $project_id)
+                                           ->where('group', 1)
+                                           ->where('vendor', 1)->get();
+     $invitations_g2 = projectsInvitations::where('project_id', $project_id)
+                                           ->where('group', 2)
+                                           ->where('vendor', 1)->get();
+     return [$invitations_g1, $invitations_g2];                                      
     }
     public function deadline_difference($project){
         $deadline = new DateTime($project->delivery_deadline);//deadline time

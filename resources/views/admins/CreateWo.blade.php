@@ -312,10 +312,10 @@ $(".form_datetime").datetimepicker({
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,
-        startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
-        initialDate: new Date(new Date().getTime() + 1*24*60*60*1000),
+        //startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
+        //initialDate: new Date(new Date().getTime() + 1*24*60*60*1000),
         minuteStep: 15,
-        endDate: new Date(new Date().getTime()+100*24*60*60*1000)
+        //endDate: new Date(new Date().getTime()+100*24*60*60*1000)
     });
     $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
     $(document).on('change','#from_language',function(){

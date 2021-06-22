@@ -413,7 +413,7 @@ $(".form_datetime").datetimepicker({
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,
-        startDate: new Date(new Date().getTime()),
+        //startDate: new Date(new Date().getTime()),
         minuteStep: 15,
        
        // endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
