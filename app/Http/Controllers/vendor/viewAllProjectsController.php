@@ -186,7 +186,7 @@ class viewAllProjectsController extends Controller
             }
              //mail to creator
              $projectCreator = User::find($project->created_by);
-             Mail::to($projectCreator->email)->send(new vendorNewDelivery($project->id, Auth::user()->name,'admin'));
+             Mail::to('projects@arabictarjamat.com')->send(new vendorNewDelivery($project->id, Auth::user()->name,'admin'));
              
 
         }

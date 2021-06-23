@@ -216,9 +216,9 @@ class viewOfferController extends Controller
         $project = projects::find($project_id);
         $projectCreator = User::find($project->created_by);
         if($action == 'allDeclined')
-            Mail::to($projectCreator->email)->send(new allVendorsDeclined($project_id, Auth::user()->name, $action, $stage_type));
+            Mail::to('projects@arabictarjamat.com')->send(new allVendorsDeclined($project_id, Auth::user()->name, $action, $stage_type));
         else
-            Mail::to($projectCreator->email)->send(new offerAction($project_id, Auth::user()->name, $action, $stage_type));
+            Mail::to('projects@arabictarjamat.com')->send(new offerAction($project_id, Auth::user()->name, $action, $stage_type));
     }
 
     public function inviteGroup2($stage, $vendor){

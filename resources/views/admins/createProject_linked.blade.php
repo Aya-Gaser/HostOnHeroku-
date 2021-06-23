@@ -428,12 +428,13 @@ $woD = new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)
 diff = 23 - $woD.getHours();
 
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy H:i:s",
+        format: "dd-M-yy hh:mm",
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,
         //startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
         minuteStep: 15,
+        ampm: true, // FOR AM/PM FORMAT
         highlightedDates:[new Date('2021-03-05')],
       //  endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
 

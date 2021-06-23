@@ -841,8 +841,9 @@ $('.select2bs4').select2({
 })
 
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy H:i:s",
+        format: "dd-M-yy hh:mm",
         autoclose: true,
+        ampm: true, // FOR AM/PM FORMAT
         todayBtn: true,
        // startDate: 
         minuteStep: 15

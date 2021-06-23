@@ -636,8 +636,9 @@ $('.select2bs4').select2({
 })
 
 $(".form_datetime").datetimepicker({
-        format: "yy-mm-dd H:i:s",
+        format: "yy-mm-dd hh:mm",
         autoclose: true,
+        ampm: true, // FOR AM/PM FORMAT
         todayBtn: true,
        // startDate: " {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}",
         minuteStep: 10

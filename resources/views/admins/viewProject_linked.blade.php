@@ -1022,9 +1022,10 @@ $('.select2bs4').select2({
 })
 
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy H:i:s",
+        format: "dd-M-yy hh:mm",
         autoclose: true,
         todayBtn: true,
+        ampm: true, // FOR AM/PM FORMAT
        // startDate: 
         minuteStep: 15
     });

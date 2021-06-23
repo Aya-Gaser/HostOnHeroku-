@@ -409,28 +409,19 @@ $woD = new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)
 diff = 23 - $woD.getHours();
 
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy H:i:s",
+        format: "dd-M-yy hh:mm",
+        //formatTime: 'H:i',
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,
+        ampm: true, // FOR AM/PM FORMAT
         //startDate: new Date(new Date().getTime()),
         minuteStep: 15,
        
-       // endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
-      /*  beforeShowDay: function(date) {
-          calender_date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+('0'+date.getDate()).slice(-2);
-
-                var search_index = $.inArray(calender_date, user_busy_days);
-
-                if (search_index > -1) {
-                    return {classes: 'non-highlighted-cal-dates', tooltip: 'User available on this day.'};
-                }else{
-                    return {classes: 'highlighted-cal-dates', tooltip: 'User not available on this day.'};
-                }
-
-            
-        } */
+    
     });
+    $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
+
     $(document).on('change','#from_language',function(){
       $.ajax({
                 url: '/create',

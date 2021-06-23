@@ -308,13 +308,14 @@ $('.select2bs4').select2({
 })
 });
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy H:i:s",
+        format: "dd-M-yy hh:mm",
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,
         //startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
         //initialDate: new Date(new Date().getTime() + 1*24*60*60*1000),
         minuteStep: 15,
+        ampm: true, // FOR AM/PM FORMAT
         //endDate: new Date(new Date().getTime()+100*24*60*60*1000)
     });
     $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
