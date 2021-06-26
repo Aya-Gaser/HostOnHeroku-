@@ -16,11 +16,12 @@ class deliveryAction extends Mailable
      *
      * @return void
      */
-    protected $wo_id, $action,$wo,$wo_client;
-    public function __construct($wo_id, $action)
+    protected $wo_id, $action,$wo,$wo_client,  $stage_id;
+    public function __construct($wo_id,$stage_id, $action)
     {
         $this->wo_id = $wo_id;
         $this->action = $action;
+        $this->stage_id = $stage_id;
         $this->wo = WO::find($this->wo_id);
         $this->wo_client = $this->wo->client->code;
 
@@ -37,7 +38,7 @@ class deliveryAction extends Mailable
     {
         return $this->markdown('emails.deliveryAction.deliveryReview')
                      ->with(['wo_id'=>$this->wo_id,'action'=>$this->action,
-                     'wo_client'=>$this->wo->client->code])
+                     'wo_client'=>$this->wo->client->code, 'stage_id'=>$this->stage_id])
                     ->from('projects@arabictarjamat.com') 
                     ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
                     .'-'.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ).' Delivery '.$this->action)->delay(15); 

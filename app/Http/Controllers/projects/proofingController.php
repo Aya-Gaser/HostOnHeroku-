@@ -161,7 +161,7 @@ class proofingController extends Controller
           $woTask->status = 'proofed';
           $woTask->save();
           
-          Mail::to($vendor->email)->send(new reviewCompleted($project->wo_id, $projectId));
+          Mail::to($vendor->email)->send(new reviewCompleted($project->wo_id, $stage->id));
           
           return response()->json([ 'success'=> 'Form is successfully submitted!']);
      

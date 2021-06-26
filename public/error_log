@@ -1,0 +1,21 @@
+[10-Jun-2021 06:42:51 UTC] PHP Warning:  Use of undefined constant DIR - assumed 'DIR' (this will throw an Error in a future version of PHP) in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:42:51 UTC] PHP Warning:  require(DIR/vendor/autoload.php): failed to open stream: No such file or directory in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:42:51 UTC] PHP Fatal error:  require(): Failed opening required 'DIR/vendor/autoload.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:42:54 UTC] PHP Warning:  Use of undefined constant DIR - assumed 'DIR' (this will throw an Error in a future version of PHP) in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:42:55 UTC] PHP Warning:  require(DIR/vendor/autoload.php): failed to open stream: No such file or directory in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:42:55 UTC] PHP Fatal error:  require(): Failed opening required 'DIR/vendor/autoload.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:43:48 UTC] PHP Warning:  Use of undefined constant DIR - assumed 'DIR' (this will throw an Error in a future version of PHP) in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:43:48 UTC] PHP Warning:  require(DIR/vendor/autoload.php): failed to open stream: No such file or directory in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:43:48 UTC] PHP Fatal error:  require(): Failed opening required 'DIR/vendor/autoload.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:45:31 UTC] PHP Warning:  Use of undefined constant DIR - assumed 'DIR' (this will throw an Error in a future version of PHP) in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:45:31 UTC] PHP Warning:  require(DIR/vendor/autoload.php): failed to open stream: No such file or directory in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:45:31 UTC] PHP Fatal error:  require(): Failed opening required 'DIR/vendor/autoload.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:46:45 UTC] PHP Warning:  Use of undefined constant DIR - assumed 'DIR' (this will throw an Error in a future version of PHP) in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:46:45 UTC] PHP Warning:  require(DIR/vendor/autoload.php): failed to open stream: No such file or directory in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:46:45 UTC] PHP Fatal error:  require(): Failed opening required 'DIR/vendor/autoload.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:48:52 UTC] PHP Warning:  Use of undefined constant DIR - assumed 'DIR' (this will throw an Error in a future version of PHP) in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:48:52 UTC] PHP Warning:  require(DIR/vendor/autoload.php): failed to open stream: No such file or directory in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:48:52 UTC] PHP Fatal error:  require(): Failed opening required 'DIR/vendor/autoload.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:49:59 UTC] PHP Warning:  Use of undefined constant DIR - assumed 'DIR' (this will throw an Error in a future version of PHP) in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:49:59 UTC] PHP Warning:  require(DIR/vendor/autoload.php): failed to open stream: No such file or directory in /home/nn3crv63i972/public_html/public/index.php on line 24
+[10-Jun-2021 06:49:59 UTC] PHP Fatal error:  require(): Failed opening required 'DIR/vendor/autoload.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/nn3crv63i972/public_html/public/index.php on line 24

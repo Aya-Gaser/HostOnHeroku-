@@ -328,7 +328,7 @@ class viewProjectController extends Controller
                    $vendor_id = $stage->vendor_id;
                    if($vendor_id && $stage->status != 'Completed'){
                       $vendor = User::find($vendor_id);
-                      Mail::to($vendor->email)->send(new projectUpdate($project->wo_id,$files, null));
+                      Mail::to($vendor->email)->send(new projectUpdate($project->wo_id,$files, null,  $stage->id));
                     }   
                 }
             }
@@ -393,7 +393,7 @@ class viewProjectController extends Controller
             }
             $stage->save();
             if($isUser){
-                Mail::to($vendor->email)->send(new projectUpdate($stage->wo_id, false,$updates));
+                Mail::to($vendor->email)->send(new projectUpdate($stage->wo_id, false,$updates,  $stage->id));
             }    
           /*  return view('emails.projectUpdate.projectUpdate')->with(['wo_id'=>$stage->wo_id,
             'isFiles'=>true,'updates'=>$updates]); */
@@ -490,7 +490,7 @@ class viewProjectController extends Controller
            $vendor_id = $stage->vendor_id;
            $vendor = User::find($vendor_id);
            if($vendor->email)
-             Mail::to($vendor->email)->send(new deliveryAction($stage->wo_id, $action));
+             Mail::to($vendor->email)->send(new deliveryAction($stage->wo_id,  $stage->id, $action));
 
         }
         public function deliveryFile_improve(){

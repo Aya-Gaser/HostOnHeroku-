@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class WO extends Model
 {
     //
-    protected $table = 'Wo';
+    protected $table = 'wo';
 
     public function client(){
        return $this->belongsTo('App\client'); 

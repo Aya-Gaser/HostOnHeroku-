@@ -16,7 +16,7 @@ $body = "# Project ". $wo_client."-".$wo_id. " delivery ". $info;
 @component('mail::message')
 {{$body}}
 
-@component('mail::button', ['url' =>route("vendor.view-project",$wo_id), 'color' => 'success'])
+@component('mail::button', ['url' =>route("vendor.view-project",$stage_id), 'color' => 'success'])
     View
 @endcomponent
 
