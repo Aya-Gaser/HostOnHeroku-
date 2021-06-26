@@ -53,7 +53,7 @@
                   @foreach($stages as $stage)
                    <tr>
                     <td>
-                    {{str_pad(App\WO::find($stage['wo_id'])->client->code, 4, "0", STR_PAD_LEFT )}}-{{str_pad($stage['wo_id'], 4, "0", STR_PAD_LEFT )}}
+                  @if(App\WO::find($stage['wo_id'])->client->code)  {{str_pad(App\WO::find($stage['wo_id'])->client->code, 4, "0", STR_PAD_LEFT )}}@endif -{{str_pad($stage['wo_id'], 4, "0", STR_PAD_LEFT )}}-{{str_pad($stage['project_id'], 4, "0", STR_PAD_LEFT )}}
 
                     </td>
                     <td> {{ $stage['type']}} </td>

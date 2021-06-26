@@ -55,8 +55,9 @@ td{
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <div class="row">
-              <p class="col-md-6 data"> <Span class="head"> ID: </Span>{{str_pad($project->wo_id, 4, "0", STR_PAD_LEFT )}}  </p>
+              <div class="row">     
+
+              <p class="col-md-6 data"> <Span class="head"> ID: </Span>@if($project->WO->client) {{$project->WO->client->code}} - @endif{{str_pad($project->WO->id, 4, "0", STR_PAD_LEFT )}} - {{$project->id}}  </p>
               <p class="col-md-6 data"> <Span class="head"> Started on: </Span>
               {{UTC_To_LocalTime($project->created_at,
                                         Auth::user()->timezone) }}  </p>
@@ -154,7 +155,7 @@ td{
                     </div>
                   </div>
                     <br><br>
-                    @if($project->status == 'reviewed')
+                    @if($stage->status == 'reviewed')
                     <div class="card card-success">
                           <div class="card-header">
                             <h5> Reviewed Document(s)  
@@ -193,7 +194,7 @@ td{
                                   </a>
                                    
                                 </li>
-                              NOTES:  {{$proofed['note']}}  
+                             <b> NOTES:</b>  {{$proofed['note']}}  
                              @endforeach   
                              </ul>
                             </td>
@@ -320,7 +321,7 @@ td{
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-           <div class="card card-warning col-md-10">
+           <div class="card card-warning col-md-12">
              <div class="card-header">
              <h4> Delivery History </h4>
              </div>

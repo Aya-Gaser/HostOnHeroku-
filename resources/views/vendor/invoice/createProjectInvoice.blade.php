@@ -37,7 +37,8 @@
       <div class="col-md-11">
             <div class="card card-success shadow-sm" >
               <div class="card-header">
-                <h2 class="card-title"> Project {{str_pad($stage->wo_id, 4, '0', STR_PAD_LEFT )}} </h2>
+                <h2 class="card-title">
+                 Project @if($wo->client) {{$wo->client->code}} - @endif{{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} - {{$stage->project->id}} </h2>
 
                 
 

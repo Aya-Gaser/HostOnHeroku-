@@ -69,7 +69,7 @@
                         value="English" > English
                     </option>
                     <option
-                        value="Farsi" > Farsi
+                        value="Farsi"> Farsi
                     </option>
                     </select>
                     </div>

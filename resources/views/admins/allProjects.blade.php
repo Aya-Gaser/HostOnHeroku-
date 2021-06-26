@@ -65,7 +65,7 @@
                   <tbody id="projects">
                    @foreach($projects as $project)
                      <tr>
-                     <td> {{str_pad($project->id, 4, "0", STR_PAD_LEFT )}} </td>
+                     <td> @if($project->WO->client) {{$project->WO->client->code}}- @endif {{str_pad($project->wo_id, 4, "0", STR_PAD_LEFT )}}-{{$project->id}} </td>
                      <td> {{$project['name']}} </td>
                     
                      <td> 

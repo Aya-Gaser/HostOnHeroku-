@@ -27,7 +27,7 @@
       <div class="col-md-11">
             <div class="card card-success shadow-sm">
               <div class="card-header">
-                <h2 class="card-title"> Project {{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} </h2>
+                <h2 class="card-title"> Project @if($wo->client) {{$wo->client->code}} - @endif{{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} - {{$stage->project->id}} </h2>
 
                 
 
@@ -139,18 +139,19 @@
                     </div>
                 </div>
                 <div class="card-footer row" id="submit_div" style="text-align:right;">
+                <div class="offset-md-8 col-md-2" id="" > 
+                    <a href="{{route('vendor.decline-offer',['stage_id'=> $stage->id,
+                    'group'=> $group,'vendor'=> $vendor] )}}">
+                      <button onclick="document.body.style.cursor='wait';" type="ok" class="btn btn-danger ">DECLINE</button>
+                      </a>
+                    </div>
                     <div class=" col-md-2" id="submit_div" >
                     <a href="{{route('vendor.accept-offer',['stage_id'=> $stage->id,
                     'group'=> $group,'vendor'=> $vendor] )}}">
                       <button onclick="document.body.style.cursor='wait';" type="ok" class="btn btn-success ">ACCEPT</button>
                       </a>
                     </div> 
-                    <div class="col-md-3" id="" > 
-                    <a href="{{route('vendor.decline-offer',['stage_id'=> $stage->id,
-                    'group'=> $group,'vendor'=> $vendor] )}}">
-                      <button onclick="document.body.style.cursor='wait';" type="ok" class="btn btn-danger ">DECLINE</button>
-                      </a>
-                    </div>
+                   
                </div>
               </div>
               <!-- /.card-body -->

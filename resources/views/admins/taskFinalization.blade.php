@@ -355,7 +355,7 @@ ul{
            </button>
          </div>
          <div class="modal-body">
-         <form id="projectManager_file" action="{{route('management.upload-finalizedFile', $task->id)}}" method="post" enctype="multipart/form-data">
+         <form id="finalization-form" action="{{route('management.upload-finalizedFile', $task->id)}}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="form-group ">
               <label class="form-control-label" for="project_type">project Manager File(s)
@@ -376,7 +376,7 @@ ul{
                     class="kv-explorer " type="file" multiple required>  
                     </div>
               </div>
-            <button type="submit" class="btn btn-primary" > 
+            <button id="submitFiles" type="submit" class="btn btn-primary" > 
               Upload </button>
         </form>  
          </div>
@@ -399,6 +399,12 @@ ul{
 <script>
 $(function () {
   bsCustomFileInput.init();
+  
+  $('#finalization-form').submit(function(e) {
+    document.body.style.cursor='wait';  
+  $('#submitFiles').attr('disabled', true)
+
+  });
  /* 
 $jobId = 0     
 $sourceID = 0;

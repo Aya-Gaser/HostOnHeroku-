@@ -68,7 +68,7 @@
                  </div>
                  <div class="form-group col-md-6">
                    <label for="exampleInputEmail1">User Name<span class="required">*</span></label>
-                    <input type="text" class="form-control" name="userName" value="{{$user->userName}}" readonly required>
+                    <input type="text" class="form-control" name="userName" value="{{$user->userName}}" required>
                  </div>
               </div>
 
@@ -106,7 +106,7 @@
                         value="English" > English
                     </option>
                     <option
-                        value="English" > Farsi
+                        value="Farsi" > Farsi
                     </option>
                     </select>
                     </div>

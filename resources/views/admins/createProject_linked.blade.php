@@ -61,7 +61,9 @@
                </p>
               <p class="data"> <Span class="head"> Client Number: </Span> {{App\client::find($wo->client_id)->code}} </p>
               <p class="data" > <Span class="head"> Language: </Span>{{$wo->from_language}} ▸ {{$wo->to_language}}</p>
-
+              <p class="data col-md-6"> <Span class="head">Word Count:  </Span>
+                {{$task->client_wordsCount}}
+                </p>
               <p class="data"> <Span class="head"> Created on: </Span> 
               {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
                </p>
@@ -428,7 +430,7 @@ $woD = new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)
 diff = 23 - $woD.getHours();
 
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy hh:mm",
+        format: "dd-M-yy hh:ii",
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,

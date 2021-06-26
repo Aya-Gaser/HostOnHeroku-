@@ -57,7 +57,7 @@ td{
               <!-- /.card-header -->
               <div class="card-body">
               <div class="row">
-              <p class="col-md-6 data"> <Span class="head"> ID: </Span>{{str_pad($project->wo_id, 4, "0", STR_PAD_LEFT )}} </p>
+              <p class="col-md-6 data"> <Span class="head"> ID: </Span>@if($project->WO->client) {{$project->WO->client->code}} - @endif{{str_pad($project->WO->id, 4, "0", STR_PAD_LEFT )}} - {{$project->id}}  </p>
               <p class="col-md-6 data"> <Span class="head"> Started on: </Span>
               {{UTC_To_LocalTime($project->created_at,
                                         Auth::user()->timezone) }}  </p>

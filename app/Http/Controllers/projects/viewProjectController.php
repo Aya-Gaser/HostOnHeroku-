@@ -167,8 +167,7 @@ class viewProjectController extends Controller
        $editedFile->extension = $extension;
        $editedFile->save();
        
-       Mail::to('hoda.tarjamat@gmail.com')->send(new readyToProofFile($project->wo_id));
-       //hoda.tarjamat@gmail.com
+       Mail::to('finalization.tarjamat@gmail.com')->send(new readyToProofFile($project->wo_id));
 
        return back();
          
@@ -198,7 +197,7 @@ class viewProjectController extends Controller
         {    $project->status = 'Within Proofing';
              $project->save();
         }
-        Mail::to('hoda.tarjamat@gmail.com')->send(new readyToProofFile($sourceFile->project->wo_id));
+        Mail::to('finalization.tarjamat@gmail.com')->send(new readyToProofFile($sourceFile->project->wo_id));
 
        // alert()->success('Project Created Successfully !')->autoclose(false);    
         return back();

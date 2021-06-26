@@ -14,8 +14,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item'}}"><a href="{{route('vendor.dashboard')}}">Home</a></li>
-              <li class="breadcrumb-item active">my projects</li>
+              <li class="breadcrumb-item"><a href="{{route('vendor.dashboard')}}">Home</a></li>
+              <li class="breadcrumb-item active"> My projects </li>
             </ol>
           </div>
         </div>
@@ -43,7 +43,7 @@
                    <option id="Completed" value="{{ route('vendor.view-myProjects', 'Completed') }} "> Completed </option>
                    <option id="invoiced" value="{{ route('vendor.view-myProjects', 'invoiced') }} "> Invoiced </option>
 
-                   <option value="{{ route('vendor.view-myProjects', 'all') }}"> ALL </option>
+                   <option id="all" value="{{ route('vendor.view-myProjects', 'all') }}"> ALL </option>
                   </select>
                  </div>  
 
@@ -71,7 +71,8 @@
                   <tbody>
                   @foreach($stages as $stage)
                    <tr>
-                    <td> {{str_pad($stage->wo_id, 4, "0", STR_PAD_LEFT )}} </td>
+                   <td>  @if($stage->WO->client) {{$stage->WO->client->code}}-@endif{{str_pad($stage->WO->id, 4, "0", STR_PAD_LEFT )}}-{{$stage->project->id}}  </p>
+ </td>
                     <td> {{App\projects::find($stage['project_id'])->name }} </td>
                     <td> {{$stage['type']}} </td>
                     <td> {{UTC_To_LocalTime(App\projects::where('id', $stage['project_id'])->first()->delivery_deadline,

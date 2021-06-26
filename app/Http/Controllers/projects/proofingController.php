@@ -156,11 +156,11 @@ class proofingController extends Controller
           $stage->vendor_qualityPoints =  $request->input('quality_points'); 
           $stage->status = 'reviewed';
           $stage->save();
-          
+        /*         
           $woTask = woTasksNeeded::find($project->woTask_id);
           $woTask->status = 'proofed';
           $woTask->save();
-          
+        */  
           Mail::to($vendor->email)->send(new reviewCompleted($project->wo_id, $stage->id));
           
           return response()->json([ 'success'=> 'Form is successfully submitted!']);

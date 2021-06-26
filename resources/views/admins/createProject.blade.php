@@ -78,8 +78,8 @@
                 <p class="data col-md-6"> <Span class="head"> Number of Files:  </Span>
                 {{$wo->sent_docs}}
                 </p>
-                <p class="data col-md-6"> <Span class="head">Created By:  </Span>
-                {{App\User::find($wo->created_by)->userName}}
+                <p class="data col-md-6"> <Span class="head">Word Count:  </Span>
+                {{$task->client_wordsCount}}
                 </p>
                 
                <p class="data col-md-6"> <Span class="head"> Client Instructions: </Span>
@@ -88,6 +88,9 @@
                <p class="data col-md-6"> <Span class="head"> General Instructions: </Span>
                  {{ $wo->general_instructions}}
                </p>
+               <p class="data col-md-6"> <Span class="head">Created By:  </Span>
+                {{App\User::find($wo->created_by)->userName}}
+                </p>
                 </div>     
                 
             
@@ -409,7 +412,7 @@ $woD = new Date("{{UTC_To_LocalTime($wo->deadline, Auth::user()->timezone, true)
 diff = 23 - $woD.getHours();
 
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy hh:mm",
+        format: "dd-M-yy hh:ii",
         //formatTime: 'H:i',
         autoclose: true,
         todayBtn: true,

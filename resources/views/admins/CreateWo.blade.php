@@ -308,7 +308,7 @@ $('.select2bs4').select2({
 })
 });
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy hh:mm",
+        format: "dd-M-yy hh:ii",
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,

@@ -66,12 +66,13 @@ class createProjectController extends Controller
       /*if($wo->isHandeled)
         return redirect('/allWo'); */
        $this->validateFilter($type);
+      $task =  woTasksNeeded::find($taskId);
       $vendors = $this->getTranslators();
       $source_files = $wo->woFiles->where('type','source_file');
       $reference_file =$wo->woFiles->where('type','reference_file');
       $view = ($type =='linked') ? 'admins.createProject_linked' : 'admins.createProject';
       return view($view)->with([ 'wo'=>$wo,'source_files'=>$source_files,'taskId'=>$taskId,
-      'reference_file'=>$reference_file, 'vendors'=>$vendors]);
+      'reference_file'=>$reference_file, 'vendors'=>$vendors, 'task'=> $task]);
     }
     
   

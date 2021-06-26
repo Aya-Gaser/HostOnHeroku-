@@ -57,7 +57,7 @@ td{
              
                 <div class="card-body">
                 <div class="row">
-                <p class="data col-md-6"> <Span class="head"> WO - Project: </Span>{{str_pad($project->WO->id, 4, "0", STR_PAD_LEFT )}} - {{str_pad($project->id, 4, "0", STR_PAD_LEFT )}} </p>
+                <p class="data col-md-6"> <Span class="head"> Client-WO-Project: </Span> @if($project->WO->client) {{$project->WO->client->code}} - @endif{{str_pad($project->WO->id, 4, "0", STR_PAD_LEFT )}} - {{$project->id}} </p>
              <p class="data col-md-6"> <Span class="head"> Name: </Span>{{$project->name}} </p>
              <p class="data col-md-6" > <Span class="head"> Language: </Span>{{$project->WO->from_language}} ▸ {{$project->WO->to_language}}</p>
               <p class="data col-md-6"> <Span class="head"> Created on: </Span>  {{ UTC_To_LocalTime($project->created_at, Auth::user()->timezone) }} </p>
@@ -1022,7 +1022,7 @@ $('.select2bs4').select2({
 })
 
 $(".form_datetime").datetimepicker({
-        format: "dd-M-yy hh:mm",
+        format: "dd-M-yy hh:ii",
         autoclose: true,
         todayBtn: true,
         ampm: true, // FOR AM/PM FORMAT

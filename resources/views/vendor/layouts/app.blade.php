@@ -175,7 +175,7 @@ body a, body span, body p , body h1{
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('vendor.view-myProjects', 'accepted') }}" 
+                <a href="{{route('vendor.view-myProjects', 'Completed') }}" 
                 class="nav-link {{ isActive('vendor.view-myProjects')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Completed Projects</p>

@@ -8,6 +8,8 @@ use App\projects;
 use App\projectStage;
 use App\User;
 use Auth;
+use App\vendorInvoice;
+
 class dashboardController extends Controller
 {
   public function __construct()
@@ -17,21 +19,32 @@ class dashboardController extends Controller
   public function index(){
         
        $VendorProjects_all = count(projectStage::where('vendor_id', Auth::user()->id)->get());
-       $VendorProjects_pending = count(projectStage::where('vendor_id', Auth::user()->id)
-                                                    ->where('status', 'pending')->get());
+       $VendorProjects_reviewed = count(projectStage::where('vendor_id', Auth::user()->id)
+                                                    ->where('status', 'reviewed')->get());
        $VendorProjects_completed = count(projectStage::where('vendor_id', Auth::user()->id)
-                                                    ->where('status', 'completed')->get());
+                                                    ->where('status', 'Completed')->get());
        $VendorProjects_undelivered = count(projectStage::where('vendor_id', Auth::user()->id)
-                                                    ->where('status', 'Undelivered')->get());
-              
+                                                    ->where('status', 'In Progress')->get());
+       /****************************** */
+       $VendorInvoices_all = count(vendorInvoice::where('vendor_id', Auth::user()->id)->get());
+       $VendorInvoices_opened = count(vendorInvoice::where('vendor_id', Auth::user()->id)
+                                                    ->where('status', 'Open')->get());
+       $VendorInvoices_approved = count(vendorInvoice::where('vendor_id', Auth::user()->id)
+                                                    ->where('status', 'Approved')->get());
+       $VendorInvoices_paid = count(vendorInvoice::where('vendor_id', Auth::user()->id)
+                                                    ->where('status', 'Paid')->get());
+        $VendorInvoices_pending = count(vendorInvoice::where('vendor_id', Auth::user()->id)
+                                                    ->where('status', 'Pending')->get());
                            
 
         
         
 
         return view('vendor.dashboard')->with(['VendorProjects_all'=>$VendorProjects_all,
-        'VendorProjects_pending'=>$VendorProjects_pending, 'VendorProjects_completed'=>$VendorProjects_completed,
-        'VendorProjects_undelivered'=>$VendorProjects_undelivered
+        'VendorProjects_reviewed'=>$VendorProjects_reviewed, 'VendorProjects_completed'=>$VendorProjects_completed,
+        'VendorProjects_undelivered'=>$VendorProjects_undelivered,'VendorInvoices_all'=>$VendorInvoices_all,
+        'VendorInvoices_pending'=>$VendorInvoices_pending, 'VendorInvoices_approved'=>$VendorInvoices_approved,
+        'VendorInvoices_paid'=>$VendorInvoices_paid
          ]);
     }
     public function profile(){

@@ -14,8 +14,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item'}}"><a href="{{route('vendor.dashboard')}}">Home</a></li>
-              <li class="breadcrumb-item active">My Invoices</li>
+              <li class="breadcrumb-item"><a href="{{route('vendor.dashboard')}}">Home</a></li>
+              <li class="breadcrumb-item active"> Completed projects </li>
             </ol>
           </div>
         </div>

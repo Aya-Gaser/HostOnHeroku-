@@ -11,6 +11,7 @@ use App\projectStage;
 use App\vendorInvoice;
 use App\vendorWorkInvoiceItem;
 use Auth;
+use App\WO;
 use App\vendorNonWorkInvoiceItem;
 //  'stageId' => 'required|unique:project_stages,id',
 class invoiceController extends Controller
@@ -27,9 +28,10 @@ class invoiceController extends Controller
     } 
     public function generateProjectInvoice($stageId){
         $stage = projectStage::findOrFail($stageId);
+        $wo = WO::find($stage->wo_id);
         if($stage->readyToInvoice != 1)
             abort(404);
-        return view('vendor.invoice.createProjectInvoice')->with(['stage'=>$stage]);
+        return view('vendor.invoice.createProjectInvoice')->with(['wo'=>$wo, 'stage'=>$stage]);
     }
 
     public function addProjectInvoice(Request $request){
@@ -145,7 +147,7 @@ class invoiceController extends Controller
         $invoice->status = 'Pending';
         $invoice->save();
         // SEND NOTIFICATION MAIL TO VENDORS
-        Mail::to('hoda.tarjamat@gmail.com')->send(new vendorInvoiceNotification($invoice->id));
+        Mail::to('finalization.tarjamat@gmail.com')->send(new vendorInvoiceNotification($invoice->id));
         Mail::to('reeno.tarjamat@gmail.com')->send(new vendorInvoiceNotification($invoice->id));
 
         return response()->json([ 'success'=> 'Form is successfully submitted!']);
@@ -210,8 +212,8 @@ class invoiceController extends Controller
     public function view_editWorkInvoice($invoiceItem_id){
         $workInvoiceItem = vendorWorkInvoiceItem::findOrFail($invoiceItem_id);
         $stage = projectStage::find( $workInvoiceItem->stageId);
-
-        return view('vendor.invoice.editProjectInvoice')->with(['stage'=>$stage, 'invoiceItem'=>$workInvoiceItem]);
+        $wo = WO::find($stage->id);
+        return view('vendor.invoice.editProjectInvoice')->with(['wo'=>$wo, 'stage'=>$stage, 'invoiceItem'=>$workInvoiceItem]);
     }
     public function editProjectInvoice(Request $request){
         $request->validate([

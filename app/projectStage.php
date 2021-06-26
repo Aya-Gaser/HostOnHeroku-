@@ -17,7 +17,7 @@ class projectStage extends Model
         return $this->hasMany('App\deliveryFiles','stage_id');
     }
     public function WO(){
-        return $this->belongsTo('App\WO');
+        return $this->belongsTo('App\WO', 'wo_id');
     }
     public function project(){
         return $this->belongsTo('App\projects');
