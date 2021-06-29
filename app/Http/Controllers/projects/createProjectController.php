@@ -205,7 +205,7 @@ class createProjectController extends Controller
         $stage->G1_acceptance_hours = request()[$acceptance_deadline];
         $stage->G2_acceptance_hours = request()[$acceptance_deadline];
         $stage->G1_acceptance_deadline= Carbon::now()->addHours(request()[$acceptance_deadline]);
-        $stage->G2_acceptance_deadline= Carbon::now()->addHours(request()[$acceptance_deadline]);
+        $stage->G2_acceptance_deadline= (new Carbon($stage->G1_acceptance_deadline))->addHours(request()[$acceptance_deadline]);
         $stage->save();
         return $stage;
 

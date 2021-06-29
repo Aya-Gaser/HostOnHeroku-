@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use  Illuminate\Support\Facades\Route;
 
 use App\Mail\createVendor;
 use Auth;
@@ -50,8 +51,12 @@ class vendorController extends Controller
 
 
      }
-     public function allvendors(){
+     public function allvendors(Request $request){
         if(!Auth::user()->can('view-vendors'))
+            abort(401);
+        
+        $wantCreate = ($request->path() == 'mangement-panel/create-vendors')? 1 : 0;
+        if($wantCreate  && !Auth::user()->can('create-vendor'))
             abort(401);
        // if( in_array($type, ['translator','editor', 'all' ], true )  ){
             $vendors = User::where('account_type', 'vendor')->orderBy('created_at','desc')->get();

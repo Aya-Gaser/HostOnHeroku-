@@ -26,8 +26,11 @@ class clientController extends Controller
 
 
      }
-     public function allclients(){
+     public function allclients(Request $request){
         if(!Auth::user()->can('view-client'))
+            abort(401);
+        $wantCreate = ($request->path() == 'mangement-panel/create-clients')? 1 : 0;
+        if($wantCreate  && !Auth::user()->can('create-client'))
             abort(401);
         $clients = client::orderBy('created_at','desc')->get();
         return view('admins.viewAllClients')->with(['clients'=> $clients]);

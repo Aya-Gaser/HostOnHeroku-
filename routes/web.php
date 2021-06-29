@@ -154,6 +154,8 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
 
     Route::get('/view-allVendors', 'projects\vendorController@allVendors')->middleware('auth')
     ->name('view-allVendors');
+    Route::get('/create-vendors', 'projects\vendorController@allVendors')->middleware('auth')
+    ->name('create-vendors');
 
     Route::get('/view-vendor/{vendor}', 'projects\vendorController@viewVendor')->middleware('auth')
     ->where(['vendor'=>'[0-9]+'])->name('view-vendor');
@@ -169,6 +171,8 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'mangement-panel',
     ////view clients
     Route::get('/view-allclients', 'projects\clientController@allclients')->middleware('auth')
     ->name('view-allClients');
+    Route::get('/create-clients', 'projects\clientController@allclients')->middleware('auth')
+    ->name('create-clients');
 
     Route::get('/view-client/{client}', 'projects\clientController@viewclient')->middleware('auth')
     ->where(['client'=>'[0-9]+'])->name('view-client');

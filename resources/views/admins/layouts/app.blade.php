@@ -296,8 +296,8 @@ body a, body span, body p , body h1{
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('management.view-allVendors')}}" 
-                class="nav-link {{ isActive('management.view-allVendors')}}">
+                <a href="{{route('management.create-vendors')}}" 
+                class="nav-link {{ isActive('management.create-vendors')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create Vendor</p>
                 </a>
@@ -321,8 +321,8 @@ body a, body span, body p , body h1{
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('management.view-allClients')}}" 
-                class="nav-link {{ isActive('management.view-allClients')}}">
+                <a href="{{route('management.create-clients')}}" 
+                class="nav-link {{ isActive('management.create-clients')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create Client</p>
                 </a>
