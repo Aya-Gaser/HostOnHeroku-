@@ -89,6 +89,8 @@ class viewWoController extends Controller
 
         $wo = WO::findOrFail($woId);
         $request = new Request();
+        if(request()['name'] && $wo->name != request()['name'] )
+           $wo->name = request()['name'];
         if(request()['client_number'] && $wo->client_id != request()['client_number'] )
            $wo->client_id = request()['client_number'];
         if(request()['from_language'] && $wo->from_language != request()['from_language'])

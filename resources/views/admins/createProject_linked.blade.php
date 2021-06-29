@@ -56,6 +56,9 @@
               <!-- /.card-header -->
               <div class="card-body">
               <p class="data"> <Span class="head"> ID: </Span>{{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}}  </p>
+              <p class="data col-md-6"> <Span class="head"> Name/Description:  </Span>
+                {{$wo->name}}
+                </p>
               <p class="data"> <Span class="head"> Deadline: </Span>
               {{ UTC_To_LocalTime($wo->deadline, Auth::user()->timezone)}}
                </p>
@@ -431,16 +434,18 @@ diff = 23 - $woD.getHours();
 
 $(".form_datetime").datetimepicker({
         format: "dd-M-yy hh:ii",
+        //formatTime: 'H:i',
         autoclose: true,
         todayBtn: true,
         todayHighlight:true,
-        //startDate: new Date(new Date().getTime() + 1*24*60*60*1000),
-        minuteStep: 15,
         ampm: true, // FOR AM/PM FORMAT
-        highlightedDates:[new Date('2021-03-05')],
-      //  endDate: new Date($woD.getTime() - 1*24*60*60*1000 + diff*60*60*1000),
+        //startDate: new Date(new Date().getTime()),
+        minuteStep: 15,
+       
+    
+    });
+    $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
 
-      });
     
     $(document).on('change','#from_language',function(){
       $.ajax({

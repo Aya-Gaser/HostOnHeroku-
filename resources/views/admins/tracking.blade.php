@@ -106,7 +106,7 @@ th{
                   <p class="col-md-2"> Status: {{$task->status}} </p>
 
                   @if($task->status == 'Completed')
-                  <button class='btn btn-dark col-md-1' onclick="archiveTask('{{$task->id}}')">Archive </button>
+                  <button class='btn col-md-1' onclick="archiveTask('{{$task->id}}')" style="background-color:#4481bd; color:#fff;">Archive </button>
                   @endif
                  </div>
                  <div>

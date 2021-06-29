@@ -52,7 +52,10 @@
               @csrf
       <div class="card-body">
                 <div class="row">  
-                
+                <div class="form-group col-md-6">
+                      <label for="exampleInputEmail1">Name/Description <span class="required">*</span></label>
+                      <input type="text"  class="form-control" name="name" id="name" placeholder="Enter WO Name/Description" required>
+                    </div>
                   <div class="form-group col-md-6">
                     <label class="form-control-label" for="client_number">Client Number <span
                     class="required">*</span></label>

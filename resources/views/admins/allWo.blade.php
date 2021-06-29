@@ -61,10 +61,13 @@
                       <th style="width: 1%">
                           #
                       </th>
-                     
+                      <th style="width: " >
+                      Name/Description
+                      </th>
                       <th style="width: " >
                          Client Number
                       </th>
+                     
                       <th style="width: ">
                       Deadline
                       </th>
@@ -84,6 +87,9 @@
               <tr>
                       <td>
                       {{str_pad($Pending_wo['id'], 4, "0", STR_PAD_LEFT )}}
+                      </td>
+                      <td>
+                      {{$Pending_wo['name']}}
                       </td>
                      
                       <td>
@@ -143,7 +149,9 @@
                       <th style="width: 1%">
                           #
                       </th>
-                     
+                      <th style="width: " >
+                      Name/Description
+                      </th>
                       
                       <th style="width: " >
                          Client Number
@@ -168,6 +176,10 @@
                       <td>
                     
                      {{str_pad($completed_wo['id'], 4, "0", STR_PAD_LEFT )}}
+                      </td>
+                      <td>
+                    
+                     {{$completed_wo->name}}
                       </td>
                     
                       <td>

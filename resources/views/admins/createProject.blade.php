@@ -57,6 +57,9 @@
                 <p class="data col-md-6"> <Span class="head"> ID:  </Span>
                  {{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}} 
                 </p>
+                <p class="data col-md-6"> <Span class="head"> Name/Description:  </Span>
+                {{$wo->name}}
+                </p>
                 <p class="data col-md-6"> <Span class="head"> Created on: </Span>
                 {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
                 </p>

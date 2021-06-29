@@ -62,7 +62,7 @@ th{
             </div>
             <div class="col-md-3 col-sm-6 col-12">
               <div class="info-box shadow">
-                <span class="info-box-icon bg-danger"><i class="far fa-copy"></i></span>
+                <span class="info-box-icon bg-danger"><i class="fas fa-exclamation-triangle"></i></span>
 
                 <div class="info-box-content">
                   <span class="info-box-text">{{$VendorProjects_undelivered}}</span>
@@ -74,7 +74,7 @@ th{
             </div>
             <div class="col-md-3 col-sm-6 col-12">
               <div class="info-box shadow">
-                <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+                <span class="info-box-icon bg-warning"><i class="far fa-eye"></i></span>
 
                 <div class="info-box-content">
                   <span class="info-box-text">{{$VendorProjects_reviewed}}</span>
@@ -86,7 +86,7 @@ th{
             </div>
             <div class="col-md-3 col-sm-6 col-12">
               <div class="info-box shadow">
-                <span class="info-box-icon bg-success"><i class="far fa-copy"></i></span>
+                <span class="info-box-icon bg-success"><i class="fas fa-check-double"></i></span>
 
                 <div class="info-box-content">
                   <span class="info-box-text">{{$VendorProjects_completed}}</span>
@@ -101,7 +101,7 @@ th{
           <div class="row">
             <div class="col-lg-3 col-6">
               <!-- small card -->
-              <div class="small-box bg-info">
+              <div class="small-box bg-success">
                 <div class="inner">
                   <h3>{{$VendorInvoices_all}}</h3>
 
@@ -115,7 +115,7 @@ th{
             </div>
             <div class="col-md-3 col-sm-6 col-12">
               <div class="info-box shadow">
-                <span class="info-box-icon bg-danger"><i class="far fa-time"></i></span>
+                <span class="info-box-icon bg-danger"><i class="fas fa-clock"></i></span>
 
                 <div class="info-box-content">
                   <span class="info-box-text">{{$VendorInvoices_pending}}</span>
@@ -139,7 +139,7 @@ th{
             </div>
             <div class="col-md-3 col-sm-6 col-12">
               <div class="info-box shadow">
-                <span class="info-box-icon bg-success"><i class="fas fa-double-check"></i></span>
+                <span class="info-box-icon bg-success"><i class="fas fa-check-double"></i></span>
 
                 <div class="info-box-content">
                   <span class="info-box-text">{{$VendorInvoices_paid}}</span>

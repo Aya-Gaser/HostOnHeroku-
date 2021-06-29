@@ -61,6 +61,10 @@ td{
               <p class="data col-md-6"> <Span class="head"> ID:  </Span>
                 {{str_pad($wo->id, 4, "0", STR_PAD_LEFT )}}
                 </p>
+                <p class="data col-md-6"> <Span class="head"> Name/Description:  </Span>
+                {{$wo->name}}
+                </p>
+                
                 <p class="data col-md-6"> <Span class="head"> Created on: </Span>
                 {{ UTC_To_LocalTime($wo->created_at, Auth::user()->timezone)}}
                 </p>
@@ -179,7 +183,10 @@ td{
               @csrf
               <div class="card-body">
               <div class="row">  
-                
+              <div class="form-group col-md-6">
+                      <label for="exampleInputEmail1">Name/Description <span class="required">*</span></label>
+                      <input type="text"  class="form-control" name="name" id="name" value="{{$wo->name}}" required>
+                    </div>
                 <div class="form-group col-md-6">
                   <label class="form-control-label" for="client_number">Client Number <span
                   class="required">*</span></label>

@@ -71,7 +71,7 @@ class createWO extends Controller
       $client_id = $request->input('client_number');
 
       $WO = new WO(); 
-      
+       $WO->name = $request->input('name');
        $WO->client_id = $client_id;
        $WO->po_number = $request->input('po_number');
        $UTCDeadline = LocalTime_To_UTC($request->input('deadline'), Auth::user()->timezone);

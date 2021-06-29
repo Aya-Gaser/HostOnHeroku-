@@ -843,12 +843,18 @@ $('.select2bs4').select2({
 
 $(".form_datetime").datetimepicker({
         format: "dd-M-yy hh:ii",
+        //formatTime: 'H:i',
         autoclose: true,
-        ampm: true, // FOR AM/PM FORMAT
         todayBtn: true,
-       // startDate: 
-        minuteStep: 15
+        todayHighlight:true,
+        ampm: true, // FOR AM/PM FORMAT
+        //startDate: new Date(new Date().getTime()),
+        minuteStep: 15,
+       
+    
     });
+    $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
+
   var type = "{{$project->type}}"
   $("#project_type option[value='"+type+"']").attr("selected", "selected");
   var unit = "{{$stage->vendor_rateUnit}}"

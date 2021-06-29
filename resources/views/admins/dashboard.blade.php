@@ -37,6 +37,10 @@ th{
   background-color:#3c6e65;
   color:white;
 }
+.linked{
+  background-color:#812594;
+  color:white;
+}
 .item{
   padding:10px;
 }
@@ -68,7 +72,7 @@ th{
                
                 </div>
                 <div class="icon">
-                  <i class="fas fa-dollar"></i>
+                  <i class="far fa-copy"></i>
                 </div>
                 <div class="row item" style="">
                 <div class="info-box-content col-md-4">
@@ -109,7 +113,7 @@ th{
                
                 </div>
                 <div class="icon">
-                  <i class="fas fa-dollar"></i>
+                  <i class="fas fa-pen"></i>
                 </div>
                 <div class="row item" style="">
                 <div class="info-box-content col-md-4">
@@ -153,7 +157,7 @@ th{
                
                 </div>
                 <div class="icon">
-                  <i class="fas fa-dollar"></i>
+                  <i class="fas fa-dollar-sign"></i>
                 </div>
                 <div class="row item" style="">
                 <div class="info-box-content col-md-4">
@@ -199,7 +203,7 @@ th{
                   </a>
                 </div>
                 <div class="icon">
-                  <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-language"></i>
                 </div>
                 <div class="row item">
                 <div class="info-box-content col-md-4">
@@ -248,7 +252,7 @@ th{
                   </a>
                 </div>
                 <div class="icon">
-                  <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-spell-check"></i>
                 </div>
                 <div class="row item">
                 <div class="info-box-content col-md-4">
@@ -297,7 +301,7 @@ th{
                   </a>
                 </div>
                 <div class="icon">
-                  <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-palette"></i>
                 </div>
                 <div class="row item">
                 <div class="info-box-content col-md-4">
@@ -340,7 +344,7 @@ th{
   <div class="row">
         <div class="col-lg-4 col-6">
               <!-- small card -->
-              <div class="small-box bg-dark">
+              <div class="small-box linked">
                 <div class="inner">
                   <h3>{{$linkedProjects_all}}</h3>
                   <a href="{{route('management.view-allProjects_type',['type'=>'linked','status'=>'all']) }}" >
@@ -349,7 +353,7 @@ th{
                   </a>
                 </div>
                 <div class="icon">
-                  <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-link"></i>
                 </div>
                 <div class="row item">
                 <div class="info-box-content col-md-4">
