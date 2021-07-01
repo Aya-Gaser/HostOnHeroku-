@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\projectsInvitations;
 use App\projects;
 use App\projectStage;
+
 class sendOfferToG2 extends Command
 {
     /**
@@ -42,7 +43,7 @@ class sendOfferToG2 extends Command
     public function handle()
     {
         $now = date('Y-m-d H:i');
-        $stages = projectStage::where('vendor_id', 0)->whereDate('G1_acceptance_deadline', Carbon::parse($now))
+        $stages = projectStage::where('vendor_id', 0)->where('G1_acceptance_deadline', '>=', Carbon::now())
             ->get();
         foreach ($stages as $stage) {
             $this->publishJobToSecondGroup($stage);

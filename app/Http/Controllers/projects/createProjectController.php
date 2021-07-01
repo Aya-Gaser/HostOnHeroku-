@@ -265,7 +265,7 @@ class createProjectController extends Controller
 
         if(request()['vendor1_translators_group2']){
             $this->store_GroupInvitations($stage->project_id, $stage->id, request()['vendor1_translators_group2'],1,2 );
-            $this->push_G2Invitations($stage);
+            //$this->push_G2Invitations($stage);
 
         }
         
