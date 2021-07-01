@@ -222,7 +222,7 @@ body a, body span, body p , body h1{
                 <a href="{{route('vendor.view-vendorAllInvoices', 'Pending') }}" 
                 class="nav-link {{ isActive('vendor.view-vendorAllInvoices')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View All Invoices</p>
+                  <p>View My Invoices</p>
                 </a>
               </li>
               </ul>
