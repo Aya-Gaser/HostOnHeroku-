@@ -36,7 +36,7 @@ class reviewCompleted extends Mailable
         return $this->markdown('emails.vendorReview.reviewCompleted')
         ->with(['wo_id'=>$this->wo_id, 'stage_id'=>$this->$stage_id,
         'wo_client'=>$this->wo->client->code])
-       ->from('projects@arabictarjamat.com')
+       ->from('projects@arabictarjamat.com', 'Tarjamat LLC')
        ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
        .'-'.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ).' Final Document(s)')->delay(15); 
     }

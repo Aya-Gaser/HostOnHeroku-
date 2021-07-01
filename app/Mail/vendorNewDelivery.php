@@ -42,7 +42,7 @@ class vendorNewDelivery extends Mailable
         return $this->markdown('emails.vendorDelivery.'.$markdown)
         ->with(['wo_id'=>$this->project->wo_id, 'vendor_name'=>$this->vendor_name,
         'project_id'=>$this->project_id,'wo_client'=>$this->wo->client->code])
-       ->from('projects@arabictarjamat.com')
+       ->from('projects@arabictarjamat.com', 'Tarjamat LLC')
        ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
        .'-'.str_pad( $this->project->wo_id, 4, "0", STR_PAD_LEFT ).' Delivery')->delay(15); 
     }

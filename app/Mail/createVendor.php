@@ -32,7 +32,7 @@ class createVendor extends Mailable
     {
         return $this->markdown('emails.newUser.newVendor')
                     // ->with(['$vendor'=>$this->vendor])
-                    ->from('projects@arabictarjamat.com')
+                    ->from('projects@arabictarjamat.com', 'Tarjamat LLC')
                     ->subject('User Account Created')->delay(15); 
     }
 }

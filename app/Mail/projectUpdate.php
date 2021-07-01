@@ -40,7 +40,7 @@ class projectUpdate extends Mailable
         return $this->markdown('emails.projectUpdate.projectUpdate')
                      ->with(['wo_id'=>$this->wo_id,'isFiles'=>$this->isFiles,
                             'updates'=>$this->updates,'wo_client'=>$this->wo->client->code, 'stage_id'=>$this->stage_id])
-                    ->from('projects@arabictarjamat.com') 
+                    ->from('projects@arabictarjamat.com', 'Tarjamat LLC') 
                     ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
                     .'-'.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ).'  Has Been Updated')->delay(15); 
     

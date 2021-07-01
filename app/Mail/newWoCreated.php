@@ -35,7 +35,7 @@ class newWoCreated extends Mailable
     {
         return $this->markdown('emails.newWoCreated.newWoCreated')
                      ->with(['wo_id'=>$this->wo_id,'wo_client'=>$this->wo->client->code])
-                    ->from('projects@arabictarjamat.com') 
+                    ->from('projects@arabictarjamat.com', 'Tarjamat LLC') 
                     ->subject('WO '.str_pad($this->wo_client, 4, "0", STR_PAD_LEFT )
                     .'-'.str_pad( $this->wo_id, 4, "0", STR_PAD_LEFT ).' Created ')->delay(15); 
     }
