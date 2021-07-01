@@ -261,7 +261,7 @@ class createProjectController extends Controller
                
             }
         }
-        $this->store_GroupInvitations($stage->project_id,request()['vendor1_translators_group1'],1,1 );
+        $this->store_GroupInvitations($stage->project_id, $stage->id,request()['vendor1_translators_group1'],1,1 );
 
         if(request()['vendor1_translators_group2']){
             $this->store_GroupInvitations($stage->project_id, $stage->id, request()['vendor1_translators_group2'],1,2 );
