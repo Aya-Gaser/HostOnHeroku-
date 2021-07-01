@@ -286,11 +286,10 @@ class createProjectController extends Controller
         }
     }
     private function push_G2Invitations($stage){
-      // $schedule = new Schedule();
-       // $job = (new  inviteGroup2($stage->id, 1))->delay(60*60* $stage->G1_acceptance_hours);
-        //$schedule->job(new  inviteGroup2($stage->id, 1))->delay(60*60* $stage->G1_acceptance_hours);
-        $job = (new  inviteGroup2($stage->id, 1))->delay(Carbon::now()->addSeconds(60*60* $stage->G1_acceptance_hours));
-        $job->dispatch();
+     /*  $job = (new  inviteGroup2($stage->id, 1))->delay(Carbon::now()->addSeconds(60*60* $stage->G1_acceptance_hours));
+        $job->dispatch();  */
+        inviteGroup2::dispatch($stage->id, 1)
+                    ->delay(Carbon::now()->addSeconds(60*60* $stage->G1_acceptance_hours));
 
     }
     
