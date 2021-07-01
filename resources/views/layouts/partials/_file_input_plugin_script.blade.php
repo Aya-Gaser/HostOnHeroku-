@@ -26,13 +26,13 @@
     $(document).ready(function () {
         $(".kv-explorer").fileinput({
             'theme': 'explorer-fas',
-            overwriteInitial: false,
+            overwriteInitial: true,
             initialPreviewAsData: true,
             showUpload: false,
             showRemove: true,
-            dropZoneEnabled: false,
+            dropZoneEnabled: true,
             maxFileSize: 512000000,
-            maxFileCount: 10,
+            maxFileCount: 30,
             uploadUrl: '#',
         });
     });
