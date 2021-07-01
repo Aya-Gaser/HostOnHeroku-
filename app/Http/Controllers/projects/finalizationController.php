@@ -80,7 +80,7 @@ class finalizationController extends Controller
         
         if(request()->file('projectManager_file')){
           $this->uploadFiles($taskId, 'projectManager_file');
-          Mail::to('Projects.Tarjamatllc@gmail.com ')->send(new projectsManger_FinalFiles($task->wo_id));
+          Mail::to('Projects.Tarjamatllc@gmail.com')->send(new projectsManger_FinalFiles($task->wo_id));
           //Projects.tarjamatllc@gmail.com
         }
         if(request()->file('client_file')){

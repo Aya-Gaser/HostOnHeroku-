@@ -44,7 +44,7 @@ class sendOfferToG2 extends Command
     {
         $now = date('Y-m-d H:i');
         $stages = projectStage::where('vendor_id', 0)->where('G1_acceptance_deadline', '>=', Carbon::now())
-            ->get();
+        ->where('G2_acceptance_deadline', '<', Carbon::now()) ->get();
         foreach ($stages as $stage) {
             $this->publishJobToSecondGroup($stage);
             $this->info('stage of id '.$stage['id'].' published to group 2');
