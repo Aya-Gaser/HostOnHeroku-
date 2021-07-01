@@ -1,13 +1,7 @@
 {{-- File input
 
     <script>
-        $(".file").fileinput({
-            showUpload: false,
-            dropZoneEnabled: false,
-            //allowedFileExtensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
-            maxFileSize: 5120000000,
-            maxFileCount: 50,
-        });
+     
     </script>--}}
 
 {{--
@@ -26,7 +20,7 @@
     $(document).ready(function () {
         $(".kv-explorer").fileinput({
             'theme': 'explorer-fas',
-            overwriteInitial: true,
+            overwriteInitial: false,
             initialPreviewAsData: true,
             showUpload: false,
             showRemove: true,
