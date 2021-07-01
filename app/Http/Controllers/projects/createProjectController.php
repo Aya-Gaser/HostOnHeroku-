@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\projects;
+use Illuminate\Console\Scheduling\Schedule;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -284,7 +285,7 @@ class createProjectController extends Controller
             
         }
     }
-    private function push_G2Invitations($stage){
+    private function push_G2Invitations($stage, Schedule $schedule){
 
        // $job = (new  inviteGroup2($stage->id, 1))->delay(60*60* $stage->G1_acceptance_hours);
         $schedule->job(new  inviteGroup2($stage->id, 1))->delay(60*60* $stage->G1_acceptance_hours);
