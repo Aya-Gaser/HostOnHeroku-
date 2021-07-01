@@ -30,7 +30,7 @@
             initialPreviewAsData: true,
             showUpload: false,
             showRemove: true,
-            dropZoneEnabled: true,
+            dropZoneEnabled: false,
             maxFileSize: 512000000,
             maxFileCount: 30,
             uploadUrl: '#',

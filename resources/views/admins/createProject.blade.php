@@ -280,7 +280,7 @@
                    
                        <div class="file-loading col-md-2">  
                         <input id="source_files" name="source_files[]"
-                         class="kv-explorer" type="file" multiple required>  
+                         class="kv-explorer" type="file" multiple="multiple" multiple required>  
                          </div>
                     </div>
                   </div> 
@@ -291,7 +291,7 @@
                    
                        <div class="file-loading">  
                         <input id="reference_files" name="reference_files[]"
-                         class="kv-explorer " type="file" multiple>  
+                         class="kv-explorer " type="file" multiple="multiple" multiple>  
                        
                          </div>
                     </div>
@@ -303,7 +303,7 @@
                    
                        <div class="file-loading col-md-2">  
                         <input id="vendorSource_files" name="vendorSource_files[]"
-                         class="kv-explorer" type="file" multiple >  
+                         class="kv-explorer" type="file" multiple="multiple" multiple >  
                          </div>
                     </div>
                   </div> 
