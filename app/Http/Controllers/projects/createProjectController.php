@@ -289,7 +289,7 @@ class createProjectController extends Controller
      /*  $job = (new  inviteGroup2($stage->id, 1))->delay(Carbon::now()->addSeconds(60*60* $stage->G1_acceptance_hours));
         $job->dispatch();  */
         inviteGroup2::dispatch($stage->id, 1)
-                    ->delay(Carbon::now()->addSeconds(60*60* $stage->G1_acceptance_hours));
+                    ->delay(Carbon::now()->addHours($stage->G1_acceptance_hours));
 
     }
     
