@@ -264,7 +264,7 @@ class createProjectController extends Controller
         $this->store_GroupInvitations($stage->project_id,request()['vendor1_translators_group1'],1,1 );
 
         if(request()['vendor1_translators_group2']){
-            $this->store_GroupInvitations($stage->project_id,request()['vendor1_translators_group2'],1,2 );
+            $this->store_GroupInvitations($stage->project_id, $stage->id, request()['vendor1_translators_group2'],1,2 );
             $this->push_G2Invitations($stage);
 
         }
@@ -272,11 +272,12 @@ class createProjectController extends Controller
             
         
     }
-    private function store_GroupInvitations($project_id, $groupInput, $vendor, $group )
+    private function store_GroupInvitations($project_id, $stage_id, $groupInput, $vendor, $group )
     {
         foreach ($groupInput as $member) {
            $invitation = new projectsInvitations();
            $invitation->project_id = $project_id;
+           $invitation->stage_id = $stage_id;
            $invitation->vendor_id = $member;
            $invitation->group = $group;
            $invitation->vendor = $vendor;

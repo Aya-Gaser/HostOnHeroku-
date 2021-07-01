@@ -17,6 +17,7 @@ class CreateProjectInvitationsTable extends Migration
         Schema::create('project_invitations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('stage_id');
             $table->unsignedBigInteger('vendor_id');
             $table->integer('group');
             $table->integer('vendor');
