@@ -48,6 +48,7 @@ class proofingController extends Controller
         //return  $readyToProof_tasks;
         return view('admins.allTasks_proofing')->with(['tasks'=>$readyToProof_tasks]);
     }
+    
     public function validateFilter($filter){
         if($filter == 'progress') $filter = 'under proofing';
        $filters = ['pending', 'under proofing', 'proofed', 'all'];
@@ -65,11 +66,19 @@ class proofingController extends Controller
         foreach($readyToProof_projects as $project){
             array_push($deliveries_edited, $this->getSource_acceptedDelivery_edited($project));
         }
+        $allowComplete = $this->ISAllTask_ProjectsProofed($task);
+
         //return $readyToProof_projects;
         return view('admins.taskProofing')->with(['source_files'=>$wo_sourceFiles,
             'task'=>$task,'taskJobs'=>$taskJobs, 'readyToProof_projects'=>$readyToProof_projects,'wo'=>$wo,
-             'deliveries_edited'=>$deliveries_edited
+             'deliveries_edited'=>$deliveries_edited, 'allowComplete'=>$allowComplete
         ]);
+    }
+    public function ISAllTask_ProjectsProofed($task){
+        $allTask_project = $task->project;
+        $allTask_project_proofed = $task->Proofed_projects;
+
+        return($allTask_project == $allTask_project_proofed );
     }
     public function getWo_sourceFiles($woId){
         $wo = WO::find($woId);
@@ -122,8 +131,8 @@ class proofingController extends Controller
         
         $readyToFinalize_files = $project->project_sourceFile->where('isReadyToFinalize', true);
          if(count($project->project_sourceFile) == count($readyToFinalize_files) ) 
-        {    $project->status = 'Within Finalization';
-             
+        {   
+             $project->status = 'Within Proofing'; 
         }
         
         $project->isReadyToFinalize = true;
@@ -145,7 +154,7 @@ class proofingController extends Controller
           ]);
           $projectId = $request->input('jobId');
           $project = projects::find($projectId);
-          $project->status = 'proofed';
+          $project->status = 'Proofed';
           $project->save();
 
           $vendor = User::find($project->translator_id);

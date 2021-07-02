@@ -19,9 +19,19 @@ class woTasksNeeded extends Model
         return $this->project()->where('isReadyToProof', 1);
       //return null   
      }
+     public function Proofed_projects(){
+     
+      return $this->project()->where('status', 'Proofed');
+    //return null   
+   }
      public function readyToFinalize_projects(){
      
       return $this->project()->where('isReadyToFinalize', 1);
+    //return null   
+   }
+   public function Finalized_projects(){
+     
+      return $this->project()->where('status', 'Finalized');
     //return null   
    }
    public function proofedFile(){

@@ -51,7 +51,8 @@ class viewProjectController extends Controller
         $source_files = $project->project_sourceFile;
         $deadline_difference = $this->deadline_difference($project);
         [$sent_g1, $sent_g2] = $this->get_projectInvitations($project->id);
-        if(count($project->woTasksNeeded->finalized_projectManagerFile) && count($project->woTasksNeeded->finalized_clientFile) )
+        //if(count($project->woTasksNeeded->finalized_projectManagerFile) && count($project->woTasksNeeded->finalized_clientFile) )
+        if($project->status == 'Finalized')  
             $allowComplete = 1;
         return view($view)->with(['project'=>$project, 'has_proofAndFinalize'=>$has_proofAndFinalize,
         'source_files'=>$source_files, 'reference_files'=> $reference_files,

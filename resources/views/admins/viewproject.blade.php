@@ -255,15 +255,16 @@ td{
   
             <div class="card col-md-12">
              <div class="card-header">
-             <h4> Translation Stage </h4>
+             @php $stage = App\projectStage::where('project_id', $project->id)
+                                              ->first(); @endphp
+             <h4> {{$stage->type}} Stage </h4>
              
                 <button style="float:right;" id="updateStage" class="btn btn-primary">Update Details</button>
                
              </div>
              <div class="card-body">
              <div class="row">
-             @php $stage = App\projectStage::where('project_id', $project->id)
-                                              ->first(); @endphp
+             
                                               
                 <p class="data col-md-4"> <Span class="head"> Deadline: </Span>
                

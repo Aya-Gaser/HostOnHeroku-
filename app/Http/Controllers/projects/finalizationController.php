@@ -64,8 +64,7 @@ class finalizationController extends Controller
         //$working_filesReadyToFinalize = $project->project_sourceFile_readyToFilnalize;
         $taskJobs = $task->project;
         $taskProofed_clientFiles = $task->proofed_clientFile;
-        if(count($task->finalized_projectManagerFile) && count($task->finalized_clientFile) )
-            $allowComplete = 1;
+        $allowComplete = $this->ISAllTask_ProjectsFinalized($task);
         
         
         return view('admins.taskFinalization')->with(['source_files'=>$source_files,
@@ -73,7 +72,13 @@ class finalizationController extends Controller
              'taskProofed_clientFiles'=>$taskProofed_clientFiles, 'task'=>$task
         ]);
     }
+    
+    public function ISAllTask_ProjectsFinalized($task){
+        $allTask_project = $task->project;
+        $allTask_project_finalized = $task->Finalized_projects;
 
+        return($allTask_project == $allTask_project_finalized );
+    }
     public function store_finalizedFile($taskId){
         
         $task = woTasksNeeded::findOrFail($taskId);
@@ -89,6 +94,13 @@ class finalizationController extends Controller
             
         $task->status = 'under finalization';
         $task->save();
+        $taskProjects = $task->project;
+        foreach($taskProjects as $project){
+            if($project->status = 'Within Finalization'){
+                $project->status = 'Finalized';
+                $project->save();
+            }
+        }
         
         alert()->success('Uploaded Successfully !')->autoclose(false);
         return back();

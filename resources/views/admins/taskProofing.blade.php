@@ -78,7 +78,7 @@ td{
               <div class="col-md-6">
                 @if($task->status != 'proofed')
                     
-                    <button type="button" id="{{$task->id}}" class="btn btn-success completeTask complete" > 
+                    <button @if(!$allowComplete) disabled @endif type="button" id="{{$task->id}}" class="btn btn-success completeTask complete" > 
                             Proofing Completed &check;&check; </button>
                         </a> 
                     @else        
