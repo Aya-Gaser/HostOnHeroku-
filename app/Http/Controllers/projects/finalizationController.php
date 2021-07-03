@@ -96,7 +96,7 @@ class finalizationController extends Controller
         $task->save();
         $taskProjects = $task->project;
         foreach($taskProjects as $project){
-            if($project->status = 'Within Finalization'){
+            if($project->status = 'Within Finalization' || $project->status = 'Proofed'){
                 $project->status = 'Finalized';
                 $project->save();
             }
