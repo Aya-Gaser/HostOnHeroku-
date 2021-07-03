@@ -19,6 +19,7 @@ use App\projectsInvitations;
 use App\Jobs\inviteGroup2;
 use App\projectStage;
 use App\project_sourceFile;
+use App\Mail\newJob;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\offerAction;
 use App\Mail\allVendorsDeclined;
@@ -156,6 +157,8 @@ class viewOfferController extends Controller
          if(!$invitation)  abort(404);
         $invitation->status = 'declined'; 
         $invitation->save();
+        $this->sendMail_toProjectCreator($project->id, 'Declined', $stage->type );
+
         //check if all deaclined
         
         $invitations_all = projectsInvitations::where('project_id', $stage->project_id)
