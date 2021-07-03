@@ -94,13 +94,7 @@ class finalizationController extends Controller
             
         $task->status = 'under finalization';
         $task->save();
-        $taskProjects = $task->project;
-        foreach($taskProjects as $project){
-            if($project->status = 'Within Finalization' || $project->status = 'Proofed'){
-                $project->status = 'Finalized';
-                $project->save();
-            }
-        }
+     
         
         alert()->success('Uploaded Successfully !')->autoclose(false);
         return back();
@@ -143,7 +137,7 @@ class finalizationController extends Controller
          
         $task->status = ($complete)? 'Completed' : 'under finalization'; //1 >> complete
         foreach($task->project as $project){
-            $project->status = 'Completed';
+            $project->status = 'Finalized';
             $project->save();
         }
         $task->save();

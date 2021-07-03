@@ -247,7 +247,9 @@ class viewProjectController extends Controller
         } 
         
         $stage->save();
-
+        $project = projects::find($stage->project_id);
+        $project->status = 'Completed';
+        $project->save();
         return response()->json(['success'=>'Done Successfully']);      
     }
    /* 
@@ -293,7 +295,7 @@ class viewProjectController extends Controller
         }
         public function complete_reOpen_project($project, $complete){
             $project = projects::findOrFail($project);  
-            $project->status = ($complete)? 'completed' : 'in progress'; //1 >> complete
+            $project->status = ($complete)? 'Completed' : 'in progress'; //1 >> complete
             $project->save();
     
             return back();
