@@ -157,7 +157,7 @@ class viewOfferController extends Controller
          if(!$invitation)  abort(404);
         $invitation->status = 'declined'; 
         $invitation->save();
-        $this->sendMail_toProjectCreator($project->id, 'Declined', $stage->type );
+        $this->sendMail_toProjectCreator($stage->project_id, 'Declined', $stage->type );
 
         //check if all deaclined
         
