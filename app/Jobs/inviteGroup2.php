@@ -46,7 +46,7 @@ class inviteGroup2 implements ShouldQueue
     public function handle()
     {
             
-        if($this->stage->vendor_id ==null && $this->project){
+        if($this->stage->vendor_id ==0 && $this->project){
             $invitations = projectsInvitations::where('project_id',$this->stage->project_id)
                                               ->where('group',2)
                                               ->where('vendor', $this->vendor);

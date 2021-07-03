@@ -278,9 +278,9 @@
                       <label class="form-control-label"
                        for="source_document">Working File(s)<span class="required">*</span></label>
                    
-                       <div class="file-loading col-md-2">  
+                       <div class="col-md-12">  
                         <input id="source_files" name="source_files[]"
-                         class="kv-explorer" type="file" multiple="multiple" multiple required>  
+                         class="form-control" type="file" multiple="multiple" multiple required>  
                          </div>
                     </div>
                   </div> 

@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('project:check-time')->hourly();
+        $schedule->command('project:check-time')->everyMinute();
     }
 
     /**

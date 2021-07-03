@@ -3,12 +3,14 @@
 namespace App\Traits;
 use App\projectsInvitations;
 use App\Mail\newJob;
+use App\User;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Mail;
 
 trait JobTrait
 {
-    private function publishJobToSecondGroup($stage)
+    public function publishJobToSecondGroup($stage)
     {
         $invitations = projectsInvitations::where('stage_id',$stage->id)
                                             ->where('group',2);

@@ -20,9 +20,9 @@
     $(document).ready(function () {
         $(".kv-explorer").fileinput({
             'theme': 'explorer-fas',
-            overwriteInitial: false,
+            overwriteInitial: true,
             initialPreviewAsData: true,
-            showUBrowse: false,
+            showUpload: false,
             showRemove: true,
             dropZoneEnabled: false,
             maxFileSize: 512000000,
