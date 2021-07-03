@@ -229,7 +229,7 @@ td{
                                 <tr class="bg-dark"> 
                                    <td colspan="2">Job # {{str_pad($jobFiles->id, 4, "0", STR_PAD_LEFT )}} Files</td>
                                    <td colspan="3"> 
-                                   @if($jobFiles->status != 'proofed') 
+                                   @if($jobFiles->status != 'Proofed') 
                                     <button @if(!count($jobFiles->proofedFile )) disabled @endif type="button" class="col-md-12 sendToVendor btn center" data-toggle="modal" data-target="#modal-sendToVendor"
                                      id="{{$jobFiles->id}}" style=" background-color:#eb6434; color:white;"> Send Document(s) To Vendor </button>
                                    @else 

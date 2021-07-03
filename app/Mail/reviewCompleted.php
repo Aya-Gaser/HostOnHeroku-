@@ -19,7 +19,7 @@ class reviewCompleted extends Mailable
     public function __construct($wo_id, $stage_id)
     {
         $this->wo_id = $wo_id;
-        $this->$stage_id = $stage_id;
+        $this->stage_id = $stage_id;
         $this->wo = WO::find($this->wo_id);
         $this->wo_client = $this->wo->client->code;
 
@@ -34,7 +34,7 @@ class reviewCompleted extends Mailable
     public function build()
     {
         return $this->markdown('emails.vendorReview.reviewCompleted')
-        ->with(['wo_id'=>$this->wo_id, 'stage_id'=>$this->$stage_id,
+        ->with(['wo_id'=>$this->wo_id, 'stage_id'=>$this->stage_id,
         'wo_client'=>$this->wo->client->code])
        ->from('projects@arabictarjamat.com', 'Tarjamat LLC')
        ->subject('Project '.str_pad( $this->wo_client, 4, "0", STR_PAD_LEFT )
