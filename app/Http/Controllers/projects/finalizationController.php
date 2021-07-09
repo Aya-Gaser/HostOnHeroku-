@@ -94,6 +94,10 @@ class finalizationController extends Controller
             
         $task->status = 'under finalization';
         $task->save();
+        foreach($task->project as $project){
+            $project->status = 'Finalized';
+            $project->save();
+        }
      
         
         alert()->success('Uploaded Successfully !')->autoclose(false);
