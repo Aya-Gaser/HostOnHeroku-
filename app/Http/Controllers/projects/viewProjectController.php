@@ -341,7 +341,7 @@ class viewProjectController extends Controller
             $stage = projectStage::findOrFail($stageId);
             $isUser = false;
             if($stage->vendor_id){
-                $vendor = User::find($stage->vendor_id)->first();
+                $vendor = User::find($stage->vendor_id);
                 $isUser = true;
             }   
             $updates = [];
@@ -383,8 +383,13 @@ class viewProjectController extends Controller
                 if($stage->deadline != $deadline){
                     if($isUser){
                         $updates['Delivery Deadline'] = [ UTC_To_LocalTime($stage->deadline,$vendor->timezone), UTC_To_LocalTime($deadline,$vendor->timezone)];
-                        $stage->deadline = $deadline;
                     }
+                    $project = projects::find($stage->project_id);
+                    $project->delivery_deadline = $deadline;
+                    $project->save();
+                    
+                    $stage->deadline = $deadline;
+
                 }
             }
             if(request()['instructions_'.$stage->id]){

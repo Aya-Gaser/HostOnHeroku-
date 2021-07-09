@@ -268,7 +268,7 @@ td{
                                               
                 <p class="data col-md-4"> <Span class="head"> Deadline: </Span>
                
-                {{ UTC_To_LocalTime($project->delivery_deadline, Auth::user()->timezone) }}</p>
+                {{ UTC_To_LocalTime($stage->deadline, Auth::user()->timezone) }}</p>
                @if($project->type != 'Dtp')
                 <p class="data col-md-4"> <Span class="head">  Word Count: </Span>
                   @if($stage->vendor_unitCount)  {{$stage->vendor_unitCount}}
@@ -383,9 +383,9 @@ td{
                 <div class="row">
                <div class="form-group-lg col-md-6" style="position:relative;top:-11px;">
                     <label for="exampleInputFile">Delivery Deadline <span class="required"> *</span> </label>
-                    <div style="padding:10px;" class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+                    <div style="padding:10px;" class="input-append date form_datetime" >
                       <input name="vendor_deadline_{{$stage->id}}" style="width:90%; height:40px;" size="16"
-                      class="form-control" value="{{UTC_To_LocalTime($stage->deadline, Auth::user()->timezone)}}" type="text" value="">
+                      class="form-control" value="{{UTC_To_LocalTime($stage->deadline, Auth::user()->timezone)}}" >
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-remove"></i></span>
                       <span style="padding:8px 5px; height:40px;" class="add-on"><i class="icon-calendar"></i></span>
                   </div>
@@ -854,7 +854,7 @@ $(".form_datetime").datetimepicker({
        
     
     });
-    $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date());
+    $(".form_datetime").datetimepicker().datetimepicker("setDate", new Date("{{$project->delivery_deadline}}"));
 
   var type = "{{$project->type}}"
   $("#project_type option[value='"+type+"']").attr("selected", "selected");

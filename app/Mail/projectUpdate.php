@@ -18,7 +18,7 @@ class projectUpdate extends Mailable
      * @return void
      */
     protected $wo_id, $isFiles, $updates,$wo,$wo_client, $stage_id;
-    public function __construct($wo_id, $isFiles, $updates )
+    public function __construct($wo_id, $isFiles, $updates, $stage_id )
     {
         $this->wo_id = $wo_id;
         $this->isFiles = $isFiles;
