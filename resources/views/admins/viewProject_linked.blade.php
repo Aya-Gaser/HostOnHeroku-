@@ -212,9 +212,11 @@ td{
                        <label class="form-control-label"
                         for="source_document">Working Files <span class="required">*</span></label>
                     
-                        <div class="file-loading col-md-2">  
-                         <input id="source_files" name="source_files[]"
-                          class="kv-explorer" type="file" multiple>  
+                      
+                          <div class="custom-file col-md-2">
+                            <input type="file" class="custom-file-input" id="source_files" name="source_files[]"
+                             multiple >
+                            <label class="custom-file-label" for="customFile">Choose file</label>
                           </div>
                      </div>
                    </div> 
@@ -225,10 +227,11 @@ td{
                        <label class="form-control-label"
                         for="source_document">Reference Files <span class="required"></span></label>
                     
-                        <div class="file-loading">  
-                         <input id="reference_files" name="reference_files[]"
-                          class="kv-explorer " type="file" multiple>  
-                        
+                      
+                          <div class="custom-file col-md-2">
+                            <input type="file" class="custom-file-input" id="reference_files" name="reference_files[]"
+                             multiple >
+                            <label class="custom-file-label" for="customFile">Choose file</label>
                           </div>
                      </div>
                    </div>   
@@ -977,10 +980,13 @@ td{
                        <label class="form-control-label"
                         for="source_document">Improved Files <span class="required">*</span></label>
                     
-                        <div class="file-loading col-md-2">  
-                         <input id="improved_files" name="improved_files[]"
-                          class="kv-explorer" type="file" multiple>  
+                      
+                          <div class="custom-file col-md-2">
+                            <input type="file" class="custom-file-input" id="improved_files" name="improved_files[]"
+                            multiple required>
+                            <label class="custom-file-label" for="customFile">Choose file</label>
                           </div>
+                          
                      </div>
                      <label class="form-control-label"
                         for="source_document">Notes </label>

@@ -286,12 +286,13 @@ td{
                  <div class="col-md-6">
                    <div class="form-group">
                      <label class="form-control-label"
-                      for="source_document">Source Document(s) <span class="required">*</span></label>
-                  
-                      <div class="file-loading col-md-2">  
-                       <input id="source_files" name="source_files[]"
-                        class="kv-explorer" type="file" multiple>  
-                        </div>
+                      for="source_document">Source Document(s) <span class="required"></span></label>
+         
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="source_files" name="source_files[]"
+                            multiple >
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                          </div>
                    </div>
                  </div> 
                     
@@ -301,11 +302,12 @@ td{
                      <label class="form-control-label"
                       for="source_document">Reference Document(s) <span class="required"></span></label>
                   
-                      <div class="file-loading">  
-                       <input id="reference_files" name="reference_files[]"
-                        class="kv-explorer " type="file" multiple>  
-                      
-                        </div>
+                    
+                        <div class="custom-file ">
+                            <input type="file" class="custom-file-input" id="reference_files" name="reference_files[]"
+                            multiple >
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                          </div>
                    </div>
                  </div>   
                    

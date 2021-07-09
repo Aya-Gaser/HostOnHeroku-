@@ -303,10 +303,11 @@ td{
                                                    'delivery'=>$deliver_withFiles->thisVendor_delivery[$source_file->id][0]->id])}}" method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <div class="file-loading">  
-                                                    <input id="delivery_files" name="delivery_file{{$stage->id}}" required
-                                                      class="kv-explorer " type="file">  
-                                                      </div>
+                                                   
+                                                  <div class="custom-file ">
+                                                    <input type="file" class="custom-file-input" id="delivery_files" name="delivery_file{{$stage->id}}" required>
+                                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                                  </div>
                                                 </div>
                                           <button type="submit" class="btn btn-primary" > 
                                              Cancel & Re-submit </button>
@@ -328,10 +329,11 @@ td{
                                               'sourceFile'=>$source_file->id])}}" method="post" enctype="multipart/form-data">
                                              @csrf
                                              <div class="form-group">
-                                                    <div class="file-loading">  
-                                                    <input id="delivery_files" name="delivery_file{{$stage->id}}" required
-                                                      class="kv-explorer " type="file">  
-                                                      </div>
+                                                   
+                                                  <div class="custom-file ">
+                                                    <input type="file" class="custom-file-input" id="delivery_files" name="delivery_file{{$stage->id}}" required>
+                                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                                  </div>
                                                 </div>
                                         <button type="submit" class="btn btn-primary" > 
                                              upload delivery</button>

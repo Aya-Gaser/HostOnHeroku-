@@ -249,37 +249,40 @@
                        <label class="form-control-label"
                         for="source_document">Working File(s) <span class="required">*</span></label>
                     
-                        <div class="file-loading col-md-2">  
-                         <input id="source_files" name="source_files[]"
-                          class="kv-explorer" type="file" multiple required>  
-                          </div>
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="source_files" name="source_files[]"
+                           multiple required>
+                          <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
                      </div>
                    </div> 
+                   <div class="col-md-6">
+                     <div class="form-group">
+                       <label class="form-control-label"
+                        for="source_document">Reference File(s) </label>
+                    
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="reference_files" name="reference_files[]"
+                           multiple >
+                          <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                     </div>
+                   </div>   
                       
                    <div class="col-md-6">
                     <div class="form-group">
                       <label class="form-control-label"
                        for="source_document">Source File(s)</label>
                    
-                       <div class="file-loading col-md-2">  
-                        <input id="vendorSource_files" name="vendorSource_files[]"
-                         class="kv-explorer" type="file" multiple >  
-                         </div>
+                       <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="vendorSource_files" name="vendorSource_files[]"
+                          multiple >
+                          <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
                     </div>
                   </div> 
                   
-                   <div class="col-md-6">
-                     <div class="form-group">
-                       <label class="form-control-label"
-                        for="source_document">Reference File(s) </label>
-                    
-                        <div class="file-loading">  
-                         <input id="reference_files" name="reference_files[]"
-                          class="kv-explorer " type="file" multiple>  
-                        
-                          </div>
-                     </div>
-                   </div>   
+                  
                     
                 </div> 
                   </div>

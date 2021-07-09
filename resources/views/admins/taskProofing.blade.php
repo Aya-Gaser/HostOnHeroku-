@@ -355,10 +355,12 @@ td{
                       <label class="form-control-label"
                       for="source_document">Vendor File </label>
                   
-                      <div class="file-loading col-md-2">  
-                        <input id="vendor_file" name="vendor_file[]"
-                        class="kv-explorer" type="file" multiple>  
-                        </div>
+                      
+                        <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="vendor_file" name="vendor_file[]"
+                        multiple="multiple" multiple >
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                      </div>
                     </div>
                   </div> 
                   <div class="form-group col-md-6">
@@ -373,10 +375,12 @@ td{
                       <label class="form-control-label"
                       for="source_document">Client File </label>
                   
-                      <div class="file-loading col-md-2">  
-                        <input id="client_file" name="client_file[]"
-                        class="kv-explorer" type="file" multiple >  
-                        </div>
+                     
+                      <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="client_file" name="client_file[]"
+                      multiple="multiple" multiple >
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
                     </div>
                   </div> 
                   <div class="form-group col-md-6">

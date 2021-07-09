@@ -358,22 +358,26 @@ ul{
          <form id="finalization-form" action="{{route('management.upload-finalizedFile', $task->id)}}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="form-group ">
-              <label class="form-control-label" for="project_type">project Manager File(s)
-                    <span class="required">*</span>
-                    </label>
-                  <div class="file-loading">  
-                  <input id="delivery_files" name="projectManager_file[]" 
-                    class="kv-explorer " type="file" multiple required>  
-                    </div>
+                <label class="form-control-label" for="project_type">project Manager File(s)
+                      <span class="required">*</span>
+                      </label>
+                
+                <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="delivery_files" name="projectManager_file[]"
+                      multiple="multiple" multiple required>
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
               </div>
            
               <div class="form-group ">
-              <label class="form-control-label" for="project_type">Client File(s)
-                    <span class="required">*</span>
-                    </label>
-                  <div class="file-loading">  
-                  <input id="delivery_files" name="client_file[]" 
-                    class="kv-explorer " type="file" multiple required>  
+                  <label class="form-control-label" for="project_type">Client File(s)
+                        <span class="required">*</span>
+                  </label>
+                
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="delivery_files" name="client_file[]" 
+                      multiple="multiple" multiple required>
+                      <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
               </div>
             <button id="submitFiles" type="submit" class="btn btn-primary" > 
